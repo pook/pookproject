@@ -13,7 +13,22 @@
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
 	</resource-ref>
-	<servlet>
+
+	<!-- Struts 2 -->
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+
+	<!-- Servlet -->
+ 	<servlet>
 		<servlet-name>Test</servlet-name>
 		<servlet-class>ctl.Test</servlet-class>
 	</servlet>
