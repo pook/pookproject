@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context path="/smms" docBase="smms"
+debug="5" reloadable="true" crossContext="true">
+
+<resource-ref>
+     <description> JNDI Database for smms Applications</description>
+     <res-ref-name>jdbc/mysmmsDS</res-ref-name>
+     <res-ref-type>javax.sql.DataSource</res-ref-type>
+     <res-auth>Container</res-auth>
+   </resource-ref>
+<!-- 
+<Realm  className="org.apache.catalina.realm.DataSourceRealm"
+             driverName="rg.postgresql.Driver"
+       
+              userTable="users" userNameCol="username" userCredCol="password"
+          userRoleTable="users" roleNameCol="user_type" />
+-->
+
+</Context>
