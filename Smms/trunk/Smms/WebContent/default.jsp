@@ -16,7 +16,7 @@
     
   </head>
   <body>
-  <div>${pageContext.request.contextPath}</div>
+  
   <div id="result">Submit form bellow.</div>
   
    <s:form id="formValidate" action="login" theme="xhtml">
