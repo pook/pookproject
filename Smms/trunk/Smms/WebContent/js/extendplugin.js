@@ -30,7 +30,9 @@
 						 "js/base/jquery.ui.resizable"+$.struts2_jquery.minSuffix+".js",
 						 "js/base/jquery.ui.button"+$.struts2_jquery.minSuffix+".js",
 						 "js/base/jquery.bgiframe"+$.struts2_jquery.minSuffix+".js",
-						 "js/base/jquery.ui.dialog"+$.struts2_jquery.minSuffix+".js"
+						 "js/base/jquery.ui.dialog"+$.struts2_jquery.minSuffix+".js",
+						 "jsext/utils.js",
+						 "jsext/xhtml/validation.js"
 						 ]);
 				}
 				$elem.wysiwyg(options.wysiwygoptions);

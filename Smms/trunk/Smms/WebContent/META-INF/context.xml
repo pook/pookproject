@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Context path="/smms" docBase="smms"
+<Context path="/Smms" docBase="smms"
 debug="5" reloadable="true" crossContext="true">
 
 <resource-ref>
