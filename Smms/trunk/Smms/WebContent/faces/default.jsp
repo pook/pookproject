@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <title>HelloWorld</title>
+    <title>Sale And Membership Management Sytem</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
 	<meta http-equiv="pragma" content="no-cache" />
@@ -23,7 +23,7 @@
 	<!-- This files are needed for AJAX Validation of XHTML Forms -->
 	<script type="text/javascript" src="${pageContext.request.contextPath}/struts/utils.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/struts/xhtml/validation.js"></script>
- <sj:head debug="true" compressed="false" jqueryui="true" jquerytheme="dark-hive" customBasepath="themes" loadFromGoogle="%{google}" ajaxhistory="%{ajaxhistory}" defaultIndicator="myDefaultIndicator" defaultLoadingText="Please wait ..."/>
+       <sj:head debug="true" compressed="false" jquerytheme="dark-hive" customBasepath="themes" loadFromGoogle="%{google}" ajaxhistory="%{ajaxhistory}" defaultIndicator="myDefaultIndicator" defaultLoadingText="Please wait ..."/>
  <!--  
   <s:if test="%{theme == 'dark-hive' || theme == null}">
       <sj:head debug="true" compressed="false" jquerytheme="dark-hive" customBasepath="themes" loadFromGoogle="%{google}" ajaxhistory="%{ajaxhistory}" defaultIndicator="myDefaultIndicator" defaultLoadingText="Please wait ..."/>
@@ -54,7 +54,7 @@
         </div>
         -->
         <div id="headline">
-	        <h1 class="ui-state-default" style="background: none; border: none;">Hello World</h1>
+	        <h1 class="ui-state-default" style="background: none; border: none;">Sale And MemberShip Management</h1>
 	        <!-- 
 	        <h4 class="ui-state-default" style="background: none; border: none;">Version 2.4.0</h4>
 	        -->
@@ -64,13 +64,18 @@
       <div id="nav">
         <div class="hlist ui-widget-header">
           <ul>         
-            <li class="ui-widget-header"><s:url id="urlform" action="form"/><sj:a id="formlink" href="%{urlform}" targets="main">Ajax Forms</sj:a></li>
+            <li class="ui-widget-header"><s:url id="urlindex" action="index"/><sj:a id="indexlink" href="%{urlindex}" targets="main">&nbsp;&nbsp;&nbsp;หน้าแรก&nbsp;&nbsp;&nbsp;</sj:a></li>
+           <li class="ui-widget-header"><s:url id="urlmember" action="member"/><sj:a id="memberlink" href="%{urlmember}" targets="main">&nbsp;&nbsp;&nbsp;Member&nbsp;&nbsp;&nbsp;</sj:a> </li>
+           <li class="ui-widget-header"><s:url id="urlregister" action="register"/><sj:a id="registerlink" href="%{urlregister}" targets="main">&nbsp;&nbsp;&nbsp;Register&nbsp;&nbsp;&nbsp;</sj:a> </li>
+           <li class="ui-widget-header"><s:url id="urlorganization" action="organization"/><sj:a id="organizationlink" href="%{urlorganization}" targets="main">&nbsp;&nbsp;&nbsp;ผังองค์กร&nbsp;&nbsp;&nbsp;</sj:a> </li>
+           <li class="ui-widget-header"><s:url id="urlpurchase" action="purchase"/><sj:a id="purchaselink" href="%{urlpurchase}" targets="main">&nbsp;&nbsp;&nbsp;สั่งชื้อสินค้า&nbsp;&nbsp;&nbsp;</sj:a> </li>
+           <li class="ui-widget-header"><s:url id="urllogin" action="login"/><sj:a id="loginlink" href="%{urllogin}" targets="main">&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;</sj:a> </li>
+           <li class="ui-widget-header"><s:url id="urlchgpasswd" action="chgpasswd"/><sj:a id="chgpasswdlink" href="%{urlchgpasswd}" targets="main">&nbsp;&nbsp;&nbsp;เปลี่ยนรหัสผ่าน&nbsp;&nbsp;&nbsp;</sj:a> </li>
           
-           
           </ul>
         </div>
       </div>
-      <sj:div id="main" href="%{urlform}">
+      <sj:div id="main" href="%{urlindex}">
         <img id="indicator" src="images/indicator.gif" alt="Loading..."/>
       </sj:div>
       <!-- begin: #footer -->
