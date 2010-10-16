@@ -8,4 +8,5 @@
 <struts>
     <package name="smms" extends="struts-default,json-default" namespace="/">
     </package>
+    
 </struts>

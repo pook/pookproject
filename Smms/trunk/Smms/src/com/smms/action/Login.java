@@ -1,14 +1,5 @@
 package com.smms.action;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Action;
@@ -18,54 +9,60 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
-import com.smms.service.SmmsService;
-import com.smms.service.SmmsServiceImp;
+import com.opensymphony.xwork2.validator.annotations.ExpressionValidator;
 
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
 @Validations(requiredStrings = {
-		@RequiredStringValidator(fieldName = "loginuser", type = ValidatorType.FIELD, message = "Login User is required"),
-		@RequiredStringValidator(fieldName = "loginpassword", type = ValidatorType.FIELD, message = "Password is required") })
+    @RequiredStringValidator(fieldName = "loginuser", type = ValidatorType.FIELD, message = "Login User is required"), 
+    @RequiredStringValidator(fieldName = "loginpassword", type = ValidatorType.FIELD, message = "Password is required")
+}, expressions = {
+  @ExpressionValidator(expression = "loginpassword.trim().equals('password') == true", message = "Wrong User name or Password.."),
+ 
+})
 public class Login extends ActionSupport {
 
-	private String loginuser;
-	private String loginpassword;
-	private String echo;
-	private static final long serialVersionUID = 8163050753941197229L;
+  
+  private static final long serialVersionUID = -7308127326053089498L;
+//private static final Log  log              = LogFactory.getLog(Login.class);
 
-	@Action(value = "/login", results = { @Result(location = "onSuccess.jsp", name = "success")
-		//	,@Result(location = "onSuccess.jsp", name = "success")
-			})
-	public String execute() throws Exception {
-		SmmsService s = new SmmsServiceImp();
-		boolean b=s.authentication(loginuser, loginpassword);
-				echo = "Welcome " + loginuser+"So Happy  "+b;		
-		return SUCCESS;
-	}
+  private String            loginuser;
+  private String            loginpassword;
+  private String            echo;
+  
+  @Action(value = "/login", results = {
+    @Result(location = "onSuccess.jsp", name = "success")
+  })
+  public String execute() throws Exception
+  {
+    echo = "Welcome " + loginuser;
+   // log.info(echo);
 
-	public String getLoginuser() {
-		return loginuser;
-	}
+    return SUCCESS;
+  }
 
-	public void setLoginuser(String loginuser) {
-		this.loginuser = loginuser;
-	}
+  public String getEcho()
+  {
+    return echo;
+  }
 
-	public String getLoginpassword() {
-		return loginpassword;
-	}
+  public String getLoginuser()
+  {
+    return loginuser;
+  }
 
-	public void setLoginpassword(String loginpassword) {
-		this.loginpassword = loginpassword;
-	}
+  public void setLoginuser(String loginuser)
+  {
+    this.loginuser = loginuser;
+  }
 
-	public String getEcho() {
-		return echo;
-	}
+  public String getLoginpassword()
+  {
+    return loginpassword;
+  }
 
-	public void setEcho(String echo) {
-		this.echo = echo;
-	}
-	
-
+  public void setLoginpassword(String loginpassword)
+  {
+    this.loginpassword = loginpassword;
+  }
 }
