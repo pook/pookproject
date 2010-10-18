@@ -6,17 +6,15 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>java:/comp/env/jdbc/mysmmsDS</jta-data-source>
 		<class>com.smms.model.Users</class>
-		<class>com.smms.model.Authorities</class>
-	
-   
+		<class>com.smms.model.Authorities</class>   
 		<properties>
 		<!-- 
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
-			 -->
+			
 			<property name="eclipselink.session.customizer"
 				value="com.smms.service.JPAEclipseLinkSessionCustomizer" />
 			<property name="eclipselink.logging.level" value="FINEST" />
-		</properties>
+	-->	</properties>
 
 	</persistence-unit>
 </persistence>
