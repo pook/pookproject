@@ -39,21 +39,22 @@ function customeValidation(form, errors) {
 }
 </script>
 
-
-<sj:div id="result1">
-
+<div id="result">
 <ul id="formerrors" class="errorMessage"></ul>
-<s:form id="formValidateCustom" action="login" theme="simple"
+<s:form id="formValidateCustom" action="chgpassword" theme="simple"
 	cssClass="yform">
-	<fieldset><legend>Login</legend>
-	<div class="type-text"><label for="echo">User: <span
-		id="loginuserError"></span></label> <s:textfield id="loginuser"
-		name="loginuser" /></div>
+	<fieldset><legend>Chang Password</legend>
 	<div class="type-text"><label for="echo">Password: <span
-		id="loginpasswordError"></span></label> <s:password id="loginpassword" 
-		name="loginpassword" /></div>
+		id="passwordError"></span></label> <s:password id="password"
+		name="password" /></div>
+	<div class="type-text"><label for="echo">New Password: <span
+		id="newpasswordError"></span></label> <s:password id="newpassword" 
+		name="newpassword" /></div>
+		<div class="type-text"><label for="echo">Re New Password: <span
+		id="renewpasswordError"></span></label> <s:password id="renewpassword" 
+		name="renewpassword" /></div>
 	<div class="type-button">
-	<sj:submit targets="result1"
+	<sj:submit targets="result"
 				button="true"
 				validate="true" 
 				validateFunction="customeValidation"
@@ -64,5 +65,4 @@ function customeValidation(form, errors) {
 </s:form>
 <img id="indicator" src="images/indicator.gif" alt="Loading..."
 	style="display: none" />
-</sj:div>
-	
+</div>

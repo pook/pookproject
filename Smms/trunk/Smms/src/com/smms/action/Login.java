@@ -13,13 +13,14 @@ import com.opensymphony.xwork2.validator.annotations.ExpressionValidator;
 
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
-@Validations(requiredStrings = {
-    @RequiredStringValidator(fieldName = "loginuser", type = ValidatorType.FIELD, message = "Login User is required"), 
-    @RequiredStringValidator(fieldName = "loginpassword", type = ValidatorType.FIELD, message = "Password is required")
-}, expressions = {
-  @ExpressionValidator(expression = "loginpassword.trim().equals('password') == true", message = "Wrong User name or Password.."),
- 
-})
+  @Validations(requiredStrings = {
+		    @RequiredStringValidator(fieldName = "loginuser", type = ValidatorType.FIELD, message = "Login User is required"), 
+		    @RequiredStringValidator(fieldName = "loginpassword", type = ValidatorType.FIELD, message = "Password is required")
+		}, expressions = {
+		  @ExpressionValidator(expression = "loginpassword.trim().equals('xxx') == true", message = "Wrong User name or Password.."),
+		 
+		}
+  )
 public class Login extends ActionSupport {
 
   
@@ -31,7 +32,8 @@ public class Login extends ActionSupport {
   private String            echo;
   
   @Action(value = "/login", results = {
-    @Result(location = "onSuccess.jsp", name = "success")
+    @Result(location = "member1.jsp", name = "success"),
+    @Result(location = "login.jsp", name = "error")
   })
   public String execute() throws Exception
   {
@@ -65,4 +67,5 @@ public class Login extends ActionSupport {
   {
     this.loginpassword = loginpassword;
   }
+  
 }

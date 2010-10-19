@@ -21,7 +21,5 @@
     </filter-mapping>
         <session-config>
       <session-timeout>40</session-timeout> 
-    </session-config>
-
-    
+    </session-config>    
 </web-app>
