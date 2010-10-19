@@ -41,7 +41,6 @@ function customeValidation(form, errors) {
 
 
 <sj:div id="result1">
-
 <ul id="formerrors" class="errorMessage"></ul>
 <s:form id="formValidateCustom" action="login" theme="simple"
 	cssClass="yform">
@@ -53,13 +52,15 @@ function customeValidation(form, errors) {
 		id="loginpasswordError"></span></label> <s:password id="loginpassword" 
 		name="loginpassword" /></div>
 	<div class="type-button">
-	<sj:submit targets="result1"
+ 
+	<sj:submit  targets="result1"
 				button="true"
 				validate="true" 
 				validateFunction="customeValidation"
 				onBeforeTopics="removeErrors" 
 				onSuccessTopics="removeErrors"
-		value="Submit" indicator="indicator" /></div>
+		value="Submit" indicator="indicator" />		
+		</div>
 	</fieldset>
 </s:form>
 <img id="indicator" src="images/indicator.gif" alt="Loading..."

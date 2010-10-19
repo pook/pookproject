@@ -7,16 +7,47 @@
 <s:property value="echo" escape="%{escape}" />
 <s:form id="formValidateCustom" action="login" theme="simple"
 	cssClass="yform">
-	<s:div class="type-test">member page</s:div>
-<fieldset><legend>Member</legend>
-	<table align="center" width="540px" height="300px">
+	<fieldset><legend>Member</legend>
+	<table
+		style="align: center; width: 540px; margin-left: 280px; border: 1px solid #000000;"
+		cellspacing="10px">
+		<tr>
+			<td colspan="1"><b>Member Profile</b></td>
+
+		</tr>
+		<tr>
+				<td>&nbsp;&nbsp;&nbsp;<s:text  name="xxxx5" >ชื่อผู้แนะนำ :</s:text></td>
+				<td>&nbsp;&nbsp;&nbsp;<s:text  name="xxxx5" >xxxxxx</s:text></td>
+			</tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;<s:text  name="xxxx5" >ชื่อ up line :</s:text></td>
+				<td>&nbsp;&nbsp;    <s:select label="ชื่อ up line"
+        name="member"
+        headerKey="-1" headerValue="Select Member Up Line"
+        list="#{'aaa':'AAAA', 'bbb':'BBBB', 'ccc':'CCCC', 'ddd':'DDDD'}"
+        value="selectedMonth"
+        required="true"
+ /></td>
+			</tr>
+			
 		<s:iterator value="memb.entrySet()">
 			<tr>
-				<td><s:property value="key" /></td>
-				<td><s:property value="value" /></td>
+				<td>&nbsp;&nbsp;&nbsp;<s:property value="key" /></td>
+				<td>&nbsp;&nbsp;&nbsp;<s:property value="value" /></td>
+			</tr>
+		</s:iterator>
+		<tr>
+			<td colspan="1"><b>ข้อมูลการเงิน</b></td>
+
+		</tr>
+
+		<s:iterator value="memb2.entrySet()">
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;<s:property value="key" /></td>
+				<td>&nbsp;&nbsp;&nbsp;<s:property value="value" /></td>
 			</tr>
 		</s:iterator>
 	</table>
 	</fieldset>
-	
+
 </s:form>

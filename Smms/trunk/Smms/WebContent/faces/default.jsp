@@ -12,8 +12,8 @@
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
 	<meta http-equiv="expires" content="0" />
-	<meta http-equiv="keywords" content="struts2, jquery, jquery-ui, plugin, showcase, jqgrid" />
-	<meta http-equiv="description" content="A Showcase for the Struts2 jQuery Plugin" />
+	<meta http-equiv="keywords" content="" />
+	<meta http-equiv="description" content="" />
 	<link href="styles/layout.css" rel="stylesheet" type="text/css" />
 	<link href="styles/patch_layout.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" href="/Smms/struts/themes/dark-hive/jquery-ui.css" type="text/css"/>
@@ -39,7 +39,7 @@
         <div class="hlist ui-widget-header">
           <ul>         
             <li class="ui-widget-header"><s:url id="urlindex" action="index"/><sj:a id="indexlink" href="%{urlindex}" targets="main">&nbsp;&nbsp;&nbsp;หน้าแรก&nbsp;&nbsp;&nbsp;</sj:a></li>
-           <li class="ui-widget-header"><s:url id="urllogin" action="login"/><sj:a id="loginlink" href="%{urllogin}" targets="main">&nbsp;&nbsp;&nbsp;ทะเบียนสมาชิก&nbsp;&nbsp;&nbsp;</sj:a> </li>
+           <li class="ui-widget-header"><s:url id="urlmember" action="member"/><sj:a id="memberlink" href="%{urlmember}" targets="main">&nbsp;&nbsp;&nbsp;ทะเบียนสมาชิก&nbsp;&nbsp;&nbsp;</sj:a> </li>
            <li class="ui-widget-header"><s:url id="urlregister" action="register"/><sj:a id="registerlink" href="%{urlregister}" targets="main">&nbsp;&nbsp;&nbsp;ลงทะเบียน&nbsp;&nbsp;&nbsp;</sj:a> </li>
            <li class="ui-widget-header"><s:url id="urlorganization" action="organization"/><sj:a id="organizationlink" href="%{urlorganization}" targets="main">&nbsp;&nbsp;&nbsp;ผังองค์กร&nbsp;&nbsp;&nbsp;</sj:a> </li>
            <li class="ui-widget-header"><s:url id="urlorder" action="order"/><sj:a id="orderlink" href="%{urlorder}" targets="main">&nbsp;&nbsp;&nbsp;ประวัติการสั่งชื้อสินค้า&nbsp;&nbsp;&nbsp;</sj:a> </li>

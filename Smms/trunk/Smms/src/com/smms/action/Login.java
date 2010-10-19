@@ -37,6 +37,7 @@ public class Login extends ActionSupport {
   })
   public String execute() throws Exception
   {
+	  
     echo = "Welcome " + loginuser;
    // log.info(echo);
 

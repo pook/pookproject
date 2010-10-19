@@ -14,7 +14,8 @@ public class Default extends ActionSupport {
 
     
   @Action(value = "/default", results = {		 
-    @Result(location = "default.jsp", name = "success")
+    @Result(location = "default.jsp", name = "success"),
+    @Result(location = "login.jsp", name = "error")
   })
   public String execute() throws Exception
   {

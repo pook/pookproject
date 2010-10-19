@@ -11,7 +11,7 @@
 <s:url id="remoteurl" action="jsonorder"/> 
     <sjg:grid 
     	id="gridtable" 
-    	caption="Customer Examples" 
+    	caption="รายการสินค้าที่ สั่งชื้อ" 
     	dataType="json" 
     	href="%{remoteurl}" 
     	pager="true" 
