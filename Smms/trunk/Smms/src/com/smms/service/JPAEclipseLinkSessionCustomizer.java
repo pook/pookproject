@@ -9,6 +9,7 @@ public class JPAEclipseLinkSessionCustomizer implements
 	@Override
 	public void customize(Session session) throws Exception {
 		 JNDIConnector conn = (JNDIConnector)session.getLogin().getConnector();
+		 
 		 conn.setLookupType(JNDIConnector.STRING_LOOKUP);
 		 System.out.println(">>>>>>>>> "+JNDIConnector.STRING_LOOKUP);
 	}

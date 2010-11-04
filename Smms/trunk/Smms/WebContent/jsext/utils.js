@@ -108,7 +108,7 @@ StrutsUtils.addOnLoad = function(func) {
     window.onload = function() {
       oldonload();
       func();
-    }
+    };
   }
 };
 
@@ -119,3 +119,22 @@ StrutsUtils.addEventListener = function(element, name, observer, capture) {
     element.attachEvent('on' + name, observer);
   }
 };
+$.subscribe('rowselect', function(event,data) {
+    $("#gridinfo").html('<p>Edit Mode for Row : '+event.originalEvent.id+'</p>');
+});
+$.subscribe('rowadd', function(event,data) {
+    $("#gridedittable").jqGrid('editGridRow',"new",{height:280,reloadAfterSubmit:false}); 
+	});
+$.subscribe('searchgrid', function(event,data) {
+    $("#gridedittable").jqGrid('searchGrid', {sopt:['cn','bw','eq','ne','lt','gt','ew']} );
+	});
+$.subscribe('showcolumns', function(event,data) {
+    $("#gridedittable").jqGrid('setColumns',{});
+	});
+  
+$.subscribe('getselectedids', function(event,data) {
+	var s; 
+	s = $("#gridmultitable").jqGrid('getGridParam','selarrrow');
+	alert('Selected Rows : '+s); 
+	});
+  

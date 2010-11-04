@@ -60,25 +60,29 @@ public class Member extends ActionSupport {
 	public String execute() throws Exception {	
 		
 		memb = new LinkedHashMap<String, String>();
-		memb.put("รหัสสมาชิก :  ","X999999999999 " );
+		memb.put("รหัสสมาชิก :  ","#AD1000000009" );
 		memb.put("รหัสบัตรประชาชน :     ", "99999999999");
 		memb.put("ชื่อ :", "xxxxxxxxx");
+		memb.put("ชื่อแสดงในสายงาน:", "ดลยา");
 		memb.put("นามสกุล :", "xxxxxxxxx");
 		memb.put("เบอร์โทรศัพท์  :", "999-9999-999");
 		memb.put("เบอร์โทรศัพท์มือถือ", "999-9999-999");
 		memb.put("เบอร์แฟกส์", "99-9999-99");
 		memb.put("E-mail :", "xxx@xxx.xxx");		
 		memb.put("ที่อยู่", "xxxxxxxxxxxxxxxxxxxxxxx");
-		memb.put("ที่อยู่ส่งของ :", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx");	
-		memb.put("บัญชีธนาคาร", "xxxxxxxxxxxxxxxxxxxxxx");
+		memb.put("จังหวัด", "xxxxxxxxxxxxxxxxxx");
+		memb.put("ที่อยู่ส่งของ :", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		memb.put("สาขาที่รับบัตรสมาชิก", "xxxxxxxxxxx");
+		
+		
 		memb2 = new LinkedHashMap<String, String>();
-		memb2.put("บัญชี :", "xxxxxxxxxxxxxxx");
+		memb2.put("ธนาคาร", "xxxxxxxxxxxxxxxxxxxxxx");		
 		memb2.put("เลขบัญชี :", "99999999999999999");
 		memb2.put("สาขาบัญชี :", "xxxxxxxxxxxxxx");
 		memb2.put("ประเภทบัญชี :", "xxxxxxxxxxxxxx");
-		memb2.put("งานครั้งล่าสุด :","xxx");
-		memb2.put("point value :","99.99");
-		memb2.put("total point value :","99.99");
+		memb2.put("ค่า Commission ครั้งล่าสุด :","xxx");
+		memb2.put("Smile value :","99.99");
+		memb2.put("Team Smile Value :","99.99");
 		this.account="xxxxxxxxxx";
 		this.accountId="9999999999999";
 		this.bankBrance="xxxxxxxxxxxxxx";

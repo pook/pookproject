@@ -105,7 +105,7 @@ $(document).ready(function() {
 	$.subscribe('rowadd', function(event, data) {
 		$("#gridedittable").jqGrid('editGridRow', "new", {
 			height : 280,
-			reloadAfterSubmit : false
+			reloadAfterSubmit : true
 		});
 	});
 	$.subscribe('searchgrid', function(event, data) {

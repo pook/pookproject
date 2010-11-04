@@ -1,0 +1,49 @@
+@CHARSET "UTF-8";
+
+.column {
+	width: 1024px;
+	float: left;
+	height:440px;
+	padding-bottom: 100px;
+}
+
+.column div {
+	margin: 5px;
+}
+
+.column div div .ui-icon {
+	float: right;
+}
+#main1{
+	width:1230px;
+	left:0px;
+	margin-top:0px;
+	margin-left: 0px;
+	position: relation;
+	}
+#content1 {
+   float: right;
+  margin: 20px 20 20 20;
+   padding: 20px;
+   margin-right:70px;  
+}
+#sidecol1 {
+     position: absolute;
+   top: 10px;
+   left: 70px;
+}
+#main{
+	height:700px;
+	}
+	#div1{
+	margin-top:30px;
+	margin-left:70px
+	}
+	#div2{
+	margin-top:30px;
+	margin-left:70px
+	}
+	#div3{
+	margin-top:30px;
+	margin-left:70px
+	}

@@ -32,7 +32,7 @@ public class Login extends ActionSupport {
   private String            echo;
   
   @Action(value = "/login", results = {
-    @Result(location = "member1.jsp", name = "success"),
+    @Result(location = "onSuccess.jsp", name = "success",type="dispatcher"),
     @Result(location = "login.jsp", name = "error")
   })
   public String execute() throws Exception

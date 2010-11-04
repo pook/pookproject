@@ -11,67 +11,44 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.smms.service.Item;
 import com.smms.service.ItemDAO;
 
-@ParentPackage(value="smms")
+@ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
 public class Order extends ActionSupport {
 
 	private static final long serialVersionUID = 8619781837424132878L;
 
-	@Action(value = "/jsonorder", results = { 
-			@Result( name = "success", type = "json")
-			}
-	)
-	 public String execute()
-  {
+	@Action(value = "/jsonorder", results = { @Result(name = "success", type = "json") })
+	public String execute() {
 
-    //int to = (rows * page);
-    //int from =0;// to - rows;
-    
+		// int to = (rows * page);
+		// int from =0;// to - rows;
 
-    //Count Rows (select count(*) from custumer)
-  //  records = CustomerDAO.count();
+		// Count Rows (select count(*) from custumer)
+		// records = CustomerDAO.count();
 
-    //Your logic to search and select the required data.
-   gridModel = ItemDAO.getItems();
+		// Your logic to search and select the required data.
+		gridModel = ItemDAO.getItems();
 
-    //calculate the total pages for the query 
-    total =(int) Math.ceil((double)records / (double)rows);
+		// calculate the total pages for the query
+		total = (int) Math.ceil((double) records / (double) rows);
 
-    return SUCCESS;
-  }
+		return SUCCESS;
+	}
 
-  public String getJSON()
-  {
-    return execute();
-  }
-	private List <Item>    gridModel;
+	public String getJSON() {
+		return execute();
+	}
 
-	  //get how many rows we want to have into the grid - rowNum attribute in the grid
-	  private Integer             rows             = 0;
-
-	  //Get the requested page. By default grid sets this to 1.
-	  private Integer             page             = 0;
-
-	  // sorting order - asc or desc
-	  private String              sord;
-
-	  // get index row - i.e. user click to sort.
-	  private String              sidx;
-
-	  // Search Field
-	  private String              searchField;
-
-	  // The Search String
-	  private String              searchString;
-
-	  // he Search Operation ['eq','ne','lt','le','gt','ge','bw','bn','in','ni','ew','en','cn','nc'] 
-	  private String              searchOper;
-
-	  // Your Total Pages
-	  private Integer             total            = 0;
-
-	  // All Record
-	  private Integer             records          = 0;
+	private List<Item> gridModel;
+	private Integer rows = 0;
+	private Integer page = 0;
+	private String sord;
+	private String sidx;
+	private String searchField;
+	private String searchString;
+	private String searchOper;
+	private Integer total = 0;
+	private Integer records = 0;
 
 	public List<Item> getGridModel() {
 		return gridModel;
@@ -152,6 +129,5 @@ public class Order extends ActionSupport {
 	public void setRecords(Integer records) {
 		this.records = records;
 	}
-	  
-	  
+
 }
