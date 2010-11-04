@@ -37,7 +37,7 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	<context:annotation-config />
+
 
 	<!-- start Register Service -->
 	<bean id="registerDAO" class="biz.evolix.model.dao.RegisterDaoImp">
@@ -62,10 +62,11 @@
 	<!-- end of Organization Chart Service -->
 	<!-- Start market service -->
 	<bean id="inventoryServiceImp" class="biz.evolix.service.InventoryServiceImp" />
-	<bean id="purcheseServiceImp" class="biz.evolix.service.PurcheseServiceImp" scope="session"/>
-	
+	<bean id="purcheseServiceImp" class="biz.evolix.service.PurcheseServiceImp"
+		scope="session" />
+
 	<bean id="inventoryService" class="com.smms.action.EditProduct">
-			<constructor-arg ref="inventoryServiceImp" />
+		<constructor-arg ref="inventoryServiceImp" />
 	</bean>
 	<bean id="skuDAO" class="biz.evolix.model.dao.SkuDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
@@ -77,5 +78,11 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
-	<!-- Stop marget Service -->
+	<!-- end marget Service -->
+	<!-- <bean id="authoritiesService" class="biz.evolix.secure.service.AuthoritiesServiceImp" 
+		/> -->
+
+	<bean id="userDetail" class="biz.evolix.secure.UserDetail" />
+
+	<context:annotation-config />
 </beans>

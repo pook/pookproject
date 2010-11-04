@@ -1,6 +1,9 @@
 package biz.evolix.model.dao;
 
+import java.util.Collection;
 import java.util.List;
+
+import javax.persistence.EntityManagerFactory;
 
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -16,7 +19,7 @@ public class AuthoritiesDAOImp extends JpaDaoSupport implements AuthoritiesDAO {
 	@Override
 	@Transactional
 	public boolean authorization(final Users user, String role) {
-		List<Authorities> a = findAuth(user.getUserId());
+		List<Authorities> a = (List<Authorities>)findAuth(user.getUserId());
 		for (Authorities auth : a) {
 			if (auth.getAuthority().equals(role))
 				return false;
@@ -34,8 +37,8 @@ public class AuthoritiesDAOImp extends JpaDaoSupport implements AuthoritiesDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Authorities> findAuth(final String id) {
-		return (List<Authorities>) getJpaTemplate().find(
+	public Collection<Authorities> findAuth(final String id) {
+		return (Collection<Authorities>) getJpaTemplate().find(
 				"select A from Authorities A where A.user.userId =?1 ", id);
 	}
 
@@ -46,8 +49,10 @@ public class AuthoritiesDAOImp extends JpaDaoSupport implements AuthoritiesDAO {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Users findUser(String userId) {
-		// TODO Auto-generated method stub
+		
+		if(getJpaTemplate().getEntityManagerFactory()==null)System.out.println("bbbb");
 		return getJpaTemplate().find(Users.class,userId);
 	}
 

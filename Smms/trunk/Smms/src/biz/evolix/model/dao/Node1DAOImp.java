@@ -1,5 +1,6 @@
 package biz.evolix.model.dao;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,7 +26,8 @@ public class Node1DAOImp extends JpaDaoSupport implements Node1DAO {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Node1 getNode1FromUserId(String u) {
+	public Node1 getNode1FromUserId(String u) throws NullPointerException,DataAccessException{
+		if(getJpaTemplate().getEntityManagerFactory()==null)System.out.println("zzzzzzzzzzz");
 		return (Node1) getJpaTemplate().findByNamedQuery(
 				"select N from Node1 N where N.user=?1", u).get(0);
 

@@ -2,13 +2,14 @@
 <beans:beans xmlns="http://www.springframework.org/schema/security"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
-
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.0.xsd 
 		http://www.springframework.org/schema/jdbc
 		http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
 		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
 		http://www.springframework.org/schema/security	http://www.springframework.org/schema/security/spring-security-3.1.xsd">
-
+<context:annotation-config />
 	<http auto-config="true">
 	 <!-- 		<intercept-url pattern="/.action" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 	-->
@@ -20,18 +21,21 @@
 		<!-- 
 		<intercept-url pattern="/**" access="ROLE_USER" />
 		-->				
-		<intercept-url pattern="/faces/**" access="ROLE_USER" />
-		<intercept-url pattern="/**" access="ROLE_USER" />
+		<intercept-url pattern="/faces/**" access="ROLE_MEMBER" />
+		<intercept-url pattern="/**" access="ROLE_MEMBER" />
 	
 		<!-- Set the login page and what to do if login fails -->
 
 
 
 	</http>
-
+ 
 	<authentication-manager alias="authenticationManager">
+	<authentication-provider user-service-ref="userDetail">
+	<!--  
 		<authentication-provider>
 		<user-service>
+		-->
 		<!--
 			<jdbc-user-service data-source-ref="dataSource"
 				users-by-username-query="SELECT U.username, U.password as password, 'true' AS enabled   
@@ -40,9 +44,14 @@
                                 FROM Users U, authorities A   
                                 WHERE (U.username = A.username) and (U.username=?)" />
                                 -->
+                                <!-- 
                                 <user authorities="ROLE_USER" name="xxx" password="xxx"/>
                                <user authorities="ROLE_USERS" name="xxxx" password="xxx"/>
+              
                                 </user-service>
 		</authentication-provider>
+		-->
+		</authentication-provider>
 	</authentication-manager>
+	
 </beans:beans>

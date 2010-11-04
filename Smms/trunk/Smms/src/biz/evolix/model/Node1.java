@@ -67,7 +67,7 @@ public class Node1 implements java.io.Serializable {
 	public void setUser(Users user) {
 		this.user = user;
 	}
-
+//	@Basic(fetch=FetchType.EAGER)
 	public Users getUser() {
 		return user;
 	}
