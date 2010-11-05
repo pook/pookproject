@@ -24,6 +24,7 @@ public class RegisterDaoImp extends
 		try {			
 			id = getID(id);
 			m.getUser().setUserId(Generate.getId(id, "99"));
+			m.getUser().setNode1(m);
 			m.setNId(id);			
 			getJpaTemplate().persist(m);		
 		} catch (Exception e) {

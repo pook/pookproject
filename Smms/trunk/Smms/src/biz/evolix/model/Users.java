@@ -51,9 +51,9 @@ public class Users implements java.io.Serializable {
 	@Column(name = "ENABLED", nullable = false)
 	private Byte enaebled=(byte)1;
 	private List<Authorities> authorities = new ArrayList<Authorities>();
-//	@OneToOne(optional=false)
-//    @JoinColumn(name="USER_ID", unique=true, nullable=false, updatable=false ,referencedColumnName="USER_ID")
-//    private Node1 node1;
+	//@OneToOne(mappedBy="nId")	
+	@JoinColumn(name="NODE_ID")
+    private Node1 node1;
 
 	public Users() {
 		super();
@@ -197,6 +197,13 @@ public class Users implements java.io.Serializable {
 	}
 	public Byte getEnaebled() {
 		return enaebled;
+	}
+	public void setNode1(Node1 node1) {
+		this.node1 = node1;
+	}
+	@OneToOne(fetch=FetchType.EAGER,cascade=CascadeType.PERSIST,mappedBy="nId")
+	public Node1 getNode1() {
+		return node1;
 	}
 	
 }

@@ -10,12 +10,10 @@ public class UserDetail implements UserDetailsService {
 	public UserDetails loadUserByUsername(String userid)
 			throws UsernameNotFoundException {
 		try{
-			SmileUser d = new SmileUser(userid);
-			System.err.println("  00");
+			SmileUser d = new SmileUser(userid);			
 		    d.loadUser();
 			return d;
 		}catch (Exception e) {
-			System.err.println(e+"  1");
 			throw new UsernameNotFoundException(e+": username");
 		}				
 	}

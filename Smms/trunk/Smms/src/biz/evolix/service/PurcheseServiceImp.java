@@ -22,7 +22,7 @@ public class PurcheseServiceImp extends JpaDaoSupport implements
 	@Autowired
 	private PurcheseDAO purcheseDAO;
 	
-//	private 
+	private List<Sku> skus = new ArrayList<Sku>();
 	
 	private List<Purchese>purcheses=new ArrayList<Purchese>();
 	
@@ -65,6 +65,14 @@ public class PurcheseServiceImp extends JpaDaoSupport implements
 
 	public List<Purchese> getPurcheses() {
 		return purcheses;
+	}
+
+	public void setSkus(List<Sku> skus) {
+		this.skus = skus;
+	}
+
+	public List<Sku> getSkus() {
+		return skus;
 	}
 	
 }

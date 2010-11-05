@@ -9,8 +9,6 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
     http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
-
-
 	<!-- JPA don't touch -->
 	<bean
 		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
@@ -37,8 +35,6 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
-
-
 	<!-- start Register Service -->
 	<bean id="registerDAO" class="biz.evolix.model.dao.RegisterDaoImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
@@ -64,7 +60,6 @@
 	<bean id="inventoryServiceImp" class="biz.evolix.service.InventoryServiceImp" />
 	<bean id="purcheseServiceImp" class="biz.evolix.service.PurcheseServiceImp"
 		scope="session" />
-
 	<bean id="inventoryService" class="com.smms.action.EditProduct">
 		<constructor-arg ref="inventoryServiceImp" />
 	</bean>
@@ -77,12 +72,6 @@
 	<bean id="purcheseDAO" class="biz.evolix.model.dao.PurcheseDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-
-	<!-- end marget Service -->
-	<!-- <bean id="authoritiesService" class="biz.evolix.secure.service.AuthoritiesServiceImp" 
-		/> -->
-
 	<bean id="userDetail" class="biz.evolix.secure.UserDetail" />
-
 	<context:annotation-config />
 </beans>

@@ -4,6 +4,8 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import biz.evolix.model.Node1;
+import biz.evolix.model.Users;
 import biz.evolix.secure.SmileUser;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -19,6 +21,7 @@ public class Commission extends ActionSupport {
 	})
 	public String execute() throws Exception {
 		try {
+			
 //			System.out.println("vvv");
 //				SmileUser u = (SmileUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //		System.out.println("node>>>>>>>>>>>>>>>>>>>>"

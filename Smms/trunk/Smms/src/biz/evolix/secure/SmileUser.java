@@ -9,7 +9,9 @@ import javax.persistence.Persistence;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import biz.evolix.model.Authorities;
@@ -26,9 +28,7 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 
 	private final String userid;
 	private Node1 node;
-	
-	
-	
+
 	public SmileUser(String userid) {
 		super();
 		this.userid = userid;
@@ -38,27 +38,26 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 	@Override
 	@Transactional(readOnly = true)
 	public Collection<GrantedAuthority> getAuthorities() {
-		Collection<Authorities> auths = (Collection<Authorities>) em
-				.createQuery(
-						"select A from Authorities A where A.user.userId =?1")
-				.setParameter(1, getUserid()).getResultList();
+		Collection<Authorities> auths = (Collection<Authorities>) getJpaTemplate()
+				.find("select A from Authorities A where A.user.userId =?1",
+						getUserid());		
 		Collection<GrantedAuthority> gas = new HashSet<GrantedAuthority>();
 		for (Authorities a : auths)
-			gas.add(new GrantedAuthorityImp("ROLE_MEMBER"));
+			gas.add(new GrantedAuthorityImp(a.getAuthority()));
 		return gas;
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public Users loadUser() {
 		try {
-			setEntityManager(em);			
-			Node1 node = getJpaTemplate().find(Node1.class, 1L);
-			setNode(node);
-			return node.getUser();
+			setEntityManager(em);
+			Users u = (Users) getJpaTemplate().find(Users.class, getUserid());
+			setNode(u.getNode1());
+			
+			return u;
 		} catch (Exception e) {
-			System.err.println( e);
+			throw new UsernameNotFoundException(e + ": username");
 		}
-		return null;
 	}
 
 	@Override
@@ -73,19 +72,18 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
+
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
+
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -93,7 +91,7 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
-	
+
 	public String getUserid() {
 		return userid;
 	}
@@ -105,7 +103,4 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 	public Node1 getNode() {
 		return node;
 	}
-
-	
-
 }
