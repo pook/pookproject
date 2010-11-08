@@ -58,12 +58,12 @@
 	<!-- end of Organization Chart Service -->
 	<!-- Start market service -->
 	<bean id="inventoryServiceImp" class="biz.evolix.service.InventoryServiceImp" />
-	<bean id="purcheseServiceImp" class="biz.evolix.service.PurcheseServiceImp"
-		scope="session" />
+	<bean id="purcheseService" class="biz.evolix.service.PurcheseServiceImp" scope="session"
+		 />
 	<bean id="inventoryService" class="com.smms.action.EditProduct">
 		<constructor-arg ref="inventoryServiceImp" />
 	</bean>
-	<bean id="skuDAO" class="biz.evolix.model.dao.SkuDAOImp">
+	<bean id="skuDAO" class="biz.evolix.model.dao.SkuDAOImp" scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<bean id="orderDAO" class="biz.evolix.model.dao.OrderDAOImp">
@@ -73,5 +73,28 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<bean id="userDetail" class="biz.evolix.secure.UserDetail" />
+
+	<!--begin Faces action -->
+	<bean id="loadSkusAct" class="com.smms.action.LoadSkusAct">
+		<constructor-arg ref="skuDAO" />
+	</bean>
+	<bean id="loadUsers" class="com.smms.action.LoadSkusAct" scope="session">
+		<constructor-arg ref="authoritiesDAO" />
+	</bean>
+	<bean id="procheseAct" class="com.smms.action.ProcheseAct" scope="session">
+		<constructor-arg ref="purcheseService" />
+	</bean>
+	<bean id="editOrderAct" class="com.smms.action.EditOrderAct" scope="session">
+		<constructor-arg ref="purcheseService" />
+	</bean>
+	<bean id="blackOfficeAct" class="com.smms.action.BlackOffice" scope="session">
+		<constructor-arg ref="purcheseService" />
+	</bean>
+	<bean id="editPurcheseAct" class="com.smms.action.EditPurcheseAct" scope="session">
+		<constructor-arg ref="purcheseService" />
+	</bean>
+	
+	
+	<!-- end faces action -->
 	<context:annotation-config />
 </beans>

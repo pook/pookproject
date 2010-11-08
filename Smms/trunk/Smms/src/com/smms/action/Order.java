@@ -28,10 +28,14 @@ public class Order extends ActionSupport {
 
 		// Your logic to search and select the required data.
 		gridModel = ItemDAO.getItems();
-
+		System.out.println("vvt"+getSidx());
+		System.out.println("vvr"+getRows());
+		System.out.println("vve"+getRecords());
+		System.out.println("vppp"+getSearchString());
+		System.out.println("vvoo"+getSearchField());
 		// calculate the total pages for the query
 		total = (int) Math.ceil((double) records / (double) rows);
-
+		
 		return SUCCESS;
 	}
 

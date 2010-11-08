@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO {
-
+/*
   public static List<Customer> getCustomers(List<Customer> list, int from, int to)
   {
 
@@ -192,5 +192,5 @@ public class CustomerDAO {
     customers.add(new Customer(495, "Diecast Collectables", "Franco", "Valarie", "6175552555", "6251 Ingle Ln.", "", "Boston", "MA", "51003", "USA", 1188, 85100.0));
     customers.add(new Customer(496, "Kelly's Gift Shop", "Snowden", "Tony", "+64 9 5555500", "Arenales 1938 3'A'", "", "Auckland  ", "", "", "New Zealand", 1612, 110000.0));
     return customers;
-  }
+  }*/
 }

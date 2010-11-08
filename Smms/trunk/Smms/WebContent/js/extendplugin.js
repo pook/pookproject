@@ -32,7 +32,8 @@
 						 "js/base/jquery.bgiframe"+$.struts2_jquery.minSuffix+".js",
 						 "js/base/jquery.ui.dialog"+$.struts2_jquery.minSuffix+".js",
 						 "jsext/utils.js",
-						 "jsext/xhtml/validation.js"
+						 "jsext/xhtml/validation.js",
+						 "jsext/custom-add-on.js"
 						 ]);
 				}
 				$elem.wysiwyg(options.wysiwygoptions);

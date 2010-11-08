@@ -13,7 +13,6 @@
 <sj:div id="div1"></sj:div>
 <sj:div id="div2">
 <s:url id="remoteurl" action="jsonorder"/> 
-
     <sjg:grid 
     	id="gridtable" 
     	caption="รายการสินค้าที่ สั่งชื้อ" 
@@ -26,7 +25,7 @@
     	rownumbers="true"
     	width="990"
     >
-     <sjg:gridColumn name="id" index="id" title="sale order ID" formatter="integer" sortable="false" width="200"/>
+       <sjg:gridColumn name="id" index="id" title="sale order ID" formatter="integer" sortable="false" width="200"/>
     	<sjg:gridColumn name="id2" index="id2" title="รหัสสมาชิก"  sortable="false" width="200"/>
     	<sjg:gridColumn name="date" index="date"  title="วันที่" sortable="false" width="280" />
     	<sjg:gridColumn name="bid" index="productCode" title="สาขา" sortable="false" width="200"/>

@@ -9,6 +9,5 @@ import biz.evolix.model.Users;
 public interface AuthoritiesDAO {
 	public boolean authorization(final Users id,String role);
 	public Collection<Authorities> findAuth(final String id);
-	public Users authentication(String username,String password);
-	public Users findUser(String userId);
+	public Users findUser(String userId)throws NullPointerException;
 }

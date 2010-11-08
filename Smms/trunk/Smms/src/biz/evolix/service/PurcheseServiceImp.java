@@ -6,41 +6,30 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 
+import biz.evolix.model.Order;
 import biz.evolix.model.Purchese;
-import biz.evolix.model.Sku;
+import biz.evolix.model.Users;
+import biz.evolix.model.dao.AuthoritiesDAO;
 import biz.evolix.model.dao.OrderDAO;
 import biz.evolix.model.dao.PurcheseDAO;
-import biz.evolix.model.dao.SkuDAO;
 
-public class PurcheseServiceImp extends JpaDaoSupport implements
-		PurcheseService {
+public class PurcheseServiceImp implements PurcheseService {
 
 	@Autowired
-	private SkuDAO skuDAO;
+	private PurcheseDAO purcheseDAO;
 	@Autowired
 	private OrderDAO orderDAO;
 	@Autowired
-	private PurcheseDAO purcheseDAO;
-	
-	private List<Sku> skus = new ArrayList<Sku>();
-	
-	private List<Purchese>purcheses=new ArrayList<Purchese>();
-	
-	@Override	
-	public boolean buy(Sku sku) {
-		Purchese p = new Purchese();
-		p.setSku(sku);
-		//p.setOrder(order);
-		getPurcheses().add(p);
-		return false;
+	private AuthoritiesDAO authoritiesDAO;
+
+	private List<Order> ordering = new ArrayList<Order>();;
+
+	public void setPurcheseDAO(PurcheseDAO purcheseDAO) {
+		this.purcheseDAO = purcheseDAO;
 	}
 
-	public void setSkuDAO(SkuDAO skuDAO) {
-		this.skuDAO = skuDAO;
-	}
-
-	public SkuDAO getSkuDAO() {
-		return skuDAO;
+	public PurcheseDAO getPurcheseDAO() {
+		return purcheseDAO;
 	}
 
 	public void setOrderDAO(OrderDAO orderDAO) {
@@ -51,28 +40,53 @@ public class PurcheseServiceImp extends JpaDaoSupport implements
 		return orderDAO;
 	}
 
-	public void setPurcheseDAO(PurcheseDAO purcheseDAO) {
-		this.purcheseDAO = purcheseDAO;
+	@Override
+	public List<Order> getNewOrder() {
+		setOrdering(new ArrayList<Order>());
+		return getOrdering();
 	}
 
-	public PurcheseDAO getPurcheseDAO() {
-		return purcheseDAO;
+	public void setOrdering(List<Order> ordering) {
+		this.ordering = ordering;
 	}
 
-	public void setPurcheses(List<Purchese> purcheses) {
-		this.purcheses = purcheses;
+	public List<Order> getOrdering() {
+		return ordering;
 	}
 
-	public List<Purchese> getPurcheses() {
-		return purcheses;
+	@Override
+	public boolean addOrder(Users user) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
-	public void setSkus(List<Sku> skus) {
-		this.skus = skus;
+	@Override
+	public List<Order> getCurrentOrder() {
+		return getOrdering();
 	}
 
-	public List<Sku> getSkus() {
-		return skus;
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Purchese> getPurcheseFromOrders(int idx) {
+		return (List<Purchese>) getOrdering().get(idx);
 	}
-	
+
+	@Override
+	public List<Order> getOrder(long idx) {
+		return getOrdering();
+	}
+
+	@Override
+	public Users userMember(String user) {		
+		return authoritiesDAO.findUser(user);
+	}
+
+	public void setAuthoritiesDAO(AuthoritiesDAO authoritiesDAO)throws NullPointerException {
+		this.authoritiesDAO = authoritiesDAO;
+	}
+
+	public AuthoritiesDAO getAuthoritiesDAO() {
+		return authoritiesDAO;
+	}
+
 }

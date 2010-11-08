@@ -23,7 +23,7 @@ public class Order implements java.io.Serializable {
 	@Column(name = "ORDER_ID")
 	private Long orderId;
 
-	@OneToMany
+	
 	@JoinColumn(name = "P_ID")
 	private List<Purchese> purchese = new ArrayList<Purchese>();
 	
@@ -31,12 +31,12 @@ public class Order implements java.io.Serializable {
 	private Users user;
 	
 	@Column(name = "TOTAL_PRICE")
-	private double totalPrice;
+	private double totalPrice = 0.0;
 	
 	@Column(name="TOTAL_QUANTITY")
-	private Integer totalQuantity;
+	private Integer totalQuantity =0;
 	@Column(name = "TOTAL_SV", length = 50)
-	private Integer totalSv;
+	private Integer totalSv = 0;
 
 	@JoinColumn(name = "BRANCE_CODE")
 	private Brance brance;
@@ -64,6 +64,8 @@ public class Order implements java.io.Serializable {
 	}
 
 	public void setTotalSv(Integer totalSv) {
+		totalSv=0;
+		for(Purchese p:getPurchese())totalSv=p.getPsv();
 		this.totalSv = totalSv;
 	}
 
@@ -82,7 +84,7 @@ public class Order implements java.io.Serializable {
 	public void setUser(Users user) {
 		this.user = user;
 	}
-	
+	@ManyToOne(fetch=FetchType.LAZY,cascade = CascadeType.PERSIST)
 	public Brance getBrance() {
 		return this.brance;
 	}
@@ -92,6 +94,8 @@ public class Order implements java.io.Serializable {
 	}
 
 	public void setTotalPrice(double totalPrice) {
+		totalPrice = 0.0;
+		for(Purchese p:getPurchese())totalPrice+=p.getPurchesePrice();
 		this.totalPrice = totalPrice;
 	}
 
@@ -102,12 +106,14 @@ public class Order implements java.io.Serializable {
 	public void setPurchese(List<Purchese> purchese) {
 		this.purchese = purchese;
 	}
-	@OneToMany(cascade=CascadeType.PERSIST,mappedBy="P_ID")
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="P_ID")
 	public List<Purchese> getPurchese() {
 		return purchese;
 	}
 
 	public void setTotalQuantity(Integer totalQuantity) {
+		totalQuantity=0;
+		for(Purchese p:getPurchese())totalQuantity+=p.getQuantity();		
 		this.totalQuantity = totalQuantity;
 	}
 

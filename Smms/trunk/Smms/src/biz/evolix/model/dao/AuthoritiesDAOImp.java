@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,18 +42,11 @@ public class AuthoritiesDAOImp extends JpaDaoSupport implements AuthoritiesDAO {
 		return (Collection<Authorities>) getJpaTemplate().find(
 				"select A from Authorities A where A.user.userId =?1 ", id);
 	}
-
-	@Override
-	public Users authentication(String username, String password) {
 	
-		return null;
-	}
-
 	@Override
 	@Transactional(readOnly=true)
-	public Users findUser(String userId) {
-		
-		if(getJpaTemplate().getEntityManagerFactory()==null)System.out.println("bbbb");
+	public Users findUser(String userId)throws NullPointerException,DataAccessException {
+		System.out.println("wxyz"+userId);
 		return getJpaTemplate().find(Users.class,userId);
 	}
 

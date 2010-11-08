@@ -1,6 +1,6 @@
 package com.smms.action;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -8,59 +8,52 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
-import biz.evolix.model.Sku;
-import biz.evolix.service.InventoryService;
-
 import com.opensymphony.xwork2.ActionSupport;
-import com.smms.service.Item;
-import com.smms.service.ItemDAO;
+import com.smms.service.Customer;
+
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
+public class Test extends ActionSupport {
 
-public class EditProduct extends ActionSupport {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7903902533882296948L;
 
-	
-	private static final long serialVersionUID = 1720423244713713847L;
-	@Action(value = "/jsoneditproduct", results = { @Result(name = "success", type = "json") })
+		private int id;
+		private String name;
+	@Action(value = "/json-test", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
-		gridModel = ItemDAO.getItems();		
-		total = (int) Math.ceil((double) records / (double) rows);
-		System.out.println("vvt"+getSidx());
-		System.out.println("vvr"+getRows());
-		System.out.println("vve"+getRecords());
-		System.out.println("vppp"+getSearchString());
-		System.out.println("vvoo"+getSearchField());
+		if (gridModel == null) {
+			List<Customer> l = new ArrayList<Customer>();
+			l.add(new Customer(1, "aaa"));
+			l.add(new Customer(3, "bbb"));
+			l.add(new Customer(4, "bbb"));
+			l.add(new Customer(5, "bbb"));
+			setGridModel(l);
+			System.out.println("yyyyy");
+		} else {
+			System.out.println(getGridModel());
+			gridModel.add(new Customer(id,name));
+			System.out.println("xxxx"+id+"uuu"+name);
+		}
 		return SUCCESS;
 	}
-	public String getJSON() throws Exception {	
-	
-		/*
-		List<Sku> skus =inventoryService.showItem();// new ArrayList<Sku>();
-		
-		
-		Sku s1 = new Sku();
-		s1.setDescription("destddddddd");
-		s1.setDiscount(2);
-		s1.setMemberPrice(80.0);
-		s1.setName("ผงซักฟอก lllสไมล์");
-		s1.setPrice(100.0);
-		s1.setSv(99);
-		s1.setPriceDiscount(90.0);
-		
-		skus.add(s1);
-		inventoryService.addItem(skus);
-		
-		for(Sku k:skus)
-		System.out.println(k.getDescription()+"\n"+k.getMemberPrice()
-				);			
-		*/	
-		
-		
+
+	@Action(value = "/json-edit", results = { @Result(name = "success", type = "json") })
+	public String execute1() throws Exception {
+		//new Customer(2,"xxxx");
+		System.out.println("x>"+id+"d>"+name);
 		return execute();
 	}
-	private InventoryService inventoryService;
-	private List<Item> gridModel;
-	//grid att
+
+	public String getJSON() throws Exception {
+
+		return execute();
+	}
+
+	private List<Customer> gridModel;
+
 	private Integer rows = 0;
 	private Integer page = 0;
 	private String sord;
@@ -71,70 +64,99 @@ public class EditProduct extends ActionSupport {
 	private Integer total = 0;
 	private Integer records = 0;
 
-	public List<Item> getGridModel() {
+	public List<Customer> getGridModel() {
 		return gridModel;
 	}
-	public void setGridModel(List<Item> gridModel) {
+
+	public void setGridModel(List<Customer> gridModel) {
 		this.gridModel = gridModel;
 	}
+
 	public Integer getRows() {
 		return rows;
 	}
+
 	public void setRows(Integer rows) {
 		this.rows = rows;
 	}
+
 	public Integer getPage() {
 		return page;
 	}
+
 	public void setPage(Integer page) {
 		this.page = page;
 	}
+
 	public String getSord() {
 		return sord;
 	}
+
 	public void setSord(String sord) {
 		this.sord = sord;
 	}
+
 	public String getSidx() {
 		return sidx;
 	}
+
 	public void setSidx(String sidx) {
 		this.sidx = sidx;
 	}
+
 	public String getSearchField() {
 		return searchField;
 	}
+
 	public void setSearchField(String searchField) {
 		this.searchField = searchField;
 	}
+
 	public String getSearchString() {
 		return searchString;
 	}
+
 	public void setSearchString(String searchString) {
 		this.searchString = searchString;
 	}
+
 	public String getSearchOper() {
 		return searchOper;
 	}
+
 	public void setSearchOper(String searchOper) {
 		this.searchOper = searchOper;
 	}
+
 	public Integer getTotal() {
 		return total;
 	}
+
 	public void setTotal(Integer total) {
 		this.total = total;
 	}
+
 	public Integer getRecords() {
 		return records;
 	}
+
 	public void setRecords(Integer records) {
 		this.records = records;
 	}
-	public EditProduct(InventoryService inventoryService) {
-		super();
-		this.inventoryService = inventoryService;
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
+	public int getId() {
+		return id;
+	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
 }
