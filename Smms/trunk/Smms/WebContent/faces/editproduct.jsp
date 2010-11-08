@@ -15,7 +15,7 @@
 				<sj:div id="div2">
 					<s:url id="remoteurl" action="jsoneditproduct" />
 					<s:url id="orderdetailsurl" action="jsonloadskus" />
-					<s:url id="editurl" action="edit-grid-entry" />
+					<s:url id="editurl" action="add-sku-grid" />
 					<sjg:grid id="gridedittable" caption="พระราม 4 " dataType="json"
 						href="%{remoteurl}" pager="true" navigator="true"
 						navigatorSearchOptions="{sopt:['eq','ne','lt','gt']}"
@@ -27,27 +27,21 @@
 						editurl="%{editurl}" editinline="true"
 						onSelectRowTopics="rowselect" rownumbers="true">
 
-						
-
-						<sjg:gridColumn name="productCode" index="productCode"
-							title="รหัส ผลิตภัณฑ์" sortable="false" editable="true" />
-						<sjg:gridColumn name="productName" index="productName"
-							title="ชื่อ ผลิตภัณฑ์" sortable="false" editable="true" />
-						<sjg:gridColumn name="productDetail" index="productDetail"
-							title="รายละเอียด ผลิตภัณฑ์" sortable="false" editable="true"
-							width="300" />
-						<sjg:gridColumn name="price" index="price"
-							title="ราคากลางต่อหน่วย" sortable="false" editable="true"
-							width="180" />
-						<sjg:gridColumn name="price" index="price"
-							title="ราคาสมาชิกต่อหน่วย" sortable="false" editable="true"
-							width="180" />
-						<sjg:gridColumn name="discount" index="ราคารวม"
-							title="ส่วนลดพิเศษ%" sortable="false" editable="true" />
-						<sjg:gridColumn name="commision" index="com"
-							title="ราคาต่อหน่วยหลังหักส่วนลด" sortable="false"
-							editable="true" width="250" />
-						<sjg:gridColumn name="totalPV" index="totalPV" title="Smile Value"
+						<sjg:gridColumn name="sid" index="sid" title="รหัส ผลิตภัณฑ์"
+							sortable="true" editable="true" />
+						<sjg:gridColumn name="name" index="name" title="ชื่อ ผลิตภัณฑ์" 
+							editable="true" width="200"/>
+						<sjg:gridColumn name="priceDiscount" title="รายละเอียด ผลิตภัณฑ์" formatter="currency"
+							editable="true" width="300" />
+						<sjg:gridColumn name="price" title="ราคากลางต่อหน่วย" formatter="currency"
+							editable="true" width="180" />
+						<sjg:gridColumn name="memberPrice" title="ราคาสมาชิกต่อหน่วย" formatter="currency"
+							editable="true" width="180" />
+						<sjg:gridColumn name="discount" title="ส่วนลดพิเศษ%" formatter="integer"
+							editable="true" />
+						<sjg:gridColumn name="priceDiscount" formatter="currency"
+							title="ราคาต่อหน่วยหลังหักส่วนลด" width="250" />
+						<sjg:gridColumn name="sv" index="sv" title="Smile Value"
 							formatter="integer" sortable="false" editable="true" width="200" />
 
 					</sjg:grid>

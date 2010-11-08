@@ -12,12 +12,6 @@ public class InventoryServiceImp implements InventoryService{
 	@Autowired
 	private SkuDAO skuDAO;
 	
-	@Override
-	public void addItem(List<Sku> skus) {		
-		for(Sku s:skus){
-			skuDAO.addItem(s);
-		}		
-	}
 	public void setSkuDAO(SkuDAO skuDAO) {
 		this.skuDAO = skuDAO;
 	}
@@ -25,8 +19,30 @@ public class InventoryServiceImp implements InventoryService{
 		return skuDAO;
 	}
 	@Override
-	public List<Sku> showItem() {
+	public List<Sku> findAllSku() {
 		return skuDAO.showAllItem();
+	}
+	@Override
+	public void addSku(Sku sku) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean remove(Sku sku) {
+		try{
+			return true;
+		}catch (Exception e) {
+			
+		}
+		return false;
+	}
+	@Override
+	public Sku find(long id) {		
+		return skuDAO.find(id);
+	}
+	@Override
+	public List<Sku> find(int from, int to) {
+		return skuDAO.find(from, to);
 	}
 		
 }

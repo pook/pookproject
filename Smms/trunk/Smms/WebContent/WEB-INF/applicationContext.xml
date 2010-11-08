@@ -35,6 +35,7 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- end  JPA -->
 	<!-- start Register Service -->
 	<bean id="registerDAO" class="biz.evolix.model.dao.RegisterDaoImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
@@ -58,9 +59,9 @@
 	<!-- end of Organization Chart Service -->
 	<!-- Start market service -->
 	<bean id="inventoryServiceImp" class="biz.evolix.service.InventoryServiceImp" />
-	<bean id="purcheseService" class="biz.evolix.service.PurcheseServiceImp" scope="session"
-		 />
-	<bean id="inventoryService" class="com.smms.action.EditProduct">
+	<bean id="purcheseService" class="biz.evolix.service.PurcheseServiceImp"
+		scope="session" />
+	<bean id="inventoryService" class="com.smms.action.EditProduct" scope="prototype">
 		<constructor-arg ref="inventoryServiceImp" />
 	</bean>
 	<bean id="skuDAO" class="biz.evolix.model.dao.SkuDAOImp" scope="prototype">
@@ -84,17 +85,24 @@
 	<bean id="procheseAct" class="com.smms.action.ProcheseAct" scope="session">
 		<constructor-arg ref="purcheseService" />
 	</bean>
-	<bean id="editOrderAct" class="com.smms.action.EditOrderAct" scope="session">
+	<bean id="editOrderAct" class="com.smms.action.EditOrderAct"
+		scope="session">
 		<constructor-arg ref="purcheseService" />
 	</bean>
-	<bean id="blackOfficeAct" class="com.smms.action.BlackOffice" scope="session">
+	<bean id="blackOfficeAct" class="com.smms.action.BlackOffice"
+		scope="session">
 		<constructor-arg ref="purcheseService" />
 	</bean>
-	<bean id="editPurcheseAct" class="com.smms.action.EditPurcheseAct" scope="session">
+	<bean id="editPurcheseAct" class="com.smms.action.EditPurcheseAct"
+		scope="session">
 		<constructor-arg ref="purcheseService" />
 	</bean>
-	
-	
+	<bean id="addSkuAct" class="com.smms.action.EditPurcheseAct"
+		scope="prototype">
+		<constructor-arg ref="inventoryService" />
+	</bean>
+
+
 	<!-- end faces action -->
 	<context:annotation-config />
 </beans>

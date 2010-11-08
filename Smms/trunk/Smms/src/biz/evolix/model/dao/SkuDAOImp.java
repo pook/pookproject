@@ -24,4 +24,25 @@ public class SkuDAOImp extends JpaDaoSupport implements SkuDAO {
 		return (List<Sku>)getJpaTemplate().find("select S from Sku s ");
 	}	
 	
+	@Override
+	@Transactional
+	public void remove(Sku sku) {
+		getJpaTemplate().remove(sku);
+		
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Sku find(long id) {		
+		return getJpaTemplate().find(Sku.class,id);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Sku> find(int from, int to)throws NullPointerException {
+		return getJpaTemplate().find("select K from Sku K where k.sid >?1 and k.sid <?2",from,to );
+	}
+	
+	
+	
 }

@@ -12,7 +12,7 @@
 	$.subscribe('rowadd', function(event, data) {
 		$("#gridedittable").jqGrid('editGridRow', "new", {
 			height : 280,
-			reloadAfterSubmit : false
+			reloadAfterSubmit : true
 		});
 
 	});
@@ -34,12 +34,13 @@
 		alert('you success');
 	});
 </script>
-<s:property value="echo" escape="%{escape}" />
+
 <sj:div id="div4">
 	<table
 		style="align: center; width: 540px; margin-left: 100px; border: 1px solid #000000; margin-top: 50px"
 		cellspacing="10px">
 		<tr>
+			<s:div id="gridinfo"></s:div>
 			<td><sj:div id="div0">
 				<sj:div id="div1"></sj:div>
 				<sj:div id="div2">
@@ -53,50 +54,43 @@
 						navigatorAddOptions="{height:280,reloadAfterSubmit:true}"
 						navigatorEditOptions="{height:280,reloadAfterSubmit:false}"
 						navigatorEdit="false" navigatorView="false" navigatorDelete="true"
-						navigatorDeleteOptions="{height:280,reloadAfterSubmit:false}"
+						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
 						gridModel="gridModel" rowList="10,15,20" rowNum="15" width="1024"
 						editurl="%{editorderurl}" editinline="true"
 						onSelectRowTopics="rowselect" rownumbers="true">
-
-						<sjg:grid id="orderssubgridtable" subGridUrl="%{remoteurl}"
+						<sjg:grid id="subgridtable" subGridUrl="%{remoteurl}"
 							gridModel="gridModel" rowNum="-1" navigator="true"
 							editurl="%{editpurcheseurl}" navigator="true" rownumbers="true"
-							width="750" pager="false" page="false" footerrow="false"
+							width="750"
 							navigatorAddOptions="{height:280,reloadAfterSubmit:true}"
 							navigatorEditOptions="{height:280,reloadAfterSubmit:false}"
 							navigatorEdit="true" navigatorView="false" navigatorDelete="true"
 							navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}">
-							<sjg:gridColumn name="purchese.pId" title="รหัสการชื้อ" width="300" 
-								editable="true" />
-							<sjg:gridColumn name="purchese.sku.sid" title="รหัสผสิตภัณฑ์" width="300" 
-								editable="true" />
-							<sjg:gridColumn name="purchese.sku.name" title="ชื่อผสิตภัณฑ์" width="300"
-								editable="false" />
-							<sjg:gridColumn name="purchese.sku.description" 
-								title="รายละเอียด ผลิตภัณฑ์" sortable="false" editable="true"
-								width="330" />
-							<sjg:gridColumn name="purchese.quantity" title="จำนวน" formatter="integer"
-								align="center" editable="true" />
+							<sjg:gridColumn name="purchese" title="รหัสการชื้อ" width="300" />
+							<sjg:gridColumn name="purchese.sku" title="รหัสผสิตภัณฑ์"
+								width="300" editable="true" />
+							<sjg:gridColumn name="purchese.sku.name" title="ชื่อผสิตภัณฑ์"
+								width="300" />
+							<sjg:gridColumn name="purchese.sku.description"
+								title="รายละเอียด ผลิตภัณฑ์" sortable="false" width="330" />
+							<sjg:gridColumn name="purchese.quantity" title="จำนวน"
+								formatter="integer" align="center" />
 							<sjg:gridColumn name="purchese.purchesePrice" title="ราคา"
-								formatter="currency" align="right" editable="true" />
+								formatter="currency" align="right" />
 						</sjg:grid>
-
 						<sjg:gridColumn name="orderId" index="orderId"
 							title="sale order ID" formatter="integer" sortable="true" />
 						<sjg:gridColumn name="user.userId" title="รหัสสมาชิก"
-							sortable="false" editable="true" />
-						<sjg:gridColumn name="user.name" title="ชื่อสมาชิก"
-							sortable="false" editable="true" editable="true" />
+							editable="true" />
+						<sjg:gridColumn name="user.name" title="ชื่อสมาชิก" />
 						<sjg:gridColumn name="price" index="price" title="ราคา"
-							sortable="false" editable="true" />
+							formatter="currency" />
 						<sjg:gridColumn name="unit" index="unit" title="จำนวน"
-							sortable="false" editable="true" />
+							formatter="integer" />
 						<sjg:gridColumn name="commision" index="ราคารวม" title="ราคารวม"
-							sortable="false" editable="true" />
+							formatter="currency" />
 						<sjg:gridColumn name="totalPV" index="totalPV"
-							title="Total Smile Value" formatter="integer" sortable="false"
-							editable="true" width="235" />
-
+							title="Total Smile Value" formatter="integer" width="235" />
 					</sjg:grid>
 					<br />
 					<sj:submit id="grid_edit_addbutton" value="Add New"

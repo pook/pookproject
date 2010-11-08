@@ -8,6 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import biz.evolix.model.Authorities;
@@ -44,9 +45,8 @@ public class AuthoritiesDAOImp extends JpaDaoSupport implements AuthoritiesDAO {
 	}
 	
 	@Override
-	@Transactional(readOnly=true)
-	public Users findUser(String userId)throws NullPointerException,DataAccessException {
-		System.out.println("wxyz"+userId);
+	@Transactional(readOnly=true,propagation=Propagation.REQUIRES_NEW)
+	public Users findUser(String userId)throws NullPointerException,DataAccessException {		
 		return getJpaTemplate().find(Users.class,userId);
 	}
 

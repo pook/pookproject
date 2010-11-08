@@ -1,5 +1,6 @@
 package com.smms.action;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -26,6 +27,7 @@ public class EditOrderAct extends ActionSupport {
 
 	private String oper;
 	private Users user;
+	private Integer orderId;
 	private PurcheseService purcheseService;
 
 	@Action(value = "/edit-grid-order", results = {
@@ -34,23 +36,24 @@ public class EditOrderAct extends ActionSupport {
 	public String execute() {
 		System.out.println("2+" + getOper());
 		System.out.println("3333+" + getUser().getUserId());
+		System.out.println("bbb");
 		try {
-			user = purcheseService.userMember(getUser().getUserId());
-			if(user==null){
+			Users u = purcheseService.userMember(getUser().getUserId());
+			if(u==null){
 				addActionError("Member Not Found  !!");
+				System.out.println("Member Not found");
 			}else{
 				log.info("Create order");
 				Order o = new Order();
 				o.setDate(new Date());
-				o.setUser(user);
+				o.setPurchese(new ArrayList<Purchese>());
+				o.setUser(u);
 				purcheseService.getCurrentOrder().add(o);
-
-			}
-			
-		} catch (Exception e) {
-			
+			}			
+		} catch (Exception e) {			
 			System.out.println("no");
 		}
+		setOrderId(99);
 		return SUCCESS;
 	}
 
@@ -82,6 +85,14 @@ public class EditOrderAct extends ActionSupport {
 
 	public Users getUser() {
 		return user;
+	}
+
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
+
+	public Integer getOrderId() {
+		return orderId;
 	}
 
 }

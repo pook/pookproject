@@ -21,17 +21,18 @@ public class BlackOffice extends ActionSupport {
 	@Action(value = "/json-ordering", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
 		//gridModel = purcheseService.getCurrentOrder();
-		System.out.println("1");		
+		System.out.println("orderId = "+getOrderId());
+		setOrderId(99);
 		return SUCCESS;
 	}
 
 	public String getJSON() throws Exception {
-		gridModel = purcheseService.getCurrentOrder();
-		System.out.println("2");
+		gridModel = purcheseService.getCurrentOrder();		
 		return SUCCESS;
 	}
 
 	private List<biz.evolix.model.Order> gridModel;
+	private Integer orderId;
 	private Integer rows = 0;
 	private Integer page = 0;
 	private String sord;
@@ -127,6 +128,14 @@ public class BlackOffice extends ActionSupport {
 	public BlackOffice(PurcheseService purcheseService) {
 		super();
 		this.purcheseService = purcheseService;
+	}
+
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
+
+	public Integer getOrderId() {
+		return orderId;
 	}
 	
 }

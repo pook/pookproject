@@ -77,8 +77,14 @@ public class PurcheseServiceImp implements PurcheseService {
 	}
 
 	@Override
-	public Users userMember(String user) {		
-		return authoritiesDAO.findUser(user);
+	public Users userMember(String user) {	
+		try{
+			Users u=authoritiesDAO.findUser(user);
+			return u;
+		}catch (Exception e) {
+			System.err.println(e);
+			return null;
+		}
 	}
 
 	public void setAuthoritiesDAO(AuthoritiesDAO authoritiesDAO)throws NullPointerException {
