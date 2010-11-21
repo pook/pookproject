@@ -10,35 +10,28 @@
 		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
 		http://www.springframework.org/schema/security	http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 	<context:annotation-config />
-	<http auto-config="true">
-		<form-login login-page="/login.jsp" />
-		<intercept-url pattern="/login.jsp*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-
-		<intercept-url pattern="/faces/**" access="ROLE_MEMBER" />
-
-		<intercept-url pattern="/**" access="ROLE_MEMBER" />
+	<http auto-config="true" use-expressions="true">
+		<form-login login-page="/login.jsp" default-target-url='/default.action'
+			always-use-default-target='true' />			
+		<intercept-url pattern="/login.jsp*" access="isAnonymous()" />		
+		<intercept-url pattern="/faces/**" access="hasRole('ROLE_MEMBER')" />
+		<intercept-url pattern="/**" access="hasRole('ROLE_MEMBER')" />
+		<logout invalidate-session="true" logout-success-url="/login.jsp" logout-url="/j_spring_security_logout"/>
 		<!-- <form-login login-page="/login.jsp" /> -->
 	</http>
-
+	<!-- <beans:bean id="shaPasswordEncoder" class="org.springframework.security.providers.encoding.ShaPasswordEncoder"> 
+		<beans:constructor-arg value="512" /> </beans:bean> -->
 	<authentication-manager alias="authenticationManager">
-		<!-- <authentication-provider user-service-ref="userDetail"> -->
-		<authentication-provider user-service-ref="userDetail">
-		<!-- 
-			<password-encoder hash="md5" >
-			
-				<salt-source user-property="username" />
-				-->
-				<!-- <jdbc-user-service data-source-ref="dataSource" users-by-username-query="SELECT 
-					U.username, U.password as password, 'true' AS enabled FROM Users U where 
-					U.username=?" authorities-by-username-query="SELECT U.username, A.authority 
-					as authorities FROM Users U, authorities A WHERE (U.username = A.username) 
-					and (U.username=?)" /> -->
-				<!-- <user-service> <user authorities="ROLE_MEMBER" name="AA9900000001" 
-					password="xxx" /> <user authorities="ROLE_MEMBER" name="xxxx" password="xxx" 
-					/> </user-service> -->
-			
+		<authentication-provider user-service-ref="userDetail" >
+			<password-encoder hash="sha"/>
+		</authentication-provider>
+		<authentication-provider>
+			<password-encoder hash="sha" />
+			<user-service>
+				<user authorities="ROLE_MEMBER,ROLE_ADMIN,ROLE_STAFF" name="evolix"
+					password="5f197f8ed4f9c2a3742fb10a0adb5a4d00fec94b" />
+			</user-service>
 		</authentication-provider>
 
 	</authentication-manager>
-
 </beans:beans>

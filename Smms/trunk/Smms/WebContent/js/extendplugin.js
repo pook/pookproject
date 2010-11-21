@@ -34,6 +34,10 @@
 						 "jsext/utils.js",
 						 "jsext/xhtml/validation.js",
 						 "jsext/custom-add-on.js"
+					//	 "js/jquery.validate.min.js",
+					//	 "js/jquery.validate.js",
+					//	 "js/jquery.validate.pack.js",
+					//	 "js/additional-methods.js",
 						 ]);
 				}
 				$elem.wysiwyg(options.wysiwygoptions);

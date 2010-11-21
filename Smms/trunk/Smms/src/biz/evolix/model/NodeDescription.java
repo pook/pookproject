@@ -1,11 +1,10 @@
 package biz.evolix.model;
 
-import javax.persistence.*;
-
-/**
- * Entity implementation class for Entity: NodeDescription
- * 
- */
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.Version;
 @Entity
 @Table(name = "NODE_DEPT")
 public class NodeDescription implements java.io.Serializable {

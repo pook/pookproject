@@ -1,138 +1,144 @@
 package com.smms.action;
 
-import java.util.List;
-
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
-import biz.evolix.model.Purchese;
+import biz.evlix.customconst.ConstType;
+import biz.evolix.model.Sku;
 import biz.evolix.service.PurcheseService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
-
-public class ProcheseAct extends ActionSupport{
+public class ProcheseAct extends ActionSupport {
 
 	/**
-	 *  work with Black office
+	 * work with Black office
 	 */
 	private static final long serialVersionUID = -8259383990285606982L;
 	private PurcheseService purcheseService;
+	private String oper;	
+	private Sku sku; // name,descript
+	private Integer quantity;
+	private double totalPrice;
+	private Integer psv;
+	private String id;
+	
+	@Action(value = "/edit-grid-purchese", results = {
+			@Result(location = "blackoffice.jsp", name = "success"),
+			@Result(location = "blackoffice.jsp", name = "input") })
+	public String execute() {
+		System.out.println("Oper" + oper);
+		try {
+			// System.out.println("pId "+pId
+			// +" sku.name "+sku.getName()+" sku.descript  q "+ quantity
+			// +" price "+purchesePrice );
+			//if(sku==null)System.out.println("sku.id q >");
+			System.out.println("xxx  "+id);
+		//System.out.println("  uu"+id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
+		if (oper.equals(ConstType.ADD)) {
+			Sku k = null;
+			try {
+				k = purcheseService.loadSku(sku.getSid());
+			} catch (Exception e) {
+				addActionError(e.getMessage());
+				System.err.println(e);
+			}
+			if(k==null || quantity==0){
+				addActionMessage("Item not found");
+				System.out.println("Item not found");
+			}else{
+				purcheseService.buyItem(k,quantity);
+			}
 
-	@Action(value = "/json-purchese", results = { @Result(name = "success", type = "json") })
-	public String execute(){
-		//purcheseService
+		} else if (oper.equals(ConstType.DEL)) {
+			try {
+				del(Integer.parseInt(id));
+				} catch (Exception e) {
+				addActionError(e.getMessage());
+				System.err.println(e);
+			}				
+		} else if (oper.equals(ConstType.EDIT)) {
+			
+		}
 		return SUCCESS;
 	}
-	@Action(value = "/json-addpurchese", results = { @Result(name = "success", type = "json") })
-	public String addPurchese(int idxOrder, Purchese p) throws Exception {
-		purcheseService.getPurcheseFromOrders(idxOrder).add(p);
-		return execute();
-	}	
-	
-	
-	public String getJSON() throws Exception {
-		return execute();
+	private void del(int sku){
+		System.out.println("sku11 "+sku);
+		purcheseService.del(sku-1);
+	}
+	private void edit(int id,Sku sku,Integer quantity){
+		
 	}
 
-	private List<biz.evolix.model.Purchese> gridModel;
-	private Integer rows = 0;
-	private Integer page = 0;
-	private String sord;
-	private String sidx;
-	private String searchField;
-	private String searchString;
-	private String searchOper;
-	private Integer total = 0;
-	private Integer records = 0;
-
-	public List<biz.evolix.model.Purchese> getGridModel() {
-		return gridModel;
-	}
-
-	public void setGridModel(List<biz.evolix.model.Purchese> gridModel) {
-		this.gridModel = gridModel;
-	}
-
-	public Integer getRows() {
-		return rows;
-	}
-
-	public void setRows(Integer rows) {
-		this.rows = rows;
-	}
-
-	public Integer getPage() {
-		return page;
-	}
-
-	public void setPage(Integer page) {
-		this.page = page;
-	}
-
-	public String getSord() {
-		return sord;
-	}
-
-	public void setSord(String sord) {
-		this.sord = sord;
-	}
-
-	public String getSidx() {
-		return sidx;
-	}
-
-	public void setSidx(String sidx) {
-		this.sidx = sidx;
-	}
-
-	public String getSearchField() {
-		return searchField;
-	}
-
-	public void setSearchField(String searchField) {
-		this.searchField = searchField;
-	}
-
-	public String getSearchString() {
-		return searchString;
-	}
-
-	public void setSearchString(String searchString) {
-		this.searchString = searchString;
-	}
-
-	public String getSearchOper() {
-		return searchOper;
-	}
-
-	public void setSearchOper(String searchOper) {
-		this.searchOper = searchOper;
-	}
-
-	public Integer getTotal() {
-		return total;
-	}
-
-	public void setTotal(Integer total) {
-		this.total = total;
-	}
-
-	public Integer getRecords() {
-		return records;
-	}
-
-	public void setRecords(Integer records) {
-		this.records = records;
-	}
 	public ProcheseAct(PurcheseService purcheseService) {
 		super();
 		this.purcheseService = purcheseService;
 	}
+
+	public PurcheseService getPurcheseService() {
+		return purcheseService;
+	}
+
+	public void setPurcheseService(PurcheseService purcheseService) {
+		this.purcheseService = purcheseService;
+	}
+
+	public String getOper() {
+		return oper;
+	}
+
+	public void setOper(String oper) {
+		this.oper = oper;
+	}
+
+	
+	public Sku getSku() {
+		return sku;
+	}
+
+	public void setSku(Sku sku) {
+		this.sku = sku;
+	}
+
+	
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+	
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setPsv(int psv) {
+		this.psv = psv;
+	}
+
+	public double getPsv() {
+		return psv;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getId() {
+		return id;
+	}
+
 
 }

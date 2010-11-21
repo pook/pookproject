@@ -44,5 +44,9 @@ public class InventoryServiceImp implements InventoryService{
 	public List<Sku> find(int from, int to) {
 		return skuDAO.find(from, to);
 	}
+	 
+	public long count(){
+		return skuDAO.count();
+	}
 		
 }

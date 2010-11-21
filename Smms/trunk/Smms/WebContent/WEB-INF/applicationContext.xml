@@ -35,7 +35,7 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	<!-- end  JPA -->
+	<!-- end JPA -->
 	<!-- start Register Service -->
 	<bean id="registerDAO" class="biz.evolix.model.dao.RegisterDaoImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
@@ -43,43 +43,36 @@
 	<bean id="authoritiesDAO" class="biz.evolix.model.dao.AuthoritiesDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	<bean id="registerServiceImp" class="biz.evolix.service.RegisterServiceImp" />
-	<bean id="registerService" scope="prototype" class="com.smms.action.Register">
-		<constructor-arg ref="registerServiceImp" />
-	</bean>
+	<bean id="registerService" class="biz.evolix.service.RegisterServiceImp" scope="prototype"/>	
 	<!-- end of Register Service -->
 	<!-- Start Organization Chart Service -->
-	<bean id="orchartServiceImp" class="biz.evolix.service.OrchartServiceImp" />
-	<bean id="orchartService" scope="prototype" class="com.smms.action.Organization">
-		<constructor-arg ref="orchartServiceImp" />
-	</bean>
+	<bean id="orchartService" class="biz.evolix.service.OrchartServiceImp" />
 	<bean id="node1DAO" class="biz.evolix.model.dao.Node1DAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<!-- end of Organization Chart Service -->
 	<!-- Start market service -->
-	<bean id="inventoryServiceImp" class="biz.evolix.service.InventoryServiceImp" />
+	<bean id="inventoryService" class="biz.evolix.service.InventoryServiceImp" />
+	<bean id="updateComService" class="biz.evolix.service.UpdateComServiceImp" />
 	<bean id="purcheseService" class="biz.evolix.service.PurcheseServiceImp"
-		scope="session" />
-	<bean id="inventoryService" class="com.smms.action.EditProduct" scope="prototype">
-		<constructor-arg ref="inventoryServiceImp" />
-	</bean>
+		scope="session" />	
 	<bean id="skuDAO" class="biz.evolix.model.dao.SkuDAOImp" scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<bean id="orderDAO" class="biz.evolix.model.dao.OrderDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	<bean id="purcheseDAO" class="biz.evolix.model.dao.PurcheseDAOImp">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
 	<bean id="userDetail" class="biz.evolix.secure.UserDetail" />
 
-	<!--begin Faces action -->
-	<bean id="loadSkusAct" class="com.smms.action.LoadSkusAct">
+	<!-- ^^^^^^^^^^begin Faces action^^^^^^^^^^^^6 -->
+	<bean id="loadSkusAct" class="com.smms.action.LoadSkusAct" scope="prototype">
 		<constructor-arg ref="skuDAO" />
 	</bean>
-	<bean id="loadUsers" class="com.smms.action.LoadSkusAct" scope="session">
+	<bean id="loadSkus2" class="com.smms.action.LoadSkus2" scope="prototype">
+		<constructor-arg ref="skuDAO" />
+	</bean>
+	
+	<bean id="loadUsers" class="com.smms.action.LoadSkusAct" scope="prototype">
 		<constructor-arg ref="authoritiesDAO" />
 	</bean>
 	<bean id="procheseAct" class="com.smms.action.ProcheseAct" scope="session">
@@ -93,16 +86,29 @@
 		scope="session">
 		<constructor-arg ref="purcheseService" />
 	</bean>
-	<bean id="editPurcheseAct" class="com.smms.action.EditPurcheseAct"
+	<bean id="subBackOffice" class="com.smms.action.SubBackOffice"
 		scope="session">
 		<constructor-arg ref="purcheseService" />
 	</bean>
-	<bean id="addSkuAct" class="com.smms.action.EditPurcheseAct"
+	<bean id="buyOrder" class="com.smms.action.BuyOrder" scope="session">
+		<constructor-arg ref="purcheseService" />
+	</bean>
+	<bean id="registerServiceAct" scope="prototype" class="biz.evolix.action.register.Register">
+		<constructor-arg ref="registerService" />
+	</bean>
+	<bean id="orchartServiceAct" scope="prototype" class="biz.evolix.action.organization.Organization">
+		<constructor-arg ref="orchartService" />
+	</bean>
+	<bean id="orchartSearchMemberAct" scope="prototype" class="biz.evolix.action.organization.OrganizationSearchMember">
+		<constructor-arg ref="orchartService" />
+	</bean>
+	<bean id="orchartBackwardAct" scope="prototype" class="biz.evolix.action.organization.OrganizationBackward">
+		<constructor-arg ref="orchartService" />
+	</bean>
+	<bean id="inventoryServiceAct" class="com.smms.action.EditProduct"
 		scope="prototype">
 		<constructor-arg ref="inventoryService" />
 	</bean>
-
-
 	<!-- end faces action -->
 	<context:annotation-config />
 </beans>

@@ -6,5 +6,7 @@ import biz.evolix.model.Node1;
 
 public interface OrchartService {
 	public List<Node1> getTeamLevel(Long  node);
+	public long  getNodeId(String  node);
 	public List<Integer> levelCommissions(List<Node1> teams);
+	public void init();
 }

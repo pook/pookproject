@@ -3,8 +3,6 @@ package biz.evolix.model.dao;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.EntityManagerFactory;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -26,7 +24,6 @@ public class AuthoritiesDAOImp extends JpaDaoSupport implements AuthoritiesDAO {
 			if (auth.getAuthority().equals(role))
 				return false;
 		}
-		System.out.println("Hello World");
 		Authorities auth = new Authorities();	
 		auth.setAuthority(role);
 		auth.setUser(user);	
@@ -48,6 +45,12 @@ public class AuthoritiesDAOImp extends JpaDaoSupport implements AuthoritiesDAO {
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRES_NEW)
 	public Users findUser(String userId)throws NullPointerException,DataAccessException {		
 		return getJpaTemplate().find(Users.class,userId);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Users> findAll() {		
+		return (List<Users>)getJpaTemplate().find("select U from Users u");
 	}
 
 }

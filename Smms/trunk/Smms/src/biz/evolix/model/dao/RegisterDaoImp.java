@@ -1,5 +1,6 @@
 package biz.evolix.model.dao;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,30 +18,26 @@ public class RegisterDaoImp extends
 		RegisterDAO {
 	private static final String DETAIL = "DETAIL";
 	private static final long AUTO = -2;
+	
 
 	@Override
 	@Transactional(readOnly = false,propagation=Propagation.REQUIRES_NEW,isolation=Isolation.DEFAULT)
-	public Users save(Node1 m,Long id) {		
+	public Users save(Node1 m,Long id,String provinceId) {		
 		try {			
 			id = getID(id);
-			m.getUser().setUserId(Generate.getId(id, "99"));
+			m.getUser().setUserId(Generate.getId(id, provinceId));
 			m.getUser().setNode1(m);
 			m.setNId(id);			
 			getJpaTemplate().persist(m);		
 		} catch (Exception e) {
-			System.err.println(e);
+			log.error(e.getMessage(),e);
 		}
 		return m.getUser();
 	}
 	@Transactional(readOnly=false,isolation=Isolation.SERIALIZABLE)
 	public Long getID(Long id){
 		NodeDescription d = null;
-		try{
-			d = getJpaTemplate().find( 
-				NodeDescription.class, DETAIL);	
-			}catch (Exception e) {
-			System.err.println(e);		
-		}
+		d =getDescription();
 		boolean b= false;
 		if(id==AUTO){id = d.getNextId();b=true;};		
 		while(getUserFromId(id)!=null)id++;	
@@ -56,8 +53,22 @@ public class RegisterDaoImp extends
 		d.setCount(c);	
 		return id;
 	}
+	@Transactional(readOnly=true)
 	private Node1 getUserFromId(Long id)throws NullPointerException{
 		return getJpaTemplate().find(Node1.class,id);
 	}
+	@Transactional(readOnly=true)
+	public NodeDescription getDescription(){
+		NodeDescription d = null;
+		try{
+			d = getJpaTemplate().find( 
+				NodeDescription.class, DETAIL);	
+			}catch (Exception e) {
+				log.error(e.getMessage(),e);
+		}
+		return d;	
+	}
 	
+	
+	private static Logger log = Logger.getLogger(RegisterDaoImp.class);
 }

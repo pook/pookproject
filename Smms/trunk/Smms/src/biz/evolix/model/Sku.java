@@ -107,5 +107,13 @@ public class Sku implements java.io.Serializable {
 	public Double getPriceDiscount() {
 		return priceDiscount;
 	}
+	@Override
+	public boolean equals(Object that){
+		if(that instanceof Sku){
+			long id = ((Sku)that).getSid();
+			if(this.getSid()==id)return true;
+		}
+		return false;
+	}
 
 }

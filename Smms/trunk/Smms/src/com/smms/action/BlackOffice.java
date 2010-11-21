@@ -19,15 +19,12 @@ public class BlackOffice extends ActionSupport {
 	private PurcheseService purcheseService;
 
 	@Action(value = "/json-ordering", results = { @Result(name = "success", type = "json") })
-	public String execute() throws Exception {
-		//gridModel = purcheseService.getCurrentOrder();
-		System.out.println("orderId = "+getOrderId());
-		setOrderId(99);
+	public String execute() throws Exception {			
 		return SUCCESS;
 	}
 
 	public String getJSON() throws Exception {
-		gridModel = purcheseService.getCurrentOrder();		
+		setGridModel( purcheseService.odering());		
 		return SUCCESS;
 	}
 

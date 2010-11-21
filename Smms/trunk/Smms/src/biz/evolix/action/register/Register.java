@@ -1,4 +1,4 @@
-package com.smms.action;
+package biz.evolix.action.register;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;

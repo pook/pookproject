@@ -10,4 +10,5 @@ public interface SkuDAO {
 	public void remove(Sku sku); 
 	public Sku find(long id);
 	public List<Sku>find(int from,int to);
+	public long count();
 }

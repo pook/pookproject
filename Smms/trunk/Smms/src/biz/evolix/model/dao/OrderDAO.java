@@ -1,5 +1,8 @@
 package biz.evolix.model.dao;
 
-public interface OrderDAO {
+import biz.evolix.model.Order;
 
+public interface OrderDAO {
+	public void newOrder(Order o);
+	public void update(Order o);
 }

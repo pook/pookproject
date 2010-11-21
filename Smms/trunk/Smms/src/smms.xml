@@ -6,7 +6,6 @@
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
-	<package name="smms" extends="struts-default,json-default"	namespace="/">
-	
+	<package name="smms" extends="struts-default,json-default"	namespace="/">	
 	</package>
 </struts>

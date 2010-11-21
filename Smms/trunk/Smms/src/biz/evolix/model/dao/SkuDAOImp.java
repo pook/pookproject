@@ -33,7 +33,7 @@ public class SkuDAOImp extends JpaDaoSupport implements SkuDAO {
 
 	@Override
 	@Transactional(readOnly=true)
-	public Sku find(long id) {		
+	public Sku find(long id) throws NullPointerException{		
 		return getJpaTemplate().find(Sku.class,id);
 	}
 
@@ -41,6 +41,12 @@ public class SkuDAOImp extends JpaDaoSupport implements SkuDAO {
 	@Transactional(readOnly=true)
 	public List<Sku> find(int from, int to)throws NullPointerException {
 		return getJpaTemplate().find("select K from Sku K where k.sid >?1 and k.sid <?2",from,to );
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public long count() {		
+		return getJpaTemplate().find("select K from Sku K").size();
 	}
 	
 	

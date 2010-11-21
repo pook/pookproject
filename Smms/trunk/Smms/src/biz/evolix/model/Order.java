@@ -1,6 +1,5 @@
 package biz.evolix.model;
 
-import biz.evolix.model.Brance;
 import biz.evolix.model.Purchese;
 import biz.evolix.model.Users;
 
@@ -23,27 +22,28 @@ public class Order implements java.io.Serializable {
 	@Column(name = "ORDER_ID")
 	private Long orderId;
 
-	
-	@JoinColumn(name = "P_ID")
 	private List<Purchese> purchese = new ArrayList<Purchese>();
-	
+
 	@JoinColumn(name = "USER_ID")
 	private Users user;
-	
+
 	@Column(name = "TOTAL_PRICE")
 	private double totalPrice = 0.0;
-	
-	@Column(name="TOTAL_QUANTITY")
-	private Integer totalQuantity =0;
+
+	@Column(name = "TOTAL_QUANTITY")
+	private Integer totalQuantity = 0;
 	@Column(name = "TOTAL_SV", length = 50)
 	private Integer totalSv = 0;
 
-	@JoinColumn(name = "BRANCE_CODE")
-	private Brance brance;
-
+	@Column(name = "READED")
+	private Boolean readed;
+	// brance name
+	@Column(name = "BRANCE", length = 50)
+	private String brance;
+	// ////
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATE")
-	private Date date;	
+	private Date date;
 
 	private static final long serialVersionUID = 1L;
 
@@ -60,12 +60,18 @@ public class Order implements java.io.Serializable {
 	}
 
 	public Integer getTotalSv() {
+		getTSV();
 		return this.totalSv;
 	}
 
+	private void getTSV() {
+		Integer s = 0;
+		for (Purchese p : getPurchese())
+			s += p.getPsv();
+		setTotalSv(s);
+	}
+
 	public void setTotalSv(Integer totalSv) {
-		totalSv=0;
-		for(Purchese p:getPurchese())totalSv=p.getPsv();
 		this.totalSv = totalSv;
 	}
 
@@ -84,41 +90,62 @@ public class Order implements java.io.Serializable {
 	public void setUser(Users user) {
 		this.user = user;
 	}
-	@ManyToOne(fetch=FetchType.LAZY,cascade = CascadeType.PERSIST)
-	public Brance getBrance() {
-		return this.brance;
-	}
-
-	public void setBrance(Brance brance) {
-		this.brance = brance;
-	}
 
 	public void setTotalPrice(double totalPrice) {
-		totalPrice = 0.0;
-		for(Purchese p:getPurchese())totalPrice+=p.getPurchesePrice();
 		this.totalPrice = totalPrice;
 	}
 
 	public double getTotalPrice() {
+		getTp();
 		return totalPrice;
+	}
+
+	private void getTp() {
+		Double tot = 0.0;
+		for (Purchese p : getPurchese())
+			tot += p.getPurchesePrice();
+		setTotalPrice(tot);
 	}
 
 	public void setPurchese(List<Purchese> purchese) {
 		this.purchese = purchese;
 	}
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="P_ID")
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "P_ID")
 	public List<Purchese> getPurchese() {
 		return purchese;
 	}
 
 	public void setTotalQuantity(Integer totalQuantity) {
-		totalQuantity=0;
-		for(Purchese p:getPurchese())totalQuantity+=p.getQuantity();		
+
 		this.totalQuantity = totalQuantity;
 	}
 
 	public Integer getTotalQuantity() {
+		getTQ();
 		return totalQuantity;
 	}
 
+	private void getTQ() {
+		Integer tot = 0;
+		for (Purchese p : getPurchese())
+			tot += p.getQuantity();
+		setTotalQuantity(tot);
+	}
+
+	public void setBrance(String brance) {
+		this.brance = brance;
+	}
+
+	public String getBrance() {
+		return brance;
+	}
+
+	public void setReaded(Boolean readed) {
+		this.readed = readed;
+	}
+
+	public Boolean getReaded() {
+		return readed;
+	}
 }

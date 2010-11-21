@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
@@ -9,10 +10,10 @@
 		style="align: center; width: 540px; margin-left: 100px; border: 1px solid #000000;margin-top: 50px"
 		cellspacing="10px">
 <tr><td>
-<sj:div id="div0" jquerytheme="dark-hive" >
+<sj:div id="div0" >
 <sj:div id="div1"></sj:div>
 <sj:div id="div2">
-<s:url id="remoteurl" action="jsonorder"/> 
+ <s:url id="remoteurl" action="jsonorder" />
     <sjg:grid 
     	id="gridtable" 
     	caption="รายการสินค้าที่ สั่งชื้อ" 

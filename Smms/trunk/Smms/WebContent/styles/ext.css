@@ -3,7 +3,7 @@
 .column {
 	width: 1024px;
 	float: left;
-	height:440px;
+	height: 440px;
 	padding-bottom: 100px;
 }
 
@@ -14,36 +14,284 @@
 .column div div .ui-icon {
 	float: right;
 }
-#main1{
-	width:1230px;
-	left:0px;
-	margin-top:0px;
+
+#main1 {
+	width: 1250px;
+	left: 0px;
+	margin-top: 0px;
 	margin-left: 0px;
 	position: relation;
-	}
+}
+
 #content1 {
-   float: right;
-  margin: 20px 20 20 20;
-   padding: 20px;
-   margin-right:70px;  
+	float: right;
+	margin: 20px 20 20 20;
+	padding: 20px;
+	margin-right: 70px;
 }
+
 #sidecol1 {
-     position: absolute;
-   top: 10px;
-   left: 70px;
+	position: absolute;
+	top: 10px;
+	left: 70px;
 }
-#main{
-	height:700px;
-	}
-	#div1{
-	margin-top:30px;
-	margin-left:70px
-	}
-	#div2{
-	margin-top:30px;
-	margin-left:70px
-	}
-	#div3{
-	margin-top:30px;
-	margin-left:70px
-	}
+
+#main {
+	height: 700px;
+}
+
+#div1 {
+	margin-top: 30px;
+	margin-left: 70px
+}
+
+#div2 {
+	margin-top: 30px;
+	margin-left: 70px
+}
+
+#div3 {
+	margin-top: 30px;
+	margin-left: 70px
+}
+
+div#mainnode div {
+	text-align: center;
+	width: 1024px;
+	float: left;
+}
+
+div#l1 div {
+	width: 100%;
+	height: 110px;
+}
+
+div#n1 {
+	
+}
+
+div#l2 div {
+	width: 50%;
+	height: 100px;
+}
+
+div#n2 {
+	
+}
+
+div#n3 {
+	
+}
+
+div#l3 div {
+	width: 25%;
+	height: 90px;
+}
+
+div#n4 {
+	
+}
+
+div#n5 {
+	
+}
+
+div#n6 {
+	
+}
+
+div#n7 {
+	
+}
+
+div#l4 div {
+	width: 12.5%;
+	height: 80px;
+}
+
+div#n8 {
+	
+}
+
+div#n9 {
+	
+}
+
+div#n10 {
+	
+}
+
+div#n11 {
+	
+}
+
+div#n12 {
+	
+}
+
+div#n13 {
+	
+}
+
+div#n14 {
+	
+}
+
+div#n15 {
+	
+}
+
+div#l5 div {
+	width: 6.25%;
+	height: 70px;
+}
+
+div#n16 {
+	
+}
+
+div#n17 {
+	
+}
+
+div#n18 {
+	
+}
+
+div#n19 {
+	
+}
+
+div#n20 {
+	
+}
+
+div#n21 {
+	
+}
+
+div#n22 {
+	
+}
+
+div#n23 {
+	
+}
+
+div#n24 {
+	
+}
+
+div#n25 {
+	
+}
+
+div#n26 {
+	
+}
+
+div#n27 {
+	
+}
+
+div#n28 {
+	
+}
+
+div#n29 {
+	
+}
+
+div#n30 {
+	
+}
+
+div#n31 {
+	
+}
+
+div#l6 div {
+	width: 3.125%;
+	height: 65px;
+}
+
+div#personPopupContainer div {
+	clear: none;
+	height: 35px;
+}
+
+#personPopupContainer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: none;
+	z-index: 20000;
+}
+
+#tablepopup1 {
+	height: auto;
+	width: auto;
+}
+
+.personPopupPopup {
+	width: 180px;
+	height: 40px;
+}
+
+#personPopupContent {
+	min-width: 60px;
+	height: 40px;
+}
+
+.personPopupPopup .personPopupImage {
+	margin: 5px;
+	margin-right: 15px;
+}
+
+.personPopupPopup .corner {
+	width: 19px;
+	height: 10px;
+}
+
+.personPopupPopup .topLeft {
+	background: url(../images/balloon_topLeft.png) no-repeat;
+}
+
+.personPopupPopup .bottomLeft {
+	background: url(../images/balloon_bottomLeft.png) no-repeat;
+}
+
+.personPopupPopup .left {
+	background: url(../images/balloon_left.png) repeat-y;
+}
+
+.personPopupPopup .right {
+	background: url(../images/balloon_right.png) repeat-y;
+}
+
+.personPopupPopup .topRight {
+	background: url(../images/balloon_topRight.png) no-repeat;
+}
+
+.personPopupPopup .bottomRight {
+	background: url(../images/balloon_bottomRight.png) no-repeat;
+}
+
+.personPopupPopup .top {
+	background: url(../images/balloon_top.png) repeat-x;
+}
+
+.personPopupPopup .bottom {
+	background: url(../images/balloon_bottom.png) repeat-x;
+	text-align: center;
+}
+
+div#name {
+	height: 12px;
+	width: 60px;
+}
+
+div#nid {
+	height: 12px;
+	width: 60px;
+}

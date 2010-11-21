@@ -5,6 +5,7 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
+import biz.evlix.customconst.ConstType;
 import biz.evolix.service.InventoryService;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -18,7 +19,14 @@ public class AddSkuAct extends ActionSupport {
 
 	@Action(value = "/add-sku-grid", results = { @Result(name = "success", type = "json") })
 	public String execute() {
-		
+		if(oper.equals(ConstType.ADD)){
+			
+		}else if(oper.equals(ConstType.DEL)){
+			
+		}else if(oper.equals(ConstType.EDIT)){
+			
+		}
+			
 		return SUCCESS;
 	}
 	

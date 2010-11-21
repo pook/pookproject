@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import biz.evlix.customconst.ConstType;
 import biz.evolix.model.Authorities;
 import biz.evolix.model.Node1;
 import biz.evolix.model.Users;
@@ -23,7 +24,7 @@ import biz.evolix.model.Users;
 public class SmileUser extends JpaDaoSupport implements UserDetails {
 
 	private static final long serialVersionUID = 2680596480619638118L;
-	private EntityManager em = Persistence.createEntityManagerFactory("SmmsPU")
+	private EntityManager em = Persistence.createEntityManagerFactory(ConstType.PERSISTENCE_UNIT)
 			.createEntityManager();
 
 	private final String userid;

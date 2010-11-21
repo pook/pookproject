@@ -1,18 +1,12 @@
 package com.smms.action;
 
-
-import java.util.ArrayList;
-import java.util.Date;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
-import biz.evolix.model.Order;
-import biz.evolix.model.Purchese;
+import biz.evlix.customconst.ConstType;
 import biz.evolix.model.Users;
 import biz.evolix.service.PurcheseService;
 
@@ -23,7 +17,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class EditOrderAct extends ActionSupport {
 
 	private static final long serialVersionUID = -6282900355788185531L;
-	private static final Log log = LogFactory.getLog(Login.class);
+	private static Logger log = Logger.getLogger(EditOrderAct.class);
 
 	private String oper;
 	private Users user;
@@ -34,41 +28,50 @@ public class EditOrderAct extends ActionSupport {
 			@Result(location = "blackoffice.jsp", name = "success"),
 			@Result(location = "blackoffice.jsp", name = "input") })
 	public String execute() {
-		System.out.println("2+" + getOper());
-		System.out.println("3333+" + getUser().getUserId());
-		System.out.println("bbb");
-		try {
-			Users u = purcheseService.userMember(getUser().getUserId());
-			if(u==null){
-				addActionError("Member Not Found  !!");
-				System.out.println("Member Not found");
-			}else{
-				log.info("Create order");
-				Order o = new Order();
-				o.setDate(new Date());
-				o.setPurchese(new ArrayList<Purchese>());
-				o.setUser(u);
-				purcheseService.getCurrentOrder().add(o);
-			}			
-		} catch (Exception e) {			
-			System.out.println("no");
+		if (oper.equals(ConstType.ADD)) {
+			return add();
+		} else if (oper.equals(ConstType.DEL)) {
+			return remove();
+		} else if (oper.equals(ConstType.EDIT)) {
+			return edit();
 		}
-		setOrderId(99);
+		return ERROR;
+	}
+
+	private String remove() {
+		return SUCCESS;		
+	}
+	private String edit(){
+		return SUCCESS;
+	}
+
+	private String add() {
+		if (purcheseService.size() > ConstType.ZERO) {
+			String m = "Submit Order first";
+			addActionMessage(m);
+			log.info(m);
+		} else {
+			Users u = null;
+			try {
+				u = purcheseService.userMember(getUser().getUserId());
+			} catch (Exception e) {
+				addActionError(e.getMessage());
+				log.error(e.getMessage());
+			}
+			if (u == null) {
+				addActionError("Member Not Found  !!");
+				log.info("Member Not found :" + getUser().getUserId());
+			} else {
+				log.info("Create Order :"+ getUser().getUserId());
+				purcheseService.newOrder(u);
+			}
+		}
 		return SUCCESS;
 	}
 
 	public EditOrderAct(PurcheseService purcheseService) {
 		super();
 		this.purcheseService = purcheseService;
-	}
-
-	private boolean add() {
-
-		return false;
-	}
-
-	private boolean del() {
-		return false;
 	}
 
 	public void setOper(String oper) {

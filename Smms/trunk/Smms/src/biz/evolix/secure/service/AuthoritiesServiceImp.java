@@ -26,7 +26,7 @@ public class AuthoritiesServiceImp implements AuthoritiesService {
 
 	@Override
 	public Node1 fimdNode1(String userid)throws NullPointerException,DataAccessException{		
-		return node1DAO.getNode1FromUserId(userid);
+		return null;//node1DAO.getNode1FromUserId(userid);
 	}
 
 	@Override

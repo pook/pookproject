@@ -4,10 +4,15 @@
 <%@ taglib prefix="sjg" uri="/struts-jquery-grid-tags"%>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="/Smms/struts/utils.js"></script>
+<style type="text/css">
+div#div4 div {
+	clear:both;
+	width:400px;
+}
+</style>
 <sj:div id="div4">
-	<table
-		style="align: center; width: 540px; margin-left: 100px; border: 1px solid #000000; margin-top: 50px"
+	<table id = "table"
+		style="align: center; width:400px; margin-left: 100px; border: 1px solid #000000; margin-top: 50px"
 		cellspacing="10px">
 		<tr>
 			<td><sj:div id="div0">
@@ -16,16 +21,16 @@
 					<s:url id="remoteurl" action="jsoneditproduct" />
 					<s:url id="orderdetailsurl" action="jsonloadskus" />
 					<s:url id="editurl" action="add-sku-grid" />
-					<sjg:grid id="gridedittable" caption="พระราม 4 " dataType="json"
-						href="%{remoteurl}" pager="true" navigator="true"
+					<sjg:grid id="gridedittable1" caption="พระราม 4 " dataType="json"
+						href="%{remoteurl}" pager="true" navigator="true" width="100"
 						navigatorSearchOptions="{sopt:['eq','ne','lt','gt']}"
 						navigatorAddOptions="{height:280,reloadAfterSubmit:true}"
-						navigatorEditOptions="{height:280,reloadAfterSubmit:false}"
-						navigatorEdit="false" navigatorView="false" navigatorDelete="true"
+						navigatorEditOptions="{height:280,reloadAfterSubmit:true}"
+						navigatorDelete="true" navigatorEdit="true"
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
-						gridModel="gridModel" rowList="10,15,20" rowNum="15" width="1024"
-						editurl="%{editurl}" editinline="true"
-						onSelectRowTopics="rowselect" rownumbers="true">
+						gridModel="gridModel" rowList="10,15,20" rowNum="15"  
+						editurl="%{editurl}" editinline="true" onSelectRowTopics="rowselect"
+						rownumbers="true" >
 
 						<sjg:gridColumn name="sid" index="sid" title="รหัส ผลิตภัณฑ์"
 							sortable="true" editable="true" />

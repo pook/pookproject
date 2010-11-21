@@ -1,15 +1,16 @@
 package biz.evolix.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
 
-/**
- * Entity implementation class for Entity: Brance
- *
- */
+
 @Entity
 @Table(name="BRANCE")
 public class Brance implements java.io.Serializable {
-
 	   
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
