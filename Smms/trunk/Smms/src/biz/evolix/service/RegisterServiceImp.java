@@ -29,13 +29,21 @@ public class RegisterServiceImp implements RegisterService {
 	private static final Collection<Node1> uplines = new HashSet<Node1>();
 	@Override
 	public void save(Node1 m,Long id) {
-		Users u=registerDAO.save(m,id,"99");		
+		Users u =insert(m,id);		
 		authoritiesDAO.authorization(u,Role.ROLE_MEMBER.name());
-		if(getUplines().contains(m))getUplines().remove(m);
 	}
 	
 	public void setRegisterDAO(RegisterDAO registerDAO) {
 		this.registerDAO = registerDAO;
+	}
+	
+	private Users insert(Node1 m,Long id){
+		Users u = null;
+		synchronized (this) {
+			u=registerDAO.save(m,id,"99");		
+			if(getUplines().contains(m))getUplines().remove(m);
+		}
+		return u;
 	}
 
 	public RegisterDAO getRegisterDAO() {
@@ -53,7 +61,7 @@ public class RegisterServiceImp implements RegisterService {
 	@Override
 	public Collection<Node1> listUpline() {
 		if(getUplines().isEmpty()){
-			getUplines().addAll(getUplines());
+			getUplines().addAll(uplines());
 		}
 		return getUplines();
 	}
@@ -67,21 +75,35 @@ public class RegisterServiceImp implements RegisterService {
 			d = registerDAO.getDescription();
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
-		}
+		}		
 		Collection<Node1> c = new HashSet<Node1>();
 		if( d!=null){
-			long id = d.getNextId();
+			long id = d.getNextId();			
 			Node1 n = null;
-			while(id<d.getMaxNode()){
-				n= node1DAO.getNode1(id);
+			while(id++<d.getUpper()){				
+				try{
+					n= node1DAO.getNode1(id);
+				}catch (Exception e) {
+					log.error(e.getMessage());				
+				}				
 				if(n == null){
 					long p = Generate.getParentId(id);
-					n= node1DAO.getNode1(p);
-					if(!c.contains(n))c.add(n);
+					Node1 n1= null;					
+					try{
+						n1= node1DAO.getNode1(p);
+					}catch (Exception e) {
+						log.error(e.getMessage());			
+					}				
+					add(c,n1);
 				}
 			}
-		}	
+		}
 		return c;
+	}
+	private void add(Collection<Node1> c,Node1 n1){
+		synchronized (this) {
+			if(!c.contains(n1))c.add(n1);
+		}		
 	}
 	private static Logger log = Logger.getLogger(RegisterServiceImp.class);
 }

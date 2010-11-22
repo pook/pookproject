@@ -1,5 +1,8 @@
 package com.smms.action;
 
+import java.io.IOException;
+
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -32,12 +35,14 @@ public class ProcheseAct extends ActionSupport {
 			@Result(location = "blackoffice.jsp", name = "input") })
 	public String execute() {
 		System.out.println("Oper" + oper);
-		try {
+			try {
 			// System.out.println("pId "+pId
 			// +" sku.name "+sku.getName()+" sku.descript  q "+ quantity
 			// +" price "+purchesePrice );
 			//if(sku==null)System.out.println("sku.id q >");
-			System.out.println("xxx  "+id);
+		//	System.out.println("xxx  "+id);
+		//	System.out.println("ywwww"+sku.getName());
+			System.out.println("yyyy"+sku.getSid());
 		//System.out.println("  uu"+id);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -46,13 +51,13 @@ public class ProcheseAct extends ActionSupport {
 		if (oper.equals(ConstType.ADD)) {
 			Sku k = null;
 			try {
-				k = purcheseService.loadSku(sku.getSid());
+				k = purcheseService.loadSku(Integer.parseInt(sku.getName()));
 			} catch (Exception e) {
-				addActionError(e.getMessage());
+				//addActionError(e.getMessage());
 				System.err.println(e);
 			}
 			if(k==null || quantity==0){
-				addActionMessage("Item not found");
+				//addActionMessage("Item not found");
 				System.out.println("Item not found");
 			}else{
 				purcheseService.buyItem(k,quantity);

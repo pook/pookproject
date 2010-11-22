@@ -47,20 +47,18 @@ public class EditOrderAct extends ActionSupport {
 
 	private String add() {
 		if (purcheseService.size() > ConstType.ZERO) {
-			String m = "Submit Order first";
-			addActionMessage(m);
+			String m = "Submit Order first";			
 			log.info(m);
 		} else {
 			Users u = null;
 			try {
 				u = purcheseService.userMember(getUser().getUserId());
-			} catch (Exception e) {
-				addActionError(e.getMessage());
+			} catch (Exception e) {				
 				log.error(e.getMessage());
 			}
 			if (u == null) {
-				addActionError("Member Not Found  !!");
-				log.info("Member Not found :" + getUser().getUserId());
+				//addActionError("Member Not Found  !!");
+				log.info(ConstType.MEMBER_NOT_FOUND+ getUser().getUserId());
 			} else {
 				log.info("Create Order :"+ getUser().getUserId());
 				purcheseService.newOrder(u);

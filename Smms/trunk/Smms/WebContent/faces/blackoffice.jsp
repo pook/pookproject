@@ -32,14 +32,11 @@
 		s = $("#gridmultitable").jqGrid('getGridParam', 'selarrrow');
 		alert('Selected Rows : ' + s);
 	});
-	$.subscribe('refreshdiv', function(event, data) {
-		$.publish('reloaddiv1');
+	$.subscribe('showerror', function(event, data) {
+		alert("xxxxxxxxxxxxxxxxxxxx");
 	});
-	function selectsku(elem){
-		 $(elem).empty()
-         .append("<option value='1'>Apples</option>")
-         .append("<option value='2'>Oranges</option>");
-	}
+	
+
 </script>
 <s:url id="ajax" value="order-purchese" />
 <sj:div id="div4">
@@ -54,7 +51,7 @@
 				<sj:div id="div2">
 					<s:url id="remoteurl" action="json-ordering" />
 					<s:url id="remote2url" action="json-grid-purchese" />					
-					<s:url id="selectskuurl" action="customer-loadskuss" />
+					<s:url id="selectskuurl" action="json-customer-loadskuss" />
 					<s:url id="editpurcheseurl" action="edit-grid-purchese" />
 					<s:url id="editorderurl" action="edit-grid-order" />
 					<sjg:grid id="gridedittable" caption="พระราม 3 " dataType="json"
@@ -76,12 +73,12 @@
 							navigatorEdit="true" navigatorView="false" navigatorDelete="true"
 							navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}">
 							<sjg:gridColumn name="sku.sid" title="รหัสผสิตภัณฑ์" width="300" 
-							editable="true" />
-							<sjg:gridColumn name="sku.name" title="ชื่อผสิตภัณฑ์" width="300" edittype="select" 
+							/>
+							<sjg:gridColumn name="sku.name"   title="ชื่อผสิตภัณฑ์" width="300" edittype="select" 
 						  editable="true" editoptions ="{ dataUrl : '%{selectskuurl}' }"   />
 							<sjg:gridColumn name="sku.description" 
 								title="รายละเอียด ผลิตภัณฑ์" sortable="false" width="330" />
-							<sjg:gridColumn name="quantity" title="จำนวน" editable="true"
+							<sjg:gridColumn name="quantity" title="จำนวน" editable="true" required="true" editrules="{integer:true,minValue:1,required:true}"
 								formatter="integer" />
 							<sjg:gridColumn name="purchesePrice" title="ราคา"
 								formatter="currency" align="right" />
@@ -91,7 +88,7 @@
 						<sjg:gridColumn name="orderId" index="orderId"
 							title="sale order ID" formatter="integer" sortable="true" />
 						<sjg:gridColumn name="user.userId" title="รหัสสมาชิก"
-							editable="true" />
+							editable="true" editrules="{required:true}" />
 						<sjg:gridColumn name="user.name" title="ชื่อสมาชิก" />
 						<sjg:gridColumn name="totalQuantity" title="จำนวน"
 							formatter="integer" />

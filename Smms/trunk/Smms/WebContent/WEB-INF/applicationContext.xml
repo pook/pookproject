@@ -96,6 +96,9 @@
 	<bean id="registerServiceAct" scope="prototype" class="biz.evolix.action.register.Register">
 		<constructor-arg ref="registerService" />
 	</bean>
+	<bean id="fetchUpLine" scope="prototype" class="biz.evolix.action.register.FetchUpline">
+		<constructor-arg ref="registerService" />
+	</bean>
 	<bean id="orchartServiceAct" scope="prototype" class="biz.evolix.action.organization.Organization">
 		<constructor-arg ref="orchartService" />
 	</bean>

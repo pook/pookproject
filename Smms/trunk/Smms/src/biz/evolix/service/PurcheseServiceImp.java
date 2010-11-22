@@ -18,8 +18,6 @@ public class PurcheseServiceImp implements PurcheseService {
 	
 	private static Logger log = Logger.getLogger(PurcheseServiceImp.class);
 
-//	@Autowired
-//	private PurcheseDAO purcheseDAO;
 	@Autowired
 	private OrderDAO orderDAO;
 	@Autowired
@@ -31,13 +29,6 @@ public class PurcheseServiceImp implements PurcheseService {
 
 	private List<Order> ordering = new ArrayList<Order>();;
 
-//	public void setPurcheseDAO(PurcheseDAO purcheseDAO) {
-//		this.purcheseDAO = purcheseDAO;
-//	}
-//
-//	public PurcheseDAO getPurcheseDAO() {
-//		return purcheseDAO;
-//	}
 
 	public void setOrderDAO(OrderDAO orderDAO) {
 		this.orderDAO = orderDAO;

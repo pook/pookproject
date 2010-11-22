@@ -65,6 +65,7 @@ public class Node1DAOImp extends JpaDaoSupport implements Node1DAO {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Node1 getNode1FromUserId(String u) throws DataAccessException {
 		Node1 n = null;		
 		try {
@@ -73,5 +74,17 @@ public class Node1DAOImp extends JpaDaoSupport implements Node1DAO {
 			log.error(e.getMessage(), e);		
 		}
 		return n;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public boolean checkDisplayName(String displayName) {
+		Node1 n = null;		
+		try {
+			n = (Node1)getJpaTemplate().find("select N from Node1 N where N.displayName=?1",displayName).get(0);
+		} catch (Exception e) {
+			log.error(e.getMessage());		
+		}		
+		return (n==null)?true:false;
 	}
 }
