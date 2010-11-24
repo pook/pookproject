@@ -6,12 +6,12 @@ import java.util.HashSet;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
+import org.apache.log4j.Logger;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import biz.evlix.customconst.ConstType;
@@ -23,13 +23,14 @@ import biz.evolix.model.Users;
 @Transactional
 public class SmileUser extends JpaDaoSupport implements UserDetails {
 
+	private static Logger log = Logger.getLogger(SmileUser.class);
 	private static final long serialVersionUID = 2680596480619638118L;
 	private EntityManager em = Persistence.createEntityManagerFactory(ConstType.PERSISTENCE_UNIT)
 			.createEntityManager();
 
 	private final String userid;
 	private Node1 node;
-
+	private String passwd;
 	public SmileUser(String userid) {
 		super();
 		this.userid = userid;
@@ -48,22 +49,29 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 		return gas;
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+	
 	public Users loadUser() {
+		Users u= getUser1();
+		setNode(u.getNode1());
+		return u;
+	}
+	@Transactional(readOnly = true)
+	private Users getUser1(){
+		
 		try {
 			setEntityManager(em);
 			Users u = (Users) getJpaTemplate().find(Users.class, getUserid());
-			setNode(u.getNode1());
-			
+			this.passwd = u.getPassword();
 			return u;
 		} catch (Exception e) {
+			log.error(e.getMessage(),e);
 			throw new UsernameNotFoundException(e + ": username");
-		}
+		}		
 	}
 
 	@Override
-	public String getPassword() {
-		return getNode().getUser().getPassword();
+	public String getPassword() {		
+		return this.passwd;
 	}
 
 	@Override

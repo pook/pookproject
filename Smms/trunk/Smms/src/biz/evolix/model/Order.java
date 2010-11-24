@@ -25,8 +25,12 @@ public class Order implements java.io.Serializable {
 	private List<Purchese> purchese = new ArrayList<Purchese>();
 
 	@JoinColumn(name = "USER_ID")
+	@ManyToOne
 	private Users user;
 
+	@JoinColumn(name = "SELLER_ID")
+	@ManyToOne
+	private Users seller;
 	@Column(name = "TOTAL_PRICE")
 	private double totalPrice = 0.0;
 
@@ -36,7 +40,7 @@ public class Order implements java.io.Serializable {
 	private Integer totalSv = 0;
 
 	@Column(name = "READED")
-	private Boolean readed;
+	private Boolean readed = false;
 	// brance name
 	@Column(name = "BRANCE", length = 50)
 	private String brance;
@@ -111,7 +115,7 @@ public class Order implements java.io.Serializable {
 		this.purchese = purchese;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "P_ID")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "P_ID")
 	public List<Purchese> getPurchese() {
 		return purchese;
 	}
@@ -147,5 +151,13 @@ public class Order implements java.io.Serializable {
 
 	public Boolean getReaded() {
 		return readed;
+	}
+
+	public void setSeller(Users seller) {
+		this.seller = seller;
+	}
+
+	public Users getSeller() {
+		return seller;
 	}
 }

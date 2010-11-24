@@ -4,6 +4,7 @@
 <%@ page
 	import="org.springframework.security.core.context.SecurityContextHolder"%>
 <%@ page import="biz.evolix.secure.SmileUser"%>
+<%@ page import="org.apache.log4j.Logger"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
@@ -11,7 +12,7 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="th">
 <head>
 <title>Smile Plus Company co.ltd</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -55,13 +56,22 @@
 <div class="page">
 <div id="header" class="ui-widget-header">
 <div id="themebox">
-<%
-	SmileUser u = (SmileUser) SecurityContextHolder.getContext()
+<%	Logger log = Logger.getLogger("Default");
+	SmileUser u =null;
+	String displayName = "evolix";
+	try{
+		u = (SmileUser) SecurityContextHolder.getContext()
 			.getAuthentication().getPrincipal();
+			displayName =u.getNode().getDisplayName();
+	}catch (ClassCastException e){
+		log.error("Unknow login");
+	}
 %>
 <div id="infoUser" style="background:#fff">
  <span class="ui-state-default"
-	style="background: none; border: none; font-size: -1"><%=u.getNode().getDisplayName()%></span><br />
+	style="background: none; border: none; font-size: -1">
+	<%=displayName %>
+	</span><br />
 <br />
 <span class="ui-state-default"
 	style="background: none; border: none; font-size: -2"> <sj:dialog

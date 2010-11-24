@@ -9,8 +9,9 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import biz.evolix.model.dao.OrderDAO;
+import biz.evlix.customconst.ConstType;
 import biz.evolix.secure.SmileUser;
+import biz.evolix.service.OrderService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -27,7 +28,7 @@ public class ShowOrdered extends ActionSupport {
 	}
 
 	public String getJSON() throws Exception {
-		setGridModel( orderDAO.showOrder(getUsers().loadUser(), 1, 10));		
+		//setGridModel( orderDAO.showOrderByStaff(getUsers().loadUser(), 0, 10));		
 		return SUCCESS;
 	}
 
@@ -41,7 +42,7 @@ public class ShowOrdered extends ActionSupport {
 	private String searchString;
 	private String searchOper;
 	private Integer total = 0;
-	private Integer records = 0;	
+	private Integer record = 0;	
 	
 	
 	public List<biz.evolix.model.Order> getGridModel() {
@@ -124,12 +125,12 @@ public class ShowOrdered extends ActionSupport {
 		this.total = total;
 	}
 
-	public Integer getRecords() {
-		return records;
+	public Integer getRecord() {
+		return record;
 	}
 
-	public void setRecords(Integer records) {
-		this.records = records;
+	public void setRecord(Integer record) {
+		this.record = record;
 	}
 
 	private SmileUser getUsers() {
@@ -142,11 +143,21 @@ public class ShowOrdered extends ActionSupport {
 		}
 		return null;
 	}
-	private OrderDAO orderDAO;
-
-	public ShowOrdered(OrderDAO orderDAO) {
+	private OrderService orderService;
+	
+	public ShowOrdered(OrderService orderService) {
 		super();
-		this.orderDAO = orderDAO;
+		this.orderService = orderService;
 	}
+
+	private void setTotal(){
+		if (getRecord() > 0 && getRows() > 0) {
+			setTotal( (int) Math.ceil((double) this.record
+					/ (double) this.rows));
+		} else {
+			setTotal(ConstType.ZERO);
+		}		
+	}		
+
 	
 }

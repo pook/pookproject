@@ -4,7 +4,8 @@
 <%@ taglib prefix="sjg" uri="/struts-jquery-grid-tags"%>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="/Smms/struts/utils.js"></script>
+<script type="text/javascript" src="/Smms/struts/utils.js">
+</script>
 <sj:div id="div0">
 	<s:form>
 		<table

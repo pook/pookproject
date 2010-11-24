@@ -1,4 +1,4 @@
-package com.smms.action;
+package biz.evolix.action.managesku;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
+import biz.evlix.customconst.ConstType;
 import biz.evolix.model.Sku;
 import biz.evolix.service.InventoryService;
 
@@ -23,21 +24,12 @@ public class EditProduct extends ActionSupport {
 		return SUCCESS;
 	}
 
-	public String getJSON() throws Exception {
-		setRecord((int) inventoryService.count());
+	public String getJSON() throws Exception {		
+		setRecord( inventoryService.count());		
 		int to = (getRows() * getPage());
-		System.out.println("to :" + to);
-
-		int from = to - getRows();
-		System.out.println("from :" + from);
-		// if (to > getRecords())
-		// to = getRecords();
-		System.out.println("reccord :" + from);
-		System.out.println("Page " + getPage() + " Rows " + getRows()
-				+ " Sorting Order " + getSord() + " Index Row :" + getSidx()
-				+ "Total : " + getTotal());
-		setGridModel(inventoryService.find(from , to+1));
-		setTotal((int) Math.ceil((double) getRecord() / (double) getRows()));
+		int from = to - getRows();		
+		setGridModel(inventoryService.find(from , to,getRows()));
+		setTotal();
 		return execute();
 	}
 
@@ -121,6 +113,14 @@ public class EditProduct extends ActionSupport {
 		return total;
 	}
 
+	private void setTotal(){
+		if (getRecord() > 0 && getRows() > 0) {
+			setTotal( (int) Math.ceil((double) this.record
+					/ (double) this.rows));
+		} else {
+			setTotal(ConstType.ZERO);
+		}		
+	}
 	public void setTotal(Integer total) {
 		this.total = total;
 	}
@@ -130,16 +130,8 @@ public class EditProduct extends ActionSupport {
 	}
 
 	public void setRecord(Integer record) {
-
 		this.record = record;
-
-		if (this.record > 0 && this.rows > 0) {
-			this.total = (int) Math.ceil((double) this.record
-					/ (double) this.rows);
-		} else {
-			this.total = 0;
-		}
-
+		this.setTotal();
 	}
 
 	public EditProduct(InventoryService inventoryService) {

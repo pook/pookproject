@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import biz.evolix.model.Order;
 import biz.evolix.model.Purchese;
@@ -12,7 +13,9 @@ import biz.evolix.model.Sku;
 import biz.evolix.model.Users;
 import biz.evolix.model.dao.AuthoritiesDAO;
 import biz.evolix.model.dao.OrderDAO;
+import biz.evolix.model.dao.OrderJdbcDAO;
 import biz.evolix.model.dao.SkuDAO;
+import biz.evolix.secure.SmileUser;
 
 public class PurcheseServiceImp implements PurcheseService {
 	
@@ -20,6 +23,8 @@ public class PurcheseServiceImp implements PurcheseService {
 
 	@Autowired
 	private OrderDAO orderDAO;
+	@Autowired
+	private OrderJdbcDAO  orderJdbcDAO;
 	@Autowired
 	private AuthoritiesDAO authoritiesDAO;
 	@Autowired
@@ -64,10 +69,21 @@ public class PurcheseServiceImp implements PurcheseService {
 	public boolean newOrder(Users u) {
 		Order o = new Order();
 		o.setUser(u);
+		o.setSeller(getUsers().loadUser());
 		o.setPurchese(new ArrayList<Purchese>());
 		orderDAO.newOrder(o);
 		getOrdering().add(o);
 		return true;
+	}
+	private SmileUser getUsers() {
+		try {
+			return (SmileUser) SecurityContextHolder.getContext()
+					.getAuthentication().getPrincipal();
+		} catch (Exception e) {
+			SecurityContextHolder.clearContext();		
+			log.error(e.getMessage(), e);
+		}
+		return null;
 	}
 
 	@Override
@@ -136,6 +152,14 @@ public class PurcheseServiceImp implements PurcheseService {
 	public void edit(int idx, Sku sku, Integer quantity) {
 		getOrdering().get(0).getPurchese().remove(idx);
 		buyItem(sku, quantity);		
+	}
+
+	public void setOrderJdbcDAO(OrderJdbcDAO orderJdbcDAO) {
+		this.orderJdbcDAO = orderJdbcDAO;
+	}
+
+	public OrderJdbcDAO getOrderJdbcDAO() {
+		return orderJdbcDAO;
 	}
 	
 

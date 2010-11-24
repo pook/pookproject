@@ -7,38 +7,12 @@
 <style type="text/css">
 </style>
 <script type="text/javascript">
-	$.subscribe('rowselect', function(event, data) {
-		$("#gridinfo").html(
-				'<p>Edit Mode for Row : ' + event.originalEvent.id + '</p>');
-	});
-	$.subscribe('rowadd', function(event, data) {
-		$("#gridedittable").jqGrid('editGridRow', "new", {
-			height : 280,
-			reloadAfterSubmit : false
-		});
-
-	});
-	$.subscribe('searchgrid', function(event, data) {
-		$("#gridedittable").jqGrid('searchGrid', {
-			sopt : [ 'cn', 'bw', 'eq', 'ne', 'lt', 'gt', 'ew' ]
-		});
-	});
-	$.subscribe('showcolumns', function(event, data) {
-		$("#gridedittable").jqGrid('setColumns', {});
-	});
-
-	$.subscribe('getselectedids', function(event, data) {
-		var s;
-		s = $("#gridmultitable").jqGrid('getGridParam', 'selarrrow');
-		alert('Selected Rows : ' + s);
-	});
-	$.subscribe('showerror', function(event, data) {
-		alert("xxxxxxxxxxxxxxxxxxxx");
-	});
 	
-
 </script>
+
 <s:url id="ajax" value="order-purchese" />
+<s:url id="prochesedetail" action="showordered" />
+
 <sj:div id="div4">
 
 	<table
@@ -106,7 +80,11 @@
 						onClickTopics="showcolumns" button="true" />					
 					<sj:a id="ajaxlink" href="%{ajax}" indicator="indicator"
 						targets="div4" button="true" buttonIcon="ui-icon-gear">
-	ชื้อสินค้า
+	สั่งสินค้า
+	</sj:a>
+	<sj:a id="ajaxlink2" href="%{prochesedetail}" indicator="indicator"
+						targets="div4" button="true" buttonIcon="ui-icon-gear">
+	ดูประวัติการสั่งชื้อ
 	</sj:a>
 
 					<br />

@@ -2,15 +2,20 @@ package biz.evolix.service;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import biz.evolix.model.Sku;
 import biz.evolix.model.dao.SkuDAO;
+import biz.evolix.model.dao.SkuJdbcDAO;
 
-public class InventoryServiceImp implements InventoryService{
+public class InventoryServiceImp  implements InventoryService{
 	
 	@Autowired
 	private SkuDAO skuDAO;
+	@Autowired
+	private SkuJdbcDAO skuJdbcDAO; 
+	
+	private List<Sku> skus;
 	
 	public void setSkuDAO(SkuDAO skuDAO) {
 		this.skuDAO = skuDAO;
@@ -24,16 +29,17 @@ public class InventoryServiceImp implements InventoryService{
 	}
 	@Override
 	public void addSku(Sku sku) {
-		// TODO Auto-generated method stub
-		
+		skuDAO.addItem(sku);		
 	}
 	@Override
-	public boolean remove(Sku sku) {
+	public boolean remove(int id) {
 		try{
+			long sku =getSkus().get(id-1).getSid();
+			getSkuDAO().remove(sku);			
 			return true;
 		}catch (Exception e) {
-			
-		}
+			log.error(e.getMessage(),e);
+		}		
 		return false;
 	}
 	@Override
@@ -41,12 +47,29 @@ public class InventoryServiceImp implements InventoryService{
 		return skuDAO.find(id);
 	}
 	@Override
-	public List<Sku> find(int from, int to) {
-		return skuDAO.find(from, to);
-	}
+	public List<Sku> find(int from, int to,int rows) {
+		to+=2;
+		int size = to-from;
+		while(size++<rows)++to;
+		setSkus(skuDAO.find(from, to));
+		return getSkus();
+	}		
 	 
-	public long count(){
-		return skuDAO.count();
+	public List<Sku> getSkus() {
+		return skus;
 	}
-		
+	public void setSkus(List<Sku> skus) {
+		this.skus = skus;
+	}
+	public int count(){		
+		return skuJdbcDAO.size();
+	}
+	public void setSkuJdbcDAO(SkuJdbcDAO skuJdbcDAO) {
+		this.skuJdbcDAO = skuJdbcDAO;
+	}
+	public SkuJdbcDAO getSkuJdbcDAO() {
+		return skuJdbcDAO;
+	}
+	private static Logger log = Logger.getLogger(InventoryServiceImp.class);
+	
 }

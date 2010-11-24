@@ -30,8 +30,7 @@ public class OrderDAOImp extends JpaDaoSupport implements OrderDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly=true)
-	public List<Order> showOrder(Users u, int f, int t) {
-		System.out.println("ccccccc");
+	public List<Order> showOrder(Users u, int f, int t) {		
 		try{
 			return (List<Order>)getJpaTemplate().find("select O from Order O where  O.orderId>?1 and O.orderId <?2 and O.user =?3",f,t,u);
 		}catch (Exception e) {
@@ -40,5 +39,19 @@ public class OrderDAOImp extends JpaDaoSupport implements OrderDAO {
 		return null;
 		
 	}
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public List<Order> showOrderByStaff(Users u, int f, int t) {		
+		try{
+			return (List<Order>)getJpaTemplate().find("select O from Order O where  O.orderId>?1 and O.orderId <?2 and O.seller =?3",f,t,u);
+		}catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		return null;
+		
+	}
+	
+
+	
 	private static Logger log = Logger.getLogger(OrderDAOImp.class);	
 }

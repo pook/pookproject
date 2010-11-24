@@ -22,8 +22,8 @@
 	<!-- <beans:bean id="shaPasswordEncoder" class="org.springframework.security.providers.encoding.ShaPasswordEncoder"> 
 		<beans:constructor-arg value="512" /> </beans:bean> -->
 	<authentication-manager alias="authenticationManager">
-		<authentication-provider user-service-ref="userDetail" >
-			<password-encoder hash="sha"/>
+		<authentication-provider user-service-ref="userDetail" >		
+			<password-encoder hash="sha"/>			
 		</authentication-provider>
 		<authentication-provider>
 			<password-encoder hash="sha" />

@@ -12,7 +12,7 @@ import javax.persistence.CascadeType;
 
 @Entity
 @Table(name = "NODE1")
-public class Node1 implements java.io.Serializable,Comparable<Node1>{
+public class Node1 implements java.io.Serializable{
 
 	private static final long serialVersionUID = -7863722387808094242L;
 	@Id
@@ -29,8 +29,8 @@ public class Node1 implements java.io.Serializable,Comparable<Node1>{
 	private Integer sv = 0;
 	@Column(name = "COMMISSIONS")
 	private Integer commissions = 0;
-	//@Column(name="STATUS")
-	//private char status;
+	@Column(name="STATUS")
+	private Character status;
 	public Node1() {
 		super();
 	}
@@ -81,14 +81,16 @@ public class Node1 implements java.io.Serializable,Comparable<Node1>{
 		return getNId() + " " + getDisplayName() + "  " + getCommissions();
 	}
 
-	public void setStatus(char status) {
-	//	this.status = status;
+	public void setStatus(Character status) {
+		this.status = status;
 	}
 
-	public char getStatus() {
-		return ' ';//status;
+	public Character getStatus() {
+		return status;
 	}
 
+	
+/*
 	@Override
 	public int compareTo(Node1 o) { 
 		return ((int)(getNId()-o.nId));
@@ -102,4 +104,5 @@ public class Node1 implements java.io.Serializable,Comparable<Node1>{
 		
 		return false;
 	}
+	*/
 }

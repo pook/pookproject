@@ -52,7 +52,8 @@ public class Users implements java.io.Serializable {
 	private Byte enaebled=(byte)1;
 	private List<Authorities> authorities = new ArrayList<Authorities>();
 	//@OneToOne(mappedBy="nId")	
-	@JoinColumn(name="NODE_ID")
+	@JoinColumn(name="NODE_ID")	
+	@OneToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
     private Node1 node1;
 
 	public Users() {
@@ -201,7 +202,7 @@ public class Users implements java.io.Serializable {
 	public void setNode1(Node1 node1) {
 		this.node1 = node1;
 	}
-	@OneToOne(fetch=FetchType.EAGER,cascade=CascadeType.PERSIST,mappedBy="nId")
+	
 	public Node1 getNode1() {
 		return node1;
 	}

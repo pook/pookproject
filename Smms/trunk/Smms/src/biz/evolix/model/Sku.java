@@ -17,19 +17,19 @@ public class Sku implements java.io.Serializable {
 	@Column(name = "NAME", length = 50, nullable = false)
 	private String name;
 	@Column(name = "PRICE")
-	private Double price;
+	private Double price = 0.0;
 	@Column(name = "MEMBER_PRICE")
-	private Double memberPrice;
+	private Double memberPrice = 0.0;
 	@Column(name = "SV")
-	private Integer sv;
+	private Integer sv = 0;
 	@Column(name = "DISCOUNT")
-	private Integer discount;
-	@Column(name = "DESCRIPTION" ,length=100)
+	private Integer discount = 0;
+	@Column(name = "DESCRIPTION", length = 100)
 	private String description;
 	@Column(name = "IMAGE")
 	private String image;
 	@Column(name = "PRICE_DISCOUNT")
-	private Double priceDiscount;
+	private Double priceDiscount = 0.0;
 	private static final long serialVersionUID = 1L;
 
 	public Sku() {
@@ -101,17 +101,21 @@ public class Sku implements java.io.Serializable {
 	}
 
 	public void setPriceDiscount(Double priceDiscount) {
-		this.priceDiscount = priceDiscount;
+		this.priceDiscount = priceDiscount; // +=(getPrice()*getDiscount()/100);
+
 	}
 
 	public Double getPriceDiscount() {
-		return priceDiscount;
+		this.priceDiscount = (getPrice() + (getPrice() * getDiscount() / 100));
+		return this.priceDiscount;
 	}
+
 	@Override
-	public boolean equals(Object that){
-		if(that instanceof Sku){
-			long id = ((Sku)that).getSid();
-			if(this.getSid()==id)return true;
+	public boolean equals(Object that) {
+		if (that instanceof Sku) {
+			long id = ((Sku) that).getSid();
+			if (this.getSid() == id)
+				return true;
 		}
 		return false;
 	}

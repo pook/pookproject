@@ -10,6 +10,8 @@
 	<constant name="struts.objectFactory"
 		value="org.apache.struts2.spring.StrutsSpringObjectFactory" />
 	<constant name="struts.convention.action.packages"
-		value="com.smms.action,biz.evolix.action.organization,biz.evolix.action.backoffice" />
+		value="com.smms.action,biz.evolix.action.organization
+		,biz.evolix.action.backoffice
+		,biz.evolix.action.mamagesku" />
 	<include file="smms.xml" />
 </struts>

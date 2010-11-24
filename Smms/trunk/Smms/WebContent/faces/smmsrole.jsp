@@ -5,6 +5,12 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="/Smms/struts/utils.js"></script>
+<script type="text/javascript">
+function xxx(){
+	$("#test").html("bbbbb") ; 
+}
+</script>
+<div id="test"></div>
 <sj:div id="div4">
 	<table
 		style="align: center; background: #FDF5CE; width: 540px; margin-left: 100px; border: 1px solid #000000; margin-top: 50px"
@@ -27,7 +33,7 @@
 							navigatorEditOptions="{height:280,reloadAfterSubmit:false}"
 							navigatorEdit="false" navigatorView="false" navigatorAdd="false"
 							navigatorDelete="false" rownumbers="true" gridModel="gridModel"
-							multiselect="true"
+							multiselect="true" 
 							rowList="10,15,20" rowNum="15" width="1024" editurl="%{editurl}"
 							onSelectRowTopics="rowselect">
 							<sjg:gridColumn name="id2" index="id2" title="รหัสสมาชิก"
@@ -121,10 +127,10 @@
 							<sjg:gridColumn name="a" index="productDetail" title="admin"
 								edittype="checkbox" sortable="false" editable="true"
 								formatter="checkbox" align="center" />
-							<sjg:gridColumn name="b" index="price" title="staff"
+							<sjg:gridColumn name="b" index="price" title="staff" onselect="xxx" onChangeTopics="xxx"
 								sortable="false" edittype="checkbox" editable="true"
 								formatter="checkbox" align="center" />
-							<sjg:gridColumn name="c" index="unit" title="member"
+							<sjg:gridColumn name="c" index="unit" title="member" 
 								sortable="false" edittype="checkbox" editable="true"
 								formatter="checkbox" align="center" />
 							<sjg:gridColumn name="a" index="productDetail"

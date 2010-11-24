@@ -59,9 +59,16 @@
 	<bean id="skuDAO" class="biz.evolix.model.dao.SkuDAOImp" scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
+	<bean id="skuJdbcDAO" class="biz.evolix.model.dao.SkuJdbcDAOImp" scope="prototype">
+		<property name="dataSource" ref="dataSource" />
+	</bean>	
 	<bean id="orderDAO" class="biz.evolix.model.dao.OrderDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
+	<bean id="orderJdbcDAO" class="biz.evolix.model.dao.OrderJdbcDAOImp">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
 	<bean id="userDetail" class="biz.evolix.secure.UserDetail" />
 
 	<!-- ^^^^^^^^^^begin Faces action^^^^^^^^^^^^6 -->
@@ -108,7 +115,11 @@
 	<bean id="orchartBackwardAct" scope="prototype" class="biz.evolix.action.organization.OrganizationBackward">
 		<constructor-arg ref="orchartService" />
 	</bean>
-	<bean id="inventoryServiceAct" class="com.smms.action.EditProduct"
+	<bean id="inventoryServiceAct" class="biz.evolix.action.managesku.EditProduct"
+		scope="prototype">
+		<constructor-arg ref="inventoryService" />
+	</bean>
+	<bean id="editAdddelSkuAct" class="biz.evolix.action.managesku.AddSkuAct"
 		scope="prototype">
 		<constructor-arg ref="inventoryService" />
 	</bean>
