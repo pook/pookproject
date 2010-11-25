@@ -4,17 +4,13 @@
 <%@ taglib prefix="sjg" uri="/struts-jquery-grid-tags"%>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
-<style type="text/css">
-</style>
-<script type="text/javascript">
 
-</script>
 <style type="text/css">
 div#gridinfo div {
 	clear:both;
 	
 }
-</s</style>
+</style>
 <s:url id="ajax" value="blackoffice" />
 <sj:div id="div4">
 	<table
@@ -25,7 +21,9 @@ div#gridinfo div {
 			<td><sj:div id="div0">
 				<sj:div id="div1"></sj:div>
 				<sj:div id="div2">
-					<s:url id="remoteurl" action="json-list-order" />	<!-- ShowOrdered -->													
+					<s:url id="remoteurl" action="json-list-order" />	<!-- ShowOrdered -->
+					<s:url id="editurl" action="edit-order-grid" />
+					<s:url id="subgridurl" action="json-list-purchese2" />													
 					<sjg:grid id="gridedittable" caption="พระราม 3 " dataType="json"
 						href="%{remoteurl}" pager="true" 
 						navigator="true"
@@ -35,19 +33,19 @@ div#gridinfo div {
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
 						gridModel="gridModel" rowList="10,15,20" rowNum="15" width="820"						
 						onSelectRowTopics="rowselect" rownumbers="false">
-						<sjg:grid id="subgridtable" 
-							dataType="json" gridModel="gridModel" rowNum="-1"							
+						<sjg:grid id="subgridtable"  subGridUrl="%{subgridurl}"
+							dataType="json" gridModel="gridModel" rowNum="-1"footerrow="true"					
 							rownumbers="true" width="750">
-							<sjg:gridColumn name="purchese.sku.sid" title="รหัสผสิตภัณฑ์" width="300" />
-							<sjg:gridColumn name="purchese.sku.name"   title="ชื่อผสิตภัณฑ์" width="300" edittype="select" 
+							<sjg:gridColumn name="sku.sid" title="รหัสผสิตภัณฑ์" width="300" />
+							<sjg:gridColumn name="sku.name"   title="ชื่อผสิตภัณฑ์" width="300" edittype="select" 
 						   editoptions ="{ dataUrl : '%{selectskuurl}' }"   />							
-							<sjg:gridColumn name="purchese.sku.description" 
+							<sjg:gridColumn name="sku.description" 
 								title="รายละเอียด ผลิตภัณฑ์" sortable="false" width="330" />
-							<sjg:gridColumn name="purchese.quantity" title="จำนวน" 
+							<sjg:gridColumn name="quantity" title="จำนวน" 
 								formatter="integer" />
-							<sjg:gridColumn name="purchese.purchesePrice" title="ราคา"
+							<sjg:gridColumn name="purchesePrice" title="ราคา"
 								formatter="currency" align="right" />
-							<sjg:gridColumn name="purchese.psv" title="smile value" align="center"
+							<sjg:gridColumn name="psv" title="smile value" align="center"
 								formatter="integer" />
 						</sjg:grid>
 						<sjg:gridColumn name="orderId" index="orderId"

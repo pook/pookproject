@@ -36,8 +36,7 @@ public class OrderDAOImp extends JpaDaoSupport implements OrderDAO {
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
-		return null;
-		
+		return null;		
 	}
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly=true)
@@ -47,11 +46,8 @@ public class OrderDAOImp extends JpaDaoSupport implements OrderDAO {
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
-		return null;
-		
+		return null;		
 	}
-	
-
 	
 	private static Logger log = Logger.getLogger(OrderDAOImp.class);	
 }

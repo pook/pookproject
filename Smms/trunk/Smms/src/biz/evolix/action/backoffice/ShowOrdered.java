@@ -7,10 +7,8 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import biz.evlix.customconst.ConstType;
-import biz.evolix.secure.SmileUser;
 import biz.evolix.service.OrderService;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -27,9 +25,15 @@ public class ShowOrdered extends ActionSupport {
 		return SUCCESS;
 	}
 
-	public String getJSON() throws Exception {
-		//setGridModel( orderDAO.showOrderByStaff(getUsers().loadUser(), 0, 10));		
-		return SUCCESS;
+	public String getJSON() throws Exception {		
+		setRecord( orderService.size());
+		System.out.println("page "+getPage() );
+		int to = (getRows() * getPage());
+		int from = to - getRows();		
+		setGridModel(orderService.orders(from , to,getRows()));
+		//setGridModel(orderService.orders(0 , 10,8));
+		setTotal();
+		return execute();
 	}
 
 	private List<biz.evolix.model.Order> gridModel;
@@ -130,19 +134,9 @@ public class ShowOrdered extends ActionSupport {
 	}
 
 	public void setRecord(Integer record) {
-		this.record = record;
+		this.record = record;this.setTotal();
 	}
 
-	private SmileUser getUsers() {
-		try {
-			return (SmileUser) SecurityContextHolder.getContext()
-					.getAuthentication().getPrincipal();
-		} catch (Exception e) {
-			SecurityContextHolder.clearContext();		
-			log.error(e.getMessage(), e);
-		}
-		return null;
-	}
 	private OrderService orderService;
 	
 	public ShowOrdered(OrderService orderService) {
@@ -158,6 +152,6 @@ public class ShowOrdered extends ActionSupport {
 			setTotal(ConstType.ZERO);
 		}		
 	}		
-
+	
 	
 }

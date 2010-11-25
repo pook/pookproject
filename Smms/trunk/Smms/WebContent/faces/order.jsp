@@ -5,42 +5,65 @@
 <%@ taglib prefix="sjg" uri="/struts-jquery-grid-tags"%>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <s:property value="echo" escape="%{escape}" />
+<style type="text/css">
+div#div4 div{
+	clear: both;
+}
+</style>
 <sj:div id="div4">
 	<table
-		style="align: center; width: 540px; margin-left: 100px; border: 1px solid #000000; margin-top: 50px"
+		style="align: center; width:880px; margin-left: 70px; border: px solid #000000; margin-top:50px"
 		cellspacing="10px">
 		<tr>
+			<s:div id="gridinfo"></s:div>
 			<td><sj:div id="div0">
 				<sj:div id="div1"></sj:div>
 				<sj:div id="div2">
-					<s:url id="remoteurl" action="jsonorder" />
-					<sjg:grid id="gridtable" caption="รายการสินค้าที่ สั่งชื้อ"
-						dataType="json" href="%{remoteurl}" pager="true"
-						gridModel="gridModel" rowList="10,15,20" rowNum="15"
-						rownumbers="true" width="990">
-						<sjg:gridColumn name="id" index="id" title="sale order ID"
-							formatter="integer" sortable="false" width="200" />
-						<sjg:gridColumn name="id2" index="id2" title="รหัสสมาชิก"
-							sortable="false" width="200" />
-						<sjg:gridColumn name="date" index="date" title="วันที่"
-							sortable="false" width="280" />
-						<sjg:gridColumn name="bid" index="productCode" title="สาขา"
-							sortable="false" width="200" />
-						<sjg:gridColumn name="productCode" index="productCode"
-							title="รหัส ผลิตภัณฑ์" sortable="false" width="200" />
-						<sjg:gridColumn name="productName" index="productName"
-							title="ชื่อ ผลิตภัณฑ์" sortable="false" width="200" />
-						<sjg:gridColumn name="productDetail" index="productDetail"
-							title="รายละเอียด ผลิตภัณฑ์" sortable="false" width="320" />
-						<sjg:gridColumn name="price" index="price" title="ราคา"
-							sortable="false" />
-						<sjg:gridColumn name="unit" index="unit" title="จำนวน"
-							sortable="false" />
-						<sjg:gridColumn name="commision" index="commision" title="ราคารวม"
-							sortable="false" />
-						<sjg:gridColumn name="totalPV" index="totalPV" title="Total SV"
-							formatter="integer" sortable="false" width="200" />
+					<s:url id="remoteurl" action="json-list-order1" />	<!-- ShowOrdered -->
+					<s:url id="subgridurl" action="json-list-purchese1" />													
+					<sjg:grid id="gridedittable" caption="พระราม 3 " dataType="json"
+						href="%{remoteurl}" pager="true" 
+						navigator="true"
+						navigatorDelete="true"
+						navigatorAdd="false"	
+						navigatorEdit="false"								
+						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
+						gridModel="gridModel" rowList="10,15,20" rowNum="15" width="880"						
+						onSelectRowTopics="rowselect" rownumbers="false">
+						<sjg:grid id="subgridtable"  subGridUrl="%{subgridurl}"
+							dataType="json" gridModel="gridModel" rowNum="-1"footerrow="true"					
+							rownumbers="true" width="750">
+							<sjg:gridColumn name="sku.sid" title="รหัสผสิตภัณฑ์" width="300" />
+							<sjg:gridColumn name="sku.name"   title="ชื่อผสิตภัณฑ์" width="300" edittype="select" 
+						   editoptions ="{ dataUrl : '%{selectskuurl}' }"   />							
+							<sjg:gridColumn name="sku.description" 
+								title="รายละเอียด ผลิตภัณฑ์" sortable="false" width="330" />
+							<sjg:gridColumn name="quantity" title="จำนวน" 
+								formatter="integer" />
+							<sjg:gridColumn name="purchesePrice" title="ราคา"
+								formatter="currency" align="right" />
+							<sjg:gridColumn name="psv" title="smile value" align="center"
+								formatter="integer" />
+						</sjg:grid>
+						<sjg:gridColumn name="orderId" index="orderId"
+							title="sale order ID" formatter="integer" sortable="true" />
+						<sjg:gridColumn name="user.userId" title="รหัสสมาชิก"
+							editable="true" editrules="{required:true}" />
+						<sjg:gridColumn name="user.name" title="ชื่อสมาชิก" />
+						<sjg:gridColumn name="totalQuantity" title="จำนวน"
+							formatter="integer" />
+						<sjg:gridColumn name="totalPrice" title="ราคารวม"
+							formatter="currency" />
+						<sjg:gridColumn name="totalSv" index="totalPV"
+							title="Total Smile Value" formatter="integer" width="235" />
 					</sjg:grid>
+					<br />				
+					
+					<sj:submit id="grid_edit_colsbutton" value="Show/Hide Columns"
+						onClickTopics="showcolumns" button="true" />					
+				
+					<br />
+					<br />
 				</sj:div>
 			</sj:div></td>
 		</tr>

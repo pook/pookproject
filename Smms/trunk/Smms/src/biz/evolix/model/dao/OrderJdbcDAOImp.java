@@ -16,5 +16,15 @@ public class OrderJdbcDAOImp extends JdbcDaoSupport implements OrderJdbcDAO {
 		return 	c;	
 	}	
 	private static Logger log = Logger.getLogger(OrderJdbcDAOImp.class);
+	@Override
+	public int pSize() {
+		int c  = -1;
+		try{
+			c =getJdbcTemplate().queryForInt("select count(0) from PURCHESE");
+		}catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}		 
+		return 	c;
+	}
 
 }

@@ -1,49 +1,44 @@
-package com.smms.action;
+package biz.evolix.action.order;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import biz.evlix.customconst.ConstType;
+import biz.evolix.model.Purchese;
+import biz.evolix.model.dao.OrderDAO;
+import biz.evolix.model.dao.OrderJdbcDAO;
+import biz.evolix.service.OrderService;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.smms.service.Item;
-import com.smms.service.ItemDAO;
 
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
 public class Order extends ActionSupport {
 
 	private static final long serialVersionUID = 8619781837424132878L;
-
-	@Action(value = "/jsonorder", results = { @Result(name = "success", type = "json") })
+	private static Logger log = Logger.getLogger(Order.class);
+	
+	@Action(value = "/json-list-order1", results = { @Result(name = "success", type = "json") })
 	public String execute() {
-
-		// int to = (rows * page);
-		// int from =0;// to - rows;
-
-		// Count Rows (select count(*) from custumer)
-		// records = CustomerDAO.count();
-
-		// Your logic to search and select the required data.
-		gridModel = ItemDAO.getItems();
-		System.out.println("vvt"+getSidx());
-		System.out.println("vvr"+getRows());
-		System.out.println("vve"+getRecords());
-		System.out.println("vppp"+getSearchString());
-		System.out.println("vvoo"+getSearchField());
-		// calculate the total pages for the query
-		total = (int) Math.ceil((double) records / (double) rows);
-		
 		return SUCCESS;
 	}
 
-	public String getJSON() {
+	public String getJSON()throws Exception {
+		setRecord( orderService.size());
+		int to = (getRows() * getPage());
+		int from = to - getRows();		
+		setGridModel(orderService.ordersByMember(from , to,getRows()));
+		setTotal();
 		return execute();
 	}
 
-	private List<Item> gridModel;
+	private List<biz.evolix.model.Order>gridModel;
 	private Integer rows = 0;
 	private Integer page = 0;
 	private String sord;
@@ -52,16 +47,8 @@ public class Order extends ActionSupport {
 	private String searchString;
 	private String searchOper;
 	private Integer total = 0;
-	private Integer records = 0;
-
-	public List<Item> getGridModel() {
-		return gridModel;
-	}
-
-	public void setGridModel(List<Item> gridModel) {
-		this.gridModel = gridModel;
-	}
-
+	private Integer record = 0;
+	
 	public Integer getRows() {
 		return rows;
 	}
@@ -126,12 +113,34 @@ public class Order extends ActionSupport {
 		this.total = total;
 	}
 
-	public Integer getRecords() {
-		return records;
+	public Integer getRecord() {
+		return record;
 	}
 
-	public void setRecords(Integer records) {
-		this.records = records;
+	public void setRecord(Integer record) {
+		this.record = record;
+		this.setTotal();
+	}
+		
+	public void setGridModel(List<biz.evolix.model.Order> gridModel) {
+		this.gridModel = gridModel;
 	}
 
+	public List<biz.evolix.model.Order> getGridModel() {
+		return gridModel;
+	}	
+	private OrderService orderService;
+
+	public Order(OrderService orderService) {
+		super();
+		this.orderService = orderService;
+	}	
+	private void setTotal(){
+		if (getRecord() > 0 && getRows() > 0) {
+			setTotal( (int) Math.ceil((double) this.record
+					/ (double) this.rows));
+		} else {
+			setTotal(ConstType.ZERO);
+		}		
+	}		
 }

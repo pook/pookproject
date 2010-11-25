@@ -54,6 +54,7 @@
 	<!-- Start market service -->
 	<bean id="inventoryService" class="biz.evolix.service.InventoryServiceImp" />
 	<bean id="updateComService" class="biz.evolix.service.UpdateComServiceImp" />
+	<bean id="orderService" class="biz.evolix.service.OrderServiceImp" scope="session"/>
 	<bean id="purcheseService" class="biz.evolix.service.PurcheseServiceImp"
 		scope="session" />	
 	<bean id="skuDAO" class="biz.evolix.model.dao.SkuDAOImp" scope="prototype">
@@ -123,6 +124,27 @@
 		scope="prototype">
 		<constructor-arg ref="inventoryService" />
 	</bean>
+	<bean id="editOrder" class="biz.evolix.action.backoffice.EditOrderAction"
+		scope="prototype">
+		<constructor-arg ref="orderService" />
+	</bean>
+	<bean id="showOrdered" class="biz.evolix.action.backoffice.ShowOrdered"
+		scope="prototype">
+		<constructor-arg ref="orderService" />
+	</bean>
+	<bean id="subShowPurcheseAction" class="biz.evolix.action.backoffice.SubShowPurcheseAction"
+		scope="prototype">
+		<constructor-arg ref="orderService" />
+	</bean>
+	<bean id="subOrderAction" class="biz.evolix.action.order.SubOrder"
+		scope="session">
+		<constructor-arg ref="orderService" />
+	</bean>
+	<bean id="orderAction" class="biz.evolix.action.order.Order"
+		scope="session">
+		<constructor-arg ref="orderService" />
+	</bean>
+	
 	<!-- end faces action -->
 	<context:annotation-config />
 </beans>
