@@ -47,18 +47,8 @@ public class InventoryServiceImp  implements InventoryService{
 		return skuDAO.find(id);
 	}
 	@Override
-	public List<Sku> find(int from, int to,int rows) {
-		/*
-		to+=2;
-		System.out.println("Rows :"+rows+"\n"+to+"\n"+from);
-		int size = to-from;
-		while(size++<rows)++to;
-		setSkus(skuDAO.find(from, to));
-		return getSkus();
-		*/
-		List<Sku> s =skuDAO.findLimit(3, 5);
-		System.out.println(">>>>>>>"+s.size());
-		return s;
+	public List<Sku> find(int min, int maxResult) {			
+		return skuDAO.findLimit(min ,maxResult);
 	}		
 	 
 	public List<Sku> getSkus() {

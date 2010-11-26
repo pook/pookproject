@@ -9,7 +9,7 @@ public interface InventoryService {
 	public List<Sku> findAllSku();	
 	public boolean remove(int id); //delete
 	public Sku find(long id);
-	public List<Sku> find(int from,int to,int rows);
+	public List<Sku> find(int min,int maxResult);
 	public int count();
 	/*
 	 * insert

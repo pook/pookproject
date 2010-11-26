@@ -28,7 +28,7 @@ public class EditProduct extends ActionSupport {
 		setRecord( inventoryService.count());		
 		int to = (getRows() * getPage());
 		int from = to - getRows();		
-		setGridModel(inventoryService.find(from , to,getRows()));
+		setGridModel(inventoryService.find(from ,getRecord() ));
 		setTotal();
 		return execute();
 	}

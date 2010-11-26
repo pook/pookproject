@@ -31,10 +31,10 @@ public class SkuDAOImp extends JpaDaoSupport implements SkuDAO {
 	}
 
 	@Override
-	@Transactional(readOnly=false,propagation = Propagation.REQUIRED)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void remove(long id) {
 		try {
-			Sku sku =getJpaTemplate().find(Sku.class, id);
+			Sku sku = getJpaTemplate().find(Sku.class, id);
 			getJpaTemplate().remove(sku);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -54,17 +54,22 @@ public class SkuDAOImp extends JpaDaoSupport implements SkuDAO {
 		return getJpaTemplate().find(
 				"select K from Sku K where k.sid >?1 and k.sid <?2", from, to);
 	}
+
 	@SuppressWarnings("unchecked")
-	public List<Sku> findLimit(int from, int to) throws NullPointerException {
-		List<Sku>skus = null;
-		try{
-			skus = getJpaTemplate().executeFind(new SkuMaxResult<Sku>(1,5,"Select K from Sku K"));
-		}catch (Exception e) {
-			log.error(e.getMessage(),e);
+	@Transactional(readOnly = true)
+	public List<Sku> findLimit(int min, int maxResult)
+			throws NullPointerException {
+		List<Sku> skus = null;
+		try {
+			skus = getJpaTemplate()
+					.executeFind(
+							new SkuMaxResult<Sku>(min, maxResult,
+									"Select K from Sku K"));
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 		}
-		
 		return skus;
 	}
-	
+
 	private static Logger log = Logger.getLogger(SkuDAOImp.class);
 }
