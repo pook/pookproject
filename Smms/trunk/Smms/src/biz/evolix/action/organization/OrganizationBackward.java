@@ -10,7 +10,7 @@ import org.apache.struts2.convention.annotation.Result;
 
 import biz.evlix.customconst.ConstType;
 import biz.evolix.gen.Generate;
-import biz.evolix.model.Node1;
+import biz.evolix.model.bean.UserBean;
 import biz.evolix.service.OrchartService;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -23,7 +23,7 @@ public class OrganizationBackward extends ActionSupport {
 	private OrchartService orchartService;	
 	private Integer nodeId;
 	private Integer back;
-	private List<Node1> teams;
+	private List<UserBean> teams;
 	private List<Integer> level;
 	private static final long serialVersionUID = -7992937997674968155L;
 	private static Logger log = Logger
@@ -38,12 +38,11 @@ public class OrganizationBackward extends ActionSupport {
 
 	private void setTeamOrg(long u) {
 		setTeams(orchartService.getTeamLevel(u));
-		setLevel(orchartService.levelCommissions(getTeams()));
+		setLevel(orchartService.levelCommissions());
 	}
 
 	public String getJSON() throws Exception {	
 		long c = -2L;
-		System.out.println("nnnn "+getNodeId());
 		if(getBack() ==ConstType.BACKWARD){
 			c = backward(getNodeId());
 		}else{
@@ -72,11 +71,11 @@ public class OrganizationBackward extends ActionSupport {
 		this.orchartService.init();
 	}
 
-	public void setTeams(List<Node1> teams) {
+	public void setTeams(List<UserBean> teams) {
 		this.teams = teams;
 	}
 
-	public List<Node1> getTeams() {
+	public List<UserBean> getTeams() {
 		return teams;
 	}
 

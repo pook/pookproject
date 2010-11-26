@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sjg" uri="/struts-jquery-grid-tags"%>
+<%@ taglib prefix="sjg" uri="/struts-jquery-grid-tags"%> 
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
+div#div4 div {
+	clear: both;
+}
 </style>
 <script type="text/javascript">
 	
@@ -16,7 +19,7 @@
 <sj:div id="div4">
 
 	<table
-		style="align: center; width:820px; margin-left: 100px; border: px solid #000000; margin-top: 50px"
+		style="align: center; width: 924px; margin-left: 60px; border: px solid #000000; margin-top: 50px"
 		cellspacing="10px">
 		<tr>
 			<s:div id="gridinfo"></s:div>
@@ -24,7 +27,7 @@
 				<sj:div id="div1"></sj:div>
 				<sj:div id="div2">
 					<s:url id="remoteurl" action="json-ordering" />
-					<s:url id="remote2url" action="json-grid-purchese" />					
+					<s:url id="remote2url" action="json-grid-purchese" />
 					<s:url id="selectskuurl" action="json-customer-loadskuss" />
 					<s:url id="editpurcheseurl" action="edit-grid-purchese" />
 					<s:url id="editorderurl" action="edit-grid-order" />
@@ -33,32 +36,12 @@
 						navigatorSearchOptions="{sopt:['eq','ne','lt','gt']}"
 						navigatorAddOptions="{height:280,reloadAfterSubmit:true}"
 						navigatorEditOptions="{height:280,reloadAfterSubmit:false}"
-						navigatorEdit="false" navigatorView="false" navigatorDelete="true"
+						navigatorEdit="true" navigatorView="false" navigatorDelete="true"
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
-						gridModel="gridModel" rowList="10,15,20" rowNum="15" width="820"
-						editurl="%{editorderurl}" editinline="true" 
-						onSelectRowTopics="rowselect" rownumbers="false">
-						<sjg:grid id="subgridtable" subGridUrl="%{remote2url}"
-							dataType="json" gridModel="gridModel" rowNum="-1"
-							navigator="true" editurl="%{editpurcheseurl}" navigator="true"
-							rownumbers="true" width="750"
-							navigatorAddOptions="{height:280,reloadAfterSubmit:true}"
-							navigatorEditOptions="{height:280,reloadAfterSubmit:false}"
-							navigatorEdit="true" navigatorView="false" navigatorDelete="true"
-							navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}">
-							<sjg:gridColumn name="sku.sid" title="รหัสผสิตภัณฑ์" width="300" 
-							/>
-							<sjg:gridColumn name="sku.name"   title="ชื่อผสิตภัณฑ์" width="300" edittype="select" 
-						  editable="true" editoptions ="{ dataUrl : '%{selectskuurl}' }"   />
-							<sjg:gridColumn name="sku.description" 
-								title="รายละเอียด ผลิตภัณฑ์" sortable="false" width="330" />
-							<sjg:gridColumn name="quantity" title="จำนวน" editable="true" required="true" editrules="{integer:true,minValue:1,required:true}"
-								formatter="integer" />
-							<sjg:gridColumn name="purchesePrice" title="ราคา"
-								formatter="currency" align="right" />
-							<sjg:gridColumn name="psv" title="smile value" align="center"
-								formatter="integer" />
-						</sjg:grid>
+						gridModel="gridModel" rowList="10,15,20" rowNum="15" width="924"
+						editurl="%{editorderurl}" editinline="true"
+						onSelectRowTopics="rowselect">
+						
 						<sjg:gridColumn name="orderId" index="orderId"
 							title="sale order ID" formatter="integer" sortable="true" />
 						<sjg:gridColumn name="user.userId" title="รหัสสมาชิก"
@@ -70,19 +53,42 @@
 							formatter="currency" />
 						<sjg:gridColumn name="totalSv" index="totalPV"
 							title="Total Smile Value" formatter="integer" width="235" />
+							
+							<sjg:grid id="subgridtable" subGridUrl="%{remote2url}"
+							gridModel="gridModel" rowNum="-1" navigator="true"
+							rownumbers="true" width="650"
+							userDataOnFooter="true" navigatorAdd="true" 
+							>
+							<sjg:gridColumn name="sku.sid" title="รหัสผสิตภัณฑ์" width="300"
+								index="sku.sid" />
+							<sjg:gridColumn name="sku.name" title="ชื่อผสิตภัณฑ์"
+								edittype="select" editable="true"
+								editoptions="{ dataUrl : '%{selectskuurl}' }" />
+							<sjg:gridColumn name="sku.description"
+								title="รายละเอียด ผลิตภัณฑ์" sortable="false" />
+							<sjg:gridColumn name="quantity" title="จำนวน" editable="true"
+								required="true"
+								editrules="{integer:true,minValue:1,required:true}"
+								formatter="integer" />
+							<sjg:gridColumn name="purchesePrice" title="ราคา"
+								formatter="currency" align="right" />
+							<sjg:gridColumn name="psv" title="smile value" align="center"
+								formatter="integer" />
+						</sjg:grid>
 					</sjg:grid>
-					<br />				
+					
+					<br />
 					<sj:submit id="grid_edit_addbutton" value="Add New"
 						onClickTopics="rowadd" button="true" />
 					<sj:submit id="grid_edit_searchbutton" value="Search"
 						onClickTopics="searchgrid" button="true" />
 					<sj:submit id="grid_edit_colsbutton" value="Show/Hide Columns"
-						onClickTopics="showcolumns" button="true" />					
+						onClickTopics="showcolumns" button="true" />
 					<sj:a id="ajaxlink" href="%{ajax}" indicator="indicator"
 						targets="div4" button="true" buttonIcon="ui-icon-gear">
 	สั่งสินค้า
 	</sj:a>
-	<sj:a id="ajaxlink2" href="%{prochesedetail}" indicator="indicator"
+					<sj:a id="ajaxlink2" href="%{prochesedetail}" indicator="indicator"
 						targets="div4" button="true" buttonIcon="ui-icon-gear">
 	ดูประวัติการสั่งชื้อ
 	</sj:a>

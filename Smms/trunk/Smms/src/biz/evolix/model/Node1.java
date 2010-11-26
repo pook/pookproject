@@ -30,7 +30,7 @@ public class Node1 implements java.io.Serializable{
 	@Column(name = "COMMISSIONS")
 	private Integer commissions = 0;
 	@Column(name="STATUS")
-	private Character status;
+	private Character status = 'V';
 	public Node1() {
 		super();
 	}

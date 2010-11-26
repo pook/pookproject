@@ -18,7 +18,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class FetchUpline extends ActionSupport {
 
-	private Map<Long,String>uplines =new HashMap<Long,String>();
+	private Map<String,String>uplines =new HashMap<String,String>();
 	private RegisterService registerService;
 	private static final long serialVersionUID = 2403583800756482378L;
 
@@ -30,9 +30,7 @@ public class FetchUpline extends ActionSupport {
 	}
 	public String getJSON() throws Exception {
 		Collection<Node1> c = registerService.listUpline();		
-		for(Node1 n:c ){
-			uplines.put(n.getNId(), n.getDisplayName());
-		}
+		for(Node1 n:c )uplines.put(n.getNId().toString(), n.getDisplayName());		
 		return execute();
 	}
 
@@ -40,12 +38,10 @@ public class FetchUpline extends ActionSupport {
 		super();
 		this.registerService = registerService;
 	}
-	public Map<Long, String> getUplines() {
+	public Map<String, String> getUplines() {
 		return uplines;
 	}
-	public void setUplines(Map<Long, String> uplines) {
+	public void setUplines(Map<String, String> uplines) {
 		this.uplines = uplines;
 	}
-	
-
 }

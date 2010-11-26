@@ -12,10 +12,15 @@ public class ConstType {
 	public static final int BACKWARD = 1;
 	public static final int BACKWARD_6 = 6;
 	public static final int MIN_SV = 399; // compute sv for commission * 10% per
-											// mount
+	public static final int COMMISION_BONUS = 99999;										// mount
 	public static final String BLANK = " ";
 	public static final int NOT_FOUND = -2;
 	public static final int NOT_ALLOW = -3;
 	public static final String MEMBER_NOT_FOUND = "Member not found";
 	public static final String MEMBER_NOT_ALLOW = "Not Allow for Member";
+	public static final Character STATUS_VACANT = 'V';
+	public static final Character STATUS_ACTIVE = 'A';
+	public static final Character STATUS_INACTIVE = 'I';
+	public static final String DEFAULT_PW = "b60d121b438a380c343d5ec3c2037564b82ffef3";
+	
 }

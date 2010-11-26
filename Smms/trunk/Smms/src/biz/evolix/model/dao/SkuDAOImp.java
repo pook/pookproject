@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import biz.evolix.model.Sku;
+import biz.evolix.model.dao.callback.SkuMaxResult;
 
 @Repository
 @Transactional
@@ -52,6 +53,17 @@ public class SkuDAOImp extends JpaDaoSupport implements SkuDAO {
 	public List<Sku> find(int from, int to) throws NullPointerException {
 		return getJpaTemplate().find(
 				"select K from Sku K where k.sid >?1 and k.sid <?2", from, to);
+	}
+	@SuppressWarnings("unchecked")
+	public List<Sku> findLimit(int from, int to) throws NullPointerException {
+		List<Sku>skus = null;
+		try{
+			skus = getJpaTemplate().executeFind(new SkuMaxResult<Sku>(1,5,"Select K from Sku K"));
+		}catch (Exception e) {
+			log.error(e.getMessage(),e);
+		}
+		
+		return skus;
 	}
 	
 	private static Logger log = Logger.getLogger(SkuDAOImp.class);

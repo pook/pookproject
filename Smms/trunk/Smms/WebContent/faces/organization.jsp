@@ -7,8 +7,8 @@
 <link href="styles/or-chart.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/jquery.validation.js"></script>
 <script type="text/javascript">
-	var jsondat = "json-organization.action";
-	var jsonbw = "json-organization-backward";
+	var jsondat = "json-organization.action";     //
+	var jsonbw = "json-organization-backward";    //
 	var jsonsearch = "json-organization-search-member";
 	$(function() {
 		//$("#messageError").removeClass("ui-state-error ui-corner-all");		
@@ -17,13 +17,13 @@
 		});
 	});
 	function orgJSON(data) {
-
 		var x = $(popuphtml(1));
-		var hideDelay = 500;
+		var hideDelay = 1;
 		var hideTimer = null;
 		var backward = 0;
-		var dat = data;
+		var dat = data;		
 		loopteamschild(data);
+		fetchlevel(dat.level);
 		function cmouseover() {
 			if (hideTimer)
 				clearTimeout(hideTimer);
@@ -32,11 +32,23 @@
 			var g = null;
 			g = $(this).attr("id");
 			var idx = g.substring(1);
-			var txt = dat.teams[idx - 1].user.userId;
-			if (txt == null)
-				$("#name1").text("dat  ");
-			else
-				$("#name1").empty().append("dat  " + txt);
+			var txt = dat.teams[idx - 1].userId;			
+			var txt1 = dat.teams[idx - 1].displayName;
+			var img = '';
+			if(dat.teams[idx - 1].status=='A'){
+				img = $(imgactive());
+			}else if(dat.teams[idx - 1].status=='I'){
+				img = $(imginactive());
+			}else{
+			}
+			if (txt == null || txt=='undefine'|| txt.length<3){
+				return ;
+			}
+			else{
+				$("#name1").empty().append("" + txt1);
+				$("#nid").empty().append("" + txt);
+				$("#status").empty().append(img);
+			}	
 			$("body").append(x);
 			if (g == "n1") {
 				x.css({
@@ -47,7 +59,7 @@
 				});
 			} else {
 				x.css({
-					"z-index" : "100000",
+					"z-index" : "1000000",
 					"height" : "50px",
 					left : (pos.left + (width + 19)) + 'px',
 					top : (pos.top - 25) + 'px'
@@ -61,7 +73,7 @@
 			var idx = parseInt(g.substring(1));
 			if (idx > dat.teams.length)
 				return;
-			var nid = dat.teams[idx - 1].NId;
+			var nid = dat.teams[idx - 1].nodeId;
 			$.ajax({
 				type : "get",
 				url : jsondat,
@@ -69,6 +81,7 @@
 				success : function(data1) {
 					dat = data1;
 					loopteamschild(dat);
+					fetchlevel(dat.level);
 				}
 			});
 		}
@@ -94,6 +107,7 @@
 					}
 					dat = data1;
 					loopteamschild(dat);
+					fetchlevel(dat.level);
 					$("#searchuser").empty().val("");
 				}
 			});
@@ -342,6 +356,7 @@
 				success : function(data1) {
 					dat = data1;
 					loopteamschild(dat);
+					fetchlevel(dat.level);
 				}
 			});
 		}
@@ -350,21 +365,20 @@
 			$.ajax({
 				type : "get",
 				url : jsonbw,
-				data : "nodeId=" + dat.teams[0].NId + "&back=" + back,
+				data : "nodeId=" + dat.teams[0].nodeId + "&back=" + back,
 				success : function(data1) {
 					dat = data1;
 					loopteamschild(dat);
+					fetchlevel(dat.level);
 				}
 			});
 		}
 		function backmouseclick1() {
-
 			backmouseclick(1);
 		}
 		function backmouseclick6() {
 			backmouseclick(6);
 		}
-
 		function cmouseout(data) {
 			if (hideTimer)
 				clearTimeout(hideTimer);
@@ -379,7 +393,12 @@
 			if (idx >= 15)
 				return;
 			$("#n" + (idx + 1)).empty().append(
-					"<font size='-2'>" + value.user.userId + "</font>");
+					"<font size='-2'>" + value.userId + "</font>");
+		});
+	} 
+	function fetchlevel(data1){
+		$.each(data1, function(idx, value) {
+			$("#lv"+(idx+1)).empty().append("<font size='-1'>"+value+ "</font><strong> SV</strong>");
 		});
 	}
 	function clearteams() {
@@ -389,7 +408,7 @@
 	}
 	function popuphtml(idx) {
 		var x = "<div id='personPopupContainer'>"
-				+ "<table id ='tablepopup' width='' border='0'  cellspacing='0' cellpadding='0' align='center' class='personPopupPopup'>"
+				+ "<table id ='tablepopup' width='300' border='0'  cellspacing='0' cellpadding='0' align='center' class='personPopupPopup'>"
 				+ "<tr>"
 				+ "<td class='corner topLeft'></td>"
 				+ "<td class='top'></td>"
@@ -400,15 +419,21 @@
 				+ "<td>"
 				+ "<table>"
 				+ "<tr>"
-				+ "<td ><img id='status' src='images/aaa.gif' style='height:24px;width:24px;border:none'/></td>"
-				+ "<td><font size='-1'><div id='name1' >" + idx
-				+ "</div><div id='nid' >bb</div></font>"
+				+ "<td ><div id='status'>img</div></td>"
+				+ "<td><div id='name1' >" + idx
+				+ "</div><div id='nid'>bb</div>"
 				+ "</td> </tr></table></td> <td class='right'></td>"
 				+ "</tr><tr><td class='corner bottomLeft'></td>"
 				+ "<td class='bottom'></td>"
 				+ " <td class='corner bottomRight'></td></tr>" + "</table>"
 				+ "</div>";
 		return x;
+	}
+	function imgactive(){
+		 return "<img  src='images/Active.png' style='height:24px;width:24px;border:none'/>";
+	}
+	function imginactive(){
+		 return "<img  src='images/Inactive.png' style='height:24px;width:24px;border:none'/>";
 	}
 </script>
 <div class="headernode" id="headnode">
@@ -454,6 +479,15 @@
 </div>
 </div>
 <!-- header node -->
+<div class="rootnode" id="rn">
+<div class="nodeleft" id="nl">
+    <div class="llevel" id="lv1">l1</div>	
+    <div class="llevel" id="lv2">l2</div>	
+    <div class="llevel" id="lv3">l3</div>
+    <div class="llevel" id="lv4">l4</div>
+    <div class="llevel" id="lv5">l5</div>
+    <div class="llevel" id="lv6">l6</div>
+  </div>
 
 <div class="mainnode" id="mainnode">
 <div class="level" id="l1">
@@ -539,7 +573,7 @@
 <div class="node1" id="n62">n62</div>
 <div class="node1" id="n63">n63</div>
 </div>
-
+</div>
 
 </div>
 <div id="dis"></div>

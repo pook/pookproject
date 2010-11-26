@@ -8,6 +8,7 @@
 <script type="text/javascript">
 function xxx(){
 	$("#test").html("bbbbb") ; 
+	alert("bbbbbbbbbbbbbb");
 }
 </script>
 <div id="test"></div>
@@ -127,7 +128,7 @@ function xxx(){
 							<sjg:gridColumn name="a" index="productDetail" title="admin"
 								edittype="checkbox" sortable="false" editable="true"
 								formatter="checkbox" align="center" />
-							<sjg:gridColumn name="b" index="price" title="staff" onselect="xxx" onChangeTopics="xxx"
+							<sjg:gridColumn name="b" index="price" title="staff" onselect="xxx()" onChangeTopics="xxx()"
 								sortable="false" edittype="checkbox" editable="true"
 								formatter="checkbox" align="center" />
 							<sjg:gridColumn name="c" index="unit" title="member" 

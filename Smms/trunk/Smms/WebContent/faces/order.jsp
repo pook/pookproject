@@ -2,12 +2,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sjg" uri="/struts-jquery-grid-tags"%>
-<%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
+<%@ taglib prefix="sjg" uri="/struts-jquery-grid-tags"%><%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <s:property value="echo" escape="%{escape}" />
 <style type="text/css">
 div#div4 div{
 	clear: both;
+	
 }
 </style>
 <sj:div id="div4">

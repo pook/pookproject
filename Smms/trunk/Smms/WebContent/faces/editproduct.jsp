@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sjg" uri="/struts-jquery-grid-tags"%>
+<%@ taglib prefix="sjg" uri="/struts-jquery-grid-tags"%> 
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
@@ -11,7 +11,7 @@ div#div4 div {
 </style>
 <sj:div id="div4">
 	<table id = "table"
-		style="align: center; width:930px; margin-left: 70px; border: 1px solid #000000; margin-top: 50px"
+		style="align: center; width:924px; margin-left: 60px; border: 0px solid #000000; margin-top: 50px"
 		cellspacing="10px">
 		<tr>
 			<td><sj:div id="div0">
