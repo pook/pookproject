@@ -7,27 +7,24 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.springframework.orm.jpa.JpaCallback;
-
-import biz.evolix.model.Sku;
-
 public class SkuMaxResult<T> implements JpaCallback<List<T>> {
 
 	@Override
+	 @SuppressWarnings("unchecked")
 	public List<T> doInJpa(EntityManager em) throws PersistenceException {
-		  Query query = em.createQuery(sqlQuery);
+		  Query query = em.createNamedQuery(nameQuery);
 	      query.setFirstResult(min);
-	      query.setMaxResults(max);
-	      @SuppressWarnings("unchecked")
-		  List<T> results = query.getResultList();
-	      return results;		
+	      query.setMaxResults(max);	     
+		  List<T> r = query.getResultList();
+	      return r;		
 	}
 	private int max;
 	private int min;
-	private String sqlQuery;
-	public SkuMaxResult(int min, int max, String sqlQuery) {
+	private String nameQuery;
+	public SkuMaxResult(int min, int max, String nameQuery) {
 		super();
 		this.max = max;
 		this.min = min;
-		this.sqlQuery = sqlQuery;
+		this.nameQuery = nameQuery;
 	}
 }

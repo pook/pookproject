@@ -37,8 +37,7 @@ public class AuthoritiesDAOImp extends JpaDaoSupport implements AuthoritiesDAO {
 
 	@SuppressWarnings("unchecked")
 	public Collection<Authorities> findAuth(final String id) {
-		return (Collection<Authorities>) getJpaTemplate().find(
-				"select A from Authorities A where A.user.userId =?1 ", id);
+		return (Collection<Authorities>) getJpaTemplate().findByNamedQuery("findAuthorities", id);
 	}
 	
 	@Override

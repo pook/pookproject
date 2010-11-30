@@ -8,8 +8,6 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.smms.service.Item;
-import com.smms.service.ItemDAO;
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
 
@@ -21,7 +19,7 @@ public class SmmsRole extends ActionSupport {
 
 	@Action(value = "/jsonsmmsrole", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
-		gridModel = ItemDAO.getItems();
+		
 
 		
 		total = (int) Math.ceil((double) records / (double) rows);
@@ -32,7 +30,7 @@ public class SmmsRole extends ActionSupport {
 		return execute();
 	}
 
-	private List<Item> gridModel;
+	private List<Object> gridModel;
 	private Integer rows = 0;
 	private Integer page = 0;
 	private String sord;
@@ -43,10 +41,10 @@ public class SmmsRole extends ActionSupport {
 	private Integer total = 0;
 	private Integer records = 0;
 
-	public List<Item> getGridModel() {
+	public List<Object> getGridModel() {
 		return gridModel;
 	}
-	public void setGridModel(List<Item> gridModel) {
+	public void setGridModel(List<Object> gridModel) {
 		this.gridModel = gridModel;
 	}
 	public Integer getRows() {

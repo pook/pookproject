@@ -2,6 +2,7 @@ package biz.evolix.action.managesku;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -18,19 +19,26 @@ import com.opensymphony.xwork2.ActionSupport;
 public class EditProduct extends ActionSupport {
 
 	private static final long serialVersionUID = 1720423244713713847L;
-
+	private static Logger log = Logger.getLogger(EditProduct.class);
+	
 	@Action(value = "/jsoneditproduct", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
+		try{
+			setRecord( inventoryService.count());		
+			int to = (getRows() * getPage());
+			int from = to - getRows();		
+			setGridModel(inventoryService.find(from ,getRecord() ));
+			setTotal();
+		}catch (Exception e) {
+			log.error(e.getMessage(),e);
+			return ERROR;
+		}
 		return SUCCESS;
 	}
 
 	public String getJSON() throws Exception {		
-		setRecord( inventoryService.count());		
-		int to = (getRows() * getPage());
-		int from = to - getRows();		
-		setGridModel(inventoryService.find(from ,getRecord() ));
-		setTotal();
-		return execute();
+		
+		return SUCCESS;
 	}
 
 	private InventoryService inventoryService;

@@ -48,6 +48,22 @@ public class OrderDAOImp extends JpaDaoSupport implements OrderDAO {
 		}
 		return null;		
 	}
+	 
 	
-	private static Logger log = Logger.getLogger(OrderDAOImp.class);	
+	
+	private static Logger log = Logger.getLogger(OrderDAOImp.class);
+
+
+
+	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int pSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}	
 }

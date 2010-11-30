@@ -10,8 +10,7 @@
 	var jsondat = "json-organization.action";     //
 	var jsonbw = "json-organization-backward";    //
 	var jsonsearch = "json-organization-search-member";
-	$(function() {
-		//$("#messageError").removeClass("ui-state-error ui-corner-all");		
+	$(function() {		
 		$.getJSON(jsondat, function(data) {
 			orgJSON(data);
 		});

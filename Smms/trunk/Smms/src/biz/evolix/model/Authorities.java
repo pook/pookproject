@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 import javax.persistence.Column;
@@ -15,6 +16,10 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.DiscriminatorColumn;
 
 @Entity
+@NamedQuery(
+		name="findAuthorities",
+	    query="select A from Authorities A where A.user.userId =?1"
+)
 @Table(name = "AUTHORITIES")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING, length = 10)

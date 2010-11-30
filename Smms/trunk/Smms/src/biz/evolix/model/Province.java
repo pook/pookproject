@@ -3,11 +3,12 @@ package biz.evolix.model;
 import java.lang.String;
 import javax.persistence.*;
 
-/**
- * Entity implementation class for Entity: Province
- * 
- */
+
 @Entity
+@NamedQuery(
+	    name="findAllProvince",
+	    query="select Object(P) FROM Province P"
+)
 @Table(name="PROVINCE")
 public class Province implements java.io.Serializable {
 

@@ -24,7 +24,7 @@ public class UpdateComServiceImp implements UpdateComService {
 		}
 		if (n != null) {
 			int sv = o.getTotalSv();			
-			n.setSv(sv);
+			n.incSv(sv);
 			node1DAO.update(n);
 			up(Generate.getParentId((n.getNId())));
 		}

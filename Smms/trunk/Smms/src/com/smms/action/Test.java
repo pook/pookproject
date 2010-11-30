@@ -1,6 +1,6 @@
 package com.smms.action;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -9,7 +9,6 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.smms.service.Customer;
 
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
@@ -24,25 +23,13 @@ public class Test extends ActionSupport {
 		private String name;
 	@Action(value = "/json-test", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
-		if (gridModel == null) {
-			List<Customer> l = new ArrayList<Customer>();
-			l.add(new Customer(1, "aaa"));
-			l.add(new Customer(3, "bbb"));
-			l.add(new Customer(4, "bbb"));
-			l.add(new Customer(5, "bbb"));
-			setGridModel(l);
-			System.out.println("yyyyy");
-		} else {
-			System.out.println(getGridModel());
-			gridModel.add(new Customer(id,name));
-			System.out.println("xxxx"+id+"uuu"+name);
-		}
+		
 		return SUCCESS;
 	}
 
 	@Action(value = "/json-edit", results = { @Result(name = "success", type = "json") })
 	public String execute1() throws Exception {
-		//new Customer(2,"xxxx");
+		//new Object(2,"xxxx");
 		System.out.println("x>"+id+"d>"+name);
 		return execute();
 	}
@@ -52,7 +39,7 @@ public class Test extends ActionSupport {
 		return execute();
 	}
 
-	private List<Customer> gridModel;
+	private List<Object> gridModel;
 
 	private Integer rows = 0;
 	private Integer page = 0;
@@ -64,11 +51,11 @@ public class Test extends ActionSupport {
 	private Integer total = 0;
 	private Integer records = 0;
 
-	public List<Customer> getGridModel() {
+	public List<Object> getGridModel() {
 		return gridModel;
 	}
 
-	public void setGridModel(List<Customer> gridModel) {
+	public void setGridModel(List<Object> gridModel) {
 		this.gridModel = gridModel;
 	}
 

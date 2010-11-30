@@ -12,7 +12,7 @@ import biz.evolix.model.NodeDescription;
 import biz.evolix.model.Users;
 
 @Repository
-@Transactional(isolation=Isolation.READ_COMMITTED)
+@Transactional(isolation=Isolation.DEFAULT)
 public class RegisterDaoImp extends
 		org.springframework.orm.jpa.support.JpaDaoSupport implements
 		RegisterDAO {
@@ -67,8 +67,6 @@ public class RegisterDaoImp extends
 				log.error(e.getMessage(),e);
 		}
 		return d;	
-	}
-	
-	
+	}	
 	private static Logger log = Logger.getLogger(RegisterDaoImp.class);
 }

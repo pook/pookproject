@@ -2,6 +2,7 @@ package biz.evolix.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +10,11 @@ import javax.persistence.Column;
 
 
 @Entity
+@NamedQuery(
+	    name="findAllBrance",
+	    query="select Object(B) FROM Brance B"
+)
+
 @Table(name="BRANCE")
 public class Brance implements java.io.Serializable {
 	   

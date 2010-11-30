@@ -15,9 +15,9 @@ public class ProvinceDAOImp extends JpaDaoSupport implements ProvinceDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional
+	@Transactional(readOnly=true)
 	public List<Province> findAll()throws DataAccessException {
-		return (List<Province>)getJpaTemplate().find("select P from Province P");
+		return (List<Province>)getJpaTemplate().findByNamedQuery("findAllProvince");
 	}
 
 }

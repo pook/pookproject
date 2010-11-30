@@ -20,7 +20,7 @@ div#div4 div{
 				<sj:div id="div1"></sj:div>
 				<sj:div id="div2">
 					<s:url id="remoteurl" action="json-list-order1" />	<!-- ShowOrdered -->
-					<s:url id="subgridurl" action="json-list-purchese1" />													
+					<s:url id="subgridurl" action="json-list-purchese1" />																		
 					<sjg:grid id="gridedittable" caption="พระราม 3 " dataType="json"
 						href="%{remoteurl}" pager="true" 
 						navigator="true"
@@ -30,7 +30,7 @@ div#div4 div{
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
 						gridModel="gridModel" rowList="10,15,20" rowNum="15" width="880"						
 						onSelectRowTopics="rowselect" rownumbers="false">
-						<sjg:grid id="subgridtable"  subGridUrl="%{subgridurl}"
+						<sjg:grid id="subgridtable"  subGridUrl="%{subgridurl}"  
 							dataType="json" gridModel="gridModel" rowNum="-1"footerrow="true"					
 							rownumbers="true" width="750">
 							<sjg:gridColumn name="sku.sid" title="รหัสผสิตภัณฑ์" width="300" />

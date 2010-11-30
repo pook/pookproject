@@ -56,7 +56,7 @@ div#div4 div {
 							
 							<sjg:grid id="subgridtable" subGridUrl="%{remote2url}"
 							gridModel="gridModel" rowNum="-1" navigator="true"
-							rownumbers="true" width="650"
+							rownumbers="true" width="650" editurl="%{editpurcheseurl}"
 							userDataOnFooter="true" navigatorAdd="true" 
 							>
 							<sjg:gridColumn name="sku.sid" title="รหัสผสิตภัณฑ์" width="300"

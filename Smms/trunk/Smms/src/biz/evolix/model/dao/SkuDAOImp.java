@@ -46,15 +46,7 @@ public class SkuDAOImp extends JpaDaoSupport implements SkuDAO {
 	public Sku find(long id) throws NullPointerException {
 		return getJpaTemplate().find(Sku.class, id);
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	@Transactional(readOnly = true)
-	public List<Sku> find(int from, int to) throws NullPointerException {
-		return getJpaTemplate().find(
-				"select K from Sku K where k.sid >?1 and k.sid <?2", from, to);
-	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)
 	public List<Sku> findLimit(int min, int maxResult)
@@ -64,7 +56,7 @@ public class SkuDAOImp extends JpaDaoSupport implements SkuDAO {
 			skus = getJpaTemplate()
 					.executeFind(
 							new SkuMaxResult<Sku>(min, maxResult,
-									"Select K from Sku K"));
+									"findSku"));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}

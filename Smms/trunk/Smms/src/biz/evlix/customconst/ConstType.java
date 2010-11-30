@@ -1,6 +1,7 @@
 package biz.evlix.customconst;
 
 public class ConstType {
+	public static final long AUTO = -2L;
 	public static final String PERSISTENCE_UNIT = "SmmsPU";
 	public static final int MAX_NODE_SHOW = 32;
 	public static final String ADD = "add";
@@ -14,6 +15,7 @@ public class ConstType {
 	public static final int MIN_SV = 399; // compute sv for commission * 10% per
 	public static final int COMMISION_BONUS = 99999;										// mount
 	public static final String BLANK = " ";
+	public static final int ERROR = -1;
 	public static final int NOT_FOUND = -2;
 	public static final int NOT_ALLOW = -3;
 	public static final String MEMBER_NOT_FOUND = "Member not found";

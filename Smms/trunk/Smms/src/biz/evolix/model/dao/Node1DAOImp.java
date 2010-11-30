@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import biz.evolix.model.Node1;
 import biz.evolix.model.Users;
+import biz.evolix.model.dao.callback.FindNode1ByUserId;
+import biz.evolix.model.dao.callback.FindNodeFromUsers;
 
 @Repository
 @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED)
@@ -18,13 +20,13 @@ public class Node1DAOImp extends JpaDaoSupport implements Node1DAO {
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
-	public Node1 getNode1(Long node){
+	public Node1 getNode1(Long node) {
 		Node1 n = null;
 		try {
 			n = getJpaTemplate().find(Node1.class, node);
 			return n;
 		} catch (Exception e) {
-			log.error(e.getMessage());			
+			log.error(e.getMessage());
 		}
 		return n;
 	}
@@ -33,11 +35,9 @@ public class Node1DAOImp extends JpaDaoSupport implements Node1DAO {
 	@Transactional(readOnly = true)
 	public Node1 getNode1FromUser(Users u) throws NullPointerException,
 			DataAccessException {
-		return (Node1) getJpaTemplate().find(
-				"select N from Node1 N where N.user=?1", u).get(0);
-
+		return (Node1) getJpaTemplate()
+				.execute(new FindNodeFromUsers<Node1>(u));
 	}
-
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.DEFAULT)
 	public boolean update(Node1 node) throws DataAccessException {
@@ -48,7 +48,6 @@ public class Node1DAOImp extends JpaDaoSupport implements Node1DAO {
 			log.error(e.getMessage(), e);
 			throw new NullPointerException();
 		}
-
 	}
 
 	@Override
@@ -67,24 +66,13 @@ public class Node1DAOImp extends JpaDaoSupport implements Node1DAO {
 	@Override
 	@Transactional(readOnly = true)
 	public Node1 getNode1FromUserId(String u) throws DataAccessException {
-		Node1 n = null;		
+		Node1 n = null;
 		try {
-			n = (Node1)getJpaTemplate().find("select N from Node1 N where N.user.userId=?1",u).get(0);
+			n = (Node1) getJpaTemplate().executeFind(
+					new FindNode1ByUserId<Node1>(u));
 		} catch (Exception e) {
-			log.error(e.getMessage(), e);		
+			log.error(e.getMessage(), e);
 		}
 		return n;
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public boolean checkDisplayName(String displayName) {
-		Node1 n = null;		
-		try {
-			n = (Node1)getJpaTemplate().find("select N from Node1 N where N.displayName=?1",displayName).get(0);
-		} catch (Exception e) {
-			log.error(e.getMessage());		
-		}		
-		return (n==null)?true:false;
 	}
 }

@@ -23,11 +23,7 @@ public class InventoryServiceImp  implements InventoryService{
 	public SkuDAO getSkuDAO() {
 		return skuDAO;
 	}
-	@Override
-	public List<Sku> findAllSku() {
-		return skuDAO.showAllItem();
-	}
-	@Override
+		@Override
 	public void addSku(Sku sku) {
 		skuDAO.addItem(sku);		
 	}

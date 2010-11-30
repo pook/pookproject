@@ -1,43 +1,25 @@
 package biz.evolix.action.register;
 
+import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
+import biz.evlix.customconst.ConstType;
 import biz.evolix.model.Node1;
 import biz.evolix.model.Users;
 import biz.evolix.service.RegisterService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-/*
- import com.opensymphony.xwork2.validator.annotations.ExpressionValidator;
- import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
- import com.opensymphony.xwork2.validator.annotations.Validations;
- import com.opensymphony.xwork2.validator.annotations.ValidatorType;
- */
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
-/*
- * @Validations(requiredStrings = {
- * 
- * @RequiredStringValidator(fieldName = "password", type = ValidatorType.FIELD,
- * message = "Password is required"),
- * 
- * @RequiredStringValidator(fieldName = "newpassword", type =
- * ValidatorType.FIELD, message = "New Password is required"),
- * 
- * @RequiredStringValidator(fieldName = "renewpassword", type =
- * ValidatorType.FIELD, message = "Re-New Password is required") }, expressions
- * = { @ExpressionValidator(expression = "newpassword!=renewpassword", message =
- * "Password miss match") })
- */
 public class Register extends ActionSupport {
 
-	private static final long serialVersionUID = -5490626071707862488L;
-	private static final Long AUTO = -2L;
-	
+	private static Logger log = Logger.getLogger(Register.class);
+	private static final long serialVersionUID = -5490626071707862488L;	
+
 	private String name;
 	private String surename;
 	private String displayName;
@@ -55,41 +37,82 @@ public class Register extends ActionSupport {
 	private String brance;
 	private String typeOfAccount;
 	private String echo;
-
+	private String upline;
 	private RegisterService registerService;
 
-	@Action(value = "/register", results = {
-			@Result(location = "register.jsp", name = "error"),
-			@Result(location = "register.jsp", name = "success") })
+	@Action(value = "/save", results = {
+			@Result(location = "echo/error.jsp", name = "error"),
+			@Result(location = "echo/success.jsp", name = "success") })
 	public String execute() throws Exception {
+		return save();
+	}
+
+	private String save() throws Exception {
+		boolean ck = check();
+		long ck2 = check2();
+		if (ck && ck2 ==ConstType.NOT_FOUND) {
+			setEcho("true");
+			addActionError("Bad Request !!");
+			return ERROR;
+		} else {
+			Users user = new Users();
+			Node1 n = new Node1();
+			n.setDisplayName(getDisplayName());
+			user.setAddress(getAddress());
+			user.setAddress2(getAddress2());
+			user.setBank(getBank());
+			user.setBankAccount(getBankAccount());
+			user.setPassword(ConstType.DEFAULT_PW);
+			user.setBrance(getBrance());
+			user.setCodeIdentification(getCodeIdentification());
+			user.setEmail(getEmail());
+			user.setInviter(getInviter());
+			user.setName(getName());
+			user.setProvince(getProvince());
+			user.setSurename(getSurename());
+			user.setTel(getTel());
+			user.setTel2(getTel2());
+			user.setTypeOfAccount(getTypeOfAccount());
+			n.setUser(user);
+			registerService.save(n, ck2);
+			setEcho("true");
+			addActionMessage("Success !!");
+		}
 		return SUCCESS;
 	}
 
-	@Action(value = "/save", results = { @Result(location = "register.jsp", name = "success") })
-	public String save() throws Exception {
-		// System.out.println("xxx"+tel2);
-		Users user =new Users();
-		Node1 n = new Node1();
-		n.setDisplayName(getDisplayName()+Math.random());		
-		user.setAddress(getAddress());
-		user.setAddress2(getAddress2());
-		user.setBank(getBank());
-		user.setBankAccount(getBankAccount());
-		user.setPassword("b60d121b438a380c343d5ec3c2037564b82ffef3");
-		user.setBrance(getBrance());
-		user.setCodeIdentification(getCodeIdentification());
-		user.setEmail(getEmail());
-		user.setInviter(getInviter());
-		user.setName(getName());		
-		user.setProvince(getProvince());
-		user.setSurename(getSurename());
-		user.setTel(getTel());
-		user.setTel2(getTel2());
-		user.setTypeOfAccount(getTypeOfAccount());
-		n.setUser(user);
-		registerService.save(n,AUTO);		
-		return execute();
-
+	private boolean check() {
+		boolean i = true;
+		try {
+			i = getAddress().trim().length()>3;			
+			i &= getBank().trim().length()>3;			
+			i &= getBankAccount().trim().length()>3;			
+			i &= getBrance().trim().length()>0;			
+			i &= getBranceCard().trim().length()>0;			
+			i &= (getCodeIdentification().trim().length()>12);			
+			i &= getDisplayName().trim().length()>3;			
+			i &= getInviter().trim().length()>10;			
+			i &= getName().trim().length()>3;			
+			i &= getProvince().trim().length()>1;			
+			i &= getSurename().trim().length()>3;
+			i &= (getTel().trim().length() >8);
+			getEmail().length();
+			getTel2().length();
+			getAddress2().length();
+		} catch (NullPointerException e) {
+			log.error(e.getMessage(), e);
+			return false;
+		}		
+		return i;
+	}
+	private long check2(){
+		long l = -1;
+		try{
+			l =Long.parseLong(getUpline()) ;
+		}catch(NumberFormatException e){
+			
+		}
+		return l;		
 	}
 
 	public String getEcho() {
@@ -230,8 +253,15 @@ public class Register extends ActionSupport {
 
 	public Register(RegisterService registerService) {
 		super();
-		this.registerService=registerService;
+		this.registerService = registerService;
 	}
 
-	
+	public void setUpline(String upline) {
+		this.upline = upline;
+	}
+
+	public String getUpline() {
+		return upline;
+	}
+
 }

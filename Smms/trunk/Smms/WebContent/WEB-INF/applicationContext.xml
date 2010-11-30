@@ -66,12 +66,21 @@
 	<bean id="orderDAO" class="biz.evolix.model.dao.OrderDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
+	<bean id="checkNameDAO" class="biz.evolix.model.dao.CheckDNameDAOImp" scope="prototype">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	
 	<bean id="orderJdbcDAO" class="biz.evolix.model.dao.OrderJdbcDAOImp">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
 	<bean id="userDetail" class="biz.evolix.secure.UserDetail" />
-
+	<bean id="fetchProvince" class="biz.evolix.model.dao.ProvinceDAOImp" scope="singleton" >
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	<bean id="fetchBrance" class="biz.evolix.model.dao.BranceDAOImp" scope="singleton" >
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
 	<!-- ^^^^^^^^^^begin Faces action^^^^^^^^^^^^6 -->
 	<bean id="loadSkusAct" class="com.smms.action.LoadSkusAct" scope="prototype">
 		<constructor-arg ref="skuDAO" />
@@ -144,7 +153,18 @@
 		scope="session">
 		<constructor-arg ref="orderService" />
 	</bean>
-	
+	<bean id="fetchProvinceAction" class="biz.evolix.action.global.FetchProvinceJSON"
+		scope="singleton">
+		<constructor-arg ref="fetchProvince" />
+	</bean>
+	<bean id="fetchBranceAction" class="biz.evolix.action.global.FetchBranceJSON"
+		scope="singleton">
+		<constructor-arg ref="fetchBrance" />
+	</bean>
+	<bean id="checkNameAction" class="biz.evolix.action.register.CheckDisplayName"
+		scope="prototype">
+		<constructor-arg ref="checkNameDAO" />
+	</bean>
 	<!-- end faces action -->
 	<context:annotation-config />
 </beans>

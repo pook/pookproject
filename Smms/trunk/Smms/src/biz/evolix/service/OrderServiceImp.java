@@ -10,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import biz.evolix.model.Order;
 import biz.evolix.model.Purchese;
 import biz.evolix.model.dao.OrderDAO;
-import biz.evolix.model.dao.OrderJdbcDAO;
 import biz.evolix.secure.SmileUser;
 
 public class OrderServiceImp implements OrderService {
@@ -18,29 +17,19 @@ public class OrderServiceImp implements OrderService {
 	@Autowired
 	private OrderDAO orderDAO;
 
-	@Autowired
-	private OrderJdbcDAO orderJdbcDAO;
-
+	
 	private List<Order> orders;
 	private List<Purchese> purcheses;
 
-	@Override
+	
 	public int size() {
-		return getOrderJdbcDAO().size();
+		return getOrderDAO().size();
 	}
 
 	public int pSize() {
-		return getOrderJdbcDAO().pSize();
+		return getOrderDAO().pSize();
 	}
-
-	public void setOrderJdbcDAO(OrderJdbcDAO orderJdbcDAO) {
-		this.orderJdbcDAO = orderJdbcDAO;
-	}
-
-	public OrderJdbcDAO getOrderJdbcDAO() {
-		return orderJdbcDAO;
-	}
-
+	
 	public void setOrderDAO(OrderDAO orderDAO) {
 		this.orderDAO = orderDAO;
 	}

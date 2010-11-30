@@ -6,6 +6,7 @@ import java.util.HashSet;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import biz.evlix.customconst.ConstType;
 import biz.evolix.gen.Generate;
 import biz.evolix.model.Node1;
 import biz.evolix.model.NodeDescription;
@@ -29,6 +30,7 @@ public class RegisterServiceImp implements RegisterService {
 	private static final Collection<Node1> uplines = new HashSet<Node1>();
 	@Override
 	public void save(Node1 m,Long id) {
+		id =(id==ConstType.AUTO)?ConstType.AUTO:Generate.getLeftChildId(id);
 		Users u =insert(m,id);		
 		authoritiesDAO.authorization(u,Role.ROLE_MEMBER.name());
 	}

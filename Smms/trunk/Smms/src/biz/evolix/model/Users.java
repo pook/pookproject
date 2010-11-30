@@ -6,10 +6,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-/**
- * Entity implementation class for Entity: Member
- * 
- */
 @Entity
 @Table(name = "USERS")
 public class Users implements java.io.Serializable {

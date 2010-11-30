@@ -2,11 +2,13 @@ package biz.evolix.model;
 
 import javax.persistence.*;
 
-/**
- * Entity implementation class for Entity: Sku
- * 
- */
 @Entity
+@NamedQueries({
+	@NamedQuery(
+			name="findSku",
+		    query="Select K from Sku K"
+	)	
+})
 @Table(name = "SKU")
 public class Sku implements java.io.Serializable {
 
