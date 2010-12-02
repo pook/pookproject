@@ -12,7 +12,6 @@ div#div4 div {
 <script type="text/javascript">
 	
 </script>
-
 <s:url id="ajax" value="order-purchese" />
 <s:url id="prochesedetail" action="showordered" />
 
@@ -40,8 +39,7 @@ div#div4 div {
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
 						gridModel="gridModel" rowList="10,15,20" rowNum="15" width="924"
 						editurl="%{editorderurl}" editinline="true"
-						onSelectRowTopics="rowselect">
-						
+						onSelectRowTopics="rowselect">						
 						<sjg:gridColumn name="orderId" index="orderId"
 							title="sale order ID" formatter="integer" sortable="true" />
 						<sjg:gridColumn name="user.userId" title="รหัสสมาชิก"

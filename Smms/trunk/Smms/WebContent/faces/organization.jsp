@@ -4,7 +4,329 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 <link href="styles/patch_layout.css" rel="stylesheet" type="text/css" />
+<!-- 
 <link href="styles/or-chart.css" rel="stylesheet" type="text/css" />
+-->
+<style type="text/css">
+@CHARSET "UTF-8";
+div#headnode  {
+	clear: both;
+	margin: 5px;
+	left:500px;
+}
+div#bcontent {
+	clear: both;
+}
+div#nl div{	
+	clear:both;
+	#float:left;
+	width:50px;	
+	position:absolute;
+	top:115px;
+}
+.llevel#lv1{	
+	top:110px;
+}
+.llevel#lv2{
+	
+	top:210px;
+}
+.llevel#lv3{
+	z-index:10000;
+	top:310px;
+}
+.llevel#lv4{
+	z-index:10000;
+	top:410px;
+}
+.llevel#lv5{
+	z-index:10000;
+	top:510px;
+}
+.llevel#lv6{
+	z-index:10000;
+	top:610px;
+}
+
+#search {
+	
+}
+
+div#backward-buttom div {
+	float: left;
+	margin: 7px;
+}
+
+div#backward  {
+	width:160px;
+	
+}
+
+div#backward1 div {
+	
+}
+
+div#backward6 div {
+}
+
+div#mainnode div {
+	position:relative;	
+	float: left;
+	text-align: center;
+	width: 980px;	
+}
+
+div#mainnode {
+	background-image: url(../images/EmptyOrg1.jpg);	
+	width:980px;
+	height:460px;		
+}
+div#l1 div {
+	width: 100%;	
+	height: 120px;
+	top:29px;
+}
+
+div#n1 {
+	
+}
+
+div#l2 div {
+	width: 50%;
+	height: 90px;
+		
+}
+
+#n2 {
+	
+}
+
+#n3 {
+	position: absolute;
+	left:10px;
+}
+
+div#l3 div {
+	width: 25%;
+	height: 85px;
+}
+
+div#n4 {
+	
+}
+
+div#n5 {
+	
+}
+
+div#n6 {
+	
+}
+
+div#n7 {
+	
+}
+
+div#l4 div {
+	width: 12.5%;
+	height: 50px;
+}
+
+div#n8 {
+	
+}
+
+div#n9 {
+	
+}
+
+div#n10 {
+	
+}
+
+div#n11 {
+	
+}
+
+div#n12 {
+	
+}
+
+div#n13 {
+	
+}
+
+div#n14 {
+	
+}
+
+div#n15 {
+	
+}
+
+div#l5 div {
+	width: 6.25%;
+	height: 70px;
+}
+
+div#n16 {
+	
+}
+
+div#n17 {
+	
+}
+
+div#n18 {
+	
+}
+
+div#n19 {
+	
+}
+
+div#n20 {
+	
+}
+
+div#n21 {
+	
+}
+
+div#n22 {
+	
+}
+
+div#n23 {
+	
+}
+
+div#n24 {
+	
+}
+
+div#n25 {
+	
+}
+
+div#n26 {
+	
+}
+
+div#n27 {
+	
+}
+
+div#n28 {
+	
+}
+
+div#n29 {
+	
+}
+
+div#n30 {
+	
+}
+
+div#n31 {
+	
+}
+
+div#l6 div {
+	width: 3.125%;
+	height: 65px;
+}
+div#status {
+	clear:none;
+	max-width:24px
+}
+
+
+div#personPopupContainer div {
+	clear: none;
+	height: 40px;
+	background-color: #FFF;
+	min-width: 80px;
+}
+
+#personPopupContainer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: none;
+	z-index: 80000;
+	background-color: #FFF;
+}
+
+#tablepopup {
+	height: auto;
+	width: auto;
+}
+
+.personPopupPopup {
+	width: 180px;
+}
+
+#personPopupContent {
+	background-color: #FFF;
+	min-width: 170px;
+	min-height: 50px;
+}
+
+.personPopupPopup .personPopupImage {
+	margin: 5px;
+	margin-right: 15px;
+}
+
+.personPopupPopup .corner {
+	width: 19px;
+	height: 15px;
+}
+
+.personPopupPopup .topLeft {
+	background: url(images/balloon_topLeft.png) no-repeat;
+}
+
+.personPopupPopup .bottomLeft {
+	background: url(images/balloon_bottomLeft.png) no-repeat;
+}
+
+.personPopupPopup .left {
+	background: url(images/balloon_left.png) repeat-y;
+}
+
+.personPopupPopup .right {
+	background: url(images/balloon_right.png) repeat-y;
+}
+
+.personPopupPopup .topRight {
+	background: url(images/balloon_topRight.png) no-repeat;
+}
+
+.personPopupPopup .bottomRight {
+	background: url(images/balloon_bottomRight.png) no-repeat;
+}
+
+.personPopupPopup .top {
+	background: url(images/balloon_top.png) repeat-x;
+}
+
+.personPopupPopup .bottom {
+	background: url(images/balloon_bottom.png) repeat-x;
+	text-align: center;
+}
+
+div#name {
+	height: 8px;
+	width: 60px;
+}
+
+div#nid {
+	height: 8px;
+	width: 60px;
+}
+</style>
 <script type="text/javascript" src="js/jquery.validation.js"></script>
 <script type="text/javascript">
 	var jsondat = "json-organization.action";     //
@@ -488,7 +810,7 @@
     <div class="llevel" id="lv6">l6</div>
   </div>
 
-<div class="mainnode" id="mainnode">
+<div class="mainnode" id="mainnode" style="background-image: url(images/EmptyOrg1.jpg);position: absolute;margin-left: 70px;left: 50px;top: 120px">
 <div class="level" id="l1">
 <div class="node1" id="n1"></div>
 </div>

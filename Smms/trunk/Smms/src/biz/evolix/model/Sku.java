@@ -3,12 +3,8 @@ package biz.evolix.model;
 import javax.persistence.*;
 
 @Entity
-@NamedQueries({
-	@NamedQuery(
-			name="findSku",
-		    query="Select K from Sku K"
-	)	
-})
+@NamedQueries({ @NamedQuery(name = "findSku", query = "Select K from Sku K"),
+		@NamedQuery(name = "getSizeSku", query = "select count(o) from Sku o") })
 @Table(name = "SKU")
 public class Sku implements java.io.Serializable {
 

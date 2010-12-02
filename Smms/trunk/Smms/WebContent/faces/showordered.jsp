@@ -31,11 +31,11 @@ div#gridinfo div {
 						navigatorAdd="false"	
 						navigatorEdit="false"								
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
-						gridModel="gridModel" rowList="10,15,20" rowNum="15" width="820"						
-						onSelectRowTopics="rowselect" rownumbers="false">
-						<sjg:grid id="subgridtable"  subGridUrl="%{subgridurl}"
-							dataType="json" gridModel="gridModel" rowNum="-1"footerrow="true"					
-							rownumbers="true" width="750">
+						gridModel="gridModel" rowList="15,30" rowNum="15" width="820" 						
+						onSelectRowTopics="rowselect" >
+						<sjg:grid id="subgridtable"  subGridUrl="%{subgridurl}" 
+							dataType="json" gridModel="gridModel" footerrow="true" rownumbers="1" rowNum="0"				
+							 width="750">
 							<sjg:gridColumn name="sku.sid" title="รหัสผสิตภัณฑ์" width="300" />
 							<sjg:gridColumn name="sku.name"   title="ชื่อผสิตภัณฑ์" width="300" edittype="select" 
 						   editoptions ="{ dataUrl : '%{selectskuurl}' }"   />							

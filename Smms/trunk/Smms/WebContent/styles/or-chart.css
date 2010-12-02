@@ -63,19 +63,21 @@ div#backward6 div {
 
 div#mainnode div {
 	position:relative;
-	top:10px;
+	top:15px;
 	float: left;
 	text-align: center;
 	width: 900px;
-	left:50px;
+	left:20px;
+}
+
+div#mainnode {
+	background-image: url(../images/EmptyOrg1.jpg);	
+	width:980px;	
+	z-index: 50000;
 	
 }
-.mainnode {
-	background: url(../images/EmptyOrg1.jpg);
-}
 div#l1 div {
-	width: 100%;
-	height: 110px;
+	width: 100%;	
 }
 
 div#n1 {
@@ -85,14 +87,16 @@ div#n1 {
 div#l2 div {
 	width: 50%;
 	height: 100px;
+	height:100px	
 }
 
-div#n2 {
+#n2 {
 	
 }
 
-div#n3 {
-	
+#n3 {
+	position: absolute;
+	left:10px;
 }
 
 div#l3 div {

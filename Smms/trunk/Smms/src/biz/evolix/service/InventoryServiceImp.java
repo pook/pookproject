@@ -6,15 +6,12 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import biz.evolix.model.Sku;
 import biz.evolix.model.dao.SkuDAO;
-import biz.evolix.model.dao.SkuJdbcDAO;
 
 public class InventoryServiceImp  implements InventoryService{
 	
 	@Autowired
 	private SkuDAO skuDAO;
-	@Autowired
-	private SkuJdbcDAO skuJdbcDAO; 
-	
+		
 	private List<Sku> skus;
 	
 	public void setSkuDAO(SkuDAO skuDAO) {
@@ -54,14 +51,9 @@ public class InventoryServiceImp  implements InventoryService{
 		this.skus = skus;
 	}
 	public int count(){		
-		return skuJdbcDAO.size();
+		return (int) skuDAO.size();
 	}
-	public void setSkuJdbcDAO(SkuJdbcDAO skuJdbcDAO) {
-		this.skuJdbcDAO = skuJdbcDAO;
-	}
-	public SkuJdbcDAO getSkuJdbcDAO() {
-		return skuJdbcDAO;
-	}
+	
 	private static Logger log = Logger.getLogger(InventoryServiceImp.class);
 	
 }

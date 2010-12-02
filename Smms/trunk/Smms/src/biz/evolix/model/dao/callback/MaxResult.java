@@ -7,10 +7,10 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.springframework.orm.jpa.JpaCallback;
-public class SkuMaxResult<T> implements JpaCallback<List<T>> {
+public class MaxResult<T> implements JpaCallback<List<T>> {
 
 	@Override
-	 @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public List<T> doInJpa(EntityManager em) throws PersistenceException {
 		  Query query = em.createNamedQuery(nameQuery);
 	      query.setFirstResult(min);
@@ -21,7 +21,7 @@ public class SkuMaxResult<T> implements JpaCallback<List<T>> {
 	private int max;
 	private int min;
 	private String nameQuery;
-	public SkuMaxResult(int min, int max, String nameQuery) {
+	public MaxResult(int min, int max, String nameQuery) {
 		super();
 		this.max = max;
 		this.min = min;

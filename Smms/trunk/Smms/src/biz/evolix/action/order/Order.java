@@ -7,14 +7,9 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import biz.evlix.customconst.ConstType;
-import biz.evolix.model.Purchese;
-import biz.evolix.model.dao.OrderDAO;
-import biz.evolix.model.dao.OrderJdbcDAO;
 import biz.evolix.service.OrderService;
-
 import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage(value = "smms")
@@ -30,10 +25,16 @@ public class Order extends ActionSupport {
 	}
 
 	public String getJSON()throws Exception {
-		setRecord( orderService.size());
-		int to = (getRows() * getPage());
-		int from = to - getRows();		
-		setGridModel(orderService.ordersByMember(from , to,getRows()));
+		try{
+			setRecord( orderService.sizeOrderOwner());
+			int to = (getRows() * getPage());
+			int from = to - getRows();		
+			setGridModel(orderService.ordersByMember(from , to,getRows()));
+		}catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		
+		
 		setTotal();
 		return execute();
 	}

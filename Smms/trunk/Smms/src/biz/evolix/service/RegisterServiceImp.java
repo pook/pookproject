@@ -102,10 +102,8 @@ public class RegisterServiceImp implements RegisterService {
 		}
 		return c;
 	}
-	private void add(Collection<Node1> c,Node1 n1){
-		synchronized (this) {
-			if(!c.contains(n1))c.add(n1);
-		}		
+	private void add(Collection<Node1> c,Node1 n1){		
+		if(!c.contains(n1))c.add(n1);				
 	}
 	private static Logger log = Logger.getLogger(RegisterServiceImp.class);
 }

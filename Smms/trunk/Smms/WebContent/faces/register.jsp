@@ -35,8 +35,9 @@
 			});
 			return true;
 		}
-		$("#fsubmit").submit(function() {	
-			clrErrInf();						
+		$("#fsubmit1").submit(function() {	
+			clrErrInf();	
+			allFields.removeClass( "ui-state-error" );					
 			var valid =true;
 			valid =  checkLength(name," ชื่อ ",3,30);
 			valid = valid && checkLength(surename," นามสกุล ",3,30);
@@ -80,7 +81,8 @@
 							$(':input','#form1')
 							 .not(':button, :submit, :reset, :hidden,#inviter,#inviter2,#brance,#branceCard,#province,#bank')
 							 .val("");;
-						};					 										    
+						};	
+						allFields.val( "" ).removeClass( "ui-state-error" );				 										    
 					}
 				});
 			}				
@@ -232,7 +234,7 @@ fieldset {
 	</thead>
 	<tfoot>
 		<tr class="ui-widget-footer ">
-			<th colspan="2" class="tf"><input type="submit" id="fsubmit"
+			<th colspan="2" class="tf"><input type="submit" id="fsubmit1"
 				class="ui-button ui-widget ui-state-default ui-corner-all"
 				value="ยืนยัน" onmouseover="ui-state-hover" /> <input type="button"
 				class="ui-button ui-widget ui-state-default ui-corner-all"
@@ -256,7 +258,7 @@ fieldset {
 			*</font>:</label></td>
 			<td><sj:select href="%{uplineurl}" id="upline" name="echo"
 				list="uplines" headerKey="-2" cssClass="selectop"   
-				headerValue="Auto Assign" /><strong>lll</strong></td>
+				headerValue="Auto Assign" /></td>
 		</tr>
 		<tr>
 			<td><label for="name">ชื่อ *:</label></td>
@@ -427,9 +429,6 @@ fieldset {
 	</tr>
 
 </table>
-<div id="div1"
-	style="position: absolute; left: 564px; top: 151px; z-index: 5"; ><a
-	href=""><font color="green"></font>ลิ้งไปผังองค์กร</a></div>
 
 
 </div>

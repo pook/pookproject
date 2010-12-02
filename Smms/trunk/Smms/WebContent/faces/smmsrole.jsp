@@ -7,7 +7,7 @@
 <script type="text/javascript" src="/Smms/struts/utils.js"></script>
 <script type="text/javascript">
 function xxx(){
-	$("#test").html("bbbbb") ; 
+	//$("#test").html("bbbbb") ; 
 	alert("bbbbbbbbbbbbbb");
 }
 </script>
@@ -18,7 +18,6 @@ function xxx(){
 		cellspacing="10px">
 		<tr>
 			<td><sj:tabbedpanel id="localtabs" selectedTab="0">
-
 				<sj:tab id="tab2" target="ttwo" label="จัดการการออกบัตร"
 					tabindex="0" />
 				<sj:tab id="tab3" target="ttree" label="ตั้งค่าสาขา" tabindex="1" />
@@ -128,7 +127,7 @@ function xxx(){
 							<sjg:gridColumn name="a" index="productDetail" title="admin"
 								edittype="checkbox" sortable="false" editable="true"
 								formatter="checkbox" align="center" />
-							<sjg:gridColumn name="b" index="price" title="staff" onselect="xxx()" onChangeTopics="xxx()"
+							<sjg:gridColumn name="b" index="price" title="staff" 
 								sortable="false" edittype="checkbox" editable="true"
 								formatter="checkbox" align="center" />
 							<sjg:gridColumn name="c" index="unit" title="member" 

@@ -59,21 +59,13 @@
 		scope="session" />	
 	<bean id="skuDAO" class="biz.evolix.model.dao.SkuDAOImp" scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
-	<bean id="skuJdbcDAO" class="biz.evolix.model.dao.SkuJdbcDAOImp" scope="prototype">
-		<property name="dataSource" ref="dataSource" />
 	</bean>	
 	<bean id="orderDAO" class="biz.evolix.model.dao.OrderDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<bean id="checkNameDAO" class="biz.evolix.model.dao.CheckDNameDAOImp" scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
-	
-	<bean id="orderJdbcDAO" class="biz.evolix.model.dao.OrderJdbcDAOImp">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-	
+	</bean>			
 	<bean id="userDetail" class="biz.evolix.secure.UserDetail" />
 	<bean id="fetchProvince" class="biz.evolix.model.dao.ProvinceDAOImp" scope="singleton" >
 		<property name="entityManagerFactory" ref="entityManagerFactory" />

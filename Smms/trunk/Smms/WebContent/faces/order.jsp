@@ -28,10 +28,10 @@ div#div4 div{
 						navigatorAdd="false"	
 						navigatorEdit="false"								
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
-						gridModel="gridModel" rowList="10,15,20" rowNum="15" width="880"						
+						gridModel="gridModel" rowList="15,30" rowNum="15" width="880"						
 						onSelectRowTopics="rowselect" rownumbers="false">
 						<sjg:grid id="subgridtable"  subGridUrl="%{subgridurl}"  
-							dataType="json" gridModel="gridModel" rowNum="-1"footerrow="true"					
+							dataType="json" gridModel="gridModel" rowNum="0"footerrow="true"					
 							rownumbers="true" width="750">
 							<sjg:gridColumn name="sku.sid" title="รหัสผสิตภัณฑ์" width="300" />
 							<sjg:gridColumn name="sku.name"   title="ชื่อผสิตภัณฑ์" width="300" edittype="select" 
@@ -46,7 +46,7 @@ div#div4 div{
 								formatter="integer" />
 						</sjg:grid>
 						<sjg:gridColumn name="orderId" index="orderId"
-							title="sale order ID" formatter="integer" sortable="true" />
+							title="sale order ID" formatter="integer" sortable="true" width="120" align="center" />
 						<sjg:gridColumn name="user.userId" title="รหัสสมาชิก"
 							editable="true" editrules="{required:true}" />
 						<sjg:gridColumn name="user.name" title="ชื่อสมาชิก" />

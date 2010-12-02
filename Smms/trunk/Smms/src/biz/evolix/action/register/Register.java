@@ -62,7 +62,7 @@ public class Register extends ActionSupport {
 			user.setAddress2(getAddress2());
 			user.setBank(getBank());
 			user.setBankAccount(getBankAccount());
-			user.setPassword(ConstType.DEFAULT_PW);
+			user.setPassword(ConstType.DEFAULT_PW );
 			user.setBrance(getBrance());
 			user.setCodeIdentification(getCodeIdentification());
 			user.setEmail(getEmail());

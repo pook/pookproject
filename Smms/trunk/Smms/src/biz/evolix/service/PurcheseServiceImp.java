@@ -13,7 +13,6 @@ import biz.evolix.model.Sku;
 import biz.evolix.model.Users;
 import biz.evolix.model.dao.AuthoritiesDAO;
 import biz.evolix.model.dao.OrderDAO;
-import biz.evolix.model.dao.OrderJdbcDAO;
 import biz.evolix.model.dao.SkuDAO;
 import biz.evolix.secure.SmileUser;
 
@@ -23,8 +22,6 @@ public class PurcheseServiceImp implements PurcheseService {
 
 	@Autowired
 	private OrderDAO orderDAO;
-	@Autowired
-	private OrderJdbcDAO  orderJdbcDAO;
 	@Autowired
 	private AuthoritiesDAO authoritiesDAO;
 	@Autowired
@@ -153,14 +150,6 @@ public class PurcheseServiceImp implements PurcheseService {
 		getOrdering().get(0).getPurchese().remove(idx);
 		buyItem(sku, quantity);		
 	}
-
-	public void setOrderJdbcDAO(OrderJdbcDAO orderJdbcDAO) {
-		this.orderJdbcDAO = orderJdbcDAO;
-	}
-
-	public OrderJdbcDAO getOrderJdbcDAO() {
-		return orderJdbcDAO;
-	}
-	
+		
 
 }

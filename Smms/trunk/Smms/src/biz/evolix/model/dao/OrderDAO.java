@@ -8,8 +8,10 @@ import biz.evolix.model.Users;
 public interface OrderDAO {
 	public void newOrder(Order o);
 	public void update(Order o);
-	public List<Order>showOrder(Users u,int f,int t);
+	public List<Order>showOrder(Users u,int f,int m);
 	public List<Order> showOrderByStaff(Users u, int f, int t);
-	public int size();
+	public long sizeAll();
+	public long sizeOrderStaff();
+	public long sizeOrderOwner();
 	public int pSize();
 }

@@ -1,6 +1,5 @@
 package biz.evolix.service;
 
-
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -15,20 +14,9 @@ import biz.evolix.secure.SmileUser;
 public class OrderServiceImp implements OrderService {
 
 	@Autowired
-	private OrderDAO orderDAO;
-
-	
+	private OrderDAO orderDAO;	
 	private List<Order> orders;
 	private List<Purchese> purcheses;
-
-	
-	public int size() {
-		return getOrderDAO().size();
-	}
-
-	public int pSize() {
-		return getOrderDAO().pSize();
-	}
 	
 	public void setOrderDAO(OrderDAO orderDAO) {
 		this.orderDAO = orderDAO;
@@ -68,9 +56,9 @@ public class OrderServiceImp implements OrderService {
 	private static Logger log = Logger.getLogger(OrderServiceImp.class);
 
 	@Override
-	public List<Order> orders(int from, int to,int rows) {		
+	public List<Order> ordersByStaff(int from, int m,int rows) {		
 		setOrders(getOrderDAO().showOrderByStaff(
-				getUsers().getNode().getUser(), from, to));
+				getUsers().getNode().getUser(), from, m));
 		return getOrders();
 	}
 
@@ -85,4 +73,19 @@ public class OrderServiceImp implements OrderService {
 		setOrders(getOrderDAO().showOrder(
 				getUsers().getNode().getUser(), from, to));
 		return getOrders();	}
+
+	@Override
+	public long sizeAll() {		
+		return orderDAO.sizeAll();
+	}
+
+	@Override
+	public int sizeOrderStaff() {		
+		return (int)orderDAO.sizeOrderStaff();
+	}
+
+	@Override
+	public int sizeOrderOwner() {
+		return (int)orderDAO.sizeOrderOwner();
+	}
 }

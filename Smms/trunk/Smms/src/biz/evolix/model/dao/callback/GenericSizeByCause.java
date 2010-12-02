@@ -6,18 +6,21 @@ import javax.persistence.Query;
 
 import org.springframework.orm.jpa.JpaCallback;
 
-public class GenericSize<T> implements JpaCallback<T> {
+public class GenericSizeByCause<T,E> implements JpaCallback<T> {
+
 	
 	@Override
-	@SuppressWarnings("unchecked")	
+	@SuppressWarnings("unchecked")
 	public T doInJpa(EntityManager em) throws PersistenceException {
 		Query q = em.createNamedQuery(this.sqlNameQuery);
+		q.setParameter(1, this.c);
 		return (T)q.getSingleResult();
 	}
-	private String sqlNameQuery;
-	
-	public GenericSize(String sqlNameQuery) {
+	public GenericSizeByCause(String sqlNameQuery,E c) {
 		super();
-		this.sqlNameQuery = sqlNameQuery;		
-	}		
+		this.sqlNameQuery = sqlNameQuery;	
+		this.c = c;
+	}
+	private String sqlNameQuery;
+	private E c;
 }
