@@ -21,7 +21,7 @@ public class Brance implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "BRANCE_CODE",length=10)
-	private Long branceCode;
+	private Integer branceCode;
 	@Column(name = "BRANCE_NAME", length = 50)
 	private String bName;
 	@Column (name = "BRANCE_ADDRESS",length=70)
@@ -33,11 +33,11 @@ public class Brance implements java.io.Serializable {
 	public Brance() {
 		super();
 	}   
-	public Long getBranceCode() {
+	public Integer getBranceCode() {
 		return this.branceCode;
 	}
 
-	public void setBranceCode(Long branceCode) {
+	public void setBranceCode(Integer branceCode) {
 		this.branceCode = branceCode;
 	}   
 	public String getBName() {

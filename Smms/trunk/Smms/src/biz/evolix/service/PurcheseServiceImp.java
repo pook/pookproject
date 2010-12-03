@@ -149,7 +149,6 @@ public class PurcheseServiceImp implements PurcheseService {
 	public void edit(int idx, Sku sku, Integer quantity) {
 		getOrdering().get(0).getPurchese().remove(idx);
 		buyItem(sku, quantity);		
-	}
-		
+	}		
 
 }

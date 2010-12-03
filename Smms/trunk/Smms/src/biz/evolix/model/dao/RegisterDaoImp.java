@@ -1,6 +1,7 @@
 package biz.evolix.model.dao;
 
 import org.apache.log4j.Logger;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,27 +13,26 @@ import biz.evolix.model.NodeDescription;
 import biz.evolix.model.Users;
 
 @Repository
-@Transactional(isolation=Isolation.DEFAULT)
+@Transactional(isolation=Isolation.DEFAULT,rollbackFor = Exception.class)
 public class RegisterDaoImp extends
 		org.springframework.orm.jpa.support.JpaDaoSupport implements
 		RegisterDAO {
 	private static final String DETAIL = "DETAIL";
-	private static final long AUTO = -2;
-	
+	private static final long AUTO = -2;	
 
 	@Override
 	@Transactional(readOnly = false,propagation=Propagation.REQUIRES_NEW,isolation=Isolation.DEFAULT)
-	public Users save(Node1 m,Long id,String provinceId) {		
+	public Users save(Node1 n,Long id,String provinceId) throws DataAccessException{		
 		try {			
 			id = getID(id);
-			m.getUser().setUserId(Generate.getId(id, provinceId));
-			m.getUser().setNode1(m);
-			m.setNId(id);			
-			getJpaTemplate().persist(m);		
-		} catch (Exception e) {
-			log.error(e.getMessage(),e);
+			n.getUser().setUserId(Generate.getId(id, provinceId));
+			n.getUser().setNode1(n);
+			n.setNId(id);			
+			getJpaTemplate().persist(n);		
+		} catch (Exception e) {			
+			log.error(e.getMessage(),e);			
 		}
-		return m.getUser();
+		return n.getUser();
 	}
 	@Transactional(readOnly=false,isolation=Isolation.SERIALIZABLE)
 	public Long getID(Long id){

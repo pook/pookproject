@@ -6,151 +6,7 @@
 	import="org.springframework.security.core.context.SecurityContextHolder"%>
 <%@ page import="biz.evolix.secure.SmileUser"%>
 <%@ page import="org.apache.log4j.Logger"%>
-<script type="text/javascript">
-	$(function() {		
-		var name = $("#name"),surename = $("#surename"),displayName = $("#displayName")
-		,codeIdentification = $("#codeIdentification"),tel = $("#tel"),tel2 = $("#tel2"),email = $("#email")
-		,inviter = $("#inviter"),address = $("#address"),address2 = $("#address2")
-		,bank = $("#bank"),bankAccount = $("#bankAccount")
-		,bankBrance = $("#bankBrance"),typeOfAccount = $("#typeOfAccount");
-		var allFields = $([]).add(name).add(surename).add(displayName).add(codeIdentification).add(tel)
-		.add(address).add(address2).add(bankAccount).add(bankBrance).add(typeOfAccount).add(email);
-		allFields.removeClass( "ui-state-error" );	
-		$("#displayName").live("focusout",checkDisplayName);
-	//$("#name").live("click",function(){			});
-		function checkDisplayName(){	
-			$(this).removeClass( "ui-state-error" );			
-			$.ajax({
-				type : "post",				
-				url : "check-displayname.action",
-				data : "displayName=" + $(this).val(),
-				success : function(res) {
-					showmsgInf(res);
-					if($("#testResult").html()=='false'){
-						 $("#displayName").addClass("ui-state-error");
-						 $("#displayName").focus();
-						 return false;
-					};
-				}
-			});
-			return true;
-		}
-		$("#fsubmit1").submit(function() {	
-			clrErrInf();	
-			allFields.removeClass( "ui-state-error" );					
-			var valid =true;
-			valid =  checkLength(name," ชื่อ ",3,30);
-			valid = valid && checkLength(surename," นามสกุล ",3,30);
-			valid = valid && checkLength(displayName," ชื่อแสดงในสายงาน ",3,30);	
-			valid = valid && checkLength(codeIdentification," รหัสบัตรประชาชน ",12,13)&&checkidentifier(codeIdentification);	
-			valid = valid && checkLength(tel," เบอร์โทรศัพท์ ",9,10);	
-			valid = valid && checkLength(address," ที่อยู่  ",5,30);	
-			valid = valid && checkEmail(email);	
-			valid = valid && checkLength(bankAccount," บัญชีธนาคาร ",8,30);
-			valid = valid && checkLength(bankBrance," สาขาธนาคาร ",3,30);
-			valid = valid && checkLength(typeOfAccount," ประเภทบัญชี ",3,30);
-			if(valid){
-				var uri = "upline="+$("#upline").val()
-				+"&name="+name.val()
-				+"&surename="+surename.val()
-				+"&displayName="+displayName.val()
-				+"&codeIdentification="+codeIdentification.val()
-				+"&tel="+tel.val()
-				+"&tel2="+tel2.val()
-				+"&inviter="+$("#inviter2").val()
-				+"&brance="+$("#brance").val()
-				+"&branceCard="+$("#branceCard").val()
-				+"&address="+address.val()
-				+"&province="+$("#province").val()
-				+"&address2="+address2.val()
-				+"&email="+email.val()
-				+"&bank="+bank.val()
-				+"&bankAccount="+bankAccount.val()
-				+"&bankBrance="+bankBrance.val()
-				+"&typeOfAccount="+typeOfAccount.val()
-				;
-				//alert(""+uri);
-				$.ajax({
-					type : "post",
-					contentType :"application/x-www-form-urlencoded;charset=UTF-8"	,			
-					url : "save",
-					data : uri,
-					success : function(res) {
-						showmsgInf(res);
-						if($("#testResult").html()=='true'){
-							$(':input','#form1')
-							 .not(':button, :submit, :reset, :hidden,#inviter,#inviter2,#brance,#branceCard,#province,#bank')
-							 .val("");;
-						};	
-						allFields.val( "" ).removeClass( "ui-state-error" );				 										    
-					}
-				});
-			}				
-		}); 
-		function checkidentifier(ci){
-			var c = true;c=checkIdent(ci.val());
-			if(!c){
-				ci.addClass( "ui-state-error" );
-				showmsgInf("<li>รหัสบัตรประชาชนไม่ถูกต้อง</li>");	
-			}else{
-				ci.removeClass( "ui-state-error" );
-			}
-			return c;
-		}
-		function checkIdent(id){			
-			if(id.length != 13) return false;
-			for(var i=0, sum=0; i < 12; i++)sum += parseFloat(id.charAt(i))*(13-i);
-			if((11-sum%11)%10!=parseFloat(id.charAt(12)))return false;
-			return true;
-		}
-		function checkEmail(o){
-			clrErrInf();
-			var v = o.val();
-			if(v.length>0)return checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. mail@evolix.biz" );
-			return true;
-		}
-		function checkRegexp( o, regexp, n ) {
-			if ( !( regexp.test( o.val() ) ) ) {
-				o.addClass( "ui-state-error" );
-				showmsgInf(n);
-				return false;
-			} else {
-				return true;
-			}
-		}
-		function checkLength(o, n, min, max) {
-			if (o.val().length > max || o.val().length < min) {
-				o.addClass("ui-state-error");
-				showmsgInf("ข้อมูล  " + n + " ที่กรอกควรมีความยาวระหว่าง " + min
-						+ " และ " + max + ".");
-				return false;
-			} else {
-				return true;
-			}
-		}
-		function showmsgInf(msgInf) {
-			$("#messageInfo")
-					.addClass("ui-state-highlight ui-corner-all")
-					.empty()
-					.append(
-							"<p><span style='float: left; margin-right: 0.3em;' class='ui-icon ui-icon-info'></span>"
-									+ "<strong>ข้อความ</strong> "
-									+ ""
-									+ msgInf
-									+ "" + "</p>");
 
-		}
-		function clrErrInf() {
-			$("#messageInfo").removeClass("ui-state-highlight ui-corner-all")
-					.empty();
-			
-		}
-		function rmAllfielderr(){
-			allFields.removeClass( "ui-state-error" );
-		}
-
-	});
-</script>
 <style type="text/css">
 input.text {
 	margin: 2px 30px 2px 39px;
@@ -224,6 +80,158 @@ fieldset {
 	action="json-fetch-brance.action" />
 <div id="test"></div>
 <div id="input-form">
+<script type="text/javascript">
+	$(function() {				
+		var name = $("#name"),surename = $("#surename"),displayName = $("#displayName")
+		,codeIdentification = $("#codeIdentification"),tel = $("#tel"),tel2 = $("#tel2"),email = $("#email")
+		,inviter = $("#inviter"),address = $("#address"),address2 = $("#address2")
+		,bank = $("#bank"),bankAccount = $("#bankAccount"),brance = $("#brance"),branceCard = $("#branceCard") 
+		,bankBrance = $("#bankBrance"),typeOfAccount = $("#typeOfAccount");
+		var allFields = $([]).add(name).add(surename).add(displayName).add(codeIdentification).add(tel)
+		.add(address).add(address2).add(bankAccount).add(bankBrance).add(typeOfAccount).add(email).add(brance).add(branceCard);
+		allFields.removeClass( "ui-state-error" );	
+		$("#displayName").live("focusout",checkDisplayName);	
+		function checkDisplayName(){	
+			$(this).removeClass( "ui-state-error" );			
+			$.ajax({
+				type : "post",				
+				url : "check-displayname.action",
+				data : "displayName=" + $(this).val(),
+				success : function(res) {
+					showmsgInf(res);
+					if($("#testResult").html()=='false'){
+						 $("#displayName").addClass("ui-state-error");
+						 $("#displayName").focus();
+						 return false;
+					};
+				}
+			});
+			return true;
+		}
+		$("#fsubmit1").submit(function() {	
+			clrErrInf();		
+			allFields.removeClass( "ui-state-error" );					
+			var valid =true;
+			valid =  checkLength(name," ชื่อ ",3,30);
+			valid = valid && checkLength(surename," นามสกุล ",3,30);
+			valid = valid && checkLength(displayName," ชื่อแสดงในสายงาน ",3,30);	
+			valid = valid && checkLength(codeIdentification," รหัสบัตรประชาชน ",12,13)&&checkidentifier(codeIdentification);	
+			valid = valid && checkLength(tel," เบอร์โทรศัพท์ ",9,10);	
+			valid = valid && ckBrance(brance);
+			valid = valid && ckBrance(branceCard);
+			valid = valid && checkLength(address," ที่อยู่  ",5,30);	
+			valid = valid && checkEmail(email);						
+			valid = valid && checkLength(bankAccount," บัญชีธนาคาร ",8,30);
+			valid = valid && checkLength(bankBrance," สาขาธนาคาร ",3,30);
+			valid = valid && checkLength(typeOfAccount," ประเภทบัญชี ",3,30);
+			if(valid){
+				var uri = "upline="+$("#upline").val()
+				+"&name="+name.val()
+				+"&surename="+surename.val()
+				+"&displayName="+displayName.val()
+				+"&codeIdentification="+codeIdentification.val()
+				+"&tel="+tel.val()
+				+"&tel2="+tel2.val()
+				+"&inviter="+$("#inviter").val()
+				+"&brance="+brance.val()
+				+"&branceCard="+branceCard.val()
+				+"&address="+address.val()
+				+"&province="+$("#province").val()
+				+"&address2="+address2.val()
+				+"&email="+email.val()
+				+"&bank="+bank.val()
+				+"&bankAccount="+bankAccount.val()
+				+"&bankBrance="+bankBrance.val()
+				+"&typeOfAccount="+typeOfAccount.val()
+				;
+				$.ajax({
+					type : "post",
+					contentType :"application/x-www-form-urlencoded;charset=UTF-8"	,			
+					url : "save",
+					data : uri,
+					success : function(res) {
+						showmsgInf(res);
+						if($("#testResult").html()=='true'){
+							$(':input','#form1')
+							 .not(':button, :submit, :reset, :hidden,#inviter,#inviter2,#brance,#branceCard,#province,#bank')
+							 .val("");
+							$("#input-form").load('register.action');
+						};	
+						allFields.val( "" ).removeClass( "ui-state-error" );				 										    
+					}
+				});
+			}				
+		}); 
+		function ckBrance(b1){
+			if(b1.val()== -1){
+				showmsgInf("กรุณาเลือกข้อมูลสาขา");
+				return false;
+			}
+			return true;
+		}
+		function checkidentifier(ci){
+			var c = true;c=checkIdent(ci.val());
+			if(!c){
+				ci.addClass( "ui-state-error" );
+				showmsgInf("<li>รหัสบัตรประชาชนไม่ถูกต้อง</li>");	
+			}else{
+				ci.removeClass( "ui-state-error" );
+			}
+			return c;
+		}
+		function checkIdent(id){			
+			if(id.length != 13) return false;
+			for(var i=0, sum=0; i < 12; i++)sum += parseFloat(id.charAt(i))*(13-i);
+			if((11-sum%11)%10!=parseFloat(id.charAt(12)))return false;
+			return true;
+		}
+		function checkEmail(o){
+			clrErrInf();
+			var v = o.val();
+			if(v.length>0)return checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. mail@evolix.biz" );
+			return true;
+		}
+		function checkRegexp( o, regexp, n ) {
+			if ( !( regexp.test( o.val() ) ) ) {
+				o.addClass( "ui-state-error" );
+				showmsgInf(n);
+				return false;
+			} else {
+				return true;
+			}
+		}
+		function checkLength(o, n, min, max) {
+			if (o.val().length > max || o.val().length < min) {
+				o.addClass("ui-state-error");
+				showmsgInf("ข้อมูล  " + n + " ที่กรอกควรมีความยาวระหว่าง " + min
+						+ " และ " + max + ".");
+				return false;
+			} else {
+				return true;
+			}
+		}
+		function showmsgInf(msgInf) {
+			$("#messageInfo")
+					.addClass("ui-state-highlight ui-corner-all")
+					.empty()
+					.append(
+							"<p><span style='float: left; margin-right: 0.3em;' class='ui-icon ui-icon-info'></span>"
+									+ "<strong>ข้อความ</strong> "
+									+ ""
+									+ msgInf
+									+ "" + "</p>");
+
+		}
+		function clrErrInf() {
+			$("#messageInfo").removeClass("ui-state-highlight ui-corner-all")
+					.empty();
+			
+		}
+		function rmAllfielderr(){
+			allFields.removeClass( "ui-state-error" );
+		}
+	});
+</script>
 <form id="form1"action="javascript:void(0)" >
 <fieldset>
 <table id="users" class="ui-widget ui-widget-content">
@@ -256,8 +264,8 @@ fieldset {
 		<tr>
 			<td><label for="upline">ชื่อ up line <font color="red">
 			*</font>:</label></td>
-			<td><sj:select href="%{uplineurl}" id="upline" name="echo"
-				list="uplines" headerKey="-2" cssClass="selectop"   
+			<td><sj:select href="%{uplineurl}" id="upline" name="echo" 
+				list="uplines" headerKey="-2" cssClass="selectop"  
 				headerValue="Auto Assign" /></td>
 		</tr>
 		<tr>
@@ -272,7 +280,7 @@ fieldset {
 		</tr>
 		<tr>
 			<td><label for="displayName">ชื่อแสดงในสายงาน *:</label></td>
-			<td><input type="text"	name="displayName" id="displayName"
+			<td><input type="text"	name="displayName" id="displayName" 
 				class="text ui-widget-content ui-corner-all" /> 
 			</td>
 		</tr>
@@ -300,12 +308,12 @@ fieldset {
 		</tr>
 		<tr>
 			<td><label for="brance">สาขาทีสมัคร *:</label></td>
-			<td><sj:select href="%{branceurl}" id="brance" name="brance" value="1"
+			<td><sj:select href="%{branceurl}" id="brance" name="brance"  headerKey="-1" headerValue="กรุณาเลือก"
 				list="brances" cssClass="selectop" /></td>
 		</tr>
 		<tr>
 			<td><label for="branceCard">สาขาทีรับบัตรสมาชิก *:</label></td>
-			<td><sj:select href="%{branceurl}" id="branceCard" name="branceCard" value="1"
+			<td><sj:select href="%{branceurl}" id="branceCard" name="branceCard" headerKey="-1" headerValue="กรุณาเลือก"
 				list="brances" cssClass="selectop" /></td>
 		</tr>
 		<tr>
@@ -316,7 +324,7 @@ fieldset {
 		<tr>
 			<td><label for="province">จังหวัด *:</label></td>
 			<td><sj:select href="%{provinceurl}" id="province" value="10"
-				name="province" list="provinces"  cssClass="selectop"
+				name="province" list="provinces"  cssClass="selectop" sortable="true"
 				 /></td>
 		</tr>
 
@@ -357,78 +365,5 @@ fieldset {
 </fieldset>
 </form>
 </div>
-
-</div>
-<div id="div1">
-<table
-	style="align: center; width: 440px; margin-left: 280px; border: 1px solid #000000; margin-top: 50px;">
-	<tr>
-		<td colspan="2" bgcolor="#EB8F00"><b>Register</b></td>
-	</tr>
-	<tr>
-		<td><s:form id="formx" action="save" theme="xhtml"
-			style="cellspacing:25px">
-			<s:select label="ชื่อ up line" name="upline" headerKey="-1"
-				headerValue="Auto Assign Upline"
-				list="#{'aaa':'AAAA', 'bbb':'BBBB', 'ccc':'CCCC', 'ddd':'DDDD'}"
-				value="none" required="true" />
-			<sj:textfield label="ชื่อ" name="name" required="true"
-				value="=ชื่อ ผู้สมัคร" />
-			<sj:textfield label="นามสกุล" name="surename" required="true"
-				value="นามสกุลผู้สมัคร" />
-			<sj:textfield label="ชื่อแสดงในสายงาน" name="displayName"
-				required="true" value="=ชื่อ แสดงในสายงาน" />
-			<sj:textfield label="รหัสบัตรประชาชน" name="codeIdentification"
-				required="true" value="รหัสบัตรประชาชน" />
-			<sj:textfield label="เบอร์โทรศัพท์" name="tel" required="true"
-				value="เบอร์โทร" />
-			<sj:textfield label="เบอร์โทรศัพท์(สำรอง)" name="tel2"
-				value="เบอร์โทรสำรอง" />
-			<sj:textfield label="ชื่อผู้แนะนำ" name="inviter" disabled="true"
-				require="true" value="ดลยา" />
-			<s:select label="สาขาทีรับบัตรสมาชิก " name="branceCard"
-				headerKey="-1" headerValue="สำนักงานใหญ่"
-				list="#{'aaa':'AAAA', 'bbb':'BBBB', 'ccc':'CCCC', 'ddd':'DDDD'}"
-				value="ชื่อ  สำนักงาน" required="true" />
-			<sj:textarea label="ที่อยู่" name="address" required="true"
-				value="ที่อยู่" />
-			<s:select label="จังหวัด " name="province" headerKey="กรุงเทพมหานคร"
-				headerValue="aaaa"
-				list="#{ 'bbb':'BBBB', 'ccc':'CCCC', 'ddd':'DDDD'}" required="true" />
-
-			<sj:textarea label="ที่อยูส่งของ" name="ที่อยู่ส่งของ"
-				value="ที่อยู่ส่งของ" />
-			<sj:textfield label="e-mail" name="email" value=" อีเมลล์" />
-			<s:select label="ธนาคาร " name="bank" headerKey="ธนาคารโลก"
-				headerValue="AAAA"
-				list="#{'zzzz':'ZZZZ', 'bbb':'BBBB', 'ccc':'CCCC', 'ddd':'DDDD'}"
-				required="true" />
-
-
-			<sj:textfield label="เลขบัญชี" name="bankAccount" required="true"
-				value="1234567890" />
-			<sj:textfield label="สาขาธนาคาร" name="brance" required="true"
-				value="บ้านแหลม" />
-			<sj:textfield label="ประเภทบัญชี" name="typeOfAccount"
-				required="true" value="ฝากตลอดชีวิต" />
-		</s:form></td>
-	</tr>
-	<tr>
-		<td align="center" colspan="1"><sj:a id="ajaxformlink"
-			cssClass="ui-button ui-widget ui-state-default ui-corner-all"
-			onmouseover="ui-state-hover" formIds="formx" targets="div1"
-			indicator="indicator" button="true" buttonIcon="ui-icon-gear">
-      ยืนยัน
-    </sj:a> <sj:a id="ajaxformlink2" formIds="formx" targets="formResult"
-			cssClass="ui-button ui-widget ui-state-default ui-corner-all"
-			onmouseover="ui-state-hover" indicator="indicator" button="true"
-			buttonIcon="ui-icon-gear">
-      ยกเลิก
-    </sj:a> <img id="indicator" src="images/indicator.gif" alt="Loading..."
-			style="display: none" /></td>
-	</tr>
-
-</table>
-
 
 </div>

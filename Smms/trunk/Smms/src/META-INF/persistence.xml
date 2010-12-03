@@ -12,12 +12,10 @@
 		<class>biz.evolix.model.Order</class>
 		<class>biz.evolix.model.NodeDescription</class>
 		<class>biz.evolix.model.Node1</class>
-		<class>biz.evolix.model.Brance</class>
-		<class>biz.evolix.model.Staffs</class>
+		<class>biz.evolix.model.Brance</class>		
 		<class>biz.evolix.model.Authorities</class>
 		<properties>
-			<property name="eclipselink.logging.level" value="FINEST" />
-			
+			<property name="eclipselink.logging.level" value="FINEST" />			
 		</properties>
 	</persistence-unit>
 </persistence>

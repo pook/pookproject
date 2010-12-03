@@ -41,11 +41,15 @@ public class Users implements java.io.Serializable {
 	@Column(name = "BANK_ACCOUNT", length = 50)
 	private String bankAccount;
 	@Column(name = "BANK_BRANCE", length = 50)
-	private String brance;
+	private String bbrance;
 	@Column(name = "TYPE_ACCOUNT", length = 50)
 	private String typeOfAccount;
-	@Column(name = "ENABLED", nullable = false)
+	@Column(name = "ENABLED")
 	private Byte enaebled=(byte)1;
+	@Column(name ="BRANCE",nullable = false)
+	private Integer brance;
+	@Column(name ="BRANCE_CARD",nullable = false)
+	private Integer branceCard;
 	private List<Authorities> authorities = new ArrayList<Authorities>();
 	//@OneToOne(mappedBy="nId")	
 	@JoinColumn(name="NODE_ID")	
@@ -151,12 +155,12 @@ public class Users implements java.io.Serializable {
 		this.bankAccount = bankAccount;
 	}
 
-	public String getBrance() {
-		return this.brance;
+	public String getBbrance() {
+		return this.bbrance;
 	}
 
-	public void setBrance(String brance) {
-		this.brance = brance;
+	public void setBbrance(String bbrance) {
+		this.bbrance = bbrance;
 	}
 
 	public String getTypeOfAccount() {
@@ -201,6 +205,18 @@ public class Users implements java.io.Serializable {
 	
 	public Node1 getNode1() {
 		return node1;
+	}
+	public Integer getBrance() {
+		return brance;
+	}
+	public void setBrance(Integer brance) {
+		this.brance = brance;
+	}
+	public Integer getBranceCard() {
+		return branceCard;
+	}
+	public void setBranceCard(Integer branceCard) {
+		this.branceCard = branceCard;
 	}
 	
 }

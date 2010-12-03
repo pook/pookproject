@@ -33,6 +33,7 @@ public class Register extends ActionSupport {
 	private String province;
 	private String address2;
 	private String bank;
+	private String bankBrance;
 	private String bankAccount;
 	private String brance;
 	private String typeOfAccount;
@@ -54,7 +55,7 @@ public class Register extends ActionSupport {
 			setEcho("true");
 			addActionError("Bad Request !!");
 			return ERROR;
-		} else {
+		} else {			
 			Users user = new Users();
 			Node1 n = new Node1();
 			n.setDisplayName(getDisplayName());
@@ -63,7 +64,14 @@ public class Register extends ActionSupport {
 			user.setBank(getBank());
 			user.setBankAccount(getBankAccount());
 			user.setPassword(ConstType.DEFAULT_PW );
-			user.setBrance(getBrance());
+			user.setBbrance(getBankBrance());
+			try{
+			user.setBrance(Integer.parseInt(getBrance()));
+			user.setBranceCard(Integer.parseInt(getBranceCard()));
+			}catch (NumberFormatException e) {
+				log.error(e.getMessage(), e);addActionError("Bad Request !!");
+				return ERROR;
+			}
 			user.setCodeIdentification(getCodeIdentification());
 			user.setEmail(getEmail());
 			user.setInviter(getInviter());
@@ -95,7 +103,7 @@ public class Register extends ActionSupport {
 			i &= getName().trim().length()>3;			
 			i &= getProvince().trim().length()>1;			
 			i &= getSurename().trim().length()>3;
-			i &= (getTel().trim().length() >8);
+			i &= (getTel().trim().length() >8);			
 			getEmail().length();
 			getTel2().length();
 			getAddress2().length();
@@ -262,6 +270,14 @@ public class Register extends ActionSupport {
 
 	public String getUpline() {
 		return upline;
+	}
+
+	public void setBankBrance(String bankBrance) {
+		this.bankBrance = bankBrance;
+	}
+
+	public String getBankBrance() {
+		return bankBrance;
 	}
 
 }

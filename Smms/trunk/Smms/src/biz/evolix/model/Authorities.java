@@ -4,16 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 import javax.persistence.Column;
-import javax.persistence.InheritanceType;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.DiscriminatorColumn;
+
 
 @Entity
 @NamedQuery(
@@ -21,9 +17,6 @@ import javax.persistence.DiscriminatorColumn;
 	    query="select A from Authorities A where A.user.userId =?1"
 )
 @Table(name = "AUTHORITIES")
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING, length = 10)
-@DiscriminatorValue("M")
 public class Authorities implements java.io.Serializable {
 
 	@Id
@@ -38,27 +31,11 @@ public class Authorities implements java.io.Serializable {
 	@Column(name = "AUTHORITY", length = 50, nullable = false)
 	private String authority;
 
-	@Column(name = "TYPE")
-	private String type;
 	private static final long serialVersionUID = 1L;
 
 	public Authorities() {
 		super();
 	}
-
-	/*
-	 * @EmbeddedId
-	 * 
-	 * @AttributeOverrides({
-	 * 
-	 * @AttributeOverride(name="username",column=@Column(name="USERNAME")),
-	 * 
-	 * @AttributeOverride(name="password",column=@Column(name="PASSWORD")),
-	 * 
-	 * @AttributeOverride(name="inviter",column=@Column(name="INVITER")),
-	 * 
-	 * @AttributeOverride(name="enabled",column=@Column(name="ENABLED")) })
-	 */
 
 	public String getAuthority() {
 		return this.authority;
@@ -83,13 +60,4 @@ public class Authorities implements java.io.Serializable {
 	public Users getUser() {
 		return user;
 	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getType() {
-		return type;
-	}
-
 }

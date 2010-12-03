@@ -18,6 +18,7 @@ import biz.evolix.model.dao.Role;
 
 public class RegisterServiceImp implements RegisterService {
 	
+	private static final int MAX = 128;
 	@Autowired
 	private RegisterDAO registerDAO;
 
@@ -27,7 +28,7 @@ public class RegisterServiceImp implements RegisterService {
 	@Autowired
 	private Node1DAO  node1DAO;
 	
-	private static final Collection<Node1> uplines = new HashSet<Node1>();
+	//private static final Collection<Node1> uplines = new HashSet<Node1>();
 	@Override
 	public void save(Node1 m,Long id) {
 		id =(id==ConstType.AUTO)?ConstType.AUTO:Generate.getLeftChildId(id);
@@ -43,7 +44,7 @@ public class RegisterServiceImp implements RegisterService {
 		Users u = null;
 		synchronized (this) {
 			u=registerDAO.save(m,id,"99");		
-			if(getUplines().contains(m))getUplines().remove(m);
+		//	if(getUplines().contains(m))getUplines().remove(m);
 		}
 		return u;
 	}
@@ -61,15 +62,12 @@ public class RegisterServiceImp implements RegisterService {
 	}
 
 	@Override
-	public Collection<Node1> listUpline() {
-		if(getUplines().isEmpty()){
-			getUplines().addAll(uplines());
-		}
+	public Collection<Node1> listUpline() {				
 		return getUplines();
 	}
 
 	public Collection<Node1> getUplines() {
-		return uplines;
+		return uplines();
 	}
 	public Collection<Node1> uplines(){
 		NodeDescription d  = null;
@@ -82,7 +80,8 @@ public class RegisterServiceImp implements RegisterService {
 		if( d!=null){
 			long id = d.getNextId();			
 			Node1 n = null;
-			while(id++<d.getUpper()){				
+			int count = 0;
+			while(id++<d.getUpper()&&++count<MAX){				
 				try{
 					n= node1DAO.getNode1(id);
 				}catch (Exception e) {
