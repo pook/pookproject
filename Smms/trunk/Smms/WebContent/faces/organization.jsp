@@ -61,12 +61,12 @@
 <!-- header node -->
 <div class="rootnode" id="rn">
 <div class="nodeleft" id="nl">
-<div class="llevel" id="lv1">l1</div>
-<div class="llevel" id="lv2">l2</div>
-<div class="llevel" id="lv3">l3</div>
-<div class="llevel" id="lv4">l4</div>
-<div class="llevel" id="lv5">l5</div>
-<div class="llevel" id="lv6">l6</div>
+<div class="llevel" id="lv1"></div>
+<div class="llevel" id="lv2"></div>
+<div class="llevel" id="lv3"></div>
+<div class="llevel" id="lv4"></div>
+<div class="llevel" id="lv5"></div>
+<div class="llevel" id="lv6"></div>
 </div>
 
 <div class="mainnode" id="mainnode"

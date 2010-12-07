@@ -30,7 +30,7 @@ public class FetchUpline extends ActionSupport {
 	}
 	public String getJSON() throws Exception {
 		Collection<Node1> c = registerService.listUpline();		
-		for(Node1 n:c )uplines.put(n.getNId().toString(), n.getDisplayName());		
+		for(Node1 n:c )uplines.put(n.getNodeId().toString(), n.getDisplayName());		
 		return execute();
 	}
 

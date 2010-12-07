@@ -1,4 +1,4 @@
-package biz.evolix.action.order;
+package biz.evolix.action.role;
 
 import java.util.List;
 
@@ -9,37 +9,29 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import biz.evlix.customconst.ConstType;
-import biz.evolix.service.OrderService;
+import biz.evolix.model.Brance;
+import biz.evolix.model.dao.BranceDAO;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
-public class Order extends ActionSupport {
+public class BranceManAct extends ActionSupport {
 
-	private static final long serialVersionUID = 8619781837424132878L;
-	private static Logger log = Logger.getLogger(Order.class);
-	
-	@Action(value = "/json-list-order1", results = { @Result(name = "success", type = "json") })
-	public String execute() {
+	private static Logger log = Logger.getLogger(BranceManAct.class);
+	private static final long serialVersionUID = 3418958865383079308L;
+	private BranceDAO fetchBrance;
+	@Action(value = "/json-brance", results = { @Result(name = "success", type = "json") })
+	public String execute() throws Exception {
+		setGridModel(fetchBrance.findAll());
 		return SUCCESS;
 	}
 
-	public String getJSON()throws Exception {
-		try{
-			setRecord( orderService.sizeOrderOwner());
-			int to = (getRows() * getPage());
-			int from = to - getRows();		
-			setGridModel(orderService.ordersByOwner(from ,getRows()));
-		}catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
+	public String getJSON() throws Exception {
 		
-		
-		setTotal();
-		return execute();
+		return SUCCESS;
 	}
-
-	private List<biz.evolix.model.Order>gridModel;
+	private List<Brance> gridModel;
 	private Integer rows = 0;
 	private Integer page = 0;
 	private String sord;
@@ -50,6 +42,14 @@ public class Order extends ActionSupport {
 	private Integer total = 0;
 	private Integer record = 0;
 	
+	public List<Brance> getGridModel() {
+		return gridModel;
+	}
+
+	public void setGridModel(List<Brance> gridModel) {
+		this.gridModel = gridModel;
+	}
+
 	public Integer getRows() {
 		return rows;
 	}
@@ -122,20 +122,6 @@ public class Order extends ActionSupport {
 		this.record = record;
 		this.setTotal();
 	}
-		
-	public void setGridModel(List<biz.evolix.model.Order> gridModel) {
-		this.gridModel = gridModel;
-	}
-
-	public List<biz.evolix.model.Order> getGridModel() {
-		return gridModel;
-	}	
-	private OrderService orderService;
-
-	public Order(OrderService orderService) {
-		super();
-		this.orderService = orderService;
-	}	
 	private void setTotal(){
 		if (getRecord() > 0 && getRows() > 0) {
 			setTotal( (int) Math.ceil((double) this.record
@@ -143,5 +129,12 @@ public class Order extends ActionSupport {
 		} else {
 			setTotal(ConstType.ZERO);
 		}		
-	}		
+	}
+
+	public BranceManAct(BranceDAO fetchBrance) {
+		super();
+		this.fetchBrance = fetchBrance;
+	}
+	
+	
 }

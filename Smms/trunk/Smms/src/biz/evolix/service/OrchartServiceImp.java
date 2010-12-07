@@ -10,8 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import biz.evlix.customconst.ConstType;
 import biz.evolix.gen.Generate;
 import biz.evolix.model.Node1;
-import biz.evolix.model.Users;
-import biz.evolix.model.bean.UserBean;
 import biz.evolix.model.dao.Node1DAO;
 import biz.evolix.secure.SmileUser;
 
@@ -19,14 +17,8 @@ public class OrchartServiceImp implements OrchartService {
 	private static final Node1 NULL_NODE;
 	static {
 		NULL_NODE = new Node1();
-		NULL_NODE.setNId(-2L);
-		NULL_NODE.setCommissions(0);
-		Users u = new Users();
-		u.setUserId(" ");
-		NULL_NODE.setUser(u);
-		NULL_NODE.setDisplayName(" ");
+		NULL_NODE.setNodeId(-2L);
 	}
-	private static final UserBean NULL_USER = new UserBean();
 	private static Logger log = Logger.getLogger(OrchartServiceImp.class);
 	private Long header;
 	@Autowired
@@ -40,44 +32,42 @@ public class OrchartServiceImp implements OrchartService {
 		}
 	}
 
-	public List<UserBean> getTeamLevel(Long id) {
+	public List<Node1> getTeamLevel(Long id) {
 		List<Node1> teams = new ArrayList<Node1>();
-		List<UserBean> teams2 = new ArrayList<UserBean>();
 		Long c = 0L;
 		if (id < getHeader()) {
 			id = getHeader();
 		}
 		Node1 n = getNode(id);
 		if (n == null)
-			return teams2;
-		addList(teams, teams2, n);
+			return teams;
+		addList(teams, n);
+		log.info("not null;" + n.getNodeId());
 		for (int i = 0; i < ConstType.MAX_NODE_SHOW; i++) {
 			Node1 n1 = null, n2 = null;
 			try {
-				c = teams.get(i).getNId();
+				c = teams.get(i).getNodeId();
 			} catch (Exception e) {
-				log.equals(e.getMessage());
+				log.error(e.getMessage(), e);
 				break;
 			}
-			n1 = getNode(Generate.getLeftChildId(c));
-			addList(teams, teams2, n1);
-			n2 = getNode(Generate.getRightChildId(c));
-			addList(teams, teams2, n2);
+			if (c != -2) {
+				n1 = getNode(Generate.getLeftChildId(c));
+				addList(teams, n1);
+				n2 = getNode(Generate.getRightChildId(c));
+				addList(teams, n2);
+			}
 		}
 		xCommission(teams);
-		return teams2;
+		return teams;
 	}
 
-	private void addList(List<Node1> teams, List<UserBean> teams2, Node1 n1) {
-		if (n1 == null) {
+	private void addList(List<Node1> teams, Node1 n1) {
+		if (n1 == null)
 			teams.add(teams.size(), NULL_NODE);
-			teams2.add(teams2.size(), NULL_USER);
-		} else {
+		else
 			teams.add(teams.size(), n1);
-			teams2.add(teams2.size(), new UserBean(n1.getUser().getUserId(), n1
-					.getNId().toString(), n1.getDisplayName(), n1.getUser()
-					.getInviter(), n1.getStatus()));
-		}
+
 	}
 
 	private Node1 getNode(long c) {
@@ -89,8 +79,10 @@ public class OrchartServiceImp implements OrchartService {
 		}
 		return node;
 	}
-	private List<Integer>levels;
-	private void xCommission(List<Node1> teams){
+
+	private List<Integer> levels;
+
+	private void xCommission(List<Node1> teams) {
 		this.levels = new ArrayList<Integer>();
 		for (int i = 0, k = 0; i < ConstType.BACKWARD_6 && k < teams.size(); i++) {
 			int value = 0;
@@ -106,6 +98,7 @@ public class OrchartServiceImp implements OrchartService {
 			this.levels.add(value);
 		}
 	}
+
 	@Override
 	public List<Integer> levelCommissions() {
 		return this.levels;
@@ -124,7 +117,8 @@ public class OrchartServiceImp implements OrchartService {
 	}
 
 	private void setHeader() throws Exception {
-		this.header = getUsers().getNode().getNId();
+		this.header = getUsers().getNodeId();
+		log.debug("head :" + this.header);
 	}
 
 	private SmileUser getUsers() {
@@ -143,12 +137,12 @@ public class OrchartServiceImp implements OrchartService {
 		Node1 n = node1DAO.getNode1FromUserId(node);
 		if (n == null)
 			return ConstType.NOT_FOUND;
-		else if (n.getNId() < getHeader()) {
+		else if (n.getNodeId() < getHeader()) {
 			return ConstType.NOT_ALLOW;
-		} else if (!searchParent(n.getNId(), getHeader())) {
+		} else if (!searchParent(n.getNodeId(), getHeader())) {
 			return ConstType.NOT_ALLOW;
 		}
-		return n.getNId();
+		return n.getNodeId();
 	}
 
 	private static boolean searchParent(long id, long head) {

@@ -1,12 +1,14 @@
 package biz.evolix.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import biz.evlix.customconst.ConstType;
 import biz.evolix.model.Order;
 import biz.evolix.model.Purchese;
 import biz.evolix.model.Sku;
@@ -66,8 +68,9 @@ public class PurcheseServiceImp implements PurcheseService {
 	public boolean newOrder(Users u) {
 		Order o = new Order();
 		o.setUser(u);
-		o.setSeller(getUsers().loadUser());
+		o.setSeller(getUsers().getUserid());
 		o.setPurchese(new ArrayList<Purchese>());
+		o.setDate(new Date());
 		orderDAO.newOrder(o);
 		getOrdering().add(o);
 		return true;
@@ -90,7 +93,7 @@ public class PurcheseServiceImp implements PurcheseService {
 
 	@Override
 	public List<Purchese> purchese() {
-		return getOrdering().get(0).getPurchese();
+		return getOrdering().get(ConstType.ZERO).getPurchese();
 	}
 
 	@Override
@@ -140,14 +143,12 @@ public class PurcheseServiceImp implements PurcheseService {
 
 	@Override
 	public void del(int sku) {	
-		//System.out.println("sk "+sku);
-		//Sku sku1 = loadSku(sku);
-		getOrdering().get(0).getPurchese().remove(sku);
+		getOrdering().get(ConstType.ZERO).getPurchese().remove(sku);
 	}
 	
 	@Override
 	public void edit(int idx, Sku sku, Integer quantity) {
-		getOrdering().get(0).getPurchese().remove(idx);
+		getOrdering().get(ConstType.ZERO).getPurchese().remove(idx);
 		buyItem(sku, quantity);		
 	}		
 

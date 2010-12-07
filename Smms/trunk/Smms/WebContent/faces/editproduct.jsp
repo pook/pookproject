@@ -27,7 +27,7 @@ div#div4 div {
 						navigatorEditOptions="{height:280,reloadAfterSubmit:true}"
 						navigatorDelete="true" 						
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true,msg:'ต้องการลบเรคคอร์ดนี้ ?'}"
-						gridModel="gridModel" rowList="5,10,30" rowNum="5"  
+						gridModel="gridModel" rowList="15,30" rowNum="15"  
 						editurl="%{editurl}" editinline="false" onSelectRowTopics="rowselect"
 						 >
 						<sjg:gridColumn name="sid" index="sid" title="รหัส ผลิตภัณฑ์"

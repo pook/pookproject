@@ -9,6 +9,6 @@ public interface SkuDAO {
 	public void remove(long sku); 
 	public Sku find(long id);		
 	public List<Sku>findLimit(int min,int maxResult);
-	public List<Sku> showAllItem();
 	public long size();
+	public List<Sku> showAllItem();
 }

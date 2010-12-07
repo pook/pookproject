@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import biz.evlix.customconst.ConstType;
 import biz.evolix.model.Authorities;
-import biz.evolix.model.Node1;
+import biz.evolix.model.Brance;
 import biz.evolix.model.Users;
 
 @Repository
@@ -25,12 +25,16 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 
 	private static Logger log = Logger.getLogger(SmileUser.class);
 	private static final long serialVersionUID = 2680596480619638118L;
-	private EntityManager em = Persistence.createEntityManagerFactory(ConstType.PERSISTENCE_UNIT)
-			.createEntityManager();
-
-	private final String userid;
-	private Node1 node;
+	private EntityManager em = Persistence.createEntityManagerFactory(
+			ConstType.PERSISTENCE_UNIT).createEntityManager();
+	private String userid;
+	private String name;
+	private String displayName;
+	private String inviter;
 	private String passwd;
+	private String brance;
+	private Long nodeId;
+
 	public SmileUser(String userid) {
 		super();
 		this.userid = userid;
@@ -41,36 +45,37 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 	@Transactional(readOnly = true)
 	public Collection<GrantedAuthority> getAuthorities() {
 		Collection<Authorities> auths = (Collection<Authorities>) getJpaTemplate()
-				.find("select A from Authorities A where A.user.userId =?1",
-						getUserid());		
-		Collection<GrantedAuthority> gas = new HashSet<GrantedAuthority>();
+				.findByNamedQuery("findAuthorities", getUserid());
+		Collection<GrantedAuthority> gat = new HashSet<GrantedAuthority>();
 		for (Authorities a : auths)
-			gas.add(new GrantedAuthorityImp(a.getAuthority()));
-		return gas;
+			gat.add(new GrantedAuthorityImp(a.getAuthority()));
+		return gat;
 	}
 
-	
 	public Users loadUser() {
-		Users u= getUser1();
-		setNode(u.getNode1());
-		return u;
+		return getUser1();
 	}
+
 	@Transactional(readOnly = true)
-	private Users getUser1(){
-		
+	private Users getUser1() {
 		try {
 			setEntityManager(em);
-			Users u = (Users) getJpaTemplate().find(Users.class, getUserid());
+			Users u = (Users) getJpaTemplate().find(Users.class, getUserid());			
 			this.passwd = u.getPassword();
+			setNodeId(u.getNode1().getNodeId());
+			setInviter(u.getNode1().getInviter());
+			setDisplayName(u.getNode1().getDisplayName());
+			Brance b = (Brance)getJpaTemplate().find(Brance.class,u.getBrance());
+			setBrance(b.getBName());
 			return u;
 		} catch (Exception e) {
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage(), e);
 			throw new UsernameNotFoundException(e + ": username");
-		}		
+		}
 	}
 
 	@Override
-	public String getPassword() {		
+	public String getPassword() {
 		return this.passwd;
 	}
 
@@ -81,13 +86,11 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-
 		return true;
 	}
 
@@ -105,11 +108,44 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 		return userid;
 	}
 
-	public void setNode(Node1 node) {
-		this.node = node;
+	public String getName() {
+		return name;
 	}
 
-	public Node1 getNode() {
-		return node;
+	public void setName(String name) {
+		this.name = name;
 	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
+	public String getInviter() {
+		return inviter;
+	}
+
+	public void setInviter(String inviter) {
+		this.inviter = inviter;
+	}
+
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
+	}
+
+	public Long getNodeId() {
+		return nodeId;
+	}
+
+	public void setBrance(String brance) {
+		this.brance = brance;
+	}
+
+	public String getBrance() {
+		return brance;
+	}
+
 }

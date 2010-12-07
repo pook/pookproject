@@ -58,11 +58,11 @@
 <div id="themebox">
 <%	Logger log = Logger.getLogger("Default");
 	SmileUser u =null;
-	String displayName = "evolix";
+	String displayName = " ";
 	try{
 		u = (SmileUser) SecurityContextHolder.getContext()
 			.getAuthentication().getPrincipal();
-			displayName =u.getNode().getDisplayName();
+		displayName =u.getDisplayName();
 	}catch (ClassCastException e){
 		log.error("Unknow login");
 	}
@@ -116,9 +116,9 @@ And MemberShip Management</h1>
 	<!-- 
            <li class="ui-widget-header"><s:url id="urllogin" action="login"/><sj:a id="loginlink" href="%{urllogin}" targets="main">&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;</sj:a> </li>
            -->
-	<li class="ui-widget-header"><s:url id="urlchgpassword"
-		action="chgpassword" /><sj:a id="chgpasswordlink"
-		href="%{urlchgpassword}" targets="main">&nbsp;เปลี่ยนรหัสผ่าน&nbsp;</sj:a>
+	<li class="ui-widget-header"><s:url id="urlchgpasswd"
+		action="chgpasswd" /><sj:a id="chgpasswdlink"
+		href="%{urlchgpasswd}" targets="main">&nbsp;เปลี่ยนรหัสผ่าน&nbsp;</sj:a>
 	</li>
 	<li class="ui-widget-header"><s:url id="urlblackoffice"
 		action="blackoffice" /><sj:a id="blackofficelink"

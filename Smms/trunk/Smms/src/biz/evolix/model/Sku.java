@@ -22,7 +22,7 @@ public class Sku implements java.io.Serializable {
 	private Integer sv = 0;
 	@Column(name = "DISCOUNT")
 	private Integer discount = 0;
-	@Column(name = "DESCRIPTION", length = 100)
+	@Column(name = "DESCRIPTION", columnDefinition="TEXT(500)")
 	private String description;
 	@Column(name = "IMAGE")
 	private String image;
@@ -104,7 +104,7 @@ public class Sku implements java.io.Serializable {
 	}
 
 	public Double getPriceDiscount() {
-		this.priceDiscount = (getPrice() + (getPrice() * getDiscount() / 100));
+		setPriceDiscount( (getMemberPrice() - (getMemberPrice() * getDiscount() / 100)));
 		return this.priceDiscount;
 	}
 

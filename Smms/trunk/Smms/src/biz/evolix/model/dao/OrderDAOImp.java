@@ -1,5 +1,6 @@
 package biz.evolix.model.dao;
 
+
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -32,44 +33,17 @@ public class OrderDAOImp extends JpaDaoSupport implements OrderDAO {
 	@Override
 	@Transactional(readOnly=false)
 	public void update(Order o) {
-		getJpaTemplate().merge(o);		
-	}
-	
-	
-	@Override
-	@Transactional(readOnly=true)
-	public List<Order> showOrder(Users u, int f, int m) {	//owner	
 		try{
-			return (List<Order>)getJpaTemplate().execute(new MaxResaultByOwner<Order>("findOrderOwner", u,f, m));
+			getJpaTemplate().merge(o);
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
-		}
-		return null;		
-	}
-	@Transactional(readOnly=true)
-	public List<Order> showOrderByStaff(Users u, int f, int m) {		
-		try{
-			return (List<Order>)getJpaTemplate().execute(new MaxResaultByOwner<Order>("findOrderByStaff", u,f, m));
-		}catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
-		return null;		
-	}
-	 
-	
-	
+		}				
+	}	 
+
 	private static Logger log = Logger.getLogger(OrderDAOImp.class);
 
-
-
-	
 	@Override
-	public int pSize() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
+	@Transactional(readOnly=true)
 	public long sizeAll() {		
 		try{
 			return getJpaTemplate().execute(new GenericSize<Long>("getSizeOrderAll"));
@@ -78,26 +52,19 @@ public class OrderDAOImp extends JpaDaoSupport implements OrderDAO {
 			throw new PersistenceException();
 		}		
 	}
-
+	
 	@Override
-	public long sizeOrderStaff() {		
-		try{
-			return getJpaTemplate().execute(new GenericSizeByCause<Long,Users>("getSizeOrderByStaff",getUsers().getNode().getUser()));
-		}catch (Exception e) {
-			log.error(e.getMessage(), e);
-			throw new PersistenceException();
-		}			
-	}
-
-	@Override
+	@Transactional(readOnly=true)
 	public long sizeOrderOwner() {		
 		try{
-			return getJpaTemplate().execute(new GenericSizeByCause<Long,Users>("getSizeOrderOwner",getUsers().getNode().getUser()));
+			Users u =getJpaTemplate().find(Users.class,getUsers().getUserid());
+			return  getJpaTemplate().execute(new GenericSizeByCause<Long,Users>("getSizeOrderOwner",u));//object
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new PersistenceException();
 		}		
-	}	
+	}
+	
 	private SmileUser getUsers() {
 		try {
 			return (SmileUser) SecurityContextHolder.getContext()
@@ -109,4 +76,16 @@ public class OrderDAOImp extends JpaDaoSupport implements OrderDAO {
 		return null;
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public List<Order> showOrderAll(int f, int m) {
+		return (List<Order>)getJpaTemplate().execute(new MaxResult<Order>(f,m, "findOrderAll"));
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Order> showOrderOwner(String uid, int f, int m) {
+		Users u = getJpaTemplate().find(Users.class, uid);
+		return (List<Order>)getJpaTemplate().execute(new MaxResaultByOwner<Order>("findOrderOwner",u , f, m));
+	}
 }

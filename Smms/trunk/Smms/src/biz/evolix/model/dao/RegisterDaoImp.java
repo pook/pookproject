@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import biz.evolix.gen.Generate;
 import biz.evolix.model.Node1;
 import biz.evolix.model.NodeDescription;
+import biz.evolix.model.Province;
 import biz.evolix.model.Users;
 
 @Repository
@@ -22,17 +23,21 @@ public class RegisterDaoImp extends
 
 	@Override
 	@Transactional(readOnly = false,propagation=Propagation.REQUIRES_NEW,isolation=Isolation.DEFAULT)
-	public Users save(Node1 n,Long id,String provinceId) throws DataAccessException{		
+	public Users save(Users u,Long id,String pid) throws DataAccessException{		
 		try {			
 			id = getID(id);
-			n.getUser().setUserId(Generate.getId(id, provinceId));
-			n.getUser().setNode1(n);
-			n.setNId(id);			
-			getJpaTemplate().persist(n);		
+			String strId = Generate.getId(id, pid);			
+			u.setUserId(strId);
+			u.getNode1().setUser(u.getUserId());
+			u.getNode1().setNodeId(id);
+			Province p =getJpaTemplate().find(Province.class,pid);
+			u.setProvince(p);
+			getJpaTemplate().persist(u.getNode1());
+			getJpaTemplate().persist(u);		
 		} catch (Exception e) {			
-			log.error(e.getMessage(),e);			
+			log.error(e.getMessage()+" id ="+id,e);			
 		}
-		return n.getUser();
+		return u;
 	}
 	@Transactional(readOnly=false,isolation=Isolation.SERIALIZABLE)
 	public Long getID(Long id){

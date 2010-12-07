@@ -47,6 +47,7 @@ div#div4 div {
 						<sjg:gridColumn name="user.name" title="ชื่อสมาชิก" />
 						<sjg:gridColumn name="totalQuantity" title="จำนวน"
 							formatter="integer" />
+						<sjg:gridColumn name="date" title="วันที่" formatter="date" formatoptions="{newformat : 'd/m/Y', srcformat : 'Y-m-d-H:i:s'}" align="center"/>
 						<sjg:gridColumn name="totalPrice" title="ราคารวม"
 							formatter="currency" />
 						<sjg:gridColumn name="totalSv" index="totalPV"
@@ -55,7 +56,7 @@ div#div4 div {
 							<sjg:grid id="subgridtable" subGridUrl="%{remote2url}"
 							gridModel="gridModel" rowNum="-1" navigator="true"
 							rownumbers="true" width="650" editurl="%{editpurcheseurl}"
-							userDataOnFooter="true" navigatorAdd="true" 
+							userDataOnFooter="true" navigatorAdd="true"  page="false" pager="false"
 							>
 							<sjg:gridColumn name="sku.sid" title="รหัสผสิตภัณฑ์" width="300"
 								index="sku.sid" />
@@ -69,7 +70,7 @@ div#div4 div {
 								editrules="{integer:true,minValue:1,required:true}"
 								formatter="integer" />
 							<sjg:gridColumn name="purchesePrice" title="ราคา"
-								formatter="currency" align="right" />
+								formatter="currency" align="right" />							
 							<sjg:gridColumn name="psv" title="smile value" align="center"
 								formatter="integer" />
 						</sjg:grid>

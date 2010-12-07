@@ -22,7 +22,6 @@ public class SubShowPurcheseAction extends ActionSupport {
 
 	@Action(value = "/json-list-purchese2", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
-
 		return SUCCESS;
 	}
 

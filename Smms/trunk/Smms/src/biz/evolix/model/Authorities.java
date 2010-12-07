@@ -25,7 +25,7 @@ public class Authorities implements java.io.Serializable {
 	private Long authId;
 
 	@ManyToOne
-	@JoinColumn(name = "USER_ID", nullable = false)
+	@JoinColumn(name = "USER_ID", nullable = false,referencedColumnName="USER_ID")
 	private Users user;
 
 	@Column(name = "AUTHORITY", length = 50, nullable = false)

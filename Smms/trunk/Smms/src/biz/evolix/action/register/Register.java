@@ -9,6 +9,7 @@ import org.apache.struts2.convention.annotation.Result;
 import biz.evlix.customconst.ConstType;
 import biz.evolix.model.Node1;
 import biz.evolix.model.Users;
+import biz.evolix.model.dao.CheckDNameDAO;
 import biz.evolix.service.RegisterService;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -50,39 +51,38 @@ public class Register extends ActionSupport {
 
 	private String save() throws Exception {
 		boolean ck = check();
-		long ck2 = check2();
-		if (ck && ck2 ==ConstType.NOT_FOUND) {
+		long id = check2();
+		if (ck && id ==ConstType.NOT_FOUND) {
 			setEcho("true");
 			addActionError("Bad Request !!");
 			return ERROR;
 		} else {			
-			Users user = new Users();
-			Node1 n = new Node1();
-			n.setDisplayName(getDisplayName());
+			Users user = new Users();			
+			try{
+				user.setBrance(Integer.parseInt(getBrance()));
+				user.setBranceCard(Integer.parseInt(getBranceCard()));
+				}catch (NumberFormatException e) {
+					log.error(e.getMessage(), e);addActionError("Bad Request !!");
+					return ERROR;
+				}			
 			user.setAddress(getAddress());
 			user.setAddress2(getAddress2());
 			user.setBank(getBank());
 			user.setBankAccount(getBankAccount());
 			user.setPassword(ConstType.DEFAULT_PW );
-			user.setBbrance(getBankBrance());
-			try{
-			user.setBrance(Integer.parseInt(getBrance()));
-			user.setBranceCard(Integer.parseInt(getBranceCard()));
-			}catch (NumberFormatException e) {
-				log.error(e.getMessage(), e);addActionError("Bad Request !!");
-				return ERROR;
-			}
+			user.setBbrance(getBankBrance());			
 			user.setCodeIdentification(getCodeIdentification());
 			user.setEmail(getEmail());
-			user.setInviter(getInviter());
-			user.setName(getName());
-			user.setProvince(getProvince());
+			user.setName(getName());			
 			user.setSurename(getSurename());
 			user.setTel(getTel());
 			user.setTel2(getTel2());
 			user.setTypeOfAccount(getTypeOfAccount());
-			n.setUser(user);
-			registerService.save(n, ck2);
+			Node1 n = new Node1();
+			n.setInviter(getInviter());
+			n.setDisplayName(getDisplayName());
+			user.setNode1(n);
+			registerService.save(user, id,getProvince());
 			setEcho("true");
 			addActionMessage("Success !!");
 		}
@@ -97,13 +97,14 @@ public class Register extends ActionSupport {
 			i &= getBankAccount().trim().length()>3;			
 			i &= getBrance().trim().length()>0;			
 			i &= getBranceCard().trim().length()>0;			
-			i &= (getCodeIdentification().trim().length()>12);			
+			i &= checkIdent(getCodeIdentification());			
 			i &= getDisplayName().trim().length()>3;			
 			i &= getInviter().trim().length()>10;			
 			i &= getName().trim().length()>3;			
 			i &= getProvince().trim().length()>1;			
 			i &= getSurename().trim().length()>3;
-			i &= (getTel().trim().length() >8);			
+			i &= (getTel().trim().length() >8);	
+			i &= displayName();
 			getEmail().length();
 			getTel2().length();
 			getAddress2().length();
@@ -112,6 +113,17 @@ public class Register extends ActionSupport {
 			return false;
 		}		
 		return i;
+	}
+	private boolean displayName(){
+		boolean b=checkNameDAO.test(getDisplayName());
+		if(!b)addActionError("มีชื่อนี้แล้วในระบบ");
+		return b;
+	}
+	private boolean checkIdent(String id){
+		if(id.length() != 13) return false;int sum = 0;
+		for(int i=0; i < 12; i++)sum += Float.parseFloat(""+id.charAt(i))*(13-i);
+		if((11-sum%11)%10!=Float.parseFloat(""+id.charAt(12)))return false;
+		return true;		
 	}
 	private long check2(){
 		long l = -1;
@@ -258,10 +270,12 @@ public class Register extends ActionSupport {
 	public String getBranceCard() {
 		return branceCard;
 	}
-
-	public Register(RegisterService registerService) {
+	
+	private CheckDNameDAO checkNameDAO;
+	public Register(RegisterService registerService,CheckDNameDAO checkNameDAO) {
 		super();
 		this.registerService = registerService;
+		this.checkNameDAO = checkNameDAO;
 	}
 
 	public void setUpline(String upline) {

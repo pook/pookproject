@@ -1,8 +1,8 @@
 package biz.evolix.model.dao;
 
 import java.util.Collection;
-import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import biz.evolix.model.Authorities;
 import biz.evolix.model.Users;
+import biz.evolix.model.dao.callback.CheckPasswdCB;
 
 @Repository
 @Transactional
@@ -18,19 +19,15 @@ public class AuthoritiesDAOImp extends JpaDaoSupport implements AuthoritiesDAO {
 
 	@Override
 	@Transactional
-	public boolean authorization(final Users user, String role) {
-		List<Authorities> a = (List<Authorities>)findAuth(user.getUserId());
-		for (Authorities auth : a) {
-			if (auth.getAuthority().equals(role))
-				return false;
-		}
-		Authorities auth = new Authorities();	
+	public boolean authorization(Users user, String role) {
+		Authorities auth = new Authorities();
 		auth.setAuthority(role);
-		auth.setUser(user);	
+		auth.setUser(user);
+		user.getAuthorities().add(auth);
 		try {
-			getJpaTemplate().persist(auth);
+			getJpaTemplate().merge(user);
 		} catch (Exception e) {
-			System.err.println(e);
+			log.error(e.getMessage(),e);
 		}
 		return true;
 	}
@@ -46,10 +43,32 @@ public class AuthoritiesDAOImp extends JpaDaoSupport implements AuthoritiesDAO {
 		return getJpaTemplate().find(Users.class,userId);
 	}
 
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	@Override
 	public List<Users> findAll() {		
 		return (List<Users>)getJpaTemplate().find("select U from Users u");
+	}*/
+
+	@Override
+	@Transactional(readOnly=false)
+	public boolean chgpw(String uid, String newpw) {
+		try{
+			Users u = getJpaTemplate().find(Users.class, uid);
+			u.setPassword(newpw);
+			getJpaTemplate().merge(u);
+			return true;
+		}catch (Exception e) {
+			log.error(e.getMessage());
+			return false;
+		}
+		
+		
 	}
+	@Transactional(readOnly=true)
+	@Override
+	public boolean ckpasswd(String uid, String pw) {
+		return getJpaTemplate().execute(new CheckPasswdCB<Users>(uid, pw))!=null;
+	}
+	private static Logger log = Logger.getLogger(AuthoritiesDAOImp.class);
 
 }

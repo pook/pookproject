@@ -1,6 +1,5 @@
 package biz.evolix.action.register;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
 import org.apache.log4j.Logger;

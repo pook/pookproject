@@ -2,6 +2,8 @@ package biz.evolix.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,7 @@ import javax.persistence.Column;
 @Entity
 @NamedQuery(
 	    name="findAllBrance",
-	    query="select Object(B) FROM Brance B"
+	    query="select B FROM Brance B"
 )
 
 @Table(name="BRANCE")
@@ -20,14 +22,19 @@ public class Brance implements java.io.Serializable {
 	   
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "BRANCE_CODE",length=10)
+	@Column(name = "BRANCE_CODE")
 	private Integer branceCode;
 	@Column(name = "BRANCE_NAME", length = 50)
 	private String bName;
-	@Column (name = "BRANCE_ADDRESS",length=70)
+	@Column (name = "BRANCE_ADDRESS",columnDefinition="TEXT(500)")
 	private String bAddress;
 	@Column(name = "BRANCE_TEL",length=50)
 	private String bTel;
+	@ManyToOne
+	@JoinColumn(name = "BRANCE_PROVINCE")
+	private Province province;
+	@Column(name = "POST_CODE",length=50)
+	private String postcode;
 	private static final long serialVersionUID = 1L;
 
 	public Brance() {
@@ -60,6 +67,18 @@ public class Brance implements java.io.Serializable {
 
 	public void setBTel(String bTel) {
 		this.bTel = bTel;
+	}
+	public void setProvince(Province province) {
+		this.province = province;
+	}
+	public Province getProvince() {
+		return province;
+	}
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+	public String getPostcode() {
+		return postcode;
 	}
    
 }

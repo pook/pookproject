@@ -27,27 +27,26 @@ public class Order implements java.io.Serializable {
 
 	private List<Purchese> purchese = new ArrayList<Purchese>();
 
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "USER_ID",columnDefinition="CHAR(20)")
 	@ManyToOne
 	private Users user;
 
-	@JoinColumn(name = "SELLER_ID")
-	@ManyToOne
-	private Users seller;
+	@Column(name = "SELLER_ID" ,columnDefinition="CHAR(20)")
+	private String seller;
 	@Column(name = "TOTAL_PRICE")
 	private double totalPrice = 0.0;
 
 	@Column(name = "TOTAL_QUANTITY")
 	private Integer totalQuantity = 0;
-	@Column(name = "TOTAL_SV", length = 50)
+	@Column(name = "TOTAL_SV")
 	private Integer totalSv = 0;
 
 	@Column(name = "READED")
 	private Boolean readed = false;
-	// brance name
-	@Column(name = "BRANCE", length = 50)
-	private String brance;
-	// ////
+	
+	@Column(name = "BRANCE")
+	private Integer brance;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATE")
 	private Date date;
@@ -70,8 +69,10 @@ public class Order implements java.io.Serializable {
 		getTSV();
 		return this.totalSv;
 	}
-
+	
+	@Transient
 	private void getTSV() {
+		if(getPurchese()==null || getPurchese().size()<1)return;
 		Integer s = 0;
 		for (Purchese p : getPurchese())
 			s += p.getPsv();
@@ -106,9 +107,10 @@ public class Order implements java.io.Serializable {
 		getTp();
 		return totalPrice;
 	}
-
+	@Transient
 	private void getTp() {
-		Double tot = 0.0;
+		if(getPurchese()==null || getPurchese().size()<1)return;
+		Double tot = 0.0;		
 		for (Purchese p : getPurchese())
 			tot += p.getPurchesePrice();
 		setTotalPrice(tot);
@@ -132,20 +134,13 @@ public class Order implements java.io.Serializable {
 		getTQ();
 		return totalQuantity;
 	}
-
+	@Transient
 	private void getTQ() {
-		Integer tot = 0;
+		if(getPurchese()==null || getPurchese().size()<1)return;
+		Integer tot = 0;		
 		for (Purchese p : getPurchese())
 			tot += p.getQuantity();
 		setTotalQuantity(tot);
-	}
-
-	public void setBrance(String brance) {
-		this.brance = brance;
-	}
-
-	public String getBrance() {
-		return brance;
 	}
 
 	public void setReaded(Boolean readed) {
@@ -156,11 +151,19 @@ public class Order implements java.io.Serializable {
 		return readed;
 	}
 
-	public void setSeller(Users seller) {
+	public void setSeller(String seller) {
 		this.seller = seller;
 	}
 
-	public Users getSeller() {
+	public String getSeller() {
 		return seller;
+	}
+
+	public void setBrance(Integer brance) {
+		this.brance = brance;
+	}
+
+	public Integer getBrance() {
+		return brance;
 	}
 }

@@ -62,7 +62,7 @@ div#mainnode div {
 div#mainnode {
 	background-image: url(../images/EmptyOrg3.jpg);
 	width: 980px;
-	height: 501px;
+	height: 502px;
 }
 
 div#l1 div {
@@ -173,23 +173,16 @@ div#personPopupContainer div {
 .personPopupPopup .top {
 	background: url(../images/balloon_top.png) repeat-x;
 }
-
 .personPopupPopup .bottom {
 	background: url(../images/balloon_bottom.png) repeat-x;
 	text-align: center;
 }
-
 #name1 {
 	height: 8px;
 	width: 60px;
 }
-
-#status {
-	
-}
-
 #main {
-	height: 600px;
+	height: 610px;
 }
 
 #b1 {

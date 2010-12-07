@@ -13,6 +13,7 @@
 		value="com.smms.action,biz.evolix.action.organization
 		,biz.evolix.action.backoffice
 		,biz.evolix.action.order
+		,biz.evolix.action.role
 		,biz.evolix.action.global
 		,biz.evolix.action.mamagesku" />
 	<include file="smms.xml" />

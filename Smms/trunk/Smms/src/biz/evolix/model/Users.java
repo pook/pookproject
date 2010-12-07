@@ -1,18 +1,44 @@
 package biz.evolix.model;
 
 import java.lang.String;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
+
+import org.eclipse.persistence.annotations.Cache;
+import org.eclipse.persistence.annotations.CacheCoordinationType;
+import org.eclipse.persistence.annotations.CacheType;
 
 @Entity
 @Table(name = "USERS")
+@Cache (
+     type=CacheType.WEAK,    
+     size = 128,
+     expiry=600000,
+     alwaysRefresh=true,
+     disableHits=true,
+     coordinationType=CacheCoordinationType.INVALIDATE_CHANGED_OBJECTS
+     )
+@NamedQueries({
+		@NamedQuery(name = "ckpasswd", query = "select U from Users u where U.userId =?1 and U.password=?2")
+})
 public class Users implements java.io.Serializable {
 
 	private static final long serialVersionUID = -1086396230161064363L;
 	@Id	
-	@Column(name = "USER_ID", length = 50, unique = true)
+	@Column(name = "USER_ID", columnDefinition="CHAR(20)", unique = true)
 	private String userId;
 	@Column(name = "PASSWORD")
 	private String password ;
@@ -20,21 +46,19 @@ public class Users implements java.io.Serializable {
 	private String name;
 	@Column(name = "SURNAME", length = 50)
 	private String surename;
-	@Column(name = "CODE_IDENT", length = 50)
+	@Column(name = "CODE_IDENT", length = 30)
 	private String codeIdentification;
 	@Column(name = "TEL", length = 30)
 	private String tel;
 	@Column(name = "TEL2", length = 30)
 	private String tel2;
-	@Column(name = "INVITER", length = 50)
-	private String inviter;
-	@Column(name = "EMAIL", length = 50)
+	@Column(name = "EMAIL", length = 100)
 	private String email;
-	@Column(name = "ADDRESS", length = 128)
+	@Column(name = "ADDRESS",columnDefinition="TEXT(500)")
 	private String address;
-	@Column(name = "PROVINCE", length = 50)
-	private String province;
-	@Column(name = "ADDRESS2", length = 128)
+	@JoinColumn(name = "PROVINCE")
+	private Province province;
+	@Column(name = "ADDRESS2", columnDefinition="TEXT(500)")
 	private String address2;
 	@Column(name = "BANK", length = 50)
 	private String bank;
@@ -46,14 +70,15 @@ public class Users implements java.io.Serializable {
 	private String typeOfAccount;
 	@Column(name = "ENABLED")
 	private Byte enaebled=(byte)1;
-	@Column(name ="BRANCE",nullable = false)
+	@Column(name ="BRANCE")
 	private Integer brance;
-	@Column(name ="BRANCE_CARD",nullable = false)
+	@Column(name ="BRANCE_CARD")
 	private Integer branceCard;
-	private List<Authorities> authorities = new ArrayList<Authorities>();
+	private List<Authorities> authorities;
+	@Column(name="REV_CARD")
+	private Boolean recivecard = false;
 	//@OneToOne(mappedBy="nId")	
-	@JoinColumn(name="NODE_ID")	
-	@OneToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@JoinColumn(name="NODE_ID")		
     private Node1 node1;
 
 	public Users() {
@@ -99,14 +124,6 @@ public class Users implements java.io.Serializable {
 		this.tel2 = tel2;
 	}
 
-	public String getInviter() {
-		return this.inviter;
-	}
-
-	public void setInviter(String inviter) {
-		this.inviter = inviter;
-	}
-
 	public String getEmail() {
 		return this.email;
 	}
@@ -122,12 +139,12 @@ public class Users implements java.io.Serializable {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
-	public String getProvince() {
+	@ManyToOne
+	public Province getProvince() {
 		return this.province;
 	}
 
-	public void setProvince(String province) {
+	public void setProvince(Province province) {
 		this.province = province;
 	}
 
@@ -175,7 +192,7 @@ public class Users implements java.io.Serializable {
 		this.authorities = authorities;
 	}
 
-	@OneToMany(mappedBy = "AUTH_ID", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "AUTH_ID", cascade = CascadeType.PERSIST,fetch=FetchType.EAGER)
 	public List<Authorities> getAuthorities() {
 		return authorities;
 	}
@@ -202,7 +219,7 @@ public class Users implements java.io.Serializable {
 	public void setNode1(Node1 node1) {
 		this.node1 = node1;
 	}
-	
+	@OneToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	public Node1 getNode1() {
 		return node1;
 	}
@@ -217,6 +234,12 @@ public class Users implements java.io.Serializable {
 	}
 	public void setBranceCard(Integer branceCard) {
 		this.branceCard = branceCard;
+	}
+	public void setRecivecard(Boolean recivecard) {
+		this.recivecard = recivecard;
+	}
+	public Boolean getRecivecard() {
+		return recivecard;
 	}
 	
 }

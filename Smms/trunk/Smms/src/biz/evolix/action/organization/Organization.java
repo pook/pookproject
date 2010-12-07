@@ -8,7 +8,8 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
-import biz.evolix.model.bean.UserBean;
+
+import biz.evolix.model.Node1;
 import biz.evolix.service.OrchartService;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -19,7 +20,7 @@ public class Organization extends ActionSupport {
 
 	private OrchartService orchartService;
 	private String nodeId;
-	private List<UserBean> teams;
+	private List<Node1> teams;
 	private List<Integer> level;
 	private static final long serialVersionUID = -7992937997674968155L;
 	private static Logger log = Logger.getLogger(Organization.class);
@@ -55,11 +56,11 @@ public class Organization extends ActionSupport {
 		this.orchartService.init();
 	}
 
-	public void setTeams(List<UserBean> teams) {
+	public void setTeams(List<Node1> teams) {
 		this.teams = teams;
 	}
 
-	public List<UserBean> getTeams() {
+	public List<Node1> getTeams() {
 		return teams;
 	}
 

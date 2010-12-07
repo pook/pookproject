@@ -9,7 +9,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import biz.evlix.customconst.ConstType;
-import biz.evolix.model.bean.UserBean;
+import biz.evolix.model.Node1;
 import biz.evolix.service.OrchartService;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -22,7 +22,7 @@ public class OrganizationSearchMember extends ActionSupport {
 	private OrchartService orchartService;
 	private String messageError[];
 	private String memberid;
-	private List<UserBean> teams;
+	private List<Node1> teams;
 	private List<Integer> level;
 	private static final long serialVersionUID = -7992937997674968155L;
 	private static Logger log = Logger
@@ -62,11 +62,11 @@ public class OrganizationSearchMember extends ActionSupport {
 		this.orchartService.init();
 	}
 
-	public void setTeams(List<UserBean> teams) {
+	public void setTeams(List<Node1> teams) {
 		this.teams = teams;
 	}
 
-	public List<UserBean> getTeams() {
+	public List<Node1> getTeams() {
 		return teams;
 	}
 

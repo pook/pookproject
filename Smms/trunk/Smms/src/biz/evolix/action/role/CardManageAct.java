@@ -1,4 +1,4 @@
-package biz.evolix.action.order;
+package biz.evolix.action.role;
 
 import java.util.List;
 
@@ -9,37 +9,27 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import biz.evlix.customconst.ConstType;
-import biz.evolix.service.OrderService;
+import biz.evolix.model.Users;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
-public class Order extends ActionSupport {
+public class CardManageAct extends ActionSupport {
 
-	private static final long serialVersionUID = 8619781837424132878L;
-	private static Logger log = Logger.getLogger(Order.class);
-	
-	@Action(value = "/json-list-order1", results = { @Result(name = "success", type = "json") })
-	public String execute() {
+	private static final long serialVersionUID = 5457921225777954498L;
+	private static Logger log = Logger.getLogger(CardManageAct.class);
+
+	@Action(value = "/json-card", results = { @Result(name = "success", type = "json") })
+	public String execute() throws Exception {
 		return SUCCESS;
 	}
 
-	public String getJSON()throws Exception {
-		try{
-			setRecord( orderService.sizeOrderOwner());
-			int to = (getRows() * getPage());
-			int from = to - getRows();		
-			setGridModel(orderService.ordersByOwner(from ,getRows()));
-		}catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
-		
-		
-		setTotal();
-		return execute();
-	}
+	public String getJSON() throws Exception {
 
-	private List<biz.evolix.model.Order>gridModel;
+		return SUCCESS;
+	}
+	private List<Users> gridModel;
 	private Integer rows = 0;
 	private Integer page = 0;
 	private String sord;
@@ -49,7 +39,15 @@ public class Order extends ActionSupport {
 	private String searchOper;
 	private Integer total = 0;
 	private Integer record = 0;
-	
+
+	public List<Users> getGridModel() {
+		return gridModel;
+	}
+
+	public void setGridModel(List<Users> gridModel) {
+		this.gridModel = gridModel;
+	}
+
 	public Integer getRows() {
 		return rows;
 	}
@@ -122,20 +120,6 @@ public class Order extends ActionSupport {
 		this.record = record;
 		this.setTotal();
 	}
-		
-	public void setGridModel(List<biz.evolix.model.Order> gridModel) {
-		this.gridModel = gridModel;
-	}
-
-	public List<biz.evolix.model.Order> getGridModel() {
-		return gridModel;
-	}	
-	private OrderService orderService;
-
-	public Order(OrderService orderService) {
-		super();
-		this.orderService = orderService;
-	}	
 	private void setTotal(){
 		if (getRecord() > 0 && getRows() > 0) {
 			setTotal( (int) Math.ceil((double) this.record
@@ -143,5 +127,5 @@ public class Order extends ActionSupport {
 		} else {
 			setTotal(ConstType.ZERO);
 		}		
-	}		
+	}
 }

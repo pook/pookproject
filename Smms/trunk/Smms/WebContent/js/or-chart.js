@@ -14,9 +14,9 @@ function orgJSON(data) {
 			var g = null;
 			g = $(this).attr("id");
 			var idx = g.substring(1);
-			var txt = dat.teams[idx - 1].userId;
+			var txt = dat.teams[idx - 1].user;
 			var txt1 = dat.teams[idx - 1].displayName;
-			var inv = dat.teams[idx - 1].invinter;
+			var inv = dat.teams[idx - 1].inviter;
 			var img = '';
 			if (dat.teams[idx - 1].status == 'A') {
 				img = $(imgactive());
@@ -441,7 +441,7 @@ function orgJSON(data) {
 			default:
 				po1 = -6;
 			}					
-			var t1 = value.userId;
+			var t1 = value.user;
 			var im = '';			
 			if (value.status == 'A') {
 				im = imgactive();
@@ -454,7 +454,7 @@ function orgJSON(data) {
 				return;
 			}						
 			if(idx<15){
-				var t2 = value.displayName,inv2 = value.invinter;
+				var t2 = value.displayName,inv2 = value.inviter;
 				$("#n" + (idx + 1)).empty().html(
 					boxhtml(im, t2,t1, inv2, po1));
 			}else{

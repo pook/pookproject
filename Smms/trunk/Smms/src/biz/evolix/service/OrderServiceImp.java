@@ -55,13 +55,7 @@ public class OrderServiceImp implements OrderService {
 
 	private static Logger log = Logger.getLogger(OrderServiceImp.class);
 
-	@Override
-	public List<Order> ordersByStaff(int from, int m,int rows) {		
-		setOrders(getOrderDAO().showOrderByStaff(
-				getUsers().getNode().getUser(), from, m));
-		return getOrders();
-	}
-
+	
 	@Override
 	public List<Purchese> purcheses(int idx) {
 		Order o=getOrders().get(idx-1);		
@@ -69,23 +63,24 @@ public class OrderServiceImp implements OrderService {
 	}
 
 	@Override
-	public List<Order> ordersByMember(int from, int to, int rows) {
-		setOrders(getOrderDAO().showOrder(
-				getUsers().getNode().getUser(), from, to));
+	public List<Order> ordersByOwner(int from, int rows) {
+		setOrders(getOrderDAO().showOrderOwner(
+				getUsers().getUserid(), from,rows));
 		return getOrders();	}
 
 	@Override
 	public long sizeAll() {		
 		return orderDAO.sizeAll();
 	}
-
-	@Override
-	public int sizeOrderStaff() {		
-		return (int)orderDAO.sizeOrderStaff();
-	}
-
+	
 	@Override
 	public int sizeOrderOwner() {
 		return (int)orderDAO.sizeOrderOwner();
+	}
+
+	@Override
+	public List<Order> ordersAll(int from, int rows) {
+		setOrders(orderDAO.showOrderAll(from, rows));
+		return getOrders();
 	}
 }

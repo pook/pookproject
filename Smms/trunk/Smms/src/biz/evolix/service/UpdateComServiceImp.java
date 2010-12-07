@@ -26,7 +26,7 @@ public class UpdateComServiceImp implements UpdateComService {
 			int sv = o.getTotalSv();			
 			n.incSv(sv);
 			node1DAO.update(n);
-			up(Generate.getParentId((n.getNId())));
+			up(Generate.getParentId((n.getNodeId())));
 		}
 	}
 
@@ -43,7 +43,7 @@ public class UpdateComServiceImp implements UpdateComService {
 				com += nr.getCommissions();
 			nc.setCommissions(com);
 			node1DAO.updateOther(nc);
-			up(Generate.getParentId((nc.getNId())));
+			up(Generate.getParentId((nc.getNodeId())));
 		}
 	}
 

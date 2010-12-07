@@ -65,6 +65,9 @@
 	</bean>
 	<bean id="checkNameDAO" class="biz.evolix.model.dao.CheckDNameDAOImp" scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>	
+	<bean id="userDAO" class="biz.evolix.model.dao.UsersDAOImp" scope="prototype">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>			
 	<bean id="userDetail" class="biz.evolix.secure.UserDetail" />
 	<bean id="fetchProvince" class="biz.evolix.model.dao.ProvinceDAOImp" scope="singleton" >
@@ -103,7 +106,8 @@
 		<constructor-arg ref="purcheseService" />
 	</bean>
 	<bean id="registerServiceAct" scope="prototype" class="biz.evolix.action.register.Register">
-		<constructor-arg ref="registerService" />
+		<constructor-arg index="0" ref="registerService" />
+		<constructor-arg index="1" ref="checkNameDAO" />
 	</bean>
 	<bean id="fetchUpLine" scope="prototype" class="biz.evolix.action.register.FetchUpline">
 		<constructor-arg ref="registerService" />
@@ -157,6 +161,15 @@
 		scope="prototype">
 		<constructor-arg ref="checkNameDAO" />
 	</bean>
+	<bean id="branceManAct" class="biz.evolix.action.role.BranceManAct"
+		scope="prototype">
+		<constructor-arg ref="fetchBrance" />
+	</bean>
+	<bean id="member" class="com.smms.action.Member"
+		scope="session">
+		<constructor-arg ref="userDAO" />
+	</bean>
+	
 	<!-- end faces action -->
 	<context:annotation-config />
 </beans>

@@ -6,15 +6,13 @@
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="/Smms/struts/utils.js"></script>
 <script type="text/javascript">
-function xxx(){
-	//$("#test").html("bbbbb") ; 
-	alert("bbbbbbbbbbbbbb");
-}
+
 </script>
 <div id="test"></div>
+
 <sj:div id="div4">
 	<table
-		style="align: center; background: #FDF5CE; width: 540px; margin-left: 100px; border: 1px solid #000000; margin-top: 50px"
+		style="align: center; width:924px; margin-left: 60px; border: 0px solid #000000; margin-top: 50px"
 		cellspacing="10px">
 		<tr>
 			<td><sj:tabbedpanel id="localtabs" selectedTab="0">
@@ -25,16 +23,16 @@ function xxx(){
 				<div id="ttwo"><sj:div id="div01">
 					<sj:div id="div11"></sj:div>
 					<sj:div id="div21">
-						<s:url id="remoteurl" action="jsonsmmsrole" />
-						<s:url id="editurl" action="edit-grid-entry" />
+						<s:url id="cardremoteurl" action="json-card" />
+						<s:url id="cardediturl" action="card-edit-grid"/>
 						<sjg:grid id="gridedittable1" caption="จัดการการออกบัตร"
-							dataType="json" href="%{remoteurl}" pager="true" navigator="true"
+							dataType="json" href="%{cardremoteurl}" pager="true" navigator="true"
 							navigatorSearchOptions="{sopt:['eq','ne','lt','gt']}"
 							navigatorEditOptions="{height:280,reloadAfterSubmit:false}"
 							navigatorEdit="false" navigatorView="false" navigatorAdd="false"
 							navigatorDelete="false" rownumbers="true" gridModel="gridModel"
 							multiselect="true" 
-							rowList="10,15,20" rowNum="15" width="1024" editurl="%{editurl}"
+							rowList="10,15,20" rowNum="15" width="880" editurl="%{cardediturl}"
 							onSelectRowTopics="rowselect">
 							<sjg:gridColumn name="id2" index="id2" title="รหัสสมาชิก"
 								sortable="false" editable="false" />
@@ -66,29 +64,29 @@ function xxx(){
 				<div id="ttree"><sj:div id="div011">
 					<sj:div id="div111"></sj:div>
 					<sj:div id="div211">
-						<s:url id="remoteurl" action="jsonsmmsrole" />
-						<s:url id="editurl" action="edit-grid-entry" />
+						<s:url id="branceurl" action="json-brance" />
+						<s:url id="editbranceurl" action="edit-grid-brance" />
 						<sjg:grid id="gridedittable11" caption="ตั้งค่าสาขา"
-							dataType="json" href="%{remoteurl}" pager="true" navigator="true"
+							dataType="json" href="%{branceurl}" pager="true" navigator="true" 
 							navigatorSearchOptions="{sopt:['eq','ne','lt','gt']}"
 							navigatorEditOptions="{height:280,reloadAfterSubmit:false}"
 							navigatorEdit="false" navigatorView="false"
 							navigatorDelete="false" navigatorAdd="true" rownumbers="true"
 							gridModel="gridModel" rowList="10,15,20" rowNum="15"
-							 width="1024" editurl="%{editurl}"
+							 width="880" editurl="%{editbranceurl}"
 							editinline="true" onSelectRowTopics="rowselect">
-							<sjg:gridColumn name="bid" index="bid" title="รหัสสาขา"
+							<sjg:gridColumn name="branceCode" index="branceCode" title="รหัสสาขา"
 								sortable="false" editable="false" />
-							<sjg:gridColumn name="member" index="productName"
-								title="ชือสาขา" sortable="false" editable="true" />
-							<sjg:gridColumn name="productName" index="productName"
-								title="เบอร์โทร" sortable="false" editable="true" />
-							<sjg:gridColumn name="productDetail" index="productDetail"
-								title="ที่อยู่" sortable="false" editable="true" />
-								<sjg:gridColumn name="productDetail" index="productDetail"
-								title="จังหวัด" sortable="false" editable="true" />
-	<sjg:gridColumn name="bid" index="productDetail"
-								title="รหัสไปรษณีย์" sortable="false" editable="true" />
+							<sjg:gridColumn name="BName" 
+								title="ชือสาขา"  editable="true" />
+							<sjg:gridColumn name="BTel" 
+								title="เบอร์โทร"  editable="true" />
+							<sjg:gridColumn name="BAddress" 
+								title="ที่อยู่"  editable="true" />
+								<sjg:gridColumn name="province.pname" index="productDetail"
+								title="จังหวัด"  editable="true" />
+	<sjg:gridColumn name="postcode"
+								title="รหัสไปรษณีย์"  editable="true" />
 
 
 						</sjg:grid>
@@ -106,8 +104,8 @@ function xxx(){
 				<div id="tone"><sj:div id="div0">
 					<sj:div id="div1"></sj:div>
 					<sj:div id="div2">
-						<s:url id="remoteurl" action="jsonsmmsrole" />
-						<s:url id="editurl" action="edit-grid-entry" />
+						<s:url id="roleurl" action="json-role" />
+						<s:url id="editroleurl" action="edit-grid-role" />
 						<sjg:grid id="gridedittable" caption="USER(CRUD)" dataType="json"
 							href="%{remoteurl}" pager="true" navigator="true"
 							navigatorSearchOptions="{sopt:['eq','ne','lt','gt']}"
@@ -118,7 +116,7 @@ function xxx(){
 							navigatorDelete="false" navigatorAdd="true" rownumbers="true"
 							
 							gridModel="gridModel" rowList="10,15,20" rowNum="15"
-							multiselect="true" width="1024" editurl="%{editurl}"
+							multiselect="true" width="880" editurl="%{editroleurl}"
 							editinline="true" onSelectRowTopics="rowselect">
 							<sjg:gridColumn name="id2" index="id2" title="รหัสสมาชิก"
 								sortable="false" editable="false" />

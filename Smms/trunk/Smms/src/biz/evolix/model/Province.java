@@ -3,27 +3,21 @@ package biz.evolix.model;
 import java.lang.String;
 import javax.persistence.*;
 
-
 @Entity
-@NamedQuery(
-	    name="findAllProvince",
-	    query="select Object(P) FROM Province P"
-)
-@Table(name="PROVINCE")
+@NamedQuery(name = "findAllProvince", query = "select Object(P) FROM Province P")
+@Table(name = "PROVINCE")
 public class Province implements java.io.Serializable {
 
 	@Id
-	@Column(name ="PROVINCE_CODE",length=5 )
+	@Column(name = "PROVINCE_CODE", columnDefinition = "CHAR(5)")
 	private String pCode;
-	@Column(name = "PROVINCE", length = 50)
+	@Column(name = "PROVINCE", length = 100)
 	private String pname;
 	private static final long serialVersionUID = 1L;
 
 	public Province() {
 		super();
 	}
-
-	
 
 	public String getPname() {
 		return this.pname;
@@ -33,13 +27,9 @@ public class Province implements java.io.Serializable {
 		this.pname = pname;
 	}
 
-
-
 	public void setpCode(String pCode) {
 		this.pCode = pCode;
 	}
-
-
 
 	public String getpCode() {
 		return pCode;

@@ -49,7 +49,7 @@ div#div4 div{
 							title="sale order ID" formatter="integer" sortable="true" width="120" align="center" />
 						<sjg:gridColumn name="user.userId" title="รหัสสมาชิก"
 							editable="true" editrules="{required:true}" />
-						<sjg:gridColumn name="user.name" title="ชื่อสมาชิก" />
+						<sjg:gridColumn name="user.name" title="ชื่อสมาชิก" />						
 						<sjg:gridColumn name="totalQuantity" title="จำนวน"
 							formatter="integer" />
 						<sjg:gridColumn name="totalPrice" title="ราคารวม"
