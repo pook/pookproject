@@ -20,7 +20,7 @@ import javax.persistence.Column;
 public class Authorities implements java.io.Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "AUTH_ID")
 	private Long authId;
 

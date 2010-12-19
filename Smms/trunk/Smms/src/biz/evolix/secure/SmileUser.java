@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import biz.evlix.customconst.ConstType;
+import biz.evolix.customconst.ConstType;
 import biz.evolix.model.Authorities;
 import biz.evolix.model.Brance;
 import biz.evolix.model.Users;
@@ -64,9 +64,8 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 			this.passwd = u.getPassword();
 			setNodeId(u.getNode1().getNodeId());
 			setInviter(u.getNode1().getInviter());
-			setDisplayName(u.getNode1().getDisplayName());
-			Brance b = (Brance)getJpaTemplate().find(Brance.class,u.getBrance());
-			setBrance(b.getBName());
+			setDisplayName(u.getNode1().getDisplayName());			
+			setBrance(u.getBrance());
 			return u;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

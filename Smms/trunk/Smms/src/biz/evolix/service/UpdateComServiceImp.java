@@ -17,8 +17,9 @@ public class UpdateComServiceImp implements UpdateComService {
 	@Override
 	public void update(Order o) {
 		Node1 n = null;
+		int count= 0;
 		try {
-			n = node1DAO.getNode1FromUser(o.getUser());
+			n = node1DAO.getNode1FromUserId(o.getUser().getUserId());
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
 		}
@@ -26,13 +27,13 @@ public class UpdateComServiceImp implements UpdateComService {
 			int sv = o.getTotalSv();			
 			n.incSv(sv);
 			node1DAO.update(n);
-			up(Generate.getParentId((n.getNodeId())));
+			up(Generate.getParentId((n.getNodeId())),++count);
 		}
 	}
 
-	private void up(long c) {		
+	private void up(long c,int count) {		
 		Node1 nl = null,nr=null,nc=null;		
-		if (c > 0) {
+		if (c > 0 && count <17) {
 			nc = node(c);
 			nl = node(Generate.getLeftChildId(c));
 			nr = node(Generate.getRightChildId(c));
@@ -43,7 +44,7 @@ public class UpdateComServiceImp implements UpdateComService {
 				com += nr.getCommissions();
 			nc.setCommissions(com);
 			node1DAO.updateOther(nc);
-			up(Generate.getParentId((nc.getNodeId())));
+			up(Generate.getParentId((nc.getNodeId())),++count);
 		}
 	}
 
@@ -59,7 +60,7 @@ public class UpdateComServiceImp implements UpdateComService {
 		try {
 			return node1DAO.getNode1(c);
 		} catch (Exception e) {
-			//log.error(e.getMessage());
+			log.error(e.getMessage());
 			return null;
 		}
 	}

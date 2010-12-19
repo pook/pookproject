@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import biz.evlix.customconst.ConstType;
+import biz.evolix.customconst.ConstType;
 import biz.evolix.gen.Generate;
 import biz.evolix.model.Node1;
 import biz.evolix.model.dao.Node1DAO;
@@ -42,21 +42,16 @@ public class OrchartServiceImp implements OrchartService {
 		if (n == null)
 			return teams;
 		addList(teams, n);
-		log.info("not null;" + n.getNodeId());
 		for (int i = 0; i < ConstType.MAX_NODE_SHOW; i++) {
 			Node1 n1 = null, n2 = null;
 			try {
 				c = teams.get(i).getNodeId();
 			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-				break;
 			}
-			if (c != -2) {
-				n1 = getNode(Generate.getLeftChildId(c));
-				addList(teams, n1);
-				n2 = getNode(Generate.getRightChildId(c));
-				addList(teams, n2);
-			}
+			n1 = getNode(Generate.getLeftChildId(c));
+			addList(teams, n1);
+			n2 = getNode(Generate.getRightChildId(c));
+			addList(teams, n2);
 		}
 		xCommission(teams);
 		return teams;
@@ -84,12 +79,14 @@ public class OrchartServiceImp implements OrchartService {
 
 	private void xCommission(List<Node1> teams) {
 		this.levels = new ArrayList<Integer>();
+		String inv = getUsers().getDisplayName();
 		for (int i = 0, k = 0; i < ConstType.BACKWARD_6 && k < teams.size(); i++) {
 			int value = 0;
 			int c = (int) Math.floor(Generate.math2Pow(i));
 			for (int j = 0; j < c; j++) {
 				try {
-					value += teams.get(k++).getCommissions();
+					if (inv.equals(teams.get(k++).getInviter()))
+						value += teams.get(k-1).getCommissions();
 				} catch (IndexOutOfBoundsException e) {
 					log.error(e.getMessage(), e);
 					break;

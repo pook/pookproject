@@ -1,0 +1,54 @@
+@CHARSET "UTF-8";
+input.text {
+	margin: 2px 30px 2px 39px;
+	width: 230px;
+	padding: 1px 5px 1px 5px;
+}
+
+.selectop {
+	margin: 2px 30px 2px 39px;
+	width: 160px;
+}
+
+.th2 {
+	height: 30px;
+}
+#input-form{
+	position: relative;
+	margin-left: 300px;
+	
+	}
+#user{
+	margin-top:50px
+	}
+#main-regist {
+	margin-top:50px;	
+}
+#main{
+	height: 820px	}
+.tf {
+	margin: 7px 30px 7px 35px;
+	padding-left: 90px;
+	padding-top: 9px;
+	padding-bottom: 9px;
+}
+
+label {
+	padding-left: 10px;
+}
+
+textarea.text {
+	margin: 2px 30px 2px 39px;
+	width: 180px;
+}
+
+select.text {
+	margin: 2px 30px 2px 39px;
+	width: 160px;
+}
+
+fieldset {
+	padding: 0;
+	border: 0;
+	margin-top: 25px;
+}

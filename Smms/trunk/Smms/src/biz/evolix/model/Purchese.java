@@ -17,12 +17,12 @@ public class Purchese implements java.io.Serializable {
 	private Long pId;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "S_ID")
+	@JoinColumn(name = "S_ID",referencedColumnName="S_ID")
 	private Sku sku;
 
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ORDER_ID", nullable=false, updatable=false ,referencedColumnName="ORDER_ID")	
+	@JoinColumn(name = "ORDER_ID", nullable=false,referencedColumnName="ORDER_ID")	
 	private Order order;
 
 	@Column(name = "QUANTITY")

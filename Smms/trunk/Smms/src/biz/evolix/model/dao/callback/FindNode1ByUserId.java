@@ -9,8 +9,9 @@ import org.springframework.orm.jpa.JpaCallback;
 public class FindNode1ByUserId<T> implements JpaCallback<T> {
 
 	@Override
+	@SuppressWarnings("unchecked")	
 	public T doInJpa(EntityManager em) throws PersistenceException {
-		Query q = em.createNamedQuery("fidNode1ByUserId");
+		Query q = em.createNamedQuery("findNode1FromUserId");
 		q.setParameter(1, this.userId);
 		return (T)q.getSingleResult();
 	}

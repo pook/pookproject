@@ -24,7 +24,7 @@ public class Order implements java.io.Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ORDER_ID")
 	private Long orderId;
-
+	
 	private List<Purchese> purchese = new ArrayList<Purchese>();
 
 	@JoinColumn(name = "USER_ID",columnDefinition="CHAR(20)")
@@ -120,7 +120,7 @@ public class Order implements java.io.Serializable {
 		this.purchese = purchese;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "P_ID")
+	@OneToMany(mappedBy = "P_ID", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public List<Purchese> getPurchese() {
 		return purchese;
 	}

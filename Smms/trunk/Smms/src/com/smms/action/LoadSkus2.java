@@ -20,13 +20,13 @@ public class LoadSkus2 extends ActionSupport {
 
 	private static final long serialVersionUID = -9096770255426595255L;
 
-	private Map<Integer,String> products= new TreeMap<Integer,String>();
+	private Map<Integer,String> products = new TreeMap<Integer,String>();
 	private SkuDAO skuDAO;
 	@Action(value = "/json-customer-loadskuss", results = { @Result(location = "select-sku.jsp", name = "success")})
 	public String execute() throws Exception {	
 		List<Sku> skus=skuDAO.showAllItem();		
 		for(Sku k:skus){
-			products.put(Integer.parseInt(k.getSid()+""), k.getName());
+			products.put(Integer.parseInt(k.getSid().toString()), k.getName());
 		}
 		return SUCCESS;
 	}

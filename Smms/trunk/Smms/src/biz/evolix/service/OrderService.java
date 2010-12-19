@@ -11,4 +11,6 @@ public interface OrderService {
 	public List<Order>ordersAll(int from,int rows);
 	public List<Purchese>purcheses(int idx);
 	public List<Order>ordersByOwner(int from,int rows);
+	public void del(int id);
+	
 }

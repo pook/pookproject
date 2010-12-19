@@ -3,7 +3,6 @@ package biz.evolix.model.dao;
 import java.util.List;
 
 import biz.evolix.model.Order;
-import biz.evolix.model.Users;
 
 public interface OrderDAO {
 	public void newOrder(Order o);
@@ -12,5 +11,5 @@ public interface OrderDAO {
 	public List<Order>showOrderAll(int f,int m);	
 	public long sizeAll();
 	public long sizeOrderOwner();
-	
+	public boolean del(long id);
 }

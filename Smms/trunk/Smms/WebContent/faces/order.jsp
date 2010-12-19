@@ -24,15 +24,15 @@ div#div4 div{
 					<sjg:grid id="gridedittable" caption="พระราม 3 " dataType="json"
 						href="%{remoteurl}" pager="true" 
 						navigator="true"
-						navigatorDelete="true"
+						navigatorDelete="false"
 						navigatorAdd="false"	
 						navigatorEdit="false"								
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
 						gridModel="gridModel" rowList="15,30" rowNum="15" width="880"						
 						onSelectRowTopics="rowselect" rownumbers="false">
-						<sjg:grid id="subgridtable"  subGridUrl="%{subgridurl}"  
+						<sjg:grid id="subgridtable1"  subGridUrl="%{subgridurl}"  
 							dataType="json" gridModel="gridModel" rowNum="0"footerrow="true"					
-							rownumbers="true" width="750">
+							rownumbers="1" width="750">
 							<sjg:gridColumn name="sku.sid" title="รหัสผสิตภัณฑ์" width="300" />
 							<sjg:gridColumn name="sku.name"   title="ชื่อผสิตภัณฑ์" width="300" edittype="select" 
 						   editoptions ="{ dataUrl : '%{selectskuurl}' }"   />							

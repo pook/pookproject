@@ -8,9 +8,9 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
-import biz.evlix.customconst.ConstType;
+import biz.evolix.customconst.ConstType;
 import biz.evolix.model.Brance;
-import biz.evolix.model.dao.BranceDAO;
+import biz.evolix.service.BranceService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -20,15 +20,24 @@ public class BranceManAct extends ActionSupport {
 
 	private static Logger log = Logger.getLogger(BranceManAct.class);
 	private static final long serialVersionUID = 3418958865383079308L;
-	private BranceDAO fetchBrance;
+	private BranceService branceService;
 	@Action(value = "/json-brance", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
-		setGridModel(fetchBrance.findAll());
+		try{
+			long l =branceService.size();
+			setRecord((int)l);			
+			int to = (getRows() * getPage());
+			int from = to - getRows();		
+			setGridModel(branceService.find(from ,getRecord() ));			
+			setTotal();
+		}catch (Exception e) {
+			log.error(e.getMessage(),e);
+			return ERROR;
+		}		
 		return SUCCESS;
 	}
 
-	public String getJSON() throws Exception {
-		
+	public String getJSON() throws Exception {		
 		return SUCCESS;
 	}
 	private List<Brance> gridModel;
@@ -131,9 +140,9 @@ public class BranceManAct extends ActionSupport {
 		}		
 	}
 
-	public BranceManAct(BranceDAO fetchBrance) {
+	public BranceManAct(BranceService branceService) {
 		super();
-		this.fetchBrance = fetchBrance;
+		this.branceService = branceService;
 	}
 	
 	

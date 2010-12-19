@@ -14,10 +14,10 @@ import biz.evolix.secure.SmileUser;
 public class OrderServiceImp implements OrderService {
 
 	@Autowired
-	private OrderDAO orderDAO;	
+	private OrderDAO orderDAO;
 	private List<Order> orders;
 	private List<Purchese> purcheses;
-	
+
 	public void setOrderDAO(OrderDAO orderDAO) {
 		this.orderDAO = orderDAO;
 	}
@@ -26,7 +26,7 @@ public class OrderServiceImp implements OrderService {
 		return orderDAO;
 	}
 
-	public void setOrders(List<Order> orders) {	
+	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
 
@@ -55,32 +55,42 @@ public class OrderServiceImp implements OrderService {
 
 	private static Logger log = Logger.getLogger(OrderServiceImp.class);
 
-	
 	@Override
 	public List<Purchese> purcheses(int idx) {
-		Order o=getOrders().get(idx-1);		
+		Order o = getOrders().get(idx - 1);
 		return o.getPurchese();
 	}
 
 	@Override
 	public List<Order> ordersByOwner(int from, int rows) {
-		setOrders(getOrderDAO().showOrderOwner(
-				getUsers().getUserid(), from,rows));
-		return getOrders();	}
+		setOrders(getOrderDAO().showOrderOwner(getUsers().getUserid(), from,
+				rows));
+		return getOrders();
+	}
 
 	@Override
-	public long sizeAll() {		
+	public long sizeAll() {
 		return orderDAO.sizeAll();
 	}
-	
+
 	@Override
 	public int sizeOrderOwner() {
-		return (int)orderDAO.sizeOrderOwner();
+		return (int) orderDAO.sizeOrderOwner();
 	}
 
 	@Override
 	public List<Order> ordersAll(int from, int rows) {
 		setOrders(orderDAO.showOrderAll(from, rows));
 		return getOrders();
+	}
+
+	@Override
+	public void del(int id) {
+		Long l = getOrders().get(id).getOrderId();
+		try {
+			orderDAO.del(l);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
 	}
 }

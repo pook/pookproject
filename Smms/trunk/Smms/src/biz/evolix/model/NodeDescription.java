@@ -5,34 +5,40 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.Version;
+
+import biz.evolix.gen.Generate;
+
 @Entity
 @Table(name = "NODE_DEPT")
 public class NodeDescription implements java.io.Serializable {
 
 	private static final long serialVersionUID = -6853818182616308987L;
 	@Id
-	@Column(name = "LEVEL", length = 20)
-	private String levelId;
-	
+	@Column(name = "NODE_ID", nullable = false)
+	private Long nodeId = 0L;
 	@Column(name = "NEXT_ID")
-	private Long nextId=2L;
-	@Column(name = "MAX_NODE")
-	private int maxNode=1;
-	@Column(name = "COUNT")
-	private int count=0;
+	private Long nextId = 1L;
 	@Column(name = "UPPER")
-	private Long upper=1L;
-
+	private Long upper = 1L;
+	@Column(name = "LOWER")
+	private Long lower = 1L;
+	@Column(name = "LEVEL")
+	private Integer level = 0;
 	@Version
-	@Column(name="VERSION")
-	private Integer version;
-	
-	public String getLevelId() {
-		return levelId;
+	@Column(name = "VERSION")
+	private Integer version = 0;
+
+	public NodeDescription() {
+		super();
 	}
 
-	public void setLevelId(String levelId) {
-		this.levelId = levelId;
+	public NodeDescription(Long nodeId) {
+		this();
+		this.nodeId = nodeId;
+		setLevel(1);
+		setLower(Generate.getLeftChildId(nodeId));
+		setUpper(getLower()+1);		
+		setNextId(getLower());
 	}
 
 	public Long getNextId() {
@@ -41,23 +47,7 @@ public class NodeDescription implements java.io.Serializable {
 
 	public void setNextId(Long nextId) {
 		this.nextId = nextId;
-	}
-
-	public int getMaxNode() {
-		return maxNode;
-	}
-
-	public void setMaxNode(int maxNode) {
-		this.maxNode = maxNode;
-	}
-
-	public int getCount() {
-		return count;
-	}
-
-	public void setCount(int count) {
-		this.count = count;
-	}
+	}	
 
 	public Long getUpper() {
 		return upper;
@@ -73,6 +63,30 @@ public class NodeDescription implements java.io.Serializable {
 
 	public Integer getVersion() {
 		return version;
+	}
+
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
+	}
+
+	public Long getNodeId() {
+		return nodeId;
+	}
+
+	public void setLower(Long lower) {
+		this.lower = lower;
+	}
+
+	public Long getLower() {
+		return lower;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public Integer getLevel() {
+		return level;
 	}
 
 }

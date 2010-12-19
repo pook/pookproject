@@ -27,7 +27,11 @@ public class OrderDAOImp extends JpaDaoSupport implements OrderDAO {
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	public void newOrder(Order o) {
-		getJpaTemplate().persist(o);		
+		try{
+			getJpaTemplate().persist(o);
+		}catch (Exception e) {
+			log.error(e.getMessage(),e);
+		}				
 	}
 
 	@Override
@@ -58,6 +62,7 @@ public class OrderDAOImp extends JpaDaoSupport implements OrderDAO {
 	public long sizeOrderOwner() {		
 		try{
 			Users u =getJpaTemplate().find(Users.class,getUsers().getUserid());
+			if(u==null)return -1L;
 			return  getJpaTemplate().execute(new GenericSizeByCause<Long,Users>("getSizeOrderOwner",u));//object
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -87,5 +92,18 @@ public class OrderDAOImp extends JpaDaoSupport implements OrderDAO {
 	public List<Order> showOrderOwner(String uid, int f, int m) {
 		Users u = getJpaTemplate().find(Users.class, uid);
 		return (List<Order>)getJpaTemplate().execute(new MaxResaultByOwner<Order>("findOrderOwner",u , f, m));
+	}
+
+	@Override
+	@Transactional(readOnly=false)
+	public boolean del(long id) {
+		try{	
+			Order o = getJpaTemplate().find(Order.class,id);
+			getJpaTemplate().remove(o);
+			return true;
+		}catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		return false;
 	}
 }

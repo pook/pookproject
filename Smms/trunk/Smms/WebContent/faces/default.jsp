@@ -26,8 +26,7 @@
 <link href="styles/patch_layout.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet"
 	href="/Smms/struts/themes/ui-lightness/jquery-ui.css" type="text/css" />
-<script type="text/javascript" src="/Smms/struts/utils.js"></script>
-<script type="text/javascript" src="/Smms/struts/xhtml/validation.js"></script>
+	<link href="styles/or-chart.css" rel="stylesheet" type="text/css" />
 <sj:head debug="true" compressed="false" jquerytheme="ui-lightness"
 	customBasepath="themes" loadFromGoogle="%{google}"
 	ajaxhistory="%{ajaxhistory}" defaultIndicator="myDefaultIndicator"
@@ -45,10 +44,15 @@
 		$('#mybuttondialog').dialog('close');
 	};
 	function cancelButton() {
-
 		$('#mybuttondialog').dialog('close');
 	};
 </script>
+<style  type="text/css">
+a#logout:hover{
+color:#39c;
+cursor: pointer;
+}
+</style>
 
 </head>
 <body>
@@ -58,20 +62,23 @@
 <div id="themebox">
 <%	Logger log = Logger.getLogger("Default");
 	SmileUser u =null;
-	String displayName = " ";
+	String displayName = "",userId="";
 	try{
 		u = (SmileUser) SecurityContextHolder.getContext()
 			.getAuthentication().getPrincipal();
 		displayName =u.getDisplayName();
+		userId = u.getUserid();
 	}catch (ClassCastException e){
 		log.error("Unknow login");
 	}
 %>
-<div id="infoUser" style="background:#fff">
- <span class="ui-state-default"
+<div id="infoUser">
+ <span 
 	style="background: none; border: none; font-size: -1">
-	<%=displayName %>
-	</span><br />
+	<%=displayName %>&nbsp;:<%=userId %>
+	</span>| <sj:a id="logout" openDialog="mybuttondialog">
+    	Logout
+    </sj:a>
 <br />
 <span class="ui-state-default"
 	style="background: none; border: none; font-size: -2"> <sj:dialog
@@ -82,14 +89,11 @@
     		}"
 	autoOpen="false" modal="true" title="ออกจากระบบ">
     คุณต้องการที่จะออกจากระบบ ?
-	</sj:dialog> <sj:a openDialog="mybuttondialog" button="true"
-	buttonIcon="ui-icon-extlink">
-    	Logout
-    </sj:a> </span></div>
+	</sj:dialog> </span></div>
     </div>
 <div id="headline">
-<h1 class="ui-state-default" style="background: none; border: none;">Sale
-And MemberShip Management</h1>
+<span class="ui-state-default" style="background: none; border: none;">Sale
+And MemberShip Management</span>
 <!-- 
 	        <h4 class="ui-state-default" style="background: none; border: none;">Version 2.4.0</h4>
 	        --> <img id="myDefaultIndicator" src="images/ajax-loader.gif"
@@ -130,11 +134,10 @@ And MemberShip Management</h1>
 	<li class="ui-widget-header"><s:url id="urlsmmsrole"
 		action="smmsrole" /><sj:a id="smmsrole" href="%{urlsmmsrole}"
 		targets="main">&nbsp;กำหนดสิทธิ์&nbsp;</sj:a></li>
-	<sec:authorize access="hasRole('ROLE_STAFF')">
-		<li class="ui-widget-header"><s:url id="urlcommission"
+			<li class="ui-widget-header"><s:url id="urlcommission"
 			action="commission" /><sj:a id="commission" href="%{urlcommission}"
 			targets="main">&nbsp;คอมมิสชั่นที่ตัดบัญชี&nbsp;</sj:a></li>
-	</sec:authorize>
+	
 </ul>
 </div>
 </div>

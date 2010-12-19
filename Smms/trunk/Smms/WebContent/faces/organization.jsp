@@ -4,34 +4,13 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 <link href="styles/patch_layout.css" rel="stylesheet" type="text/css" />
-<link href="styles/or-chart.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="js/or-chart.js"></script>
-<script type="text/javascript">
-	var jsondat = "json-organization.action"; //
-	var jsonbw = "json-organization-backward"; //
-	var jsonsearch = "json-organization-search-member";
-	$(function() {
-		$.getJSON(jsondat, function(data) {
-			orgJSON(data);
-		});
-	});	
-</script>
 <div class="headernode" id="headnode">
 <div class="ui-widget">
-<div id="messageInfo" style="margin-top: 20px; padding: 0pt 0.7em;"><!-- 
-				class="ui-state-highlight ui-corner-all"> 
-					<p><span style="float: left; margin-right: 0.3em;" class="ui-icon ui-icon-info"></span>
-					<strong>Hey!</strong> Sample ui-state-highlight style.</p>				
-			--></div>
+<div id="messageInfo" style="margin-top: 20px; padding: 0pt 0.7em;"></div>
 </div>
 <div class="ui-widget">
-
-<div id="messageError" style="padding: 0pt 0.7em;"><!-- 
-					<p><span id="iconAlert" style="float: left; margin-right: 0.3em;" class="ui-icon ui-icon-alert"></span> 
-					<strong>Alert:</strong> Sample ui-state-error style.</p>
-					--></div>
+<div id="messageError" style="padding: 0pt 0.7em;"></div>
 </div>
-
 <div class="bodycontent" id="bcontent">
 <div id="formsearch" class="sform">
 
@@ -155,6 +134,14 @@
 <div class="node1" id="n63"></div>
 </div>
 </div>
-
+<script type="text/javascript" src="js/or-chart.js"></script>
+<script type="text/javascript">
+	var jsondat = "json-organization.action",jsonbw = "json-organization-backward",jsonsearch = "json-organization-search-member";
+	$(function() {
+		$.getJSON(jsondat, function(data) {
+			orgJSON(data);
+		});
+	});	
+</script>
 </div>
 <div id="dis"></div>

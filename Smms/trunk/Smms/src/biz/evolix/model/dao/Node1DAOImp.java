@@ -9,9 +9,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import biz.evolix.model.Node1;
-import biz.evolix.model.Users;
 import biz.evolix.model.dao.callback.FindNode1ByUserId;
-import biz.evolix.model.dao.callback.FindNodeFromUsers;
+
 
 @Repository
 @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED)
@@ -31,13 +30,6 @@ public class Node1DAOImp extends JpaDaoSupport implements Node1DAO {
 		return n;
 	}
 
-	@Override
-	@Transactional(readOnly = true)
-	public Node1 getNode1FromUser(Users u) throws NullPointerException,
-			DataAccessException {
-		return (Node1) getJpaTemplate()
-				.execute(new FindNodeFromUsers<Node1>(u));
-	}
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.DEFAULT)
 	public boolean update(Node1 node) throws DataAccessException {
@@ -68,7 +60,7 @@ public class Node1DAOImp extends JpaDaoSupport implements Node1DAO {
 	public Node1 getNode1FromUserId(String u) throws DataAccessException {
 		Node1 n = null;
 		try {
-			n = (Node1) getJpaTemplate().executeFind(
+			n = (Node1) getJpaTemplate().execute(
 					new FindNode1ByUserId<Node1>(u));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

@@ -6,7 +6,7 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
-import biz.evlix.customconst.ConstType;
+import biz.evolix.customconst.ConstType;
 import biz.evolix.model.Users;
 import biz.evolix.service.PurcheseService;
 
@@ -46,9 +46,8 @@ public class EditOrderAct extends ActionSupport {
 	}
 
 	private String add() {
-		if (purcheseService.size() > ConstType.ZERO) {
-			String m = "Submit Order first";			
-			log.info(m);
+		if (purcheseService.size() > ConstType.ZERO) {						
+			log.info("Submit Order first");
 		} else {
 			Users u = null;
 			try {

@@ -12,7 +12,7 @@
 	<context:annotation-config />
 	<http auto-config="true" use-expressions="true">
 		<form-login login-page="/login.jsp" default-target-url='/default.action'
-			always-use-default-target='true' authentication-failure-url="/login.jsp" />			
+			always-use-default-target='true' authentication-failure-url="/login.jsp" />						
 		<intercept-url pattern="/login.jsp*" access="isAnonymous()" />		
 		<intercept-url pattern="/faces/**" access="hasRole('ROLE_MEMBER')" />
 		<intercept-url pattern="/**" access="hasRole('ROLE_MEMBER')" />

@@ -28,7 +28,7 @@ public class SkuDAOImp extends JpaDaoSupport implements SkuDAO {
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public List<Sku> showAllItem() {
-		return (List<Sku>) getJpaTemplate().find("select S from Sku s ");
+		return (List<Sku>) getJpaTemplate().findByNamedQuery("findSku");
 	}
 
 	@Override
@@ -54,8 +54,7 @@ public class SkuDAOImp extends JpaDaoSupport implements SkuDAO {
 			throws NullPointerException {
 		List<Sku> skus = null;
 		try {
-			skus = getJpaTemplate()
-					.executeFind(
+			skus = getJpaTemplate().executeFind(
 							new MaxResult<Sku>(min, maxResult,
 									"findSku"));
 		} catch (Exception e) {
@@ -70,5 +69,18 @@ public class SkuDAOImp extends JpaDaoSupport implements SkuDAO {
 	@Override
 	public long size() {		
 		return getJpaTemplate().execute(new GenericSize<Long>("getSizeSku"));
+	}
+
+	@Override
+	@Transactional
+	public boolean update(Sku sku) {
+		try{
+			getJpaTemplate().merge(sku);
+			return true;
+		}catch (Exception e) {
+			log.error(e.getMessage(),e);
+			return false;
+		}
+		
 	}
 }

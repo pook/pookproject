@@ -1,8 +1,8 @@
 package biz.evolix.action.global;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
@@ -22,14 +22,12 @@ public class FetchProvinceJSON extends ActionSupport {
 	@Action(value = "/json-fetch-province", results = {
 			@Result(name = "success", type = "json"),
 			@Result(name = "error", type = "json") })
+
 	public String execute() throws Exception {
-		setProvinces(new HashMap<String,String>());
+		setProvinces(new TreeMap<String,String>());
 		return SUCCESS;
 	}
-	public String getJSON() throws Exception {
-		
-		return SUCCESS;
-	}
+	
 	public void setProvinces(Map<String,String> provinces) {		
 		List<Province>pv = fetchProvince.findAll();
 		for(Province p:pv){

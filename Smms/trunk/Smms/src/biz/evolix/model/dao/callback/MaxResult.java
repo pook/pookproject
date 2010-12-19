@@ -14,9 +14,8 @@ public class MaxResult<T> implements JpaCallback<List<T>> {
 	public List<T> doInJpa(EntityManager em) throws PersistenceException {
 		  Query query = em.createNamedQuery(nameQuery);
 	      query.setFirstResult(min);
-	      query.setMaxResults(max);	     
-		  List<T> r = query.getResultList();
-	      return r;		
+	      query.setMaxResults(max);	 	  
+	      return  query.getResultList();		
 	}
 	private int max;
 	private int min;

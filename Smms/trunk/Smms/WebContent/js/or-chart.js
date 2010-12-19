@@ -436,7 +436,7 @@ function orgJSON(data) {
 				po1 = 59;
 				break;
 			case 7:case 8:case 9:case 10:case 11:case 12:case 13:case 14:
-				po1 = 7;
+				po1 = 0;
 				break;				
 			default:
 				po1 = -6;
@@ -486,6 +486,12 @@ function orgJSON(data) {
 	function clearteams() {
 		for ( var i = 0; i < 63; i++) {
 			$("#n" + (i + 1)).empty().append("&nbsp;");
+		}
+		clearLevel();
+	}
+	function clearLevel() {
+		for ( var i = 0; i < 6; i++) {
+			$("#lv" + (i + 1)).empty().append("0");
 		}				
 	}
 	function popuphtml() {

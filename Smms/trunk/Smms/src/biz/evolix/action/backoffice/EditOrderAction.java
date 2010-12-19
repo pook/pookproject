@@ -6,6 +6,7 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
+import biz.evolix.customconst.ConstType;
 import biz.evolix.service.OrderService;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -21,7 +22,17 @@ public class EditOrderAction extends ActionSupport {
 
 	@Action(value = "/edit-order-grid", results = { @Result(name = "success", location = "showordered.jsp") })
 	public String execute() {
-
+		if (getOper().equals(ConstType.DEL)) {
+			int idx = -1;			
+			try{
+				idx = Integer.parseInt(getId());				
+			}catch (Exception e) {
+				log.error(e.getMessage());
+				return ERROR;
+			}
+			if(idx<1)return ERROR;
+			orderService.del(idx-1);
+		}
 		return SUCCESS;
 	}
 

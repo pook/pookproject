@@ -43,7 +43,7 @@
 	<bean id="authoritiesDAO" class="biz.evolix.model.dao.AuthoritiesDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	<bean id="registerService" class="biz.evolix.service.RegisterServiceImp" scope="prototype"/>	
+	<bean id="registerService" class="biz.evolix.service.RegisterServiceImp" scope="session"/>	
 	<!-- end of Register Service -->
 	<!-- Start Organization Chart Service -->
 	<bean id="orchartService" class="biz.evolix.service.OrchartServiceImp" />
@@ -70,10 +70,12 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>			
 	<bean id="userDetail" class="biz.evolix.secure.UserDetail" />
-	<bean id="fetchProvince" class="biz.evolix.model.dao.ProvinceDAOImp" scope="singleton" >
+	<bean id="fetchUplineService" class="biz.evolix.service.FetchUplineServiceImp" scope="session" />
+	<bean id="branceService" class="biz.evolix.service.BranceServiceImp" scope="session" />
+	<bean id="fetchProvince" class="biz.evolix.model.dao.ProvinceDAOImp" scope="prototype" >
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	<bean id="fetchBrance" class="biz.evolix.model.dao.BranceDAOImp" scope="singleton" >
+	<bean id="fetchBrance" class="biz.evolix.model.dao.BranceDAOImp" scope="prototype" >
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<!-- ^^^^^^^^^^begin Faces action^^^^^^^^^^^^6 -->
@@ -110,7 +112,7 @@
 		<constructor-arg index="1" ref="checkNameDAO" />
 	</bean>
 	<bean id="fetchUpLine" scope="prototype" class="biz.evolix.action.register.FetchUpline">
-		<constructor-arg ref="registerService" />
+		<constructor-arg ref="fetchUplineService" />
 	</bean>
 	<bean id="orchartServiceAct" scope="prototype" class="biz.evolix.action.organization.Organization">
 		<constructor-arg ref="orchartService" />
@@ -149,12 +151,16 @@
 		scope="session">
 		<constructor-arg ref="orderService" />
 	</bean>
-	<bean id="fetchProvinceAction" class="biz.evolix.action.global.FetchProvinceJSON"
-		scope="singleton">
+	<bean id="fetchProvinceJSONAction" class="biz.evolix.action.global.FetchProvinceJSON"
+		scope="prototype">
+		<constructor-arg ref="fetchProvince" />
+	</bean>
+	<bean id="fetchProvinceAction" class="biz.evolix.action.global.FetchProvince"
+		scope="prototype">
 		<constructor-arg ref="fetchProvince" />
 	</bean>
 	<bean id="fetchBranceAction" class="biz.evolix.action.global.FetchBranceJSON"
-		scope="singleton">
+		scope="prototype">
 		<constructor-arg ref="fetchBrance" />
 	</bean>
 	<bean id="checkNameAction" class="biz.evolix.action.register.CheckDisplayName"
@@ -163,13 +169,18 @@
 	</bean>
 	<bean id="branceManAct" class="biz.evolix.action.role.BranceManAct"
 		scope="prototype">
-		<constructor-arg ref="fetchBrance" />
+		<constructor-arg ref="branceService" />
 	</bean>
 	<bean id="member" class="com.smms.action.Member"
 		scope="session">
 		<constructor-arg ref="userDAO" />
 	</bean>
-	
+	<bean id="chkLevelAct" scope="prototype" class="biz.evolix.action.register.ChkLevelAct">
+		<constructor-arg  ref="registerService" />		
+	</bean>	
+	<bean id="editBranceAct" scope="prototype" class="biz.evolix.action.role.EditBrance">
+		<constructor-arg  ref="branceService" />		
+	</bean>
 	<!-- end faces action -->
 	<context:annotation-config />
 </beans>

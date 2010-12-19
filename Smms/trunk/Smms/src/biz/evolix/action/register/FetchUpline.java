@@ -10,7 +10,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import biz.evolix.model.Node1;
-import biz.evolix.service.RegisterService;
+import biz.evolix.service.FetchUplineService;
 
 import com.opensymphony.xwork2.ActionSupport;
 @ParentPackage(value = "smms")
@@ -19,7 +19,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class FetchUpline extends ActionSupport {
 
 	private Map<String,String>uplines =new HashMap<String,String>();
-	private RegisterService registerService;
+	private FetchUplineService fetchUplineService;
 	private static final long serialVersionUID = 2403583800756482378L;
 
 	@Action(value = "/json-fetch-upline", results = {
@@ -29,14 +29,14 @@ public class FetchUpline extends ActionSupport {
 		return SUCCESS;
 	}
 	public String getJSON() throws Exception {
-		Collection<Node1> c = registerService.listUpline();		
+		Collection<Node1> c = fetchUplineService.uplines();		
 		for(Node1 n:c )uplines.put(n.getNodeId().toString(), n.getDisplayName());		
 		return execute();
 	}
 
-	public FetchUpline(RegisterService registerService) {
+	public FetchUpline(FetchUplineService fetchUplineService) {
 		super();
-		this.registerService = registerService;
+		this.fetchUplineService = fetchUplineService;
 	}
 	public Map<String, String> getUplines() {
 		return uplines;

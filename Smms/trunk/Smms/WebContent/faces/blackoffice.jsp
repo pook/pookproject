@@ -9,9 +9,6 @@ div#div4 div {
 	clear: both;
 }
 </style>
-<script type="text/javascript">
-	
-</script>
 <s:url id="ajax" value="order-purchese" />
 <s:url id="prochesedetail" action="showordered" />
 
@@ -32,7 +29,7 @@ div#div4 div {
 					<s:url id="editorderurl" action="edit-grid-order" />
 					<sjg:grid id="gridedittable" caption="พระราม 3 " dataType="json"
 						href="%{remoteurl}" pager="true" navigator="true"
-						navigatorSearchOptions="{sopt:['eq','ne','lt','gt']}"
+						navigatorSearch="false"
 						navigatorAddOptions="{height:280,reloadAfterSubmit:true}"
 						navigatorEditOptions="{height:280,reloadAfterSubmit:false}"
 						navigatorEdit="true" navigatorView="false" navigatorDelete="true"
@@ -46,11 +43,11 @@ div#div4 div {
 							editable="true" editrules="{required:true}" />
 						<sjg:gridColumn name="user.name" title="ชื่อสมาชิก" />
 						<sjg:gridColumn name="totalQuantity" title="จำนวน"
-							formatter="integer" />
-						<sjg:gridColumn name="date" title="วันที่" formatter="date" formatoptions="{newformat : 'd/m/Y', srcformat : 'Y-m-d-H:i:s'}" align="center"/>
+							formatter="integer" search="false" />
+						<sjg:gridColumn name="date" title="วันที่" formatter="date" formatoptions="{newformat : 'd/m/Y', srcformat : 'Y-m-d-H:i:s'}" align="center" search="false"/>
 						<sjg:gridColumn name="totalPrice" title="ราคารวม"
-							formatter="currency" />
-						<sjg:gridColumn name="totalSv" index="totalPV"
+							formatter="currency" search="false"/>
+						<sjg:gridColumn name="totalSv" index="totalPV" search="false"
 							title="Total Smile Value" formatter="integer" width="235" />
 							
 							<sjg:grid id="subgridtable" subGridUrl="%{remote2url}"

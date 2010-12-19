@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
@@ -12,10 +13,11 @@ import javax.persistence.Column;
 
 
 @Entity
-@NamedQuery(
-	    name="findAllBrance",
-	    query="select B FROM Brance B"
-)
+@NamedQueries({ 
+	@NamedQuery( name="findAllBrance",
+	    query="select B from Brance B"),
+	@NamedQuery( name="branceSize",query="select count(B) from Brance B")  	
+})
 
 @Table(name="BRANCE")
 public class Brance implements java.io.Serializable {
@@ -33,7 +35,7 @@ public class Brance implements java.io.Serializable {
 	@ManyToOne
 	@JoinColumn(name = "BRANCE_PROVINCE")
 	private Province province;
-	@Column(name = "POST_CODE",length=50)
+	@Column(name = "POST_CODE",length=10)
 	private String postcode;
 	private static final long serialVersionUID = 1L;
 

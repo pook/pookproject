@@ -26,10 +26,11 @@ div#gridinfo div {
 					<s:url id="subgridurl" action="json-list-purchese2" />													
 					<sjg:grid id="gridedittable" caption="พระราม 3 " dataType="json"
 						href="%{remoteurl}" pager="true" 
-						navigator="true"
+						navigator="true" editurl="%{editurl}"
 						navigatorDelete="true"
 						navigatorAdd="false"	
-						navigatorEdit="false"								
+						navigatorEdit="false"	
+						navigatorSearchOptions="{sopt:['eq','lt','gt']}"													
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
 						gridModel="gridModel" rowList="15,30" rowNum="15" width="820" 						
 						onSelectRowTopics="rowselect" >
@@ -38,7 +39,7 @@ div#gridinfo div {
 							 width="750">
 							<sjg:gridColumn name="sku.sid" title="รหัสผสิตภัณฑ์" width="300" />
 							<sjg:gridColumn name="sku.name"   title="ชื่อผสิตภัณฑ์" width="300" edittype="select" 
-						   editoptions ="{ dataUrl : '%{selectskuurl}' }"   />							
+						   editoptions ="{ dataUrl : '%{selectskuurl}' }"  search="false" />							
 							<sjg:gridColumn name="sku.description" 
 								title="รายละเอียด ผลิตภัณฑ์" sortable="false" width="330" />
 							<sjg:gridColumn name="quantity" title="จำนวน" 
@@ -51,14 +52,14 @@ div#gridinfo div {
 						<sjg:gridColumn name="orderId" index="orderId"
 							title="sale order ID" formatter="integer" sortable="true" />
 						<sjg:gridColumn name="user.userId" title="รหัสสมาชิก"
-							editable="true" editrules="{required:true}" />
+							editable="true" editrules="{required:true}"  />
 						<sjg:gridColumn name="user.name" title="ชื่อสมาชิก" />
 						<sjg:gridColumn name="totalQuantity" title="จำนวน"
-							formatter="integer" />
-						<sjg:gridColumn name="totalPrice" title="ราคารวม"
-							formatter="currency" />
+							formatter="integer" search="false"/>
+						<sjg:gridColumn name="totalPrice" title="ราคารวม" sortable="false"
+							formatter="currency" search="false" />
 						<sjg:gridColumn name="totalSv" index="totalPV"
-							title="Total Smile Value" formatter="integer" width="235" />
+							title="Total Smile Value" formatter="integer" width="235" search="false" />
 					</sjg:grid>
 					<br />				
 					

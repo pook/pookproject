@@ -1,8 +1,6 @@
 package biz.evolix.action.global;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +49,7 @@ public class FetchBranceJSON extends ActionSupport {
 	public void setBrances(Map<String, String> brances) {		
 		List<Brance> l = fetchBrance.findAll();
 		for (Brance b : l) {
-			brances.put(b.getBranceCode().toString(), b.getBName());
+			brances.put(b.getBName(), b.getBName());
 		}
 		this.brances = brances;
 	}

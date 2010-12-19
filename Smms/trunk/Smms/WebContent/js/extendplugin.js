@@ -31,9 +31,9 @@
 						 "js/base/jquery.ui.button"+$.struts2_jquery.minSuffix+".js",
 						 "js/base/jquery.bgiframe"+$.struts2_jquery.minSuffix+".js",
 						 "js/base/jquery.ui.dialog"+$.struts2_jquery.minSuffix+".js",
-						 "jsext/utils.js",
-						 "jsext/xhtml/validation.js",
-						 "jsext/custom-add-on.js"
+					//	 "jsext/utils.js",
+					//	 "jsext/xhtml/validation.js",
+					//	 "jsext/custom-add-on.js"
 					//	 "js/jquery.validate.min.js",
 					//	 "js/jquery.validate.js",
 					//	 "js/jquery.validate.pack.js",

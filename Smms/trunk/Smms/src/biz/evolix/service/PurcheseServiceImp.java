@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import biz.evlix.customconst.ConstType;
+import biz.evolix.customconst.ConstType;
 import biz.evolix.model.Order;
 import biz.evolix.model.Purchese;
 import biz.evolix.model.Sku;
@@ -117,19 +117,12 @@ public class PurcheseServiceImp implements PurcheseService {
 	}
 
 	@Override
-	public boolean save() {
-		System.out.println("Update ");
-		long s = System.currentTimeMillis();
-		log.info("Time Start>>>>>>>>>"+s);
-		System.out.println("Time Start>>>>>>>>>"+s );
-		if (size() == 1) {
+	public boolean save() {					
+		if (size() == 1 && !getOrdering().get(ConstType.ZERO).getPurchese().isEmpty()) {
 			orderDAO.update(getOrdering().get(0));
 			updateComService.update(getOrdering().get(0));
 			setOrdering(new ArrayList<Order>());
-		}
-		long t= System.currentTimeMillis() - s;
-		System.out.println("Time Stop>>>>>>>>>" + t);
-		log.info("Time Stop>>>>>>>>>" + t);
+		}		
 		return false;
 	}
 
@@ -150,6 +143,5 @@ public class PurcheseServiceImp implements PurcheseService {
 	public void edit(int idx, Sku sku, Integer quantity) {
 		getOrdering().get(ConstType.ZERO).getPurchese().remove(idx);
 		buyItem(sku, quantity);		
-	}		
-
+	}	
 }

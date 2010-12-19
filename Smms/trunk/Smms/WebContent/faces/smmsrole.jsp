@@ -55,40 +55,40 @@
 						<sj:submit id="grid_edit_searchbutton1" value="Search"
 							onClickTopics="searchgrid" button="true" />
 						<sj:submit id="grid_edit_colsbutton1" value="Show/Hide Columns"
-							onClickTopics="showcolumns" button="true" />
-						
+							onClickTopics="showcolumns" button="true" />						
 						<br />
 						<br />
 					</sj:div>
 				</sj:div></div>
 				<div id="ttree"><sj:div id="div011">
-					<sj:div id="div111"></sj:div>
+					<sj:div id="div111"></sj:div>					
 					<sj:div id="div211">
+						<s:url id="selectprovinceurl" action="fetch-province" />
 						<s:url id="branceurl" action="json-brance" />
-						<s:url id="editbranceurl" action="edit-grid-brance" />
+						<s:url id="editbranceurl" action="edit-grid-brance" />						
 						<sjg:grid id="gridedittable11" caption="ตั้งค่าสาขา"
 							dataType="json" href="%{branceurl}" pager="true" navigator="true" 
-							navigatorSearchOptions="{sopt:['eq','ne','lt','gt']}"
+							navigatorSearchOptions="{sopt:['eq']}" 
 							navigatorEditOptions="{height:280,reloadAfterSubmit:false}"
-							navigatorEdit="false" navigatorView="false"
+							navigatorEdit="true" navigatorView="false"
 							navigatorDelete="false" navigatorAdd="true" rownumbers="true"
 							gridModel="gridModel" rowList="10,15,20" rowNum="15"
 							 width="880" editurl="%{editbranceurl}"
-							editinline="true" onSelectRowTopics="rowselect">
+							onSelectRowTopics="rowselect">
 							<sjg:gridColumn name="branceCode" index="branceCode" title="รหัสสาขา"
-								sortable="false" editable="false" />
+								sortable="false"   editable="false"  
+								 />
 							<sjg:gridColumn name="BName" 
-								title="ชือสาขา"  editable="true" />
+								title="ชือสาขา"  editable="true"  editrules="{minValue:3,required:true}" />
 							<sjg:gridColumn name="BTel" 
-								title="เบอร์โทร"  editable="true" />
+								title="เบอร์โทร"  editable="true" editrules="{minValue:8,required:true}"/>
 							<sjg:gridColumn name="BAddress" 
-								title="ที่อยู่"  editable="true" />
-								<sjg:gridColumn name="province.pname" index="productDetail"
-								title="จังหวัด"  editable="true" />
-	<sjg:gridColumn name="postcode"
-								title="รหัสไปรษณีย์"  editable="true" />
-
-
+								title="ที่อยู่"  editable="true" editrules="{minValue:5,required:true}"/>
+							<sjg:gridColumn name="province.pname" 
+								title="จังหวัด"   edittype="select" editable="true"  
+								editoptions="{ dataUrl : '%{selectprovinceurl}' }"/>
+							<sjg:gridColumn name="postcode"
+								title="รหัสไปรษณีย์"  editable="true" editrules="{integer:true,minValue:1,required:true}"/>
 						</sjg:grid>
 						<br />	<sj:submit id="grid_edit_searchbutton10" value="Add"
 							onClickTopics="searchgrid" button="true" />
@@ -108,7 +108,7 @@
 						<s:url id="editroleurl" action="edit-grid-role" />
 						<sjg:grid id="gridedittable" caption="USER(CRUD)" dataType="json"
 							href="%{remoteurl}" pager="true" navigator="true"
-							navigatorSearchOptions="{sopt:['eq','ne','lt','gt']}"
+							navigatorSearchOptions="{sopt:['eq','lt','gt']}"
 							navigatorEditOptions="{height:280,reloadAfterSubmit:false}"
 											
 							navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"

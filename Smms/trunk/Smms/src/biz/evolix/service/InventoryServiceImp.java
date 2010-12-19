@@ -20,28 +20,30 @@ public class InventoryServiceImp  implements InventoryService{
 	public SkuDAO getSkuDAO() {
 		return skuDAO;
 	}
-		@Override
+	@Override
 	public void addSku(Sku sku) {
 		skuDAO.addItem(sku);		
 	}
 	@Override
 	public boolean remove(int id) {
 		try{
-			long sku =getSkus().get(id-1).getSid();
+			long sku =getSkus().get(id).getSid();
 			getSkuDAO().remove(sku);			
 			return true;
+	
 		}catch (Exception e) {
 			log.error(e.getMessage(),e);
 		}		
 		return false;
 	}
 	@Override
-	public Sku find(long id) {		
-		return skuDAO.find(id);
+	public Sku find(int id) {		
+		return getSkus().get(id);
 	}
 	@Override
-	public List<Sku> find(int min, int maxResult) {			
-		return skuDAO.findLimit(min ,maxResult);
+	public List<Sku> find(int min, int maxResult) {
+		setSkus(skuDAO.findLimit(min ,maxResult));
+		return getSkus();
 	}		
 	 
 	public List<Sku> getSkus() {
@@ -55,5 +57,9 @@ public class InventoryServiceImp  implements InventoryService{
 	}
 	
 	private static Logger log = Logger.getLogger(InventoryServiceImp.class);
-	
+
+	@Override
+	public boolean update(Sku sku) {		
+		return skuDAO.update(sku);
+	}	
 }

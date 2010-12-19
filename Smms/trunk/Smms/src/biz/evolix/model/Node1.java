@@ -1,5 +1,6 @@
 package biz.evolix.model;
 
+import biz.evolix.customconst.ConstType;
 import biz.evolix.gen.Generate;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
@@ -12,7 +13,7 @@ import javax.persistence.Transient;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "findDisplayName", query = "select N.nodeId from Node1 N where N.displayName=?1"),
-		@NamedQuery(name = "findNode1FromUser", query = "select N from Node1 N where N.user=?1") })
+		@NamedQuery(name = "findNode1FromUserId", query = "select N from Node1 N where N.user=?1") })
 @Table(name = "NODE1")
 public class Node1 implements java.io.Serializable {
 
@@ -22,7 +23,7 @@ public class Node1 implements java.io.Serializable {
 	private Long nodeId;
 	@Column(name = "DISPLAYNAME", length = 50)
 	private String displayName;
-	@Column(name = "USER_ID", columnDefinition = "CHAR(20)")	
+	@Column(name = "USER_ID")
 	private String user;
 	@Column(name = "SMILE_VALUE")
 	private Integer sv = 0;
@@ -51,12 +52,18 @@ public class Node1 implements java.io.Serializable {
 
 	@Transient
 	public void decSv(Integer sv) {
-		setSv(getSv() - sv);
+		int v = getSv() - sv;
+		if (v >= ConstType.MIN_SV && getStatus() == ConstType.STATUS_ACTIVE)
+			setStatus(ConstType.STATUS_INACTIVE);
+		setSv(v);
 	}
 
 	@Transient
 	public void incSv(Integer sv) {
-		setSv(getSv() + sv);
+		int v = getSv() + sv;
+		if (v >= ConstType.MIN_SV && getStatus() == ConstType.STATUS_INACTIVE)
+			setStatus(ConstType.STATUS_ACTIVE);
+		setSv(v);
 	}
 
 	public void setSv(Integer sv) {
@@ -64,7 +71,8 @@ public class Node1 implements java.io.Serializable {
 	}
 
 	public Integer getCommissions() {
-		return this.commissions + (int) Generate.xCommission(getSv());
+		int com =this.commissions+getSv();
+		return (getStatus() == ConstType.STATUS_ACTIVE) ? com+ (int) Generate.xCommission(com) : com;
 	}
 
 	public void setCommissions(Integer commissions) {
@@ -103,13 +111,22 @@ public class Node1 implements java.io.Serializable {
 		return inviter;
 	}
 
-	/*
-	 * @Override public int compareTo(Node1 o) { return ((int)(getNId()-o.nId));
-	 * }
-	 * 
-	 * public boolean equals(Object other){ if(other instanceof Node1 ){ Node1 n
-	 * = (Node1)other; return this.nId == n.nId; }
-	 * 
-	 * return false; }
-	 */
+	public boolean equals(Object o) {
+		if (o != null && o instanceof Node1) {
+			Node1 that = (Node1) o;
+			return this.nodeId.equals(that.nodeId)
+					&& this.nodeId.equals(that.nodeId);
+		} else {
+			return false;
+		}
+	}
+
+	public int hashCode() {
+		int hash = 7;
+	    hash = hash * 31 + this.nodeId.hashCode();
+	    hash = hash * 31 
+	                + (this.nodeId == null ? 0 : this.nodeId.hashCode());
+	    return hash;
+
+	}
 }
