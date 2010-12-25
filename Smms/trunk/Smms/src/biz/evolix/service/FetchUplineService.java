@@ -1,9 +1,6 @@
 package biz.evolix.service;
 
-import java.util.Collection;
-
-import biz.evolix.model.Node1;
-
+import java.util.Map;
 public interface FetchUplineService {
-	public Collection<Node1> uplines();
+	public Map<String,String> uplines();
 }

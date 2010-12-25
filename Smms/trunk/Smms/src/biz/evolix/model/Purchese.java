@@ -73,7 +73,7 @@ public class Purchese implements java.io.Serializable {
 	}
 
 	public Double getPurchesePrice() {
-		Double p = getSku().getPrice() * getQuantity();
+		Double p = getSku().getPriceDiscount() * getQuantity();
 		setPurchesePrice(p);
 		return purchesePrice;// *getQuantity();
 	}

@@ -82,7 +82,7 @@
 								title="ชือสาขา"  editable="true"  editrules="{minValue:3,required:true}" />
 							<sjg:gridColumn name="BTel" 
 								title="เบอร์โทร"  editable="true" editrules="{minValue:8,required:true}"/>
-							<sjg:gridColumn name="BAddress" 
+							<sjg:gridColumn name="BAddress" edittype="textarea"
 								title="ที่อยู่"  editable="true" editrules="{minValue:5,required:true}"/>
 							<sjg:gridColumn name="province.pname" 
 								title="จังหวัด"   edittype="select" editable="true"  

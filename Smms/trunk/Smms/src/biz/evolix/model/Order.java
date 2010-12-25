@@ -1,7 +1,7 @@
 package biz.evolix.model;
 
 import biz.evolix.model.Purchese;
-import biz.evolix.model.Users;
+
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({ 
 	@NamedQuery(name = "findOrderAll", query = "select O from Order O"),
-	@NamedQuery(name = "findOrderOwner", query = "select O from Order O where O.user =?1"),
+	@NamedQuery(name = "findOrderbyOwner", query = "select O from Order O where O.user =?1"),
 	@NamedQuery(name = "findOrderByStaff", query = "select O from Order O where O.seller =?1"),
 	@NamedQuery(name = "getSizeOrderAll", query = "select count(O) from Order O"),
 	@NamedQuery(name = "getSizeOrderOwner", query = "select count(O) from Order O where O.user =?1"),
@@ -21,17 +21,18 @@ import javax.persistence.*;
 public class Order implements java.io.Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "ORDER_SEQ", strategy = GenerationType.TABLE)
+	@TableGenerator(name = "ORDER_SEQ", initialValue = 1, allocationSize = 1)
 	@Column(name = "ORDER_ID")
 	private Long orderId;
 	
 	private List<Purchese> purchese = new ArrayList<Purchese>();
 
-	@JoinColumn(name = "USER_ID",columnDefinition="CHAR(20)")
+	@JoinColumn(name = "USER_ID")
 	@ManyToOne
 	private Users user;
 
-	@Column(name = "SELLER_ID" ,columnDefinition="CHAR(20)")
+	@Column(name = "SELLER_ID" ,length = 50)
 	private String seller;
 	@Column(name = "TOTAL_PRICE")
 	private double totalPrice = 0.0;
@@ -41,9 +42,6 @@ public class Order implements java.io.Serializable {
 	@Column(name = "TOTAL_SV")
 	private Integer totalSv = 0;
 
-	@Column(name = "READED")
-	private Boolean readed = false;
-	
 	@Column(name = "BRANCE")
 	private Integer brance;
 	
@@ -90,15 +88,7 @@ public class Order implements java.io.Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
-	public Users getUser() {
-		return this.user;
-	}
-
-	public void setUser(Users user) {
-		this.user = user;
-	}
-
+	
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
@@ -143,14 +133,6 @@ public class Order implements java.io.Serializable {
 		setTotalQuantity(tot);
 	}
 
-	public void setReaded(Boolean readed) {
-		this.readed = readed;
-	}
-
-	public Boolean getReaded() {
-		return readed;
-	}
-
 	public void setSeller(String seller) {
 		this.seller = seller;
 	}
@@ -165,5 +147,13 @@ public class Order implements java.io.Serializable {
 
 	public Integer getBrance() {
 		return brance;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
+	}
+
+	public Users getUser() {
+		return user;
 	}
 }

@@ -5,10 +5,11 @@ import java.util.List;
 import biz.evolix.model.Order;
 import biz.evolix.model.Purchese;
 import biz.evolix.model.Sku;
+import biz.evolix.model.SmileUsersDetails;
 import biz.evolix.model.Users;
 
 public interface PurcheseService {	
-	public Users userMember(String user);
+	public SmileUsersDetails userMember(String smileuser);
 	public int size();
 	public boolean newOrder(Users u);
 	public List<Order> odering();

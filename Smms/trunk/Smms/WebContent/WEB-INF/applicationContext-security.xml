@@ -29,7 +29,7 @@
 			<password-encoder hash="sha" />
 			<user-service>
 				<user authorities="ROLE_MEMBER,ROLE_ADMIN,ROLE_STAFF" name="evolix"
-					password="5f197f8ed4f9c2a3742fb10a0adb5a4d00fec94b" />
+					password="b60d121b438a380c343d5ec3c2037564b82ffef3" />
 			</user-service>
 		</authentication-provider>
 

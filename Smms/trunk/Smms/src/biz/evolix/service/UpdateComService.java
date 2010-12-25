@@ -4,4 +4,5 @@ import biz.evolix.model.Order;
 
 public interface UpdateComService {
 	public void update(Order o);
+	public void updateDec(Order o);
 }

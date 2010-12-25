@@ -33,20 +33,7 @@ public class ProcheseAct extends ActionSupport {
 	@Action(value = "/edit-grid-purchese", results = {
 			@Result(location = "blackoffice.jsp", name = "success"),
 			@Result(location = "blackoffice.jsp", name = "input") })
-	public String execute() {
-		System.out.println("Oper" + oper);
-			try {
-			// System.out.println("pId "+pId
-			// +" sku.name "+sku.getName()+" sku.descript  q "+ quantity
-			// +" price "+purchesePrice );
-			//if(sku==null)System.out.println("sku.id q >");
-		//	System.out.println("xxx  "+id);
-		//	System.out.println("ywwww"+sku.getName());
-			System.out.println("yyyy"+sku.getSid());
-		//System.out.println("  uu"+id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public String execute() {		
 
 		if (oper.equals(ConstType.ADD)) {
 			Sku k = null;

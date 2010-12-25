@@ -6,6 +6,7 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>java:comp/env/jdbc/mysmmsDS</jta-data-source>
 		<class>biz.evolix.model.Users</class>
+		<class>biz.evolix.model.SmileUsersDetails</class>
 		<class>biz.evolix.model.Sku</class>
 		<class>biz.evolix.model.Purchese</class>
 		<class>biz.evolix.model.Province</class>
@@ -13,8 +14,8 @@
 		<class>biz.evolix.model.NodeDescription</class>
 		<class>biz.evolix.model.Node1</class>
 		<class>biz.evolix.model.Brance</class>
-		<class>biz.evolix.model.Authorities</class>
 		<class>biz.evolix.model.BonusPeriod</class>
+		<class>biz.evolix.model.Authorities</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINEST" />
 			<property name="eclipselink.cache.type.default" value="Weak"/>			

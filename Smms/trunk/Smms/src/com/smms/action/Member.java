@@ -8,6 +8,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import biz.evolix.model.SmileUsersDetails;
 import biz.evolix.model.Users;
 import biz.evolix.model.dao.UsersDAO;
 import biz.evolix.secure.SmileUser;
@@ -22,12 +23,18 @@ import com.opensymphony.xwork2.ActionSupport;
 	private Users userModel ;
 	private UsersDAO userDAO;
 		
+	public Users getUserModel() {
+		return userModel;
+	}
+
+	public void setUserModel(Users userModel) {
+		this.userModel = userModel;
+	}
+
 	@Action(value = "/json-member", results = { @Result(type ="json", name = "success") })
-	public String execute() throws Exception {	
-		Users u =userDAO.userDetail(getUsers().getUserid());
-		u.getAuthorities();
-		setUserModel(u);
-		
+	public String execute() throws Exception {
+		Users user = userDAO.userDetail(getUsers().getUserid());				
+		setUserModel(user);		
 		return SUCCESS;
 	}
 	
@@ -48,14 +55,7 @@ import com.opensymphony.xwork2.ActionSupport;
 		}
 		return null;
 	}
-	public void setUserModel(Users userModel) {
-		this.userModel = userModel;
-	}
-
-	public Users getUserModel() {
-		return userModel;
-	}
-	
+		
 	public Member(UsersDAO userDAO) {
 		super();
 		this.userDAO = userDAO;

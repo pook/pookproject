@@ -30,9 +30,7 @@ public class CheckDisplayName extends ActionSupport {
 			return ERROR;
 		}
 		boolean b = checkNameDAO.test(getDisplayName());
-		if (b) {
-			Random r = new Random(100);
-			setDisplayName(getDisplayName() + r.nextInt());
+		if (b) {			
 			addActionError("ไม่สามารถใช้ชื่อนี้ได้");
 			addActionError("ชื่อแสดงมีผู้ใช้แล้ว");
 			setTest(false);

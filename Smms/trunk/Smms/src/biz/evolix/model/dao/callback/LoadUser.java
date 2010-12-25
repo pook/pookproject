@@ -6,20 +6,20 @@ import javax.persistence.Query;
 
 import org.springframework.orm.jpa.JpaCallback;
 
-import biz.evolix.model.SmileUsersDetails;
+public class LoadUser <T> implements JpaCallback<T> {
 
-public class FindNodeFromUsers<T> implements JpaCallback<T> {
-
+	@SuppressWarnings("unchecked")
 	@Override
-	@SuppressWarnings("unchecked")	
 	public T doInJpa(EntityManager em) throws PersistenceException {
-		Query q = em.createNamedQuery("findNode1FromUser");	
-		q.setParameter(1, this.u);			
+		Query q  = em.createNamedQuery(this.nameQuery);
+		q.setParameter(1,this.smileId);
 		return (T)q.getSingleResult();
 	}
-	private SmileUsersDetails u;
-	public FindNodeFromUsers(SmileUsersDetails u) {
+	private String smileId;
+	private String nameQuery;
+	public LoadUser(String smileId, String nameQuery) {
 		super();
-		this.u = u;
-	}	
+		this.smileId = smileId;
+		this.nameQuery = nameQuery;
+	} 	
 }

@@ -1,10 +1,11 @@
 package biz.evolix.service;
 
-import biz.evolix.model.Users;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import biz.evolix.model.Node1;
+import biz.evolix.model.SmileUsersDetails;
 
 public interface RegisterService {
-	public Users save(Users n,Long id,String pv);		
-	public void chgpw(String newpw);
-	public boolean checkPassword(String pw);
+	public SmileUsersDetails save(SmileUsersDetails n,String id,String pv,Node1 node)throws UsernameNotFoundException;		
 	public boolean checkLevel();
 }

@@ -11,26 +11,26 @@
 	});
 	function profile(dat){
 		$("#f1").empty().append(dat.node1.inviter);
-		$("#f2").empty().append(dat.userId);
-		$("#f3").empty().append(dat.codeIdentification);
-		$("#f4").empty().append(dat.name);
-		$("#f5").empty().append(dat.surename);
+		$("#f2").empty().append(dat.node1.smileId);
+		$("#f3").empty().append(dat.smile.codeIdentification);
+		$("#f4").empty().append(dat.smile.name);
+		$("#f5").empty().append(dat.smile.surename);
 		$("#f6").empty().append(dat.node1.displayName);
-		$("#f7").empty().append(dat.tel);
-		$("#f8").empty().append(dat.tel2);
-		$("#f9").empty().append(dat.email);
-		$("#f10").empty().append(dat.address);
-		$("#f11").empty().append(dat.province.pname);
-		$("#f12").empty().append(dat.address2);
-		$("#f13").empty().append(dat.branceCard);
-		$("#f14").empty().append(dat.bank);
-		$("#f15").empty().append(dat.bankAccount);
-		$("#f16").empty().append(dat.bbrance);
-		$("#f17").empty().append(dat.typeOfAccount);
-		$("#f18").empty().append(dat.bonusTeam);
-		$("#f19").empty().append(dat.bonusInv);
-		$("#f20").empty().append(dat.bonusTeam+dat.bonusInv);
-		$("#f21").empty().append(dat.bonusLast);
+		$("#f7").empty().append(dat.smile.tel);
+		$("#f8").empty().append(dat.smile.tel2);
+		$("#f9").empty().append(dat.smile.email);
+		$("#f10").empty().append(dat.smile.address);
+		$("#f11").empty().append(dat.smile.province.pname);
+		$("#f12").empty().append(dat.smile.address2);
+		$("#f13").empty().append(dat.smile.branceCard);
+		$("#f14").empty().append(dat.smile.bank);
+		$("#f15").empty().append(dat.smile.bankAccount);
+		$("#f16").empty().append(dat.smile.bbrance);
+		$("#f17").empty().append(dat.smile.typeOfAccount);
+		$("#f18").empty().append(dat.smile.bonusTeam);
+		$("#f19").empty().append(dat.smile.bonusInv);
+		$("#f20").empty().append(dat.smile.bonusTeam+dat.bonusInv);
+		$("#f21").empty().append(dat.smile.bonusLast);
 	}
 </script>
 

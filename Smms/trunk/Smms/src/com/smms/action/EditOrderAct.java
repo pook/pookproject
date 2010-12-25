@@ -7,6 +7,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import biz.evolix.customconst.ConstType;
+import biz.evolix.model.SmileUsersDetails;
 import biz.evolix.model.Users;
 import biz.evolix.service.PurcheseService;
 
@@ -20,7 +21,7 @@ public class EditOrderAct extends ActionSupport {
 	private static Logger log = Logger.getLogger(EditOrderAct.class);
 
 	private String oper;
-	private Users user;
+	private SmileUsersDetails user;
 	private Integer orderId;
 	private PurcheseService purcheseService;
 
@@ -39,27 +40,28 @@ public class EditOrderAct extends ActionSupport {
 	}
 
 	private String remove() {
-		return SUCCESS;		
+		return SUCCESS;
 	}
-	private String edit(){
+
+	private String edit() {
 		return SUCCESS;
 	}
 
 	private String add() {
-		if (purcheseService.size() > ConstType.ZERO) {						
+		if (purcheseService.size() > ConstType.ZERO) {
 			log.info("Submit Order first");
 		} else {
 			Users u = null;
 			try {
-				u = purcheseService.userMember(getUser().getUserId());
-			} catch (Exception e) {				
+				//u = purcheseService.userMember(getUser());
+			} catch (Exception e) {
 				log.error(e.getMessage());
 			}
 			if (u == null) {
-				//addActionError("Member Not Found  !!");
-				log.info(ConstType.MEMBER_NOT_FOUND+ getUser().getUserId());
+				 addActionError("Member Not Found  !!");
+				 log.info(ConstType.MEMBER_NOT_FOUND+ getUser().getSmileId());
 			} else {
-				log.info("Create Order :"+ getUser().getUserId());
+				log.info("Create Order :"+ getUser().getSmileId());
 				purcheseService.newOrder(u);
 			}
 		}
@@ -79,11 +81,11 @@ public class EditOrderAct extends ActionSupport {
 		return oper;
 	}
 
-	public void setUser(Users user) {
+	public void setUser(SmileUsersDetails user) {
 		this.user = user;
 	}
 
-	public Users getUser() {
+	public SmileUsersDetails getUser() {
 		return user;
 	}
 

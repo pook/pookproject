@@ -9,7 +9,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import biz.evolix.customconst.ConstType;
-import biz.evolix.model.Users;
+import biz.evolix.model.SmileUsersDetails;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -29,7 +29,7 @@ public class CardManageAct extends ActionSupport {
 
 		return SUCCESS;
 	}
-	private List<Users> gridModel;
+	private List<SmileUsersDetails> gridModel;
 	private Integer rows = 0;
 	private Integer page = 0;
 	private String sord;
@@ -40,11 +40,11 @@ public class CardManageAct extends ActionSupport {
 	private Integer total = 0;
 	private Integer record = 0;
 
-	public List<Users> getGridModel() {
+	public List<SmileUsersDetails> getGridModel() {
 		return gridModel;
 	}
 
-	public void setGridModel(List<Users> gridModel) {
+	public void setGridModel(List<SmileUsersDetails> gridModel) {
 		this.gridModel = gridModel;
 	}
 

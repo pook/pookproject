@@ -2,6 +2,8 @@ package biz.evolix.secure;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -16,8 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import biz.evolix.customconst.ConstType;
 import biz.evolix.model.Authorities;
-import biz.evolix.model.Brance;
+import biz.evolix.model.SmileUsersDetails;
 import biz.evolix.model.Users;
+import biz.evolix.model.dao.callback.LoadUser;
 
 @Repository
 @Transactional
@@ -27,50 +30,72 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 	private static final long serialVersionUID = 2680596480619638118L;
 	private EntityManager em = Persistence.createEntityManagerFactory(
 			ConstType.PERSISTENCE_UNIT).createEntityManager();
-	private String userid;
+	private String smileid;
 	private String name;
 	private String displayName;
 	private String inviter;
 	private String passwd;
 	private String brance;
-	private Long nodeId;
+	private String treeId;
+	private Long pos;
+	private Long userid;
 
-	public SmileUser(String userid) {
+	public SmileUser(String smileid) {
 		super();
+		this.smileid = smileid;
+	}
+	
+
+	public Long getUserid() {
+		return userid;
+	}
+
+
+	public void setUserid(Long userid) {
 		this.userid = userid;
 	}
+
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
 	public Collection<GrantedAuthority> getAuthorities() {
 		Collection<Authorities> auths = (Collection<Authorities>) getJpaTemplate()
-				.findByNamedQuery("findAuthorities", getUserid());
+				.findByNamedQuery("findAuthorities", this.userid);
 		Collection<GrantedAuthority> gat = new HashSet<GrantedAuthority>();
 		for (Authorities a : auths)
 			gat.add(new GrantedAuthorityImp(a.getAuthority()));
 		return gat;
 	}
 
-	public Users loadUser() {
+	public SmileUsersDetails loadUser() {
 		return getUser1();
 	}
 
 	@Transactional(readOnly = true)
-	private Users getUser1() {
+	private SmileUsersDetails getUser1() {
 		try {
-			setEntityManager(em);
-			Users u = (Users) getJpaTemplate().find(Users.class, getUserid());			
+			if( test(getUsername()))return null;
+			setEntityManager(em);			
+			Users u = getJpaTemplate().execute(
+					new LoadUser<Users>(getSmileid(), "loaduser"));
 			this.passwd = u.getPassword();
-			setNodeId(u.getNode1().getNodeId());
+			this.userid = u.getUserId();
+			this.pos = u.getNode1().getPos();
+			this.setTreeId(u.getNode1().getTreeId());
 			setInviter(u.getNode1().getInviter());
-			setDisplayName(u.getNode1().getDisplayName());			
-			setBrance(u.getBrance());
-			return u;
+			setDisplayName(u.getNode1().getDisplayName());
+			setBrance(u.getSmile().getBrance());
+			return null;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new UsernameNotFoundException(e + ": username");
 		}
+	}
+	private boolean test(String uname){
+		Pattern p = Pattern.compile("[A-Z]{2}[0-9]{10}");
+		Matcher m = p.matcher(getSmileid());
+		return  !m.matches();
 	}
 
 	@Override
@@ -80,7 +105,7 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return getUserid();
+		return getSmileid();
 	}
 
 	@Override
@@ -103,8 +128,8 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 		return true;
 	}
 
-	public String getUserid() {
-		return userid;
+	public String getSmileid() {
+		return smileid;
 	}
 
 	public String getName() {
@@ -131,20 +156,28 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 		this.inviter = inviter;
 	}
 
-	public void setNodeId(Long nodeId) {
-		this.nodeId = nodeId;
-	}
-
-	public Long getNodeId() {
-		return nodeId;
-	}
-
 	public void setBrance(String brance) {
 		this.brance = brance;
 	}
 
 	public String getBrance() {
 		return brance;
+	}
+
+	public void setPos(Long pos) {
+		this.pos = pos;
+	}
+
+	public Long getPos() {
+		return pos;
+	}
+
+	public void setTreeId(String treeId) {
+		this.treeId = treeId;
+	}
+
+	public String getTreeId() {
+		return treeId;
 	}
 
 }

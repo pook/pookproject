@@ -6,7 +6,7 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
-import biz.evolix.service.RegisterService;
+import biz.evolix.service.sub.ChangePasswdService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -22,8 +22,8 @@ public class ChangePasswdAct extends ActionSupport {
 			@Result(name = "success", location = "echo/success.jsp"),
 			@Result(name = "error", location = "echo/error.jsp") })
 	public String execute(){
-		if(registerService.checkPassword(getOldpassword())){
-				registerService.chgpw(getNewpasswd());
+		if(changePasswdService.checkPassword(getOldpassword())){
+				changePasswdService.chgpw(getNewpasswd());
 				addActionMessage("Success !!");
 				return SUCCESS;
 		}else{
@@ -31,10 +31,10 @@ public class ChangePasswdAct extends ActionSupport {
 		}
 		return ERROR;
 	}	
-	private RegisterService  registerService;
-	public ChangePasswdAct(RegisterService registerService) {
+	private ChangePasswdService  changePasswdService;
+	public ChangePasswdAct(ChangePasswdService changePasswdService) {
 		super();
-		this.registerService = registerService;
+		this.changePasswdService = changePasswdService;
 	}
 	public void setNewpasswd(String newpasswd) {
 		this.newpasswd = newpasswd;

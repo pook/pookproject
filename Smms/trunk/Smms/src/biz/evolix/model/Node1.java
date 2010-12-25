@@ -3,6 +3,7 @@ package biz.evolix.model;
 import biz.evolix.customconst.ConstType;
 import biz.evolix.gen.Generate;
 import javax.persistence.Entity;
+import javax.persistence.IdClass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -10,21 +11,63 @@ import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.Transient;
 
+import org.eclipse.persistence.annotations.Cache;
+import org.eclipse.persistence.annotations.CacheCoordinationType;
+import org.eclipse.persistence.annotations.CacheType;
+
 @Entity
+@Cache(type = CacheType.WEAK, size = 128, expiry = 600000, alwaysRefresh = true, disableHits = true, coordinationType = CacheCoordinationType.INVALIDATE_CHANGED_OBJECTS)
 @NamedQueries({
-		@NamedQuery(name = "findDisplayName", query = "select N.nodeId from Node1 N where N.displayName=?1"),
-		@NamedQuery(name = "findNode1FromUserId", query = "select N from Node1 N where N.user=?1") })
+		@NamedQuery(name = "findDisplayName", query = "select N from Node1 N where N.displayName=?1"),
+		@NamedQuery(name = "findNode1FromUserId", query = "select N from Node1 N where N.user=?1"),
+		@NamedQuery(name = "findFromSmileId", query = "select N from Node1 N where N.smileId=?1") })		
+@IdClass(NodePK.class)
 @Table(name = "NODE1")
 public class Node1 implements java.io.Serializable {
 
 	private static final long serialVersionUID = -7863722387808094242L;
 	@Id
-	@Column(name = "NODE_ID", nullable = false)
-	private Long nodeId;
-	@Column(name = "DISPLAYNAME", length = 50)
+	@Column(name = "TREE_ID", nullable = false,length = 32,columnDefinition="CHAR(32)")
+	private String treeId;
+
+	@Override
+	public int hashCode() {
+		final int p = 31;
+		int r = 1;
+		r = p * r + ((treeId == null) ? 0 : treeId.hashCode());
+		r = p * r + ((pos == null) ? 0 : pos.hashCode());
+		return r;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Node1 other = (Node1) obj;
+		if (treeId == null) {
+			if (other.treeId != null)
+				return false;
+		} else if (!treeId.equals(other.getTreeId()))
+			return false;
+		if (pos == null) {
+			if (other.pos != null)
+				return false;
+		} else if (!pos.equals(other.getPos()))
+			return false;
+		return true;
+	}
+
+	@Id
+	@Column(name = "POS", nullable = false)
+	private Long pos;
+	@Column(name = "DISPLAYNAME", length = 50, unique = true)
 	private String displayName;
 	@Column(name = "USER_ID")
-	private String user;
+	private Long user;
 	@Column(name = "SMILE_VALUE")
 	private Integer sv = 0;
 	@Column(name = "COMMISSIONS")
@@ -33,10 +76,18 @@ public class Node1 implements java.io.Serializable {
 	private Character status = 'I';
 	@Column(name = "INVITER", length = 50)
 	private String inviter;
-
+	@Column(name = "SMILE_ID", length = 50)
+	private String smileId;
+	
 	public Node1() {
 		super();
 	}
+	public Node1(NodePK id) {
+		this();
+		this.treeId = id.getTreeId();
+		this.pos = id.getPos();
+	}
+
 
 	public String getDisplayName() {
 		return this.displayName;
@@ -71,8 +122,8 @@ public class Node1 implements java.io.Serializable {
 	}
 
 	public Integer getCommissions() {
-		int com =this.commissions+getSv();
-		return (getStatus() == ConstType.STATUS_ACTIVE) ? com+ (int) Generate.xCommission(com) : com;
+		return (getStatus() == ConstType.STATUS_ACTIVE) ? this.commissions
+				+ (int) Generate.xCommission(getSv()) : this.commissions;
 	}
 
 	public void setCommissions(Integer commissions) {
@@ -87,20 +138,12 @@ public class Node1 implements java.io.Serializable {
 		return status;
 	}
 
-	public void setUser(String user) {
+	public void setUser(Long user) {
 		this.user = user;
 	}
 
-	public String getUser() {
+	public Long getUser() {
 		return user;
-	}
-
-	public void setNodeId(Long nodeId) {
-		this.nodeId = nodeId;
-	}
-
-	public Long getNodeId() {
-		return nodeId;
 	}
 
 	public void setInviter(String inviter) {
@@ -111,22 +154,28 @@ public class Node1 implements java.io.Serializable {
 		return inviter;
 	}
 
-	public boolean equals(Object o) {
-		if (o != null && o instanceof Node1) {
-			Node1 that = (Node1) o;
-			return this.nodeId.equals(that.nodeId)
-					&& this.nodeId.equals(that.nodeId);
-		} else {
-			return false;
-		}
+	public void setPos(Long pos) {
+		this.pos = pos;
 	}
 
-	public int hashCode() {
-		int hash = 7;
-	    hash = hash * 31 + this.nodeId.hashCode();
-	    hash = hash * 31 
-	                + (this.nodeId == null ? 0 : this.nodeId.hashCode());
-	    return hash;
-
+	public Long getPos() {
+		return pos;
 	}
+	
+	public void setSmileId(String smileId) {
+		this.smileId = smileId;
+	}
+
+	public String getSmileId() {
+		return smileId;
+	}
+
+	public void setTreeId(String treeId) {
+		this.treeId = treeId;
+	}
+
+	public String getTreeId() {
+		return treeId;
+	}
+
 }

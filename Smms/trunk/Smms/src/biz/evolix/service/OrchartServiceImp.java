@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import biz.evolix.customconst.ConstType;
 import biz.evolix.gen.Generate;
 import biz.evolix.model.Node1;
+import biz.evolix.model.NodePK;
 import biz.evolix.model.dao.Node1DAO;
 import biz.evolix.secure.SmileUser;
 
@@ -17,7 +18,8 @@ public class OrchartServiceImp implements OrchartService {
 	private static final Node1 NULL_NODE;
 	static {
 		NULL_NODE = new Node1();
-		NULL_NODE.setNodeId(-2L);
+		NULL_NODE.setTreeId("");
+		NULL_NODE.setPos(-2L);
 	}
 	private static Logger log = Logger.getLogger(OrchartServiceImp.class);
 	private Long header;
@@ -32,25 +34,22 @@ public class OrchartServiceImp implements OrchartService {
 		}
 	}
 
-	public List<Node1> getTeamLevel(Long id) {
+	public List<Node1> getTeamLevel(Long head) {
 		List<Node1> teams = new ArrayList<Node1>();
-		Long c = 0L;
-		if (id < getHeader()) {
-			id = getHeader();
+		if (head < getHeader()) {
+			head = getHeader();
 		}
-		Node1 n = getNode(id);
+		NodePK id = new NodePK(getUsers().getTreeId(), head);
+		Node1 n = node1DAO.find(id);
 		if (n == null)
 			return teams;
 		addList(teams, n);
 		for (int i = 0; i < ConstType.MAX_NODE_SHOW; i++) {
-			Node1 n1 = null, n2 = null;
-			try {
-				c = teams.get(i).getNodeId();
-			} catch (Exception e) {
-			}
-			n1 = getNode(Generate.getLeftChildId(c));
+			Node1 n1 = null, n2 = null;			
+			id.setPos(teams.get(i).getPos());
+			n1 = node1DAO.find(new NodePK(ConstType.HASHCODE_NODE0, id.getLeft()));
 			addList(teams, n1);
-			n2 = getNode(Generate.getRightChildId(c));
+			n2 = node1DAO.find(new NodePK(ConstType.HASHCODE_NODE0, id.getRight()));
 			addList(teams, n2);
 		}
 		xCommission(teams);
@@ -65,32 +64,16 @@ public class OrchartServiceImp implements OrchartService {
 
 	}
 
-	private Node1 getNode(long c) {
-		Node1 node = null;
-		try {
-			node = node1DAO.getNode1(c);
-		} catch (Exception e) {
-			log.error(e.getMessage());
-		}
-		return node;
-	}
-
 	private List<Integer> levels;
 
 	private void xCommission(List<Node1> teams) {
 		this.levels = new ArrayList<Integer>();
-		String inv = getUsers().getDisplayName();
 		for (int i = 0, k = 0; i < ConstType.BACKWARD_6 && k < teams.size(); i++) {
 			int value = 0;
 			int c = (int) Math.floor(Generate.math2Pow(i));
 			for (int j = 0; j < c; j++) {
-				try {
-					if (inv.equals(teams.get(k++).getInviter()))
-						value += teams.get(k-1).getCommissions();
-				} catch (IndexOutOfBoundsException e) {
-					log.error(e.getMessage(), e);
-					break;
-				}
+				if(teams.get(k).getPos()==-2L)continue;
+				value += teams.get(k++).getSv();				
 			}
 			this.levels.add(value);
 		}
@@ -114,7 +97,7 @@ public class OrchartServiceImp implements OrchartService {
 	}
 
 	private void setHeader() throws Exception {
-		this.header = getUsers().getNodeId();
+		this.header = getUsers().getPos();
 		log.debug("head :" + this.header);
 	}
 
@@ -130,23 +113,23 @@ public class OrchartServiceImp implements OrchartService {
 	}
 
 	@Override
-	public long getNodeId(String node) {
-		Node1 n = node1DAO.getNode1FromUserId(node);
+	public long getNodeId(String node) {		
+		Node1 n = node1DAO.findFromSmileId(node);		
 		if (n == null)
 			return ConstType.NOT_FOUND;
-		else if (n.getNodeId() < getHeader()) {
+		else if (n.getPos() < getHeader()) {
 			return ConstType.NOT_ALLOW;
-		} else if (!searchParent(n.getNodeId(), getHeader())) {
+		} else if (!searchParent(n.getPos(), getHeader())) {
 			return ConstType.NOT_ALLOW;
 		}
-		return n.getNodeId();
+		return  n.getPos();
 	}
 
 	private static boolean searchParent(long id, long head) {
 		while (id >= head) {
 			if (id == head)
 				return true;
-			id = Generate.getParentId(id);
+			id = Generate.parent(id);
 		}
 		return false;
 	}

@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ page
+	import="org.springframework.security.core.context.SecurityContextHolder"%>
+<%@ page import="biz.evolix.secure.SmileUser"%>
+<%@ page import="org.apache.log4j.Logger"%>	
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sjg" uri="/struts-jquery-grid-tags"%> 
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
@@ -9,9 +13,19 @@ div#div4 div {
 	clear: both;
 }
 </style>
+<%	Logger log = Logger.getLogger("BlackOffice");
+	SmileUser u =null;
+	String brance = "";
+	try{
+		u = (SmileUser) SecurityContextHolder.getContext()
+			.getAuthentication().getPrincipal();
+		brance = u.getBrance();		
+	}catch (ClassCastException e){
+		log.error("Unknow login");
+	}
+%>
 <s:url id="ajax" value="order-purchese" />
 <s:url id="prochesedetail" action="showordered" />
-
 <sj:div id="div4">
 
 	<table
@@ -27,7 +41,7 @@ div#div4 div {
 					<s:url id="selectskuurl" action="json-customer-loadskuss" />
 					<s:url id="editpurcheseurl" action="edit-grid-purchese" />
 					<s:url id="editorderurl" action="edit-grid-order" />
-					<sjg:grid id="gridedittable" caption="พระราม 3 " dataType="json"
+					<sjg:grid id="gridedittable" caption="สาขาพระราม 3"  dataType="json"
 						href="%{remoteurl}" pager="true" navigator="true"
 						navigatorSearch="false"
 						navigatorAddOptions="{height:280,reloadAfterSubmit:true}"
@@ -80,7 +94,7 @@ div#div4 div {
 						onClickTopics="searchgrid" button="true" />
 					<sj:submit id="grid_edit_colsbutton" value="Show/Hide Columns"
 						onClickTopics="showcolumns" button="true" />
-					<sj:a id="ajaxlink" href="%{ajax}" indicator="indicator"
+					<sj:a id="ajaxlink" href="%{ajax}" indicator="indicator" 
 						targets="div4" button="true" buttonIcon="ui-icon-gear">
 	สั่งสินค้า
 	</sj:a>

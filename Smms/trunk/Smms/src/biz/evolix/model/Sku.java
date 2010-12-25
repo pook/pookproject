@@ -9,7 +9,8 @@ import javax.persistence.*;
 public class Sku implements java.io.Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "SKU_SEQ", strategy = GenerationType.TABLE)
+	@TableGenerator(name = "SKU_SEQ", initialValue = 5000, allocationSize = 1)
 	@Column(name = "S_ID")
 	private Long sid;
 	@Column(name = "NAME", length = 50, nullable = false)

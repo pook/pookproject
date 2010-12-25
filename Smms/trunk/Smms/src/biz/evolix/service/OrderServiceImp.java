@@ -63,7 +63,7 @@ public class OrderServiceImp implements OrderService {
 
 	@Override
 	public List<Order> ordersByOwner(int from, int rows) {
-		setOrders(getOrderDAO().showOrderOwner(getUsers().getUserid(), from,
+		setOrders(getOrderDAO().showOrderOwner(getUsers().getSmileid(), from,
 				rows));
 		return getOrders();
 	}

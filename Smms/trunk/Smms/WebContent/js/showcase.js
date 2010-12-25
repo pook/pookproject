@@ -1,20 +1,10 @@
-/*
- * Function for Custome Validation Example
- * 
- */
 function customeValidation(form, errors) {
-
-	// List for errors
 	var list = $('#formerrors');
-
-	// Handle non field errors
 	if (errors.errors) {
 		$.each(errors.errors, function(index, value) {
 			list.append('<li>' + value + '</li>\n');
 		});
 	}
-
-	// Handle field errors
 	if (errors.fieldErrors) {
 		$.each(errors.fieldErrors, function(index, value) {
 			var elem = $('#' + index + 'Error');

@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
+import javax.persistence.TableGenerator;
 
 
 @Entity
@@ -23,7 +24,9 @@ import javax.persistence.Column;
 public class Brance implements java.io.Serializable {
 	   
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(generator = "BRANCE_SEQ", strategy = GenerationType.TABLE)
+	@TableGenerator(name = "BRANCE_SEQ", initialValue = 5000, allocationSize = 1)
+
 	@Column(name = "BRANCE_CODE")
 	private Integer branceCode;
 	@Column(name = "BRANCE_NAME", length = 50)

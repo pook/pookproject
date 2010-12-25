@@ -51,7 +51,7 @@
 	<!-- Spring Security config -->
 
 	<session-config>
-		<session-timeout>35</session-timeout>
+		<session-timeout>45</session-timeout>
 	</session-config>
 
 </web-app>

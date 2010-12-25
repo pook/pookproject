@@ -40,8 +40,7 @@ public class Organization extends ActionSupport {
 		long u = -2L;		
 		try {
 			String x = (getNodeId() == null) ? "-2" : getNodeId();		
-			u = Long.parseLong(x);
-			log.info("Member node id :"+x);
+			u = Long.parseLong(x);			
 		} catch (Exception e) {
 			log.error(e.getMessage()+" :"+u, e);
 			return ERROR;

@@ -4,8 +4,11 @@ import java.lang.String;
 import javax.persistence.*;
 
 @Entity
-@NamedQuery(name = "findAllProvince", query = "select Object(P) FROM Province P")
 @Table(name = "PROVINCE")
+
+@NamedQueries({ 
+	@NamedQuery(name = "findAllProvince", query = "select P from Province P")
+})
 public class Province implements java.io.Serializable {
 
 	@Id

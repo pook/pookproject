@@ -6,15 +6,13 @@
 	import="org.springframework.security.core.context.SecurityContextHolder"%>
 <%@ page import="biz.evolix.secure.SmileUser"%>
 <%@ page import="org.apache.log4j.Logger"%>
+<script type="text/javascript" src="js/register.js"></script>
+<script type="text/javascript">
+	$(function() {
+		regis();
+	});				
+</script>
 <link href="styles/register.css" rel="stylesheet" type="text/css" />
-<style type="text/css">
-div#main-regist div{
-	clear:both;
-}
-<!--
-
--->
-</style>
 <%
 	Logger log = Logger.getLogger("Register");
 	SmileUser u = null;
@@ -23,7 +21,7 @@ div#main-regist div{
 	try {
 		u = (SmileUser) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
-		id = u.getUserid();
+		id = u.getSmileid();
 		displayName = u.getDisplayName();
 	} catch (ClassCastException e) {
 		log.error("Unknow login");
@@ -174,11 +172,5 @@ div#main-regist div{
 </table>
 </fieldset>
 </form>
-<script type="text/javascript" src="js/register.js"></script>
-<script type="text/javascript">
-	$(function() {
-		regis();
-	});				
-</script>
 </div>
 </div>

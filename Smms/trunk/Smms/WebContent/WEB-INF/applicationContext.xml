@@ -36,20 +36,29 @@
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<!-- end JPA -->
-	<!-- start Register Service -->
+	<!-- start Register Service 
 	<bean id="registerDAO" class="biz.evolix.model.dao.RegisterDaoImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	-->
+	<bean id="smileUsersDetailDAO" class="biz.evolix.model.dao.SmileUsersDetailDAOImp">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />	
 	</bean>
 	<bean id="authoritiesDAO" class="biz.evolix.model.dao.AuthoritiesDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	<bean id="registerService" class="biz.evolix.service.RegisterServiceImp" scope="session"/>	
+	<bean id="registerService" class="biz.evolix.service.RegisterServiceImp" scope="singleton"/>	
 	<!-- end of Register Service -->
 	<!-- Start Organization Chart Service -->
 	<bean id="orchartService" class="biz.evolix.service.OrchartServiceImp" />
 	<bean id="node1DAO" class="biz.evolix.model.dao.Node1DAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
+	<bean id="nodeDeptDAO" class="biz.evolix.model.dao.NodeDeptDAOImp">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="node1DAO" ref="node1DAO" />
+	</bean>
+	
 	<!-- end of Organization Chart Service -->
 	<!-- Start market service -->
 	<bean id="inventoryService" class="biz.evolix.service.InventoryServiceImp" />
@@ -72,6 +81,7 @@
 	<bean id="userDetail" class="biz.evolix.secure.UserDetail" />
 	<bean id="fetchUplineService" class="biz.evolix.service.FetchUplineServiceImp" scope="session" />
 	<bean id="branceService" class="biz.evolix.service.BranceServiceImp" scope="session" />
+	<bean id="changePasswdService" class="biz.evolix.service.sub.imp.ChangePasswdServiceImp" scope="session" />
 	<bean id="fetchProvince" class="biz.evolix.model.dao.ProvinceDAOImp" scope="prototype" >
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
@@ -107,7 +117,7 @@
 	<bean id="buyOrder" class="com.smms.action.BuyOrder" scope="session">
 		<constructor-arg ref="purcheseService" />
 	</bean>
-	<bean id="registerServiceAct" scope="prototype" class="biz.evolix.action.register.Register">
+	<bean id="registerServiceAct" scope="request" class="biz.evolix.action.register.Register">
 		<constructor-arg index="0" ref="registerService" />
 		<constructor-arg index="1" ref="checkNameDAO" />
 	</bean>
@@ -180,6 +190,9 @@
 	</bean>	
 	<bean id="editBranceAct" scope="prototype" class="biz.evolix.action.role.EditBrance">
 		<constructor-arg  ref="branceService" />		
+	</bean>
+	<bean id="changePasswdAct" scope="session" class="biz.evolix.action.register.ChangePasswdAct">
+		<constructor-arg  ref="changePasswdService" />		
 	</bean>
 	<!-- end faces action -->
 	<context:annotation-config />

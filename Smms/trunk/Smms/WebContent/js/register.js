@@ -34,7 +34,7 @@ function regis() {
 			brance).add(branceCard);
 	allFields.removeClass("ui-state-error");
 	$("#displayName").live("focusout", checkDisplayName);
-	$("#fsubmit1").submit(
+	$("#fsubmit1").live("click",
 					function() {
 						clrErrInf();
 						allFields.removeClass("ui-state-error");
@@ -68,22 +68,21 @@ function regis() {
 									+ "&bank=" + bank.val()
 									+ "&bankAccount=" + bankAccount.val()
 									+ "&bankBrance=" + bankBrance.val()
-									+ "&typeOfAccount=" + typeOfAccount.val();
-							$.ajax({
-								type : "post",
-								contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+									+ "&typeOfAccount=" + typeOfAccount.val();	
+							$("#main-regist").load("save.action", {"upline":""+$("#upline").val(),"name":""+name.val(),"surename":""+ surename.val() ,"displayName":""+displayName.val(),
+								"codeIdentification":""+ codeIdentification.val(),"tel":""+ tel.val(),"brance":"" + brance.val(),"tel2":"" + tel2.val()	,
+								"branceCard":"" + branceCard.val(),"address" :""+ address.val(),"province":"" + $("#province").val(),"address2":"" + address2.val(),
+								"email":""+ email.val(),"bank":"" + bank.val(),"bankAccount":"" + bankAccount.val(), "bankBrance" :""+ bankBrance.val(), "typeOfAccount" :""+ typeOfAccount.val()});
+							
+							/*$.ajax({
+								type : "post",								
 								url : "save.action",
 								data : uri,
 								success : function(res) {									
-									$('#main-regist').load('register.action');	
-									alert("Success !");
-									showmsgInf(res);
-								},
-								error:function(res){
-									alert("error !");
-									showmsgInf(res);
+								
 								}
-							});
+							});*/
+														
 						}
 					});
 }

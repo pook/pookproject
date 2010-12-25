@@ -3,6 +3,7 @@ package biz.evolix.service;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import biz.evolix.customconst.ConstType;
 import biz.evolix.gen.Generate;
 import biz.evolix.model.Node1;
 import biz.evolix.model.Order;
@@ -17,34 +18,53 @@ public class UpdateComServiceImp implements UpdateComService {
 	@Override
 	public void update(Order o) {
 		Node1 n = null;
-		int count= 0;
 		try {
-			n = node1DAO.getNode1FromUserId(o.getUser().getUserId());
+	//		n = node1DAO.getNode1FromUserId(o.getUser().getUserId());
 		} catch (Exception e) {
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage(), e);
 		}
 		if (n != null) {
-			int sv = o.getTotalSv();			
+			int sv = o.getTotalSv();
 			n.incSv(sv);
-			node1DAO.update(n);
-			up(Generate.getParentId((n.getNodeId())),++count);
+	//		node1DAO.update(n);
+	//		long c =Generate.getParentId( n.getNodeId());
+	//		for(int i=0;i<15&&c>0;i++)
+	//			c = up(c);						
 		}
 	}
 
-	private void up(long c,int count) {		
-		Node1 nl = null,nr=null,nc=null;		
-		if (c > 0 && count <17) {
+	private long up(long c) {
+		Node1 nl = null, nr = null, nc = null;
+		if (c > 0 ){
 			nc = node(c);
-			nl = node(Generate.getLeftChildId(c));
-			nr = node(Generate.getRightChildId(c));
+		//	nl = node(Generate.getLeftChildId(c));
+		//	nr = node(Generate.getRightChildId(c));
 			int com = 0;
 			if (nl != null)
 				com += nl.getCommissions();
 			if (nr != null)
 				com += nr.getCommissions();
 			nc.setCommissions(com);
-			node1DAO.updateOther(nc);
-			up(Generate.getParentId((nc.getNodeId())),++count);
+		//	node1DAO.updateOther(nc);
+		//	return Generate.getParentId(c);
+		}
+		return ConstType.NOT_FOUND;
+	}
+	@Override
+	public void updateDec(Order o){
+		Node1 n = null;
+		try {
+		//	n = node1DAO.getNode1FromUserId(o.getUser().getUserId());
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		if (n != null) {
+			int sv = o.getTotalSv();
+			n.decSv(sv);
+		//	node1DAO.update(n);
+		//	long c =Generate.getParentId( n.getNodeId());
+		//	for(int i=0;i<15&&c>0;i++)
+		//		c = up(c);						
 		}
 	}
 
@@ -57,12 +77,7 @@ public class UpdateComServiceImp implements UpdateComService {
 	}
 
 	public Node1 node(long c) {
-		try {
-			return node1DAO.getNode1(c);
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			return null;
-		}
+		return null;
+	//	return node1DAO.getNode1(c);
 	}
-
 }

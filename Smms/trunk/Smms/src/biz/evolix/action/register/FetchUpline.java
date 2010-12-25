@@ -1,6 +1,6 @@
 package biz.evolix.action.register;
 
-import java.util.Collection;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +9,6 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
-import biz.evolix.model.Node1;
 import biz.evolix.service.FetchUplineService;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -29,8 +28,7 @@ public class FetchUpline extends ActionSupport {
 		return SUCCESS;
 	}
 	public String getJSON() throws Exception {
-		Collection<Node1> c = fetchUplineService.uplines();		
-		for(Node1 n:c )uplines.put(n.getNodeId().toString(), n.getDisplayName());		
+		uplines = fetchUplineService.uplines();	
 		return execute();
 	}
 

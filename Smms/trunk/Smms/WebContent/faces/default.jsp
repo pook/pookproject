@@ -21,7 +21,7 @@
 <meta http-equiv="cache-control" content="no-cache" />
 <meta http-equiv="expires" content="0" />
 <meta http-equiv="keywords" content="" />
-<meta http-equiv="description" content="" />
+<meta http-equiv="description" content="evolix.biz" />
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 <link href="styles/patch_layout.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet"
@@ -47,7 +47,7 @@
 		$('#mybuttondialog').dialog('close');
 	};
 </script>
-<style  type="text/css">
+<style type="text/css">
 a#logout:hover{
 color:#39c;
 cursor: pointer;
@@ -67,7 +67,7 @@ cursor: pointer;
 		u = (SmileUser) SecurityContextHolder.getContext()
 			.getAuthentication().getPrincipal();
 		displayName =u.getDisplayName();
-		userId = u.getUserid();
+		userId = u.getSmileid();
 	}catch (ClassCastException e){
 		log.error("Unknow login");
 	}

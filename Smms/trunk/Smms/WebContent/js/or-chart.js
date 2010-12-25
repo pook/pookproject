@@ -14,7 +14,7 @@ function orgJSON(data) {
 			var g = null;
 			g = $(this).attr("id");
 			var idx = g.substring(1);
-			var txt = dat.teams[idx - 1].user;
+			var txt = dat.teams[idx - 1].smileId;
 			var txt1 = dat.teams[idx - 1].displayName;
 			var inv = dat.teams[idx - 1].inviter;
 			var img = '';
@@ -107,7 +107,7 @@ function orgJSON(data) {
 			var idx = parseInt(g.substring(1));
 			if (idx > dat.teams.length)
 				return;
-			var nid = dat.teams[idx - 1].nodeId;
+			var nid = dat.teams[idx - 1].pos;
 			$.ajax({
 				type : "get",
 				url : jsondat,
@@ -131,7 +131,7 @@ function orgJSON(data) {
 			}
 			$.ajax({
 				type : "get",
-				url : jsonsearch,
+				url : "json-organization-search-member",
 				data : "memberid=" + m,
 				success : function(data1) {
 					if (data1.messageError) {
@@ -399,7 +399,7 @@ function orgJSON(data) {
 			$.ajax({
 				type : "get",
 				url : jsonbw,
-				data : "nodeId=" + dat.teams[0].nodeId + "&back=" + back,
+				data : "nodeId=" + dat.teams[0].pos + "&back=" + back,
 				success : function(data1) {
 					dat = data1;
 					loopteamschild(dat);
@@ -441,7 +441,7 @@ function orgJSON(data) {
 			default:
 				po1 = -6;
 			}					
-			var t1 = value.user;
+			var t1 = value.smileId;
 			var im = '';			
 			if (value.status == 'A') {
 				im = imgactive();
