@@ -10,16 +10,18 @@ import biz.evolix.gen.Generate;
 import biz.evolix.model.Node1;
 import biz.evolix.model.NodeDescription;
 import biz.evolix.model.NodePK;
+import biz.evolix.model.Page;
 
 @Repository
 @Transactional
 public class NodeDeptDAOImp extends JpaDaoSupport implements NodeDeptDAO {
 
 	private Node1DAO node1DAO;
+	private PageDAO pageDAO;
 
 	@Override
-	@Transactional(readOnly = true)
-	public NodeDescription id(NodePK id) {
+	@Transactional
+	public NodeDescription find(NodePK id) {
 		NodeDescription d = null;
 		try {
 			d = getJpaTemplate().find(NodeDescription.class, id);
@@ -29,18 +31,23 @@ public class NodeDeptDAOImp extends JpaDaoSupport implements NodeDeptDAO {
 		return d;
 	}
 
-	private static Logger log = Logger.getLogger(NodeDescription.class);
+	private static Logger log = Logger.getLogger(NodeDeptDAOImp.class);
 
 	@Override
-	@Transactional
-	public void updateNodeDept(long nxt, NodeDescription dept) {
-		while (nxt > dept.getUpper()) {
-			dept.setLevel(dept.getLevel() + 1);
-			dept.setLower(Generate.left(dept.getLower()));
-			dept.setUpper(Generate.right(dept.getUpper()));
-			dept.setNextId(dept.getLower());
+	@Transactional(readOnly = false)
+	public void updateNodeDept(long nxt, NodeDescription dept, boolean test) {
+		if (test) {
+			// if()
+			while (nxt > dept.getUpper()) {
+				dept.setLevel(dept.getLevel() + 1);
+				dept.setLower(Generate.left(dept.getLower()));
+				dept.setUpper(Generate.right(dept.getUpper()));
+				dept.setNextId(dept.getLower());
+				dept.setCount(0L);
+			}
 			try {
 				getJpaTemplate().merge(dept);
+				getJpaTemplate().flush();
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);
 			}
@@ -68,40 +75,81 @@ public class NodeDeptDAOImp extends JpaDaoSupport implements NodeDeptDAO {
 	}
 
 	@Transactional
-	public NodePK nextId(Long useId, String treeId, Long pos1) {
-		NodeDescription d = null;		
-		NodePK id = new NodePK(treeId, pos1);
-		d = description(id);
-		boolean auto = (useId == ConstType.AUTO) ? true : false;
+	public NodeDescription nextId(NodeDescription dHead, long useId, NodePK id,
+			boolean auto) {
+		dHead = find(id);
+		NodeDescription newDept = null;
 		if (!auto) {
-			NodePK id2 = new NodePK(treeId, useId);			
-			if (getNodeFromId(id2) == null)	return id2;			
+			NodePK id2 = new NodePK(id.getTreeId(), useId);
+			if (getNodeFromId(id2) == null) {
+				newDept = new NodeDescription(id2);
+			}
 			auto = true;
 		}
-		NodePK id2 = new NodePK(d.getTreeId(), d.getNextId());
+		int level = dHead.getLevel();
+		long maxnode = Generate.math2Pow(level), count = dHead.getCount();
+		NodePK id2 = new NodePK(dHead.getTreeId(), dHead.getNextId());
+		boolean found = false;
 		if (auto) {
-			Node1 next = null;			
-			while ((next = getNodeFromId(id2)) != null) {				
-				if (next.getPos() > d.getUpper()) {					
-					updateNodeDept(d.getNextId(), d);
-					id = new NodePK(d.getTreeId(), d.getNextId());					
-				} else {
-					id2.next();					
+			Node1 node = null;
+			while (!found) {				
+				while (count < maxnode - 1 && !found) {
+					if ((node = getNodeFromId(id2)) == null) {
+						found = true;
+					} else if (id2.getPos() == dHead.getUpper()) {
+						String next = pageDAO.lookup(id2.getTreeId());
+						id2 = new NodePK(next, maxnode);
+					} else {						
+						id2 = new NodePK(id2.getTreeId(), id2.testNext());
+					}
+					dHead.setCount(++count);
+					dHead.setNextId(dHead.getNextId() + 1);
 				}
-			}
-			if (next == null) {
-				if (id2.testNext() > d.getUpper()) {
-					long upper = d.getUpper();
-					updateNodeDept(id2.testNext(), d);
-					if(id2.getPos()>upper)
-						id2.setPos(d.getNextId());										
-				} else {
-					d.setNextId(id2.testNext());
-					update(d);
-				}
+				if (count + 1 == maxnode && !found) {
+					id2 = new NodePK(id2.getTreeId(), dHead.getUpper());
+					if ((node = getNodeFromId(id2)) == null) 
+						found = true;					
+					if (dHead.getUpper() < ConstType.MAX_NODE63
+							&& dHead.getUpper() >= ConstType.MAX_NODE62) {
+						NodePK beforeLower = null;
+						if (found){							
+							pageDAO.insert(new Page(new NodePK(id2.getTreeId(),
+									id2.getPos()).hashNode1(), new NodePK(id2
+									.getTreeId(), id2.testNext()).hashNode1()));
+							//id2.setTree();
+						}else;
+							beforeLower = new NodePK(dHead.getTreeId(),
+								dHead.getLower());
+						updateNodeDept2(dHead);
+						if (!found)
+							id2 = new NodePK(beforeLower.hashNode1(), 2);
+					} else {
+						updateNodeDept(dHead.getUpper() + 1, dHead, true);
+						
+						if (!found)
+							id2 = new NodePK(dHead.getTreeId(),
+									dHead.getNextId());						
+					}
+					if (!found) {
+						level = dHead.getLevel();
+						count = dHead.getCount();
+						maxnode = Generate.math2Pow(level);
+					}
+				}				
 			}
 		}
-		return id2;
+		newDept = new NodeDescription(id2);
+		insert(newDept);
+		return newDept;
+	}
+
+	@Transactional
+	private void updateNodeDept2(NodeDescription dHead) {
+		dHead.setLevel(dHead.getLevel() + 1);
+		dHead.setLower(2L);
+		dHead.setUpper(3L);
+		dHead.setCount(0L);
+		dHead.setNextId(dHead.getLower());
 	}
 
 	@Override
@@ -115,11 +163,6 @@ public class NodeDeptDAOImp extends JpaDaoSupport implements NodeDeptDAO {
 	}
 
 	@Transactional(readOnly = true)
-	private NodeDescription description(NodePK id) {
-		return getJpaTemplate().find(NodeDescription.class, id);
-	}
-
-	@Transactional(readOnly = true)
 	private Node1 getNodeFromId(NodePK id) {
 		Node1 n = null;
 		try {
@@ -127,5 +170,13 @@ public class NodeDeptDAOImp extends JpaDaoSupport implements NodeDeptDAO {
 		} catch (Exception e) {
 		}
 		return n;
+	}
+
+	public void setPageDAO(PageDAO pageDAO) {
+		this.pageDAO = pageDAO;
+	}
+
+	public PageDAO getPageDAO() {
+		return pageDAO;
 	}
 }

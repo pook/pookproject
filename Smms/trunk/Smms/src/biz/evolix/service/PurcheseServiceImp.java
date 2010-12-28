@@ -12,11 +12,10 @@ import biz.evolix.customconst.ConstType;
 import biz.evolix.model.Order;
 import biz.evolix.model.Purchese;
 import biz.evolix.model.Sku;
-import biz.evolix.model.SmileUsersDetails;
 import biz.evolix.model.Users;
-import biz.evolix.model.dao.AuthoritiesDAO;
 import biz.evolix.model.dao.OrderDAO;
 import biz.evolix.model.dao.SkuDAO;
+import biz.evolix.model.dao.UsersDAO;
 import biz.evolix.secure.SmileUser;
 
 public class PurcheseServiceImp implements PurcheseService {
@@ -26,7 +25,7 @@ public class PurcheseServiceImp implements PurcheseService {
 	@Autowired
 	private OrderDAO orderDAO;
 	@Autowired
-	private AuthoritiesDAO authoritiesDAO;
+	private UsersDAO usersDAO;
 	@Autowired
 	private UpdateComService updateComService;
 	@Autowired
@@ -50,18 +49,15 @@ public class PurcheseServiceImp implements PurcheseService {
 		return ordering;
 	}
 
-	public AuthoritiesDAO getAuthoritiesDAO() {
-		return authoritiesDAO;
-	}
-
+	
 	@Override
 	public int size() {
 		return getOrdering().size();
 	}
 
 	@Override
-	public SmileUsersDetails userMember(String smileuser) {
-		return authoritiesDAO.findUser(smileuser);
+	public Users userMember(String smileId) {
+		return usersDAO.findBySmileUser(smileId);
 	}
 
 	@Override

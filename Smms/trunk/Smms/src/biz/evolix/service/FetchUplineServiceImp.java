@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import biz.evolix.customconst.ConstType;
 import biz.evolix.model.Node1;
 import biz.evolix.model.NodeDescription;
 import biz.evolix.model.NodePK;
@@ -26,50 +25,48 @@ public class FetchUplineServiceImp implements FetchUplineService {
 
 	@Override
 	public Map<String, String> uplines() {
-		NodeDescription d = null;
+		NodeDescription dept = null;
 		SmileUser head = getUsers();
 		if (head == null)
 			return new HashMap<String, String>();
 		NodePK id = new NodePK(head.getTreeId(), head.getPos());
-		d = nodeDeptDAO.id(id);
+		dept = nodeDeptDAO.find(id);
 		Map<String, String> map = new HashMap<String, String>();
-		uplines2(d, map, id);
+		uplines2(dept, map, id);
 		return map;
 	}
 
-	private void uplines2(NodeDescription d, Map<String, String> map, NodePK id) {
-		if (d != null) {
-			id.setPos(d.getNextId());
+	private void uplines2(NodeDescription dept, Map<String, String> map,
+			NodePK id) {
+		if (dept != null) {
+			id = new NodePK(id.getTreeId(), dept.getNextId());
 			int count = 0;
 			boolean left = false;
 			while (count < MAX) {
-				Node1 node = node1DAO.find(id);
+				Node1 node = node1DAO.find2(id);
 				count++;
 				if (node == null) {
-					left = id.isLeft();
-					node = node1DAO.find(id);
-					Node1 nodeParent = node1DAO.find(new NodePK(
-							ConstType.HASHCODE_NODE0, id.getParent()));
-					if (id.getPos() < d.getUpper()) {
+					left = id.isLeft();					
+					Node1 nodeParent = node1DAO.find2(new NodePK(
+							id.getTreeId(), id.getParent()));					
+					long upper = dept.getUpper();
+					if (id.getPos() < upper) {						
 						add(map, nodeParent, id, left);
-						id.next();
+						id = new NodePK(id.getTreeId(), id.testNext());
 						continue;
-					} else if (id.getPos() == d.getUpper()) {
-						add(map, nodeParent, id, left);						
-						break;
-					}
-
-				} else {
-					if (id.getPos() == d.getUpper()) {
+					} else if (id.getPos() == upper) {						
+						add(map, nodeParent, id, left);
 						if (map.isEmpty()) {
-							d.setPos(node.getPos() + 1);
-							nodeDeptDAO.updateNodeDept(d.getNextId(),d);
-							id.setPos(d.getNextId());
-						} else
+							nodeDeptDAO.updateNodeDept(dept.getUpper() + 1,
+									dept, true);
+						} else {
 							break;
+						}
+					} else {
+						add(map, nodeParent, id, left);
 					}
-					id.next();
 				}
+				id = new NodePK(id.getTreeId(), id.testNext());
 			}
 		}
 	}

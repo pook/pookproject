@@ -2,8 +2,6 @@ package biz.evolix.secure;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -74,8 +72,7 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 
 	@Transactional(readOnly = true)
 	private SmileUsersDetails getUser1() {
-		try {
-			if( test(getUsername()))return null;
+		try {			
 			setEntityManager(em);			
 			Users u = getJpaTemplate().execute(
 					new LoadUser<Users>(getSmileid(), "loaduser"));
@@ -92,12 +89,6 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 			throw new UsernameNotFoundException(e + ": username");
 		}
 	}
-	private boolean test(String uname){
-		Pattern p = Pattern.compile("[A-Z]{2}[0-9]{10}");
-		Matcher m = p.matcher(getSmileid());
-		return  !m.matches();
-	}
-
 	@Override
 	public String getPassword() {
 		return this.passwd;

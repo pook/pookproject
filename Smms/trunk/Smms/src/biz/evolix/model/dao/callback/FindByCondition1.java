@@ -6,7 +6,7 @@ import javax.persistence.Query;
 
 import org.springframework.orm.jpa.JpaCallback;
 
-public class FindFormString<T> implements JpaCallback<T> {
+public class FindByCondition1<T> implements JpaCallback<T> {
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -16,8 +16,8 @@ public class FindFormString<T> implements JpaCallback<T> {
 		return (T)q.getSingleResult();
 	}
 	private String nameQuery;
-	private String key;
-	public FindFormString( String key,String nameQuery) {
+	private Object key;
+	public FindByCondition1( Object key,String nameQuery) {
 		super();
 		this.nameQuery = nameQuery;
 		this.key = key;

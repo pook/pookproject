@@ -20,14 +20,17 @@ import org.eclipse.persistence.annotations.CacheType;
 @NamedQueries({
 		@NamedQuery(name = "findDisplayName", query = "select N from Node1 N where N.displayName=?1"),
 		@NamedQuery(name = "findNode1FromUserId", query = "select N from Node1 N where N.user=?1"),
-		@NamedQuery(name = "findFromSmileId", query = "select N from Node1 N where N.smileId=?1") })		
+		@NamedQuery(name = "findFromSmileId", query = "select N from Node1 N where N.smileId=?1"),
+		@NamedQuery(name = "findByHashcode", query = "select N from Node1 N,NodeDescription D where N.treeId = D.treeId and "
+				+ "N.pos = D.pos and D.hashCode =?1")
+		 })
 @IdClass(NodePK.class)
 @Table(name = "NODE1")
 public class Node1 implements java.io.Serializable {
 
 	private static final long serialVersionUID = -7863722387808094242L;
 	@Id
-	@Column(name = "TREE_ID", nullable = false,length = 32,columnDefinition="CHAR(32)")
+	@Column(name = "TREE_ID", nullable = false, length = 32, columnDefinition = "CHAR(32)")
 	private String treeId;
 
 	@Override
@@ -78,16 +81,16 @@ public class Node1 implements java.io.Serializable {
 	private String inviter;
 	@Column(name = "SMILE_ID", length = 50)
 	private String smileId;
-	
+
 	public Node1() {
 		super();
 	}
+
 	public Node1(NodePK id) {
 		this();
 		this.treeId = id.getTreeId();
 		this.pos = id.getPos();
 	}
-
 
 	public String getDisplayName() {
 		return this.displayName;
@@ -122,8 +125,7 @@ public class Node1 implements java.io.Serializable {
 	}
 
 	public Integer getCommissions() {
-		return (getStatus() == ConstType.STATUS_ACTIVE) ? this.commissions
-				+ (int) Generate.xCommission(getSv()) : this.commissions;
+		return  this.commissions + (int) Generate.xCommission(getSv());
 	}
 
 	public void setCommissions(Integer commissions) {
@@ -161,7 +163,7 @@ public class Node1 implements java.io.Serializable {
 	public Long getPos() {
 		return pos;
 	}
-	
+
 	public void setSmileId(String smileId) {
 		this.smileId = smileId;
 	}

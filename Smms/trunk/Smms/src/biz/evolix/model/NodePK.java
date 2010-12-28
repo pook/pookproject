@@ -4,11 +4,12 @@ import java.security.NoSuchAlgorithmException;
 
 import org.apache.log4j.Logger;
 
+import biz.evolix.customconst.ConstType;
 import biz.evolix.gen.Generate;
 
 public class NodePK implements java.io.Serializable {
 	private static final long serialVersionUID = -809139391916070346L;
-	private static final String hashAlgorithm = "md5";
+	private static final String HASH_ALGORITHM = "md5";
 
 	private String treeId;
 	private Long pos;
@@ -19,7 +20,7 @@ public class NodePK implements java.io.Serializable {
 		this.treeId = treeId;
 	}	
 	
-	public NodePK(String treeId, Long pos) {
+	public NodePK(String treeId, long pos) {
 		super();
 		this.pos = pos;
 		this.treeId = treeId;
@@ -28,7 +29,7 @@ public class NodePK implements java.io.Serializable {
 		return pos;
 	}
 
-	public void setPos(Long pos) {
+	public void setPos(long pos) {
 		this.pos = pos;
 	}	
 	
@@ -56,25 +57,34 @@ public class NodePK implements java.io.Serializable {
 	}
 
 	public void next() {
-		setPos(Generate.next(this.pos));		
+		if(this.pos<ConstType.MAX_NODE63)
+			setPos(++pos);
+		else
+			goNext();				
 	}
-	public Long testNext(){
+	public long testNext(){
 		return getPos()+1;
 	}
 	public void parent(){
 		setPos(Generate.parent(this.pos));
 	}
 	public void left(){
-		setPos(Generate.left(this.pos));
+		if(this.pos<ConstType.MAX_NODE62)
+			setPos(Generate.left(this.pos));
+		else
+			setPos(goLeft());		
 	}
 	public void right(){
-		setPos(Generate.right(this.pos));
+		if(this.pos<ConstType.MAX_NODE62)
+			setPos(Generate.right(this.pos));
+		else
+			setPos(goRight());
 	}
-	public long getLeft(){
-		return Generate.left(this.pos);
+	public NodePK getLeft(){
+		return (this.pos<ConstType.MAX_NODE62)?new NodePK(getTreeId(),Generate.left(this.pos)):testGoLeft();
 	}
-	public long getRight(){
-		return Generate.right(this.pos);
+	public NodePK getRight(){
+		return (this.pos<ConstType.MAX_NODE62)?new NodePK(getTreeId(),Generate.right(this.pos)):testGoRight();
 	}
 	public long getParent(){
 		return Generate.parent(this.pos);
@@ -82,13 +92,34 @@ public class NodePK implements java.io.Serializable {
 	public boolean isLeft(){
 		return this.pos%2==0;
 	}
+	
 	public String hashNode1() {
 		try {
-			return Generate.generateHashAlgorilthm(hashAlgorithm,getTreeId()+getPos());
+			return Generate.generateHashAlgorilthm(HASH_ALGORITHM,getTreeId()+getPos());
 		} catch (NoSuchAlgorithmException e) {
 			log.error(e.getMessage());
 		}
 		return null;
+	}
+	private long goLeft(){		
+		setPos(2);
+		setTree(this.hashNode1());		
+		return getPos();
+	}
+	private long goRight(){
+		setPos(3);
+		setTree(this.hashNode1());		
+		return getPos();
+	}
+	private long goNext(){
+		              	
+		return getPos();
+	}
+	private NodePK testGoLeft(){			
+		return new NodePK(this.hashNode1(), 2);
+	}
+	private NodePK testGoRight(){
+		return new NodePK(this.hashNode1(), 3);
 	}
 	private static Logger log = Logger.getLogger(NodePK.class);
 }

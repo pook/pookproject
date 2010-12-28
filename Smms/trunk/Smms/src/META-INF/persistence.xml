@@ -16,6 +16,7 @@
 		<class>biz.evolix.model.Brance</class>
 		<class>biz.evolix.model.BonusPeriod</class>
 		<class>biz.evolix.model.Authorities</class>
+		<class>biz.evolix.model.Page</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINEST" />
 			<property name="eclipselink.cache.type.default" value="Weak"/>			

@@ -38,11 +38,13 @@ public class AuthoritiesDAOImp extends JpaDaoSupport implements AuthoritiesDAO {
 		return (Collection<Authorities>) getJpaTemplate().findByNamedQuery("findAuthorities", id);
 	}
 	
-	@Override
+	/*
+	 * @Override
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRES_NEW)
 	public SmileUsersDetails findUser(String userId)throws NullPointerException,DataAccessException {		
 		return getJpaTemplate().find(SmileUsersDetails.class,userId);
 	}
+	*/
     @Override
     @Transactional(readOnly=false)
     public boolean chgpw(String uid, String newpw) {

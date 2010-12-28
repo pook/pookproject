@@ -29,9 +29,8 @@ function regis() {
 	chkLevel();
 	var name = $("#name"), surename = $("#surename"), displayName = $("#displayName"), codeIdentification = $("#codeIdentification"), tel = $("#tel"), tel2 = $("#tel2"), email = $("#email"), inviter = $("#inviter"), address = $("#address"), address2 = $("#address2"), bank = $("#bank"), bankAccount = $("#bankAccount"), brance = $("#brance"), branceCard = $("#branceCard"), bankBrance = $("#bankBrance"), typeOfAccount = $("#typeOfAccount");
 	var allFields = $([]).add(name).add(surename).add(displayName).add(
-			codeIdentification).add(tel).add(tel2).add(address).add(address2).add(email).add(
-			bankAccount).add(bankBrance).add(typeOfAccount).add(email).add(
-			brance).add(branceCard);
+			codeIdentification).add(tel).add(tel2).add(email).add(brance).add(branceCard).add(address).add(address2).add(
+			bankAccount).add(typeOfAccount).add(bankBrance);
 	allFields.removeClass("ui-state-error");
 	$("#displayName").live("focusout", checkDisplayName);
 	$("#fsubmit1").live("click",
@@ -42,7 +41,7 @@ function regis() {
 						valid = checkLength(name, " ชื่อ ", 3, 30);
 						valid = valid&& checkLength(surename, " นามสกุล ", 3, 30);
 						valid = valid&& checkLength(displayName," ชื่อแสดงในสายงาน ", 3, 30);
-						valid = valid&& checkLength(codeIdentification," รหัสบัตรประชาชน ", 12, 13)&& checkidentifier(codeIdentification);
+						valid = valid&& checkidentifier(codeIdentification)&&checkLength(codeIdentification," รหัสบัตรประชาชน ", 13, 13) ;
 						valid = valid&& checkLength(tel, " เบอร์โทรศัพท์ ", 9, 10);
 						valid = valid&& ckBrance(brance);
 						valid = valid&& ckBrance(branceCard);
@@ -51,24 +50,8 @@ function regis() {
 						valid = valid&& checkLength(bankAccount, " บัญชีธนาคาร ", 8,30);
 						valid = valid&& checkLength(bankBrance, " สาขาธนาคาร ", 3,30);
 						valid = valid&& checkLength(typeOfAccount, " ประเภทบัญชี ",	3, 30);
-						if (valid) {
-							var uri = "upline=" + $("#upline").val()
-									+ "&name="+ name.val()
-									+ "&surename="+ surename.val() 
-									+ "&displayName="+ displayName.val()
-									+ "&codeIdentification="+ codeIdentification.val() 
-									+ "&tel="+ tel.val()
-									+ "&tel2=" + tel2.val()									
-									+ "&brance=" + brance.val()
-									+ "&branceCard=" + branceCard.val()
-									+ "&address=" + address.val()
-									+ "&province=" + $("#province").val()
-									+ "&address2=" + address2.val()
-									+ "&email="	+ email.val()
-									+ "&bank=" + bank.val()
-									+ "&bankAccount=" + bankAccount.val()
-									+ "&bankBrance=" + bankBrance.val()
-									+ "&typeOfAccount=" + typeOfAccount.val();	
+						if (valid &&checkDisplayName()) {
+						
 							$("#main-regist").load("save.action", {"upline":""+$("#upline").val(),"name":""+name.val(),"surename":""+ surename.val() ,"displayName":""+displayName.val(),
 								"codeIdentification":""+ codeIdentification.val(),"tel":""+ tel.val(),"brance":"" + brance.val(),"tel2":"" + tel2.val()	,
 								"branceCard":"" + branceCard.val(),"address" :""+ address.val(),"province":"" + $("#province").val(),"address2":"" + address2.val(),

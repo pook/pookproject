@@ -52,11 +52,13 @@ public class RegisterServiceImp implements RegisterService {
 			log.error(e.getMessage());
 			throw new UsernameNotFoundException("Register Fail");
 		}
-		if(chose==-1) throw new UsernameNotFoundException("Register Fail");
+		boolean auto = (chose == ConstType.AUTO) ? true : false;
+		if (chose == -1)
+			throw new UsernameNotFoundException("Register Fail");
 		Users user = new Users(); // invint user
 		user.setNode1(node);
 		user.setPassword(ConstType.DEFAULT_PW);
-		if (!findPlace(treeId, pos, chose, node))
+		if (!findPlace(new NodePK(treeId, pos), chose, node, false, auto))
 			throw new UsernameNotFoundException("Register Fail");
 		Province p = smileUsersDetailDAO.province(pv);
 		smileuser.setProvince(p);
@@ -78,20 +80,21 @@ public class RegisterServiceImp implements RegisterService {
 		return smileuser;
 	}
 
-	private boolean findPlace(String treeId, Long pos, long choseId, Node1 node) {
-		boolean b = false;
+	private boolean findPlace(NodePK id, long choseId, Node1 node,
+			boolean test, boolean auto) {
+		String displayName =node.getDisplayName();
 		synchronized (LOCK) {
-			if (checkDisplayName(node.getDisplayName())) {
-				final NodePK idpk = nodeDeptDAO.nextId(choseId, treeId, pos);
-				final NodeDescription nodeDept = new NodeDescription(idpk);
-				nodeDeptDAO.insert(nodeDept);
+			if (checkDisplayName(displayName)&&displayName.length()>2) {
+				final NodeDescription dHead = nodeDeptDAO.find(id);
+				final NodeDescription nodeDept = nodeDeptDAO.nextId(dHead,
+						choseId, id, auto);
 				node.setTreeId(nodeDept.getTreeId());
 				node.setPos(nodeDept.getPos());
 				node1DAO.persist(node);
-				b = true;
+				test = true;
 			}
 		}
-		return b;
+		return test;
 	}
 
 	private boolean checkDisplayName(String displayName) {

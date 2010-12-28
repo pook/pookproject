@@ -1,13 +1,12 @@
 @CHARSET "UTF-8";
 input.text {
-	margin: 2px 30px 2px 39px;
-	width: 230px;
+	margin: 5px 9px 5px 9px;
+	width: 150px;
 	padding: 1px 5px 1px 5px;
 }
-
 .selectop {
-	margin: 2px 30px 2px 39px;
-	width: 160px;
+	margin: 5px 9px 5px 9px;
+	width: 150px;
 }
 
 .th2 {
@@ -15,17 +14,17 @@ input.text {
 }
 #input-form{
 	position: relative;
-	margin-left: 300px;
+	margin-left: 40px;
 	
 	}
 #user{
-	margin-top:50px
+	margin-top:10px
 	}
 #main-regist {
-	margin-top:50px;	
+	margin-top:10px;	
 }
 #main{
-	height: 820px	}
+	height: 370px	}
 .tf {
 	margin: 7px 30px 7px 35px;
 	padding-left: 90px;
@@ -38,17 +37,22 @@ label {
 }
 
 textarea.text {
-	margin: 2px 30px 2px 39px;
-	width: 180px;
+	margin: 5px 9px 5px 9px;
+	width: 150px;
 }
 
 select.text {
-	margin: 2px 30px 2px 39px;
-	width: 160px;
+	margin: 5px 9px 5px 9px;
+	width: 150px;
 }
 
 fieldset {
 	padding: 0;
 	border: 0;
 	margin-top: 25px;
+}
+.actionMessage{
+	font-size: 32;
+	font-style:oblique;	
+	color: red;
 }

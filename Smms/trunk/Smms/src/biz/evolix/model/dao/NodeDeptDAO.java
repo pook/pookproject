@@ -5,9 +5,9 @@ import biz.evolix.model.NodePK;
 
 
 public interface NodeDeptDAO {
-	public NodeDescription id(NodePK id);
-	public void updateNodeDept(long nxt,NodeDescription dept);
+	public NodeDescription find(NodePK id);
+	public void updateNodeDept(long nxt,NodeDescription dept,boolean test);
 	public boolean insert(NodeDescription nodeDept);
-	public NodePK nextId(Long useId, String nodeId, Long pos);
+	public NodeDescription nextId(NodeDescription dHead,long useId, NodePK id,boolean auto);
 	public void update(NodeDescription dept);
 }

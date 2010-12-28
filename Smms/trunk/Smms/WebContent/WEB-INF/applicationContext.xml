@@ -47,6 +47,10 @@
 	<bean id="authoritiesDAO" class="biz.evolix.model.dao.AuthoritiesDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
+	<bean id="pageDAO" class="biz.evolix.model.dao.PageDAOImp">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	
 	<bean id="registerService" class="biz.evolix.service.RegisterServiceImp" scope="singleton"/>	
 	<!-- end of Register Service -->
 	<!-- Start Organization Chart Service -->
@@ -57,6 +61,7 @@
 	<bean id="nodeDeptDAO" class="biz.evolix.model.dao.NodeDeptDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 		<property name="node1DAO" ref="node1DAO" />
+		<property name="pageDAO" ref="pageDAO" />
 	</bean>
 	
 	<!-- end of Organization Chart Service -->

@@ -97,31 +97,18 @@ public class Register extends ActionSupport {
 	private boolean check() {
 		boolean i = true;
 		try {
-			i = getAddress().trim().length() > 3;
-			log.info("address " + i);
-			i &= getBank().trim().length() > 3;
-			log.info("bank " + i);
+			i = getAddress().trim().length() > 3;			
+			i &= getBank().trim().length() > 3;			
 			i &= getBankAccount().trim().length() > 3;
-			log.info("bank " + i);
-			i &= getBrance().trim().length() > 3;
-			log.info("bank " + i);
-			i &= getBranceCard().trim().length() > 3;
-			log.info("BranceCard " + i);
-			i &= checkIdent(getCodeIdentification());
-			log.info("CodeIdentification " + i);
-			i &= getDisplayName().trim().length() > 2;
-			log.info("DisplayName " + i);
-			// i &= getInviter().trim().length() > 10
-			i &= getName().trim().length() > 2;
-			log.info("Name " + i);
-			i &= getProvince().trim().length() > 1;
-			log.info("Province " + i);
-			i &= getSurename().trim().length() > 2;
-			log.info("Surename " + i);
-			i &= (getTel().trim().length() > 8);
-			log.info("tel " + i);
-			i &= checkDisplayName();
-			log.info("DisplayName " + i);
+			i &= getBrance().trim().length() > 3;			
+			i &= getBranceCard().trim().length() > 3;			
+			i &= checkIdent(getCodeIdentification());			
+			i &= getDisplayName().trim().length() > 2;			
+			i &= getName().trim().length() > 2;			
+			i &= getProvince().trim().length() > 1;			
+			i &= getSurename().trim().length() > 2;			
+			i &= (getTel().trim().length() > 8);			
+			i &= checkDisplayName();			
 			getEmail().length();
 			getTel2().length();
 			getAddress2().length();

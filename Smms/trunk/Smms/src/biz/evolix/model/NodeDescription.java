@@ -21,29 +21,33 @@ public class NodeDescription implements java.io.Serializable {
 	@Id
 	@Column(name = "POS", nullable = false)
 	private Long pos;
-	@Column(name = "NEXT_ID", length = 50)
+	@Column(name = "NEXT_ID")
 	private Long nextId;
-	@Column(name = "UPPER", length = 50)
+	@Column(name = "UPPER")
 	private Long upper;
-	@Column(name = "LOWER", length = 50)
+	@Column(name = "LOWER")
 	private Long lower;
 	@Column(name = "LEVEL")
 	private Integer level = 0;
 	@Column(name="HASH_CODE",columnDefinition="CHAR(32)",length=32)
-	private String hashCode;
+	private String hashCode; 
+	@Column(name ="COUNT")
+	private Long count = 0L;
 	@Version
 	@Column(name = "VERSION")
 	private Integer version = 0;
 
-	public NodeDescription() {
+	public NodeDescription(long pos,String nodeId){
 		super();
 	}
-
+	public NodeDescription(){
+		super();
+	}
 	public NodeDescription(NodePK pk) {		
 		this(pk.getTreeId(),pk.getPos());
 	}
 
-	public NodeDescription(String nodeId, Long pos) {
+	public NodeDescription(String nodeId, long pos) {
 		super();
 		this.treeId = nodeId;
 		this.pos = pos;
@@ -51,6 +55,8 @@ public class NodeDescription implements java.io.Serializable {
 		setLower(Generate.left(this.pos));
 		setUpper(Generate.right(this.pos));
 		setNextId(getLower());
+		setCount(0L);
+		setHashCode(new NodePK(getTreeId(), getPos()).hashNode1());
 	}
 
 	public void setVersion(Integer version) {
@@ -115,5 +121,11 @@ public class NodeDescription implements java.io.Serializable {
 
 	public String getHashCode() {
 		return hashCode;
+	}
+	public void setCount(Long count) {
+		this.count = count;
+	}
+	public Long getCount() {
+		return count;
 	}
 }

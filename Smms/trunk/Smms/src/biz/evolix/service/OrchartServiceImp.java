@@ -47,9 +47,9 @@ public class OrchartServiceImp implements OrchartService {
 		for (int i = 0; i < ConstType.MAX_NODE_SHOW; i++) {
 			Node1 n1 = null, n2 = null;			
 			id.setPos(teams.get(i).getPos());
-			n1 = node1DAO.find(new NodePK(ConstType.HASHCODE_NODE0, id.getLeft()));
+			n1 = node1DAO.find( id.getLeft());
 			addList(teams, n1);
-			n2 = node1DAO.find(new NodePK(ConstType.HASHCODE_NODE0, id.getRight()));
+			n2 = node1DAO.find(id.getRight());
 			addList(teams, n2);
 		}
 		xCommission(teams);

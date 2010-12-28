@@ -49,21 +49,18 @@ div#div4 div {
 						navigatorEdit="true" navigatorView="false" navigatorDelete="true"
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
 						gridModel="gridModel" rowList="10,15,20" rowNum="15" width="924"
-						editurl="%{editorderurl}" editinline="true"
+						editurl="%{editorderurl}" 
 						onSelectRowTopics="rowselect">						
 						<sjg:gridColumn name="orderId" index="orderId"
 							title="sale order ID" formatter="integer" sortable="true" />
-						<sjg:gridColumn name="user.userId" title="รหัสสมาชิก"
-							editable="true" editrules="{required:true}" />
-						<sjg:gridColumn name="user.name" title="ชื่อสมาชิก" />
-						<sjg:gridColumn name="totalQuantity" title="จำนวน"
-							formatter="integer" search="false" />
+						<sjg:gridColumn name="user.smile.smileId" title="รหัสสมาชิก"
+							 editrules="{required:true}" editable="true"/>
+						<sjg:gridColumn name="user.smile.name" title="ชื่อสมาชิก"  />						
 						<sjg:gridColumn name="date" title="วันที่" formatter="date" formatoptions="{newformat : 'd/m/Y', srcformat : 'Y-m-d-H:i:s'}" align="center" search="false"/>
 						<sjg:gridColumn name="totalPrice" title="ราคารวม"
 							formatter="currency" search="false"/>
 						<sjg:gridColumn name="totalSv" index="totalPV" search="false"
-							title="Total Smile Value" formatter="integer" width="235" />
-							
+							title="Total Smile Value" formatter="integer" width="235" />							
 							<sjg:grid id="subgridtable" subGridUrl="%{remote2url}"
 							gridModel="gridModel" rowNum="-1" navigator="true"
 							rownumbers="true" width="650" editurl="%{editpurcheseurl}"
