@@ -33,6 +33,17 @@ public class SmileUsersDetailDAOImp extends JpaDaoSupport implements
 	public Province province(String id) {
 		return getJpaTemplate().find(Province.class, id);
 	}
-	
+
+	@Override
+	@Transactional(readOnly = true)
+	public SmileUsersDetails find(String smileId) {
+		SmileUsersDetails sm = null;
+		try {
+			sm = getJpaTemplate().find(SmileUsersDetails.class, smileId);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		return sm;
+	}
 
 }

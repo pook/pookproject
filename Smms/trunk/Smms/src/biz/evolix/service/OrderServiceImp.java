@@ -45,7 +45,7 @@ public class OrderServiceImp implements OrderService {
 	private SmileUser getUsers() {
 		try {
 			return (SmileUser) SecurityContextHolder.getContext()
-					.getAuthentication().getPrincipal();
+					 .getAuthentication().getPrincipal();
 		} catch (Exception e) {
 			SecurityContextHolder.clearContext();
 			log.error(e.getMessage(), e);

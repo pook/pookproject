@@ -37,11 +37,14 @@ public class RegisterServiceImp implements RegisterService {
 	private Node1DAO node1DAO;
 	@Autowired
 	private UsersDAO userDAO;
+	@Autowired
+	private FindPlaceService findPlaceService;
 
 	@Override
 	public SmileUsersDetails save(SmileUsersDetails smileuser, String choseId,
-			String pv, Node1 node) {
+			String pv, Node1 node,Users user) {
 		SmileUser suser = getUsers();
+		log.info("$$$$$$$$$$$$"+choseId);
 		String treeId = (suser == null) ? ConstType.HASHCODE_NODE0 : getUsers()
 				.getTreeId();
 		Long pos = (suser == null) ? 0L : getUsers().getPos();
@@ -55,9 +58,7 @@ public class RegisterServiceImp implements RegisterService {
 		boolean auto = (chose == ConstType.AUTO) ? true : false;
 		if (chose == -1)
 			throw new UsernameNotFoundException("Register Fail");
-		Users user = new Users(); // invint user
 		user.setNode1(node);
-		user.setPassword(ConstType.DEFAULT_PW);
 		if (!findPlace(new NodePK(treeId, pos), chose, node, false, auto))
 			throw new UsernameNotFoundException("Register Fail");
 		Province p = smileUsersDetailDAO.province(pv);
@@ -82,15 +83,20 @@ public class RegisterServiceImp implements RegisterService {
 
 	private boolean findPlace(NodePK id, long choseId, Node1 node,
 			boolean test, boolean auto) {
-		String displayName =node.getDisplayName();
+		String displayName = node.getDisplayName();
+		NodeDescription dHead = nodeDeptDAO.find(id);
+		NodePK id2 = null;		
 		synchronized (LOCK) {
-			if (checkDisplayName(displayName)&&displayName.length()>2) {
-				final NodeDescription dHead = nodeDeptDAO.find(id);
-				final NodeDescription nodeDept = nodeDeptDAO.nextId(dHead,
-						choseId, id, auto);
-				node.setTreeId(nodeDept.getTreeId());
-				node.setPos(nodeDept.getPos());
+			if (checkDisplayName(displayName) && displayName.length() > 2) {
+				id2 = findPlaceService.manual(choseId,id.getTreeId());	
+				auto = auto && (id2==null)?true:false;
+				if (auto)id2 =findPlaceService.auto(dHead, auto);				
+				nodeDeptDAO.insert(new NodeDescription(dHead.getBaseLevel()+dHead.getLevel(),
+						id2));
+				node.setTreeId(id2.getTreeId());
+				node.setPos(id2.getPos());
 				node1DAO.persist(node);
+				nodeDeptDAO.flush();
 				test = true;
 			}
 		}
@@ -149,5 +155,13 @@ public class RegisterServiceImp implements RegisterService {
 
 	public UsersDAO getUserDAO() {
 		return userDAO;
+	}
+
+	public void setFindPlaceService(FindPlaceService findPlaceService) {
+		this.findPlaceService = findPlaceService;
+	}
+
+	public FindPlaceService getFindPlaceService() {
+		return findPlaceService;
 	}
 }

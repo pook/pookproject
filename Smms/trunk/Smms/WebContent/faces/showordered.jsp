@@ -53,7 +53,7 @@ div#gridinfo div {
 							title="sale order ID" formatter="integer" sortable="true" />
 						<sjg:gridColumn name="user.userId" title="รหัสสมาชิก"
 							editable="true" editrules="{required:true}"  />
-						<sjg:gridColumn name="user.name" title="ชื่อสมาชิก" />
+						<sjg:gridColumn name="user.smile.name" title="ชื่อสมาชิก" />
 						<sjg:gridColumn name="totalQuantity" title="จำนวน"
 							formatter="integer" search="false"/>
 						<sjg:gridColumn name="totalPrice" title="ราคารวม" sortable="false"

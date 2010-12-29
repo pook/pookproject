@@ -40,6 +40,22 @@ public class Users implements java.io.Serializable {
 	@Column(name = "NUM_ACCOUNT")
 	private Integer numberOfAccount = 0;
 
+	@Column(name = "ENABLED")
+	private Byte enaebled = (byte) 1;
+	@Column(name = "BRANCE", length = 50)
+	private String brance;
+	@Column(name = "BRANCE_CARD", length = 50)
+	private String branceCard;	
+	@Column(name = "REV_CARD")
+	private Boolean recivecard = false;
+	@Column(name = "BONUS_TEAM")
+	private Integer bonusTeam = 0;
+	@Column(name = "BONUS_INV")
+	private Integer bonusInv = 0;
+	@Column(name = "BONUS_LAST")
+	private Integer bonusLast = 0;
+	@Column(name = "READED")
+	private Boolean readed = false;
 	@Column(name = "PASSWORD", length = 50)
 	private String password;
 	@OneToOne
@@ -98,5 +114,70 @@ public class Users implements java.io.Serializable {
 	public SmileUsersDetails getSmile() {
 		return smile;
 	}
+
+	public Byte getEnaebled() {
+		return enaebled;
+	}
+
+	public void setEnaebled(Byte enaebled) {
+		this.enaebled = enaebled;
+	}
+
+	public String getBrance() {
+		return brance;
+	}
+
+	public void setBrance(String brance) {
+		this.brance = brance;
+	}
+
+	public String getBranceCard() {
+		return branceCard;
+	}
+
+	public void setBranceCard(String branceCard) {
+		this.branceCard = branceCard;
+	}
+
+	public Boolean getRecivecard() {
+		return recivecard;
+	}
+
+	public void setRecivecard(Boolean recivecard) {
+		this.recivecard = recivecard;
+	}
+
+	public Integer getBonusTeam() {
+		return bonusTeam;
+	}
+
+	public void setBonusTeam(Integer bonusTeam) {
+		this.bonusTeam = bonusTeam;
+	}
+
+	public Integer getBonusInv() {
+		return bonusInv;
+	}
+
+	public void setBonusInv(Integer bonusInv) {
+		this.bonusInv = bonusInv;
+	}
+
+	public Integer getBonusLast() {
+		return bonusLast;
+	}
+
+	public void setBonusLast(Integer bonusLast) {
+		this.bonusLast = bonusLast;
+	}
+
+	public Boolean getReaded() {
+		return readed;
+	}
+
+	public void setReaded(Boolean readed) {
+		this.readed = readed;
+	}
+	
 
 }

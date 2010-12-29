@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import biz.evolix.model.Order;
 import biz.evolix.model.SmileUsersDetails;
+import biz.evolix.model.Users;
 import biz.evolix.model.dao.callback.GenericSize;
 import biz.evolix.model.dao.callback.GenericSizeByCause;
 import biz.evolix.model.dao.callback.MaxResaultByOwner;
@@ -63,13 +64,13 @@ public class OrderDAOImp extends JpaDaoSupport implements OrderDAO {
 	@Transactional(readOnly = true)
 	public long sizeOrderOwner() {
 		try {
-			SmileUsersDetails u = getJpaTemplate()
-					.find(SmileUsersDetails.class, getUsers().getSmileid());
+			Users u = getJpaTemplate()
+					.find(Users.class, getUsers().getUserid());
 			if (u == null)
 				return -1L;
 			return getJpaTemplate()
 					.execute(
-							new GenericSizeByCause<Long, SmileUsersDetails>(
+							new GenericSizeByCause<Long, Users>(
 									"getSizeOrderOwner", u));// object
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

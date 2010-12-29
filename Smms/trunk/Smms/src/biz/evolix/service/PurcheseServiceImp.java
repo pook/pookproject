@@ -15,6 +15,7 @@ import biz.evolix.model.Sku;
 import biz.evolix.model.Users;
 import biz.evolix.model.dao.OrderDAO;
 import biz.evolix.model.dao.SkuDAO;
+import biz.evolix.model.dao.SmileUsersDetailDAO;
 import biz.evolix.model.dao.UsersDAO;
 import biz.evolix.secure.SmileUser;
 
@@ -30,7 +31,8 @@ public class PurcheseServiceImp implements PurcheseService {
 	private UpdateComService updateComService;
 	@Autowired
 	private SkuDAO skuDAO;
-
+	@Autowired
+	private SmileUsersDetailDAO smileUsersDetailDAO;
 	private List<Order> ordering = new ArrayList<Order>();;
 
 	public void setOrderDAO(OrderDAO orderDAO) {
@@ -142,5 +144,13 @@ public class PurcheseServiceImp implements PurcheseService {
 	public void edit(int idx, Sku sku, Integer quantity) {
 		getOrdering().get(ConstType.ZERO).getPurchese().remove(idx);
 		buyItem(sku, quantity);
+	}
+
+	public void setSmileUsersDetailDAO(SmileUsersDetailDAO smileUsersDetailDAO) {
+		this.smileUsersDetailDAO = smileUsersDetailDAO;
+	}
+
+	public SmileUsersDetailDAO getSmileUsersDetailDAO() {
+		return smileUsersDetailDAO;
 	}
 }

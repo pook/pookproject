@@ -68,6 +68,7 @@
 	<!-- Start market service -->
 	<bean id="inventoryService" class="biz.evolix.service.InventoryServiceImp" />
 	<bean id="updateComService" class="biz.evolix.service.UpdateComServiceImp" />
+	<bean id="findPlaceService" class="biz.evolix.service.FindPlaceServiceImp" />
 	<bean id="orderService" class="biz.evolix.service.OrderServiceImp" scope="session"/>
 	<bean id="purcheseService" class="biz.evolix.service.PurcheseServiceImp"
 		scope="session" />	

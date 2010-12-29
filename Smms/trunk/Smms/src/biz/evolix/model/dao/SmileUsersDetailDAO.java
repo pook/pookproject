@@ -5,5 +5,6 @@ import biz.evolix.model.SmileUsersDetails;
 
 public interface SmileUsersDetailDAO {
 	public void register(SmileUsersDetails smileuser);
-	public Province province(String id);	
+	public Province province(String id);
+	public SmileUsersDetails find(String smileId);
 }

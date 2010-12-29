@@ -1,13 +1,14 @@
 package biz.evolix.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import biz.evolix.model.Node1;
+import biz.evolix.gen.Generate;
 import biz.evolix.model.NodeDescription;
 import biz.evolix.model.NodePK;
 import biz.evolix.model.dao.Node1DAO;
@@ -17,11 +18,11 @@ import biz.evolix.secure.SmileUser;
 public class FetchUplineServiceImp implements FetchUplineService {
 
 	private static final int MAX = 128;
-	@Autowired
-	private Node1DAO node1DAO;
 
 	@Autowired
 	private NodeDeptDAO nodeDeptDAO;
+	@Autowired
+	private Node1DAO node1DAO;
 
 	@Override
 	public Map<String, String> uplines() {
@@ -32,62 +33,54 @@ public class FetchUplineServiceImp implements FetchUplineService {
 		NodePK id = new NodePK(head.getTreeId(), head.getPos());
 		dept = nodeDeptDAO.find(id);
 		Map<String, String> map = new HashMap<String, String>();
-		uplines2(dept, map, id);
+		while (map.isEmpty()) {
+			uplines2(dept, map, id);
+			if (map.isEmpty())
+				updateNodeDept(dept.getUpper() + 1, dept, true);
+		}
 		return map;
 	}
 
 	private void uplines2(NodeDescription dept, Map<String, String> map,
 			NodePK id) {
-		if (dept != null) {
-			id = new NodePK(id.getTreeId(), dept.getNextId());
-			int count = 0;
-			boolean left = false;
-			while (count < MAX) {
-				Node1 node = node1DAO.find2(id);
-				count++;
-				if (node == null) {
-					left = id.isLeft();					
-					Node1 nodeParent = node1DAO.find2(new NodePK(
-							id.getTreeId(), id.getParent()));					
-					long upper = dept.getUpper();
-					if (id.getPos() < upper) {						
-						add(map, nodeParent, id, left);
-						id = new NodePK(id.getTreeId(), id.testNext());
-						continue;
-					} else if (id.getPos() == upper) {						
-						add(map, nodeParent, id, left);
-						if (map.isEmpty()) {
-							nodeDeptDAO.updateNodeDept(dept.getUpper() + 1,
-									dept, true);
-						} else {
-							break;
-						}
-					} else {
-						add(map, nodeParent, id, left);
-					}
-				}
-				id = new NodePK(id.getTreeId(), id.testNext());
+
+		final long upper = dept.getUpper();
+		int level = dept.getLevel();
+		long lower = dept.getNextId();
+		List<Long> nonspace = node1DAO.findNonSpace(lower, upper);
+		boolean isLeft = true;		
+		while (lower <= upper) {
+			if (!nonspace.contains(lower)) {
+				isLeft = Generate.isLeft(lower);
+				String upline = node1DAO
+						.findDisplayName(Generate.parent(lower));
+				add(map, lower, upline, isLeft);
+			}
+			lower++;
+		}
+	}
+
+	public void updateNodeDept(long nxt, NodeDescription dept, boolean test) {
+		if (test) {
+			while (nxt > dept.getUpper()) {
+				dept.setLevel(dept.getLevel() + 1);
+				dept.setLower(Generate.left(dept.getLower()));
+				dept.setUpper(Generate.right(dept.getUpper()));
+				dept.setNextId(dept.getLower());
+				dept.setCount(0L);
 			}
 		}
 	}
 
-	private void add(Map<String, String> map, Node1 n1, NodePK id, boolean left) {
-		if (left) {
-			map.put(id.getPos().toString(), n1.getDisplayName() + " ช้าย");
-		} else {
-			map.put(id.getPos().toString(), n1.getDisplayName() + " ขวา");
-		}
+	private static void add(Map<String, String> map, Long pos, String upline,
+			boolean left) {
+		StringBuilder upl = new StringBuilder().append(upline);
+		String strl = (left) ? " ช้าย" : " ขวา";
+		upl.append(strl);
+		map.put(pos.toString(), upl.toString());
 	}
 
 	private static Logger log = Logger.getLogger(FetchUplineServiceImp.class);
-
-	public Node1DAO getNode1DAO() {
-		return node1DAO;
-	}
-
-	public void setNode1DAO(Node1DAO node1dao) {
-		node1DAO = node1dao;
-	}
 
 	private SmileUser getUsers() {
 		try {
@@ -106,4 +99,13 @@ public class FetchUplineServiceImp implements FetchUplineService {
 	public NodeDeptDAO getNodeDeptDAO() {
 		return nodeDeptDAO;
 	}
+
+	public void setNode1DAO(Node1DAO node1DAO) {
+		this.node1DAO = node1DAO;
+	}
+
+	public Node1DAO getNode1DAO() {
+		return node1DAO;
+	}
+
 }

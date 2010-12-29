@@ -17,13 +17,13 @@ import org.eclipse.persistence.annotations.CacheType;
 
 @Entity
 @Cache(type = CacheType.WEAK, size = 128, expiry = 600000, alwaysRefresh = true, disableHits = true, coordinationType = CacheCoordinationType.INVALIDATE_CHANGED_OBJECTS)
-@NamedQueries({
+@NamedQueries({		
 		@NamedQuery(name = "findDisplayName", query = "select N from Node1 N where N.displayName=?1"),
+		@NamedQuery(name = "findDisplayNameByPos", query = "select N.displayName from Node1 N where N.pos=?1"),
 		@NamedQuery(name = "findNode1FromUserId", query = "select N from Node1 N where N.user=?1"),
 		@NamedQuery(name = "findFromSmileId", query = "select N from Node1 N where N.smileId=?1"),
 		@NamedQuery(name = "findByHashcode", query = "select N from Node1 N,NodeDescription D where N.treeId = D.treeId and "
-				+ "N.pos = D.pos and D.hashCode =?1")
-		 })
+				+ "N.pos = D.pos and D.hashCode =?1") })
 @IdClass(NodePK.class)
 @Table(name = "NODE1")
 public class Node1 implements java.io.Serializable {
@@ -125,7 +125,7 @@ public class Node1 implements java.io.Serializable {
 	}
 
 	public Integer getCommissions() {
-		return  this.commissions + (int) Generate.xCommission(getSv());
+		return this.commissions + (int) Generate.xCommission(getSv());
 	}
 
 	public void setCommissions(Integer commissions) {

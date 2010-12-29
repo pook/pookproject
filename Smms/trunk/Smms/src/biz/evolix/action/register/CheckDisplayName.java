@@ -1,8 +1,5 @@
 package biz.evolix.action.register;
 
-import java.util.Random;
-
-
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -21,6 +18,7 @@ public class CheckDisplayName extends ActionSupport {
 	private static final long serialVersionUID = 818911213537613837L;	
 
 	@Action(value = "/check-displayname", results = {
+			@Result(name = "success", location = "echo/checkeddisplayname.jsp"),
 			@Result(name = "error", location = "echo/checkeddisplaynameErr.jsp") })
 	public String execute() {		
 		if(getDisplayName().length() < 3){

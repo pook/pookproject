@@ -82,7 +82,7 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 			this.setTreeId(u.getNode1().getTreeId());
 			setInviter(u.getNode1().getInviter());
 			setDisplayName(u.getNode1().getDisplayName());
-			setBrance(u.getSmile().getBrance());
+			setBrance(u.getBrance());
 			return null;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -96,7 +96,7 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return getSmileid();
+		return getSmileid().toUpperCase();
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 	}
 
 	public String getSmileid() {
-		return smileid;
+		return smileid.toUpperCase();
 	}
 
 	public String getName() {

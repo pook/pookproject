@@ -8,9 +8,9 @@ function checkDisplayName() {
 			showmsgInf(res);
 			if ($("#testResult").html() == 'false') {
 				$("#displayName").addClass("ui-state-error");
-				$("#displayName").focus();
+				$("#displayName").focus();				
 				return false;
-			};
+			}
 		}
 	});
 	return true;
@@ -25,6 +25,9 @@ function chkLevel(){
 		}		
 	});
 }
+function clrErrInf2(){	
+	clrErrInf();
+}
 function regis() {
 	chkLevel();
 	var name = $("#name"), surename = $("#surename"), displayName = $("#displayName"), codeIdentification = $("#codeIdentification"), tel = $("#tel"), tel2 = $("#tel2"), email = $("#email"), inviter = $("#inviter"), address = $("#address"), address2 = $("#address2"), bank = $("#bank"), bankAccount = $("#bankAccount"), brance = $("#brance"), branceCard = $("#branceCard"), bankBrance = $("#bankBrance"), typeOfAccount = $("#typeOfAccount");
@@ -33,6 +36,8 @@ function regis() {
 			bankAccount).add(typeOfAccount).add(bankBrance);
 	allFields.removeClass("ui-state-error");
 	$("#displayName").live("focusout", checkDisplayName);
+	$("#codeIdentification").live("focusout",clrErrInf2);
+	$("#tel").live("focusout",clrErrInf2);$("#tel2").live("focusout",clrErrInf2);$("#name").live("focusout",clrErrInf2);$("#address").live("focusout",clrErrInf2);$("#bank").live("focusout",clrErrInf2);
 	$("#fsubmit1").live("click",
 					function() {
 						clrErrInf();
@@ -50,22 +55,11 @@ function regis() {
 						valid = valid&& checkLength(bankAccount, " บัญชีธนาคาร ", 8,30);
 						valid = valid&& checkLength(bankBrance, " สาขาธนาคาร ", 3,30);
 						valid = valid&& checkLength(typeOfAccount, " ประเภทบัญชี ",	3, 30);
-						if (valid &&checkDisplayName()) {
-						
+						if (valid) {						
 							$("#main-regist").load("save.action", {"upline":""+$("#upline").val(),"name":""+name.val(),"surename":""+ surename.val() ,"displayName":""+displayName.val(),
 								"codeIdentification":""+ codeIdentification.val(),"tel":""+ tel.val(),"brance":"" + brance.val(),"tel2":"" + tel2.val()	,
 								"branceCard":"" + branceCard.val(),"address" :""+ address.val(),"province":"" + $("#province").val(),"address2":"" + address2.val(),
-								"email":""+ email.val(),"bank":"" + bank.val(),"bankAccount":"" + bankAccount.val(), "bankBrance" :""+ bankBrance.val(), "typeOfAccount" :""+ typeOfAccount.val()});
-							
-							/*$.ajax({
-								type : "post",								
-								url : "save.action",
-								data : uri,
-								success : function(res) {									
-								
-								}
-							});*/
-														
+								"email":""+ email.val(),"bank":"" + bank.val(),"bankAccount":"" + bankAccount.val(), "bankBrance" :""+ bankBrance.val(), "typeOfAccount" :""+ typeOfAccount.val()});							
 						}
 					});
 }

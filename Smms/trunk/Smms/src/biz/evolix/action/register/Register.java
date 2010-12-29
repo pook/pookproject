@@ -8,8 +8,10 @@ import org.apache.struts2.convention.annotation.Result;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import biz.evolix.customconst.ConstType;
 import biz.evolix.model.Node1;
 import biz.evolix.model.SmileUsersDetails;
+import biz.evolix.model.Users;
 import biz.evolix.model.dao.CheckDNameDAO;
 import biz.evolix.secure.SmileUser;
 import biz.evolix.service.RegisterService;
@@ -52,17 +54,19 @@ public class Register extends ActionSupport {
 
 	private String save() throws Exception {
 		boolean ck = check();
-		if (!ck) {
-			log.info("brance :" + getBank());
+		if (!ck) {			
 			setEcho("true");
 			addActionError("Bad Request !!");
+			addActionError("ข้อมูลที่กรอกไม่ถูกต้อง !!");
 			log.error("Bad request");
 			return ERROR;
 		} else {
 			try {
 				SmileUsersDetails user = new SmileUsersDetails();
-				user.setBrance(getBrance());
-				user.setBranceCard(getBranceCard());
+				Users u = new Users(); // invint user				
+				u.setPassword(ConstType.DEFAULT_PW);
+				u.setBrance(getBrance());
+				u.setBranceCard(getBranceCard());
 				user.setAddress(getAddress());
 				user.setAddress2(getAddress2());
 				user.setBank(getBank());
@@ -77,17 +81,17 @@ public class Register extends ActionSupport {
 				user.setTypeOfAccount(getTypeOfAccount());
 				Node1 n = new Node1();
 				n.setInviter(getInviter());
-				n.setDisplayName(getDisplayName());
+				n.setDisplayName(getDisplayName());			
 				user = registerService
-						.save(user, getUpline(), getProvince(), n);								
+						.save(user, getUpline(), getProvince(), n,u);								
 				setEcho("true");
 				addActionMessage("Success !!");
 				addActionMessage("Your user ID :" +  user.getSmileId());
 			}catch(UsernameNotFoundException ue){
-				addActionError("Register Fail !!");
+				addActionError("Register Fail !!"+ue);
 				return ERROR;
 			}catch (Exception e) {
-				addActionError("Register Fail !!");
+				addActionError("Register Fail !!"+e);
 				return ERROR;
 			}
 		}

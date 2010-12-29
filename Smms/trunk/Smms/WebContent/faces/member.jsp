@@ -22,15 +22,15 @@
 		$("#f10").empty().append(dat.smile.address);
 		$("#f11").empty().append(dat.smile.province.pname);
 		$("#f12").empty().append(dat.smile.address2);
-		$("#f13").empty().append(dat.smile.branceCard);
+		$("#f13").empty().append(dat.branceCard);
 		$("#f14").empty().append(dat.smile.bank);
 		$("#f15").empty().append(dat.smile.bankAccount);
 		$("#f16").empty().append(dat.smile.bbrance);
 		$("#f17").empty().append(dat.smile.typeOfAccount);
-		$("#f18").empty().append(dat.smile.bonusTeam);
-		$("#f19").empty().append(dat.smile.bonusInv);
-		$("#f20").empty().append(dat.smile.bonusTeam+dat.bonusInv);
-		$("#f21").empty().append(dat.smile.bonusLast);
+		$("#f18").empty().append(dat.bonusTeam);
+		$("#f19").empty().append(dat.bonusInv);
+		$("#f20").empty().append(dat.bonusTeam+dat.bonusInv);
+		$("#f21").empty().append(dat.bonusLast);
 	}
 </script>
 

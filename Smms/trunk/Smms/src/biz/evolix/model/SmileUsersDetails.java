@@ -42,22 +42,7 @@ public class SmileUsersDetails implements java.io.Serializable {
 	private String bbrance;
 	@Column(name = "TYPE_ACCOUNT", length = 50)
 	private String typeOfAccount;
-	@Column(name = "ENABLED")
-	private Byte enaebled = (byte) 1;
-	@Column(name = "BRANCE", length = 50)
-	private String brance;
-	@Column(name = "BRANCE_CARD", length = 50)
-	private String branceCard;	
-	@Column(name = "REV_CARD")
-	private Boolean recivecard = false;
-	@Column(name = "BONUS_TEAM")
-	private Integer bonusTeam = 0;
-	@Column(name = "BONUS_INV")
-	private Integer bonusInv = 0;
-	@Column(name = "BONUS_LAST")
-	private Integer bonusLast = 0;
-	@Column(name = "READED")
-	private Boolean readed = false;
+	
 
 	
 	public SmileUsersDetails() {
@@ -168,73 +153,7 @@ public class SmileUsersDetails implements java.io.Serializable {
 	public void setTypeOfAccount(String typeOfAccount) {
 		this.typeOfAccount = typeOfAccount;
 	}
-
-
-	public void setEnaebled(Byte enaebled) {
-		this.enaebled = enaebled;
-	}
-
-	public Byte getEnaebled() {
-		return enaebled;
-	}
-
-
-	public void setRecivecard(Boolean recivecard) {
-		this.recivecard = recivecard;
-	}
-
-	public Boolean getRecivecard() {
-		return recivecard;
-	}
-
-	public void setBranceCard(String branceCard) {
-		this.branceCard = branceCard;
-	}
-
-	public String getBranceCard() {
-		return branceCard;
-	}
-
-	public void setBrance(String brance) {
-		this.brance = brance;
-	}
-
-	public String getBrance() {
-		return brance;
-	}
-
-	public void setBonusTeam(Integer bonusTeam) {
-		this.bonusTeam = bonusTeam;
-	}
-
-	public Integer getBonusTeam() {
-		return bonusTeam;
-	}
-
-	public void setBonusInv(Integer bonusInv) {
-		this.bonusInv = bonusInv;
-	}
-
-	public Integer getBonusInv() {
-		return bonusInv;
-	}
-
-	public void setBonusLast(Integer bonusLast) {
-		this.bonusLast = bonusLast;
-	}
-
-	public Integer getBonusLast() {
-		return bonusLast;
-	}
-
-	public void setReaded(Boolean readed) {
-		this.readed = readed;
-	}
-
-	public Boolean getReaded() {
-		return readed;
-	}
-
+	
 	public void setSmileId(String smileId) {
 		this.smileId = smileId;
 	}

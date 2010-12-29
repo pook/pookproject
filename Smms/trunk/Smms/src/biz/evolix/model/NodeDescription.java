@@ -2,6 +2,8 @@ package biz.evolix.model;
 
 import javax.persistence.Entity;
 import javax.persistence.IdClass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.Column;
@@ -11,6 +13,9 @@ import biz.evolix.gen.Generate;
 
 @Entity
 @IdClass(NodePK.class)
+@NamedQueries({
+		@NamedQuery(name = "findNonSpace", query = "select D.pos from NodeDescription D where  D.pos>=?1 and D.pos<=?2 " )
+	})
 @Table(name = "NODE_DEPT")
 public class NodeDescription implements java.io.Serializable {
 
@@ -36,15 +41,16 @@ public class NodeDescription implements java.io.Serializable {
 	@Version
 	@Column(name = "VERSION")
 	private Integer version = 0;
-
+	@Column(name = "BASE_LEVEL")
+	private Integer baseLevel= -1;
 	public NodeDescription(long pos,String nodeId){
 		super();
 	}
 	public NodeDescription(){
 		super();
 	}
-	public NodeDescription(NodePK pk) {		
-		this(pk.getTreeId(),pk.getPos());
+	public NodeDescription(NodePK id) {		
+		this(id.getTreeId(),id.getPos());
 	}
 
 	public NodeDescription(String nodeId, long pos) {
@@ -55,8 +61,12 @@ public class NodeDescription implements java.io.Serializable {
 		setLower(Generate.left(this.pos));
 		setUpper(Generate.right(this.pos));
 		setNextId(getLower());
-		setCount(0L);
+		setCount(0L);		
 		setHashCode(new NodePK(getTreeId(), getPos()).hashNode1());
+	}
+	public NodeDescription(int baselevel,NodePK id){
+		this(id);
+		setBaseLevel(baselevel+getLevel());
 	}
 
 	public void setVersion(Integer version) {
@@ -127,5 +137,11 @@ public class NodeDescription implements java.io.Serializable {
 	}
 	public Long getCount() {
 		return count;
+	}
+	public void setBaseLevel(Integer baseLevel) {
+		this.baseLevel = baseLevel;
+	}
+	public Integer getBaseLevel() {
+		return baseLevel;
 	}
 }

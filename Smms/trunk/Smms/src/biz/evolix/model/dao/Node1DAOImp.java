@@ -1,5 +1,7 @@
 package biz.evolix.model.dao;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import org.springframework.orm.jpa.support.JpaDaoSupport;
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import biz.evolix.model.Node1;
 import biz.evolix.model.NodePK;
 import biz.evolix.model.dao.callback.FindByCondition1;
+import biz.evolix.model.dao.callback.FindListByCondition2;
 
 @Repository
 @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED)
@@ -18,12 +21,13 @@ public class Node1DAOImp extends JpaDaoSupport implements Node1DAO {
 	private static Logger log = Logger.getLogger(Node1DAOImp.class);
 
 	@Override
-	@Transactional
+	@Transactional(readOnly=true)
 	public Node1 find(NodePK id) {
 		Node1 n = null;
 		try {
 			n = getJpaTemplate().find(Node1.class, id);
 		} catch (Exception e) {
+			log.info(e.getMessage(), e);
 		}
 		return n;
 	}
@@ -95,6 +99,31 @@ public class Node1DAOImp extends JpaDaoSupport implements Node1DAO {
 		} catch (Exception e) {
 		}
 		return n;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")	
+	@Transactional(readOnly=true)
+	public List<Long> findNonSpace(long lower, long upper) {
+		List<Long> nonspace=null;
+		try{
+			nonspace =(List<Long>) getJpaTemplate().executeFind(new FindListByCondition2<Long>("findNonSpace",lower,upper));
+		}catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		return nonspace;
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public String findDisplayName(long pos) {
+		String  displayName = null;
+		try{
+			displayName = getJpaTemplate().execute(new FindByCondition1<String>(pos,"findDisplayNameByPos"));
+		}catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return displayName;
 	}
 	
 }
