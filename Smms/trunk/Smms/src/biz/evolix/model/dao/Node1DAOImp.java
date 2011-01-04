@@ -125,5 +125,16 @@ public class Node1DAOImp extends JpaDaoSupport implements Node1DAO {
 		}
 		return displayName;
 	}
+
+	@Override
+	public List<Object[]> findDisplayName2(long lower,long upper) {
+		List<Object[]>nodes = null;
+		try{
+			nodes = (List<Object[]>) getJpaTemplate().executeFind(new FindListByCondition2<Object[]>("findNonSpace2",lower,upper));
+		}catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return nodes;
+	}
 	
 }

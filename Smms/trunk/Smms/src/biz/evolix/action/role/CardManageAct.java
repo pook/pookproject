@@ -9,7 +9,8 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import biz.evolix.customconst.ConstType;
-import biz.evolix.model.SmileUsersDetails;
+import biz.evolix.model.bean.UserBean;
+import biz.evolix.service.sub.RoleService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -22,6 +23,16 @@ public class CardManageAct extends ActionSupport {
 
 	@Action(value = "/json-card", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
+		try{
+			setRecord( roleService.sizeOfRevCard());		
+			int to = (getRows() * getPage());
+			int from = to - getRows();		
+			setGridModel(roleService.userNotRevCard(from,getRecord()));
+			setTotal();
+		}catch (Exception e) {
+			log.error(e.getMessage(),e);
+			return ERROR;
+		}
 		return SUCCESS;
 	}
 
@@ -29,7 +40,7 @@ public class CardManageAct extends ActionSupport {
 
 		return SUCCESS;
 	}
-	private List<SmileUsersDetails> gridModel;
+	private List<UserBean> gridModel;
 	private Integer rows = 0;
 	private Integer page = 0;
 	private String sord;
@@ -39,14 +50,8 @@ public class CardManageAct extends ActionSupport {
 	private String searchOper;
 	private Integer total = 0;
 	private Integer record = 0;
-
-	public List<SmileUsersDetails> getGridModel() {
-		return gridModel;
-	}
-
-	public void setGridModel(List<SmileUsersDetails> gridModel) {
-		this.gridModel = gridModel;
-	}
+	private boolean loadonce = false;
+	
 
 	public Integer getRows() {
 		return rows;
@@ -128,4 +133,27 @@ public class CardManageAct extends ActionSupport {
 			setTotal(ConstType.ZERO);
 		}		
 	}
+	private RoleService roleService;
+
+	public CardManageAct(RoleService roleService) {
+		super();
+		this.roleService = roleService;
+	}
+
+	public void setGridModel(List<UserBean> gridModel) {
+		this.gridModel = gridModel;
+	}
+
+	public List<UserBean> getGridModel() {
+		return gridModel;
+	}
+
+	public void setLoadonce(boolean loadonce) {
+		this.loadonce = loadonce;
+	}
+
+	public boolean isLoadonce() {
+		return loadonce;
+	}
+	
 }

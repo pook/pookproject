@@ -14,4 +14,5 @@ public interface Node1DAO {
 	public void persist(Node1 node);
 	public void update(Node1 node);
 	public String findDisplayName(long pos);
+	public List<Object[]> findDisplayName2(long lower,long upper);
 }

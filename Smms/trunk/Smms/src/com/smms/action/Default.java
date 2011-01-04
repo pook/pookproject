@@ -11,11 +11,9 @@ public class Default extends ActionSupport {
 
   
   private static final long serialVersionUID = -7308127326053089498L;
-
-    
+  
   @Action(value = "/default", results = {		 
-    @Result(location = "default.jsp", name = "success"),
-    @Result(location = "login.jsp", name = "error")
+    @Result(location = "default.jsp", name = "success")   
   })
   public String execute() throws Exception
   {

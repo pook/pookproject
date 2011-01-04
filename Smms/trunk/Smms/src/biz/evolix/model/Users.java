@@ -21,8 +21,13 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "ckpasswd", query = "select U from Users u where UPPER(U.smile) =?1 and U.password=?2"),
-	@NamedQuery(name = "loaduser", query = "select U from Users u where U.smile.smileId =?1 ")
+@NamedQueries({ @NamedQuery(name = "ckpasswd", query = "select U from Users U where U.smile=?1 and U.password=?2"),
+	@NamedQuery(name = "finduser", query = "select U from Users U where U.node1.smileId =?1 "),
+	@NamedQuery(name = "receivecardSize", query = "select count(U) from Users U where U.recivecard=false"),
+	@NamedQuery(name = "receivecard", query = "select U from Users U where U.recivecard=false"),
+	@NamedQuery(name = "userSize", query = "select count(U) from Users U "),
+	@NamedQuery(name = "loadUser", query = "select U from Users U "),
+	@NamedQuery(name = "updateCard", query = "update Users set recivecard=true where userId=?1")
 	}
 )
 @Table(name = "USERS")
@@ -34,14 +39,14 @@ public class Users implements java.io.Serializable {
 	@TableGenerator(name = "USER_SEQ", initialValue = 10024, allocationSize = 1)
 	@Column(name = "USER_ID")
 	private Long userId;
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade ={ CascadeType.PERSIST})
 	@JoinColumn(name = "SMILE_ID",referencedColumnName="SMILE_ID")
 	private SmileUsersDetails smile;
 	@Column(name = "NUM_ACCOUNT")
 	private Integer numberOfAccount = 0;
 
 	@Column(name = "ENABLED")
-	private Byte enaebled = (byte) 1;
+	private Boolean enaebled = true;
 	@Column(name = "BRANCE", length = 50)
 	private String brance;
 	@Column(name = "BRANCE_CARD", length = 50)
@@ -101,8 +106,8 @@ public class Users implements java.io.Serializable {
 	public void setAuthorities(Set<Authorities> authorities) {
 		this.authorities = authorities;
 	}
-
-	@OneToMany(mappedBy = "AUTH_ID", cascade = CascadeType.PERSIST)
+	@JoinColumn(nullable=true)
+	@OneToMany(mappedBy = "AUTH_ID", cascade = {CascadeType.PERSIST,CascadeType.REMOVE},orphanRemoval=true)
 	public Set<Authorities> getAuthorities() {
 		return authorities;
 	}
@@ -115,11 +120,11 @@ public class Users implements java.io.Serializable {
 		return smile;
 	}
 
-	public Byte getEnaebled() {
+	public Boolean getEnaebled() {
 		return enaebled;
 	}
 
-	public void setEnaebled(Byte enaebled) {
+	public void setEnaebled(Boolean enaebled) {
 		this.enaebled = enaebled;
 	}
 
@@ -177,6 +182,31 @@ public class Users implements java.io.Serializable {
 
 	public void setReaded(Boolean readed) {
 		this.readed = readed;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Users other = (Users) obj;
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
+			return false;
+		return true;
 	}
 	
 

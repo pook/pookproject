@@ -1,6 +1,5 @@
 package com.smms.action;
 
-import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -12,95 +11,10 @@ import com.opensymphony.xwork2.ActionSupport;
 @InterceptorRef("jsonValidationWorkflowStack")
 
 public class SmmsRole extends ActionSupport {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7213592453906175834L;
+		private static final long serialVersionUID = 7213592453906175834L;
 
-	@Action(value = "/jsonsmmsrole", results = { @Result(name = "success", type = "json") })
-	public String execute() throws Exception {
-		
-
-		
-		total = (int) Math.ceil((double) records / (double) rows);
+	@Action(value = "/jsonsmmsrole", results = { @Result(name = "success",location="smmsrole.jsp") })
+	public String execute() throws Exception {		
 		return SUCCESS;
 	}
-	public String getJSON() throws Exception {
-		
-		return execute();
-	}
-
-	private List<Object> gridModel;
-	private Integer rows = 0;
-	private Integer page = 0;
-	private String sord;
-	private String sidx;
-	private String searchField;
-	private String searchString;
-	private String searchOper;
-	private Integer total = 0;
-	private Integer records = 0;
-
-	public List<Object> getGridModel() {
-		return gridModel;
-	}
-	public void setGridModel(List<Object> gridModel) {
-		this.gridModel = gridModel;
-	}
-	public Integer getRows() {
-		return rows;
-	}
-	public void setRows(Integer rows) {
-		this.rows = rows;
-	}
-	public Integer getPage() {
-		return page;
-	}
-	public void setPage(Integer page) {
-		this.page = page;
-	}
-	public String getSord() {
-		return sord;
-	}
-	public void setSord(String sord) {
-		this.sord = sord;
-	}
-	public String getSidx() {
-		return sidx;
-	}
-	public void setSidx(String sidx) {
-		this.sidx = sidx;
-	}
-	public String getSearchField() {
-		return searchField;
-	}
-	public void setSearchField(String searchField) {
-		this.searchField = searchField;
-	}
-	public String getSearchString() {
-		return searchString;
-	}
-	public void setSearchString(String searchString) {
-		this.searchString = searchString;
-	}
-	public String getSearchOper() {
-		return searchOper;
-	}
-	public void setSearchOper(String searchOper) {
-		this.searchOper = searchOper;
-	}
-	public Integer getTotal() {
-		return total;
-	}
-	public void setTotal(Integer total) {
-		this.total = total;
-	}
-	public Integer getRecords() {
-		return records;
-	}
-	public void setRecords(Integer records) {
-		this.records = records;
-	}
-
-
 }

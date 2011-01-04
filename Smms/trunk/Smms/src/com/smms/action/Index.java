@@ -15,9 +15,6 @@ public class Index extends ActionSupport {
 
 	@Action(value = "/index", results = { @Result(location = "index.jsp", name = "success") })
 	public String execute() throws Exception {
-
-		// log.info(echo);
-
 		return SUCCESS;
 	}
 }

@@ -34,18 +34,15 @@ public class FetchUplineServiceImp implements FetchUplineService {
 		dept = nodeDeptDAO.find(id);
 		Map<String, String> map = new HashMap<String, String>();
 		while (map.isEmpty()) {
-			uplines2(dept, map, id);
+			uplines2(dept, map);
 			if (map.isEmpty())
 				updateNodeDept(dept.getUpper() + 1, dept, true);
 		}
 		return map;
 	}
 
-	private void uplines2(NodeDescription dept, Map<String, String> map,
-			NodePK id) {
-
+	private void uplines2(NodeDescription dept, Map<String, String> map) {
 		final long upper = dept.getUpper();
-		int level = dept.getLevel();
 		long lower = dept.getNextId();
 		List<Long> nonspace = node1DAO.findNonSpace(lower, upper);
 		boolean isLeft = true;		

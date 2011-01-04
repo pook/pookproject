@@ -2,7 +2,6 @@ package biz.evolix.secure;
 
 import java.util.Collection;
 import java.util.HashSet;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
@@ -18,7 +17,7 @@ import biz.evolix.customconst.ConstType;
 import biz.evolix.model.Authorities;
 import biz.evolix.model.SmileUsersDetails;
 import biz.evolix.model.Users;
-import biz.evolix.model.dao.callback.LoadUser;
+import biz.evolix.model.dao.callback.FindByCondition1;
 
 @Repository
 @Transactional
@@ -37,6 +36,7 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 	private String treeId;
 	private Long pos;
 	private Long userid;
+	private Collection<GrantedAuthority> grantedAuthority;
 
 	public SmileUser(String smileid) {
 		super();
@@ -54,16 +54,11 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 	}
 
 
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	@Transactional(readOnly = true)
-	public Collection<GrantedAuthority> getAuthorities() {
-		Collection<Authorities> auths = (Collection<Authorities>) getJpaTemplate()
-				.findByNamedQuery("findAuthorities", this.userid);
-		Collection<GrantedAuthority> gat = new HashSet<GrantedAuthority>();
-		for (Authorities a : auths)
-			gat.add(new GrantedAuthorityImp(a.getAuthority()));
-		return gat;
+	public Collection<GrantedAuthority> getAuthorities() {		
+		return getGrantedAuthority();
 	}
 
 	public SmileUsersDetails loadUser() {
@@ -72,22 +67,29 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 
 	@Transactional(readOnly = true)
 	private SmileUsersDetails getUser1() {
+		Users u = null;
 		try {			
 			setEntityManager(em);			
-			Users u = getJpaTemplate().execute(
-					new LoadUser<Users>(getSmileid(), "loaduser"));
-			this.passwd = u.getPassword();
-			this.userid = u.getUserId();
-			this.pos = u.getNode1().getPos();
-			this.setTreeId(u.getNode1().getTreeId());
-			setInviter(u.getNode1().getInviter());
-			setDisplayName(u.getNode1().getDisplayName());
-			setBrance(u.getBrance());
-			return null;
+			u = getJpaTemplate().execute(
+					new FindByCondition1<Users>(getSmileid(), "finduser"));			
+			
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new UsernameNotFoundException(e + ": username");
 		}
+		Collection<Authorities> auths =u.getAuthorities();
+		Collection<GrantedAuthority> gat = new HashSet<GrantedAuthority>();
+		for (Authorities a : auths)
+			gat.add(new GrantedAuthorityImp(a.getAuthority()));
+		setGrantedAuthority(gat);
+		this.passwd = u.getPassword();
+		this.userid = u.getUserId();
+		this.pos = u.getNode1().getPos();
+		this.setTreeId(u.getNode1().getTreeId());
+		setInviter(u.getNode1().getInviter());
+		setDisplayName(u.getNode1().getDisplayName());
+		setBrance(u.getBrance());
+		return null;
 	}
 	@Override
 	public String getPassword() {
@@ -169,6 +171,16 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 
 	public String getTreeId() {
 		return treeId;
+	}
+
+
+	public void setGrantedAuthority(Collection<GrantedAuthority> grantedAuthority) {
+		this.grantedAuthority = grantedAuthority;
+	}
+
+
+	public Collection<GrantedAuthority> getGrantedAuthority() {
+		return grantedAuthority;
 	}
 
 }

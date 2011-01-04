@@ -50,7 +50,9 @@
 	<bean id="pageDAO" class="biz.evolix.model.dao.PageDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	
+	<bean id="newsDAO" class="biz.evolix.model.dao.NewsDAOImp" scope="prototype">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
 	<bean id="registerService" class="biz.evolix.service.RegisterServiceImp" scope="singleton"/>	
 	<!-- end of Register Service -->
 	<!-- Start Organization Chart Service -->
@@ -88,6 +90,7 @@
 	<bean id="fetchUplineService" class="biz.evolix.service.FetchUplineServiceImp" scope="session" />
 	<bean id="branceService" class="biz.evolix.service.BranceServiceImp" scope="session" />
 	<bean id="changePasswdService" class="biz.evolix.service.sub.imp.ChangePasswdServiceImp" scope="session" />
+	<bean id="roleService" class="biz.evolix.service.sub.RoleServiceImp" scope="session" />
 	<bean id="fetchProvince" class="biz.evolix.model.dao.ProvinceDAOImp" scope="prototype" >
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
@@ -197,8 +200,32 @@
 	<bean id="editBranceAct" scope="prototype" class="biz.evolix.action.role.EditBrance">
 		<constructor-arg  ref="branceService" />		
 	</bean>
+	<bean id="cardManageAct" scope="prototype" class="biz.evolix.action.role.CardManageAct">
+		<constructor-arg  ref="roleService" />		
+	</bean>
+	<bean id="roleManAct" scope="prototype" class="biz.evolix.action.role.RoleManAct">
+		<constructor-arg  ref="roleService" />		
+	</bean>
+	<bean id="editRoleAct" scope="prototype" class="biz.evolix.action.role.EditRoleAct">
+		<constructor-arg  ref="roleService" />		
+	</bean>
+	<bean id="editCardManAct" scope="prototype" class="biz.evolix.action.role.EditCardManAct">
+		<constructor-arg  ref="roleService" />		
+	</bean>
 	<bean id="changePasswdAct" scope="session" class="biz.evolix.action.register.ChangePasswdAct">
 		<constructor-arg  ref="changePasswdService" />		
+	</bean>
+	<bean id="noticeAct" scope="prototype" class="biz.evolix.action.index.NoticeAct">
+		<constructor-arg  ref="newsDAO" />		
+	</bean>
+	<bean id="activityAct" scope="prototype" class="biz.evolix.action.index.ActivityAct">
+		<constructor-arg  ref="newsDAO" />		
+	</bean>
+	<bean id="saveActivityAct" scope="prototype" class="biz.evolix.action.index.SaveActivityAct">
+		<constructor-arg  ref="newsDAO" />		
+	</bean>
+	<bean id="saveNoticeAct" scope="prototype" class="biz.evolix.action.index.SaveNoticeAct">
+		<constructor-arg  ref="newsDAO" />		
 	</bean>
 	<!-- end faces action -->
 	<context:annotation-config />

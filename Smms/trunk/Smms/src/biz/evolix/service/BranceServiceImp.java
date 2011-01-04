@@ -13,7 +13,7 @@ public class BranceServiceImp implements BranceService {
 
 	@Autowired
 	private BranceDAO branceDAO;
-
+	
 	@Override
 	public List<Brance> findAll() {
 		setBrances(branceDAO.findAll());

@@ -2,6 +2,8 @@ package biz.evolix.model;
 
 import javax.persistence.Entity;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -14,8 +16,9 @@ public class SmileUsersDetails implements java.io.Serializable {
 
 	private static final long serialVersionUID = -1086396230161064363L;
 	@Id
-	@Column(name = "SMILE_ID", columnDefinition = "CHAR(50)", unique = true)
-	private String smileId;	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "SMILE_ID")
+	private Long smileDetailId;
 	@Column(name = "NAME", length = 50)
 	private String name;
 	@Column(name = "SURNAME", length = 50)
@@ -42,9 +45,8 @@ public class SmileUsersDetails implements java.io.Serializable {
 	private String bbrance;
 	@Column(name = "TYPE_ACCOUNT", length = 50)
 	private String typeOfAccount;
-	
-
-	
+	@Column(name = "NUM_ACCOUNT")
+	private Integer numOfAccount= 1;
 	public SmileUsersDetails() {
 		super();
 	}
@@ -153,13 +155,21 @@ public class SmileUsersDetails implements java.io.Serializable {
 	public void setTypeOfAccount(String typeOfAccount) {
 		this.typeOfAccount = typeOfAccount;
 	}
-	
-	public void setSmileId(String smileId) {
-		this.smileId = smileId;
+
+	public void setSmileDetailId(Long smileDetailId) {
+		this.smileDetailId = smileDetailId;
 	}
 
-	public String getSmileId() {
-		return smileId;
+	public Long getSmileDetailId() {
+		return smileDetailId;
+	}
+
+	public void setNumOfAccount(Integer numOfAccount) {
+		this.numOfAccount = numOfAccount;
+	}
+
+	public Integer getNumOfAccount() {
+		return numOfAccount;
 	}
 
 }

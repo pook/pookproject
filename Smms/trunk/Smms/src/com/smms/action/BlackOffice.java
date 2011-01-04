@@ -12,9 +12,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
 public class BlackOffice extends ActionSupport {
-	/*
-	 * buy product
-	 */
+	
 	private static final long serialVersionUID = 9197620900860026907L;
 	private PurcheseService purcheseService;
 

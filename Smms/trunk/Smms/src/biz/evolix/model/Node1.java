@@ -63,7 +63,6 @@ public class Node1 implements java.io.Serializable {
 			return false;
 		return true;
 	}
-
 	@Id
 	@Column(name = "POS", nullable = false)
 	private Long pos;

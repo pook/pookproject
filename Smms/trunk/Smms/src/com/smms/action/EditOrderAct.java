@@ -20,12 +20,13 @@ public class EditOrderAct extends ActionSupport {
 	private static Logger log = Logger.getLogger(EditOrderAct.class);
 
 	private String oper;
-	private Users user;
+	private String smileId;
 	private Integer orderId;
 	private PurcheseService purcheseService;
 
 	@Action(value = "/edit-grid-order", results = {
-			@Result(location = "blackoffice.jsp", name = "success"),
+			@Result(location = "echo/error.jsp", name = "error"),
+			@Result(location = "echo/success.jsp", name = "success"),
 			@Result(location = "blackoffice.jsp", name = "input") })
 	public String execute() {
 		if (oper.equals(ConstType.ADD)) {
@@ -48,19 +49,21 @@ public class EditOrderAct extends ActionSupport {
 
 	private String add() {
 		if (purcheseService.size() > ConstType.ZERO) {
-			log.info("Submit Order first: "+getUser().getSmile().getSmileId());
+			log.info("Submit Order first: "+getSmileId());
 		} else {
 			Users u = null;
 			try {
-				u = purcheseService.userMember(getUser().getSmile().getSmileId());
+				u = purcheseService.userMember(getSmileId());
+				addActionMessage("Found");
 			} catch (Exception e) {
 				log.error(e.getMessage());
 			}
 			if (u == null) {
-				 addActionError("Member Not Found  !!");
-				 log.info(ConstType.MEMBER_NOT_FOUND+ getUser().getSmile().getSmileId());
+				 addActionError("Member Not Found");
+				 log.info(ConstType.MEMBER_NOT_FOUND+ getSmileId());
+				 return ERROR;
 			} else {
-				log.info("Create Order :"+ getUser().getSmile().getSmileId());
+				log.info("Create Order :"+ getSmileId());
 				purcheseService.newOrder(u);
 			}
 		}
@@ -88,12 +91,12 @@ public class EditOrderAct extends ActionSupport {
 		return orderId;
 	}
 
-	public void setUser(Users user) {
-		this.user = user;
+	public void setSmileId(String smileId) {
+		this.smileId = smileId;
 	}
 
-	public Users getUser() {
-		return user;
+	public String getSmileId() {
+		return smileId;
 	}
-
+	
 }

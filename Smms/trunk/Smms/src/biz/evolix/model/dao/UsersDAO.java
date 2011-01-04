@@ -1,5 +1,7 @@
 package biz.evolix.model.dao;
 
+import java.util.List;
+
 import biz.evolix.model.Users;
 
 public interface UsersDAO {
@@ -7,4 +9,11 @@ public interface UsersDAO {
 	public Users findBySmileUser(String smileId);
 	public void persist(Users user);
 	public void update(Users user);
+	public void updateQuery(long user,String nameQuery);
+	public Long sizeRevCard();
+	public List<Users> userRecCard(int start,int max);
+	public Long size();
+	public List<Users> find(int start,int max);
+	public void flush();
+	public void removeNull();
 }

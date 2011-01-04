@@ -1,5 +1,4 @@
-function orgJSON(data) {
-		var x = $(popuphtml());
+function orgJSON(data) {		
 		var hideDelay = 500;
 		var hideTimer = null;
 		var backward = 0;
@@ -9,6 +8,9 @@ function orgJSON(data) {
 		function cmouseover() {
 			if (hideTimer)
 				clearTimeout(hideTimer);
+			$("#personPopupContainer").remove();
+			var x = $(popuphtml());
+			$("body").append(x);
 			var pos = $(this).offset();
 			var width = $(this).width();
 			var g = null;
@@ -32,8 +34,7 @@ function orgJSON(data) {
 				$("#nid1").empty().append("" + txt);
 				$("#status").empty().append(img);
 				$("#inv").empty().append("" + inv);
-			}
-			$("body").append(x);
+			}			
 			switch (g) {
 			case "n1":
 				x.css({
@@ -417,7 +418,7 @@ function orgJSON(data) {
 			if (hideTimer)
 				clearTimeout(hideTimer);
 			hideTimer = setTimeout(function() {
-				x.css('display', 'none');
+				$("#personPopupContainer").remove();
 			}, hideDelay);
 		}
 	}
@@ -497,12 +498,12 @@ function orgJSON(data) {
 	function popuphtml() {
 		return "<div id='personPopupContainer'>"
 				+ "<table id ='tablepopup' width='300' border='0'  cellspacing='0' cellpadding='0' align='center' class='personPopupPopup'>"
-				+ "<tr>" + "<td class='corner topLeft'></td>"
-				+ "<td class='top'></td>" + "<td class='corner topRight'></td>"
+				+ "<tr><td class='corner topLeft'></td>"
+				+ "<td class='top'></td><td class='corner topRight'></td>"
 				+ "</tr><tr><td class='left'></td><td>"
 				+ "<table style='background-color:#fff'><tr >"
-				+ "<td id='status' rowspan='3'></td>" + "<td id='name1'></td>"
-				+ "<tr><td id='nid1'></td><tr>" + "<td id='inv'></td>"
+				+ "<td id='status' rowspan='3'></td><td id='name1'></td>"
+				+ "<tr><td id='nid1'></td><tr><td id='inv'></td>"
 				+ "</tr></table></td> <td class='right'></td>"
 				+ "</tr><tr><td class='corner bottomLeft'></td>"
 				+ "<td class='bottom'></td>"

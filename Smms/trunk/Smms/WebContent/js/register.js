@@ -30,23 +30,24 @@ function clrErrInf2(){
 }
 function regis() {
 	chkLevel();
-	var name = $("#name"), surename = $("#surename"), displayName = $("#displayName"), codeIdentification = $("#codeIdentification"), tel = $("#tel"), tel2 = $("#tel2"), email = $("#email"), inviter = $("#inviter"), address = $("#address"), address2 = $("#address2"), bank = $("#bank"), bankAccount = $("#bankAccount"), brance = $("#brance"), branceCard = $("#branceCard"), bankBrance = $("#bankBrance"), typeOfAccount = $("#typeOfAccount");
-	var allFields = $([]).add(name).add(surename).add(displayName).add(
-			codeIdentification).add(tel).add(tel2).add(email).add(brance).add(branceCard).add(address).add(address2).add(
-			bankAccount).add(typeOfAccount).add(bankBrance);
-	allFields.removeClass("ui-state-error");
+	
 	$("#displayName").live("focusout", checkDisplayName);
 	$("#codeIdentification").live("focusout",clrErrInf2);
 	$("#tel").live("focusout",clrErrInf2);$("#tel2").live("focusout",clrErrInf2);$("#name").live("focusout",clrErrInf2);$("#address").live("focusout",clrErrInf2);$("#bank").live("focusout",clrErrInf2);
 	$("#fsubmit1").live("click",
 					function() {
+		var name = $("#name"), surename = $("#surename"), displayName = $("#displayName"), codeIdentification = $("#codeIdentification"), tel = $("#tel"), tel2 = $("#tel2"), email = $("#email"), inviter = $("#inviter"), address = $("#address"), address2 = $("#address2"), bank = $("#bank"), bankAccount = $("#bankAccount"), brance = $("#brance"), branceCard = $("#branceCard"), bankBrance = $("#bankBrance"), typeOfAccount = $("#typeOfAccount");
+		var allFields = $([]).add(name).add(surename).add(displayName).add(
+				codeIdentification).add(tel).add(tel2).add(email).add(brance).add(branceCard).add(address).add(address2).add(
+				bankAccount).add(typeOfAccount).add(bankBrance);
+		
 						clrErrInf();
 						allFields.removeClass("ui-state-error");
 						var valid = true;
 						valid = checkLength(name, " ชื่อ ", 3, 30);
 						valid = valid&& checkLength(surename, " นามสกุล ", 3, 30);
 						valid = valid&& checkLength(displayName," ชื่อแสดงในสายงาน ", 3, 30);
-						valid = valid&& checkidentifier(codeIdentification)&&checkLength(codeIdentification," รหัสบัตรประชาชน ", 13, 13) ;
+						valid = valid&& checkidentifier(codeIdentification);
 						valid = valid&& checkLength(tel, " เบอร์โทรศัพท์ ", 9, 10);
 						valid = valid&& ckBrance(brance);
 						valid = valid&& ckBrance(branceCard);
@@ -61,6 +62,7 @@ function regis() {
 								"branceCard":"" + branceCard.val(),"address" :""+ address.val(),"province":"" + $("#province").val(),"address2":"" + address2.val(),
 								"email":""+ email.val(),"bank":"" + bank.val(),"bankAccount":"" + bankAccount.val(), "bankBrance" :""+ bankBrance.val(), "typeOfAccount" :""+ typeOfAccount.val()});							
 						}
+						valid = false;
 					});
 }
 function ckBrance(b1) {
@@ -75,7 +77,7 @@ function checkidentifier(ci) {
 	c = checkIdent(ci.val());
 	if (!c) {
 		ci.addClass("ui-state-error");
-		showmsgInf("<li>รหัสบัตรประชาชนไม่ถูกต้อง</li>");
+		showmsgInf("<li>รหัสบัตรประชาชนไม่ถูกต้อง</li><li>ข้อมูล รหัสบัตรประชาชนควรมีเท่ากับ 13</li>");
 	} else {
 		ci.removeClass("ui-state-error");
 	}

@@ -2,8 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
+<%@ taglib prefix="sjr" uri="/struts-jquery-richtext-tags"%>
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 <link href="styles/ext.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/ckeditor.config.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$(".column div div .ui-icon").click(function() {
@@ -30,58 +32,92 @@
 		myrichtextoptions.wysiwygoptions.resizeOptions = {};
 		$.mys2jextend.bind($('#richtextarea'), myrichtextoptions);
 	});
-
 </script>
-<div id="main1">
-<div id="div0">
-  	<sj:div id="column1" cssClass="column"
-	sortable="true" sortableConnectWith=".column"
-	sortablePlaceholder="ui-state-highlight"
-	sortableForcePlaceholderSize="true"
-	sortableHandle="div.ui-widget-header" sortableCursor="crosshair"
-	sortableOnUpdateTopics="onupdate">
-<div id="div1">
+<style type="text/css">
+div#main1 div {
+	clear: both;
+}
 
-	<div
-		class="ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
-	<div class="ui-widget-header ui-corner-all"><span class="title">แจ้งให้ทราบ</span><span
-		class="ui-icon ui-icon-plusthick"></span></div>
-	<div class="portlet-content"> 
-	<u>22/10/2553</u><br>
-	is well   equipped with the latest call center technology that fitted 
-with the high volume   of call center environments. In addition our well
- trained agents have a great number of   experiences in handling 
-different types of call solutions.  Need to find call center partner for
- your next marketing   campaign or CRM, Please feel free to 
- </div>
+div#main2 {
+	width: 700px
+}
+#sec1 {		
+	margin: 30px 100px 30px 150px;
+}
+div#main3{
+	float:left;
+	}
+#accordion {
+	margin: 30px 100px 50px 150px;
+}
+
+#divInAccrodionItem {
+	height: 180px
+}
+
+#divInAccrodionItem1 {
+	height: 180px
+}
+#divrt1{
+	margin: 30px 100px 30px 50px;
+}
+#divrt2{
+	margin: 30px 100px 30px 50px;
+}
+
+</style>
+
+<div id="main1">
+<div id="main2"><s:url id="noticeurl" action="notice" /> <s:url
+	id="activityurl" action="activity" /> <sj:accordion id="accordion">
+	<sj:accordionItem title="แจ้งให้ทราบ">
+		<sj:div id="divInAccrodionItem" href="%{noticeurl}" />
+	</sj:accordionItem>
+	<sj:accordionItem title="ข่าวและกิจกรรม">
+		<sj:div id="divInAccrodionItem1" href="%{activityurl}" />
+	</sj:accordionItem>
+</sj:accordion></div>
+<s:set id="contextPath"  value="#request.get('javax.servlet.forward.context_path')" />
+<div id="sec1">
+<div id="main3"> 
+	<div id="divrt1">
+	<s:form id="f1" action="save-notice" theme="xhtml">
+	<sjr:ckeditor  name="notice"
+	href="%{noticeurl}" id="rt" rows="8" cols="80" toolbar="MyToolbar" resizableMaxWidth="400"
+	 customConfig="%{contextPath}/js/ckeditor.config.js" />
+	 <sj:submit 
+			id="s"
+			targets="main1" 
+			value="บันทึก การแจ้งให้ทราบ" 
+			indicator="indicator" 
+			button="true"
+		/>
+		<img id="indicator" 
+			src="images/indicator.gif" 
+			alt="Loading..." 
+			style="display:none"/>
+	 
+	 </s:form></div>	 
+	<div id="divrt2">
+	<s:form id="f2" action="save-activity" theme="xhtml">	
+	<sjr:ckeditor name="activity"
+	href="%{activityurl}" id="rt1" rows="8" cols="80" toolbar="MyToolbar" resizableMaxWidth="400"
+	 customConfig="%{contextPath}/js/ckeditor.config.js" />
+	  <sj:submit  
+			id="s1"
+			targets="main1" 
+			value="บันทึก กิจกรรม" 
+			indicator="indicator" 
+			button="true"
+		/>
+		<img id="indicator" 
+			src="images/indicator.gif" 
+			alt="Loading..." 
+			style="display:none"/>
+	 </s:form>
+	</div>
 	</div>
 </div>
-
-<div id="div2">
-	<div 
-		class="ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
-	<div class="ui-widget-header ui-corner-all"><span class="title">ข่าวและกิจกรรม</span><span
-		class="ui-icon ui-icon-plusthick"></span></div>
-	<div class="portlet-content"> 
-	         
-	<ul>                        
-	<u>22/10/2553</u><br>
-	                <li>Advertising Response Tracking <br>
-                                                  </li><li>Complaint Management Service <br>
-                                                  </li><li>Fulfillment Service <br>
-                                                  </li><li>Information Center <br>
-                                                  </li><li>Membership Subscriber Service <br>
-                                                  </li><li>Pre-Event Registration</li></div>
-      </ul>                                           
-	</div>
-	</div>
-	<div id="div3"> 
-	<textarea name="richtextarea" id="richtextarea" rows="15" cols="50">
-    Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
-    </textarea>
-    </div>
-</sj:div></div>
-
 </div>
 
 

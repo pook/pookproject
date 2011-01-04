@@ -26,4 +26,6 @@ public class ConstType {
 	public static final long MAX_NODE62 =0x4000000000000000L;
 	public static final long MAX_NODE63 =0x8000000000000000L;
 	public static final int MAX_LEVEL = 64;
+	public static final String NOTICE = "NOTICE";
+	public static final String ACTIVITY = "ACTIVITY";
 }

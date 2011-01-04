@@ -7,7 +7,7 @@
       ['NewPage','Preview'],
       ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Scayt'],
       ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
-      ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+      ['Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
       '/',
       ['Styles','Format'],
       ['Bold','Italic','Strike'],

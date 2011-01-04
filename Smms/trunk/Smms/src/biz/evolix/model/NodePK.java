@@ -19,7 +19,7 @@ public class NodePK implements java.io.Serializable {
 	public void setTree(String treeId) {
 		this.treeId = treeId;
 	}	
-	
+	public NodePK(){}
 	public NodePK(String treeId, long pos) {
 		super();
 		this.pos = pos;

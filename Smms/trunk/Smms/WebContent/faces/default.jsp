@@ -25,7 +25,7 @@
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 <link href="styles/patch_layout.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet"
-	href="/Smms/struts/themes/ui-lightness/jquery-ui.css" type="text/css" />
+	href= "<%=request.getContextPath()%>/struts/themes/ui-lightness/jquery-ui.css" type="text/css" />
 	<link href="styles/or-chart.css" rel="stylesheet" type="text/css" />
 <sj:head debug="true" compressed="false" jquerytheme="ui-lightness"
 	customBasepath="themes" loadFromGoogle="%{google}"

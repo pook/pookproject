@@ -82,11 +82,11 @@ public class Register extends ActionSupport {
 				Node1 n = new Node1();
 				n.setInviter(getInviter());
 				n.setDisplayName(getDisplayName());			
-				user = registerService
+				String id = registerService
 						.save(user, getUpline(), getProvince(), n,u);								
 				setEcho("true");
 				addActionMessage("Success !!");
-				addActionMessage("Your user ID :" +  user.getSmileId());
+				addActionMessage("Your user ID :" +  id);
 			}catch(UsernameNotFoundException ue){
 				addActionError("Register Fail !!"+ue);
 				return ERROR;
@@ -104,8 +104,8 @@ public class Register extends ActionSupport {
 			i = getAddress().trim().length() > 3;			
 			i &= getBank().trim().length() > 3;			
 			i &= getBankAccount().trim().length() > 3;
-			i &= getBrance().trim().length() > 3;			
-			i &= getBranceCard().trim().length() > 3;			
+			i &= getBrance().trim().length() > 1;			
+			i &= getBranceCard().trim().length() > 1;			
 			i &= checkIdent(getCodeIdentification());			
 			i &= getDisplayName().trim().length() > 2;			
 			i &= getName().trim().length() > 2;			

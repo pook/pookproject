@@ -13,16 +13,16 @@ import biz.evolix.gen.Generate;
 
 @Entity
 @IdClass(NodePK.class)
-@NamedQueries({
-		@NamedQuery(name = "findNonSpace", query = "select D.pos from NodeDescription D where  D.pos>=?1 and D.pos<=?2 " )
+@NamedQueries({ @NamedQuery(name = "findNonSpace", query = "select D.pos from NodeDescription D where  D.pos>=?1 and D.pos<=?2 "),
+	@NamedQuery(name = "findNonSpace2", query = "select D.treeId,D.pos from NodeDescription D where  D.pos>=?1  and D.pos<=?2 ")
 	})
 @Table(name = "NODE_DEPT")
 public class NodeDescription implements java.io.Serializable {
 
 	private static final long serialVersionUID = -6853818182616308987L;
 	@Id
-	@Column(name = "TREE_ID", nullable = false, length =32,columnDefinition="CHAR(32)")
-	private String treeId ;
+	@Column(name = "TREE_ID", nullable = false, length = 32, columnDefinition = "CHAR(32)")
+	private String treeId;
 	@Id
 	@Column(name = "POS", nullable = false)
 	private Long pos;
@@ -34,39 +34,39 @@ public class NodeDescription implements java.io.Serializable {
 	private Long lower;
 	@Column(name = "LEVEL")
 	private Integer level = 0;
-	@Column(name="HASH_CODE",columnDefinition="CHAR(32)",length=32)
-	private String hashCode; 
-	@Column(name ="COUNT")
+	@Column(name = "HASH_CODE", updatable = false, columnDefinition = "CHAR(32)", length = 32)
+	private String hashCode;
+	@Column(name = "COUNT")
 	private Long count = 0L;
 	@Version
 	@Column(name = "VERSION")
 	private Integer version = 0;
-	@Column(name = "BASE_LEVEL")
-	private Integer baseLevel= -1;
-	public NodeDescription(long pos,String nodeId){
+	@Column(name = "BASE_LEVEL", updatable = false)
+	private Integer baseLevel = -1;
+
+	public NodeDescription(long pos, String nodeId) {
 		super();
 	}
-	public NodeDescription(){
+
+	public NodeDescription() {
 		super();
-	}
-	public NodeDescription(NodePK id) {		
-		this(id.getTreeId(),id.getPos());
 	}
 
 	public NodeDescription(String nodeId, long pos) {
 		super();
 		this.treeId = nodeId;
 		this.pos = pos;
-		setLevel(1);
 		setLower(Generate.left(this.pos));
 		setUpper(Generate.right(this.pos));
 		setNextId(getLower());
-		setCount(0L);		
+		setCount(0L);
 		setHashCode(new NodePK(getTreeId(), getPos()).hashNode1());
 	}
-	public NodeDescription(int baselevel,NodePK id){
-		this(id);
-		setBaseLevel(baselevel+getLevel());
+
+	public NodeDescription(int blevel, NodePK id) {
+		this(id.getTreeId(), id.getPos());
+		setLevel(1);
+		setBaseLevel(blevel);
 	}
 
 	public void setVersion(Integer version) {
@@ -132,15 +132,19 @@ public class NodeDescription implements java.io.Serializable {
 	public String getHashCode() {
 		return hashCode;
 	}
+
 	public void setCount(Long count) {
 		this.count = count;
 	}
+
 	public Long getCount() {
 		return count;
 	}
+
 	public void setBaseLevel(Integer baseLevel) {
 		this.baseLevel = baseLevel;
 	}
+
 	public Integer getBaseLevel() {
 		return baseLevel;
 	}

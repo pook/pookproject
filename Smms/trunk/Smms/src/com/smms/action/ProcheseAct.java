@@ -1,8 +1,5 @@
 package com.smms.action;
 
-import java.io.IOException;
-
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -18,9 +15,6 @@ import com.opensymphony.xwork2.ActionSupport;
 @InterceptorRef("jsonValidationWorkflowStack")
 public class ProcheseAct extends ActionSupport {
 
-	/**
-	 * work with Black office
-	 */
 	private static final long serialVersionUID = -8259383990285606982L;
 	private PurcheseService purcheseService;
 	private String oper;	
@@ -40,11 +34,11 @@ public class ProcheseAct extends ActionSupport {
 			try {
 				k = purcheseService.loadSku(Integer.parseInt(sku.getName()));
 			} catch (Exception e) {
-				//addActionError(e.getMessage());
+				addActionError(e.getMessage());
 				System.err.println(e);
 			}
 			if(k==null || quantity==0){
-				//addActionMessage("Item not found");
+				addActionMessage("Item not found");
 				System.out.println("Item not found");
 			}else{
 				purcheseService.buyItem(k,quantity);
@@ -66,10 +60,7 @@ public class ProcheseAct extends ActionSupport {
 		System.out.println("sku11 "+sku);
 		purcheseService.del(sku-1);
 	}
-	private void edit(int id,Sku sku,Integer quantity){
-		
-	}
-
+	
 	public ProcheseAct(PurcheseService purcheseService) {
 		super();
 		this.purcheseService = purcheseService;

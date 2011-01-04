@@ -9,7 +9,9 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import biz.evolix.customconst.ConstType;
-import biz.evolix.model.SmileUsersDetails;
+import biz.evolix.model.bean.UserRoleBean;
+import biz.evolix.service.sub.RoleService;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage(value = "smms")
@@ -21,13 +23,32 @@ public class RoleManAct extends ActionSupport {
 
 	@Action(value = "/json-role", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
+		
+		try {
+			if (searchString != null && searchOper != null &&!searchString.equals("")&&!searchOper.equals("")) {
+				if (searchOper.equalsIgnoreCase("eq")) {
+					setGridModel(roleService.search(searchString));
+					setTotal(1);
+				}
+			} else {
+				setRecord(roleService.sizeMember());
+				int to = (getRows() * getPage());
+				int from = to - getRows();
+				setGridModel(roleService.userRole(from, getRecord()));
+				setTotal();
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ERROR;
+		}
 		return SUCCESS;
 	}
 
 	public String getJSON() throws Exception {
 		return SUCCESS;
 	}
-	private List<SmileUsersDetails> gridModel;
+
+	private List<UserRoleBean> gridModel;
 	private Integer rows = 0;
 	private Integer page = 0;
 	private String sord;
@@ -37,14 +58,8 @@ public class RoleManAct extends ActionSupport {
 	private String searchOper;
 	private Integer total = 0;
 	private Integer record = 0;
-
-	public List<SmileUsersDetails> getGridModel() {
-		return gridModel;
-	}
-
-	public void setGridModel(List<SmileUsersDetails> gridModel) {
-		this.gridModel = gridModel;
-	}
+	private Boolean loadonce = false;
+	private String id;
 
 	public Integer getRows() {
 		return rows;
@@ -118,13 +133,48 @@ public class RoleManAct extends ActionSupport {
 		this.record = record;
 		this.setTotal();
 	}
-	private void setTotal(){
+
+	private void setTotal() {
 		if (getRecord() > 0 && getRows() > 0) {
-			setTotal( (int) Math.ceil((double) this.record
-					/ (double) this.rows));
+			setTotal((int) Math.ceil((double) this.record / (double) this.rows));
 		} else {
 			setTotal(ConstType.ZERO);
-		}		
+		}
 	}
-	
+
+	public void setGridModel(List<UserRoleBean> gridModel) {
+		this.gridModel = gridModel;
+	}
+
+	public List<UserRoleBean> getGridModel() {
+		return gridModel;
+	}
+
+	public void setLoadonce(Boolean loadonce) {
+		this.loadonce = loadonce;
+	}
+
+	public Boolean getLoadonce() {
+		return isLoadonce();
+	}
+
+	public Boolean isLoadonce() {
+		return loadonce;
+	}
+
+	private RoleService roleService;
+
+	public RoleManAct(RoleService roleService) {
+		super();
+		this.roleService = roleService;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getId() {
+		return id;
+	}
+
 }

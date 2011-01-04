@@ -19,7 +19,7 @@ public class UpdateComServiceImp implements UpdateComService {
 	public void update(Order o) {
 		Node1 n = null;
 		try {
-			n = node1DAO.findFromSmileId(o.getUser().getSmile().getSmileId());
+			n = node1DAO.findFromSmileId(o.getUser().getNode1().getSmileId());
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
