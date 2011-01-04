@@ -1,4 +1,4 @@
-package biz.evolix.action.managesku;
+package biz.evolix.action.member;
 
 import java.util.List;
 
@@ -9,25 +9,25 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import biz.evolix.customconst.ConstType;
-import biz.evolix.model.Sku;
-import biz.evolix.service.InventoryService;
+import biz.evolix.model.bean.UserDowlineBean;
+import biz.evolix.service.DownlineService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
-public class EditProduct extends ActionSupport {
+public class GridDownlineAct extends ActionSupport {
 
-	private static final long serialVersionUID = 1720423244713713847L;
-	private static Logger log = Logger.getLogger(EditProduct.class);
+	private static final long serialVersionUID = 4493787060586048546L;
+	private static Logger log = Logger.getLogger(GridDownlineAct.class);
 	
-	@Action(value = "/jsoneditproduct", results = { @Result(name = "success", type = "json") })
+	@Action(value = "/json-downline", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
 		try{
-			setRecord( inventoryService.count());		
+			setRecord( downlineService.size());		
 			int to = (getRows() * getPage());
 			int from = to - getRows();		
-			setGridModel(inventoryService.find(from ,getRecord() ));
+			setGridModel(downlineService.downline(from, getRecord()));
 			setTotal();
 		}catch (Exception e) {
 			log.error(e.getMessage(),e);
@@ -35,13 +35,10 @@ public class EditProduct extends ActionSupport {
 		}
 		return SUCCESS;
 	}
-
-	public String getJSON() throws Exception {			
-		return SUCCESS;
-	}
-
-	private InventoryService inventoryService;
-	private List<Sku> gridModel;
+	
+	
+	private DownlineService downlineService;
+	private List<UserDowlineBean> gridModel;
 	private Integer rows = 0;
 	private Integer page = 0;
 	private String sord;
@@ -52,14 +49,7 @@ public class EditProduct extends ActionSupport {
 	private Integer total = 0;
 	private Integer record = 0;
 
-	public List<Sku> getGridModel() {
-		return gridModel;
-	}
-
-	public void setGridModel(List<Sku> gridModel) {
-		this.gridModel = gridModel;
-	}
-
+	
 	public Integer getRows() {
 		return rows;
 	}
@@ -141,9 +131,12 @@ public class EditProduct extends ActionSupport {
 		this.setTotal();
 	}
 
-	public EditProduct(InventoryService inventoryService) {
-		super();
-		this.inventoryService = inventoryService;
+	public void setGridModel(List<UserDowlineBean> gridModel) {
+		this.gridModel = gridModel;
+	}
+
+	public List<UserDowlineBean> getGridModel() {
+		return gridModel;
 	}
 
 }

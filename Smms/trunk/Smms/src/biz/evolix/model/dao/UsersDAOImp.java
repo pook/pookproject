@@ -12,8 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import biz.evolix.model.Users;
 import biz.evolix.model.dao.callback.FindByCondition1;
 import biz.evolix.model.dao.callback.GenericSize;
+import biz.evolix.model.dao.callback.GenericSizeByCause;
 import biz.evolix.model.dao.callback.MaxResult;
-import biz.evolix.model.dao.callback.RemoveNull;
+import biz.evolix.model.dao.callback.MaxResultCon1;
 import biz.evolix.model.dao.callback.UpdateCon1;
 
 @Repository
@@ -119,30 +120,49 @@ public class UsersDAOImp extends JpaDaoSupport implements UsersDAO {
 	}
 
 	@Override
-	public void updateQuery(long user,String nameQuery) {
-		try{
+	public void updateQuery(long user, String nameQuery) {
+		try {
 			getJpaTemplate().execute(new UpdateCon1<Long>(null, nameQuery));
-		}catch (Exception e) {
+		} catch (Exception e) {
 			log.error(e.getMessage());
-		}		
+		}
 	}
 
 	@Override
 	public void flush() {
-		try{
+		try {
 			getJpaTemplate().flush();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			log.error(e.getMessage());
-		}		
+		}
 	}
 
 	@Override
-	public void removeNull() {
-		try{
-			getJpaTemplate().execute(new RemoveNull<Integer>());
-		}catch (Exception e) {
+	@Transactional(readOnly = true)
+	public long size(Object arg0) {
+		long size = -1;
+		try {
+			size = getJpaTemplate().execute(
+					new GenericSizeByCause<Long, Object>("userdownlinesize",
+							arg0));
+		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
-		
+		return size;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<Users> find(int start, int max, Object arg0, String nameQuery) {
+		List<Users> users = null;
+		try {
+			users = getJpaTemplate().executeFind(
+					new MaxResultCon1<Users>(arg0, start, max, nameQuery));
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return users;
+	}
+
 }

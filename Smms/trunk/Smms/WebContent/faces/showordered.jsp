@@ -30,7 +30,7 @@ div#gridinfo div {
 						navigatorDelete="true"
 						navigatorAdd="false"	
 						navigatorEdit="false"	
-						navigatorSearchOptions="{sopt:['eq','lt','gt']}"													
+						navigatorSearchOptions="{sopt:['eq']}"													
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
 						gridModel="gridModel" rowList="15,30" rowNum="15" width="820" 						
 						onSelectRowTopics="rowselect" >
@@ -69,7 +69,6 @@ div#gridinfo div {
 						targets="div4" button="true" buttonIcon="ui-icon-gear">
 	กลับไปหน้าชื้อสินค้า
 	</sj:a>
-
 					<br />
 					<br />
 				</sj:div>

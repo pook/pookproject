@@ -6,9 +6,11 @@
 <script type="text/javascript">
 	$(function() {
 		$.getJSON("json-member.action", function(data) {
+			$("table tr").addClass("ui-widget-content");
+			$("table tfoot tr").removeClass("ui-widget-content");
 			profile(data.userModel);
 		});
-	});
+	});	
 	function profile(dat){
 		$("#f1").empty().append(dat.node1.inviter);
 		$("#f2").empty().append(dat.node1.smileId);
@@ -31,20 +33,23 @@
 		$("#f19").empty().append(dat.bonusInv);
 		$("#f20").empty().append(dat.bonusTeam+dat.bonusInv);
 		$("#f21").empty().append(dat.bonusLast);
+		$("#f501").empty().append(dat.smile.numOfAccount);
 	}
 </script>
 
 <style type="text/css">
 #main{
- height: 980px
+ height: 1090px
 }
 
 .th2 {
 	height: 30px;
 }
-table td {
-	width: 200px;
+table td {	
 	padding: 7px 20px 10px 50px;
+}
+table tfoot td{	
+	padding: 2px 2px 2px 10px;
 }
 
 table {
@@ -53,17 +58,29 @@ table {
 	margin-bottom: 20px;
 	width:720px
 }
+#downlinelink{
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+}
 </style>
 <div id="main-member">
 <div id="userinf">
 <table id="users" class="ui-widget ui-widget-content">
 	<thead>
-		<tr class="ui-widget-header ">
+		<tr class="ui-widget-header">
 			<th colspan="2" class="th2">ข้อมูลสมาชิก</th>
 		</tr>
 	</thead>
+	<tfoot>
+    <tr>
+      <td colspan="2">	<sj:a id="downlinelink" href="%{ajax}" indicator="indicator"
+						targets="div4" button="true" buttonIcon="ui-icon-gear">
+	ดูดาวน์ไลน์
+	</sj:a></td>     
+    </tr>
+  </tfoot>
 	<tr>
-		<td>ชื่อผู้แนะนำ :</td>
+		<td width="200px">ชื่อผู้แนะนำ :</td>
 		<td id="f1">f1</td>
 	</tr>
 	<tr>
@@ -114,6 +131,10 @@ table {
 		<td>สาขาที่รับบัตรสมาชิก</td>
 		<td id="f13">f13</td>
 	</tr>
+	<tr>
+		<td>จำนวนบัญชี</td>
+		<td id="f501">f501</td>
+	</tr>
 </table>
 </div>
 <div id="status">
@@ -123,8 +144,15 @@ table {
 			<th colspan="2" class="th2">ข้อมูลการเงิน</th>
 		</tr>
 	</thead>
+	<tfoot>
+    <tr>
+      <td></td>
+      <td></td>
+    </tr>
+  </tfoot>
+	
 	<tr>
-		<td>ธนาคาร :</td>
+		<td width="200px">ธนาคาร :</td>
 		<td id="f14">f14</td>
 	</tr>
 	<tr>

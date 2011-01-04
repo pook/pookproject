@@ -27,7 +27,9 @@ import javax.persistence.TableGenerator;
 	@NamedQuery(name = "receivecard", query = "select U from Users U where U.recivecard=false"),
 	@NamedQuery(name = "userSize", query = "select count(U) from Users U "),
 	@NamedQuery(name = "loadUser", query = "select U from Users U "),
-	@NamedQuery(name = "updateCard", query = "update Users set recivecard=true where userId=?1")
+	@NamedQuery(name = "updateCard", query = "update Users set recivecard=true where userId=?1"),
+	@NamedQuery(name = "userdownlinesize", query = "select count(U) from Users U where U.node1.inviter=?1"),
+	@NamedQuery(name = "loaddownline", query = "select U from Users U where U.node1.inviter=?1")
 	}
 )
 @Table(name = "USERS")

@@ -86,6 +86,7 @@
 	<bean id="userDAO" class="biz.evolix.model.dao.UsersDAOImp" scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>			
+	<bean id="downlineService" class="biz.evolix.service.DownlineServiceImp" scope="session" />	
 	<bean id="userDetail" class="biz.evolix.secure.UserDetail" />
 	<bean id="fetchUplineService" class="biz.evolix.service.FetchUplineServiceImp" scope="session" />
 	<bean id="branceService" class="biz.evolix.service.BranceServiceImp" scope="session" />
@@ -226,6 +227,9 @@
 	</bean>
 	<bean id="saveNoticeAct" scope="prototype" class="biz.evolix.action.index.SaveNoticeAct">
 		<constructor-arg  ref="newsDAO" />		
+	</bean>
+	<bean id="gridDownlineAct" scope="session" class="biz.evolix.action.member.GridDownlineAct">
+		<constructor-arg  ref="downlineService" />		
 	</bean>
 	<!-- end faces action -->
 	<context:annotation-config />

@@ -4,7 +4,8 @@ public class UserRoleBean extends User{
 	
 	public UserRoleBean(Integer id, String smileId, String name, Boolean allow,String tel) {
 		super(id, smileId, name);
-		this.allow = allow;
+		this.allow = allow;	
+		this.tel = tel;
 	}
 	
 	public UserRoleBean(Integer id, String smileId, String name, Boolean admin,
@@ -41,5 +42,14 @@ public class UserRoleBean extends User{
 	}
 	public void setAllow(Boolean allow) {
 		this.allow = allow;
-	}		
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+	
 }

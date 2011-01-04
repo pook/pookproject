@@ -14,6 +14,7 @@ public interface UsersDAO {
 	public List<Users> userRecCard(int start,int max);
 	public Long size();
 	public List<Users> find(int start,int max);
-	public void flush();
-	public void removeNull();
+	public void flush();	
+	public long size(Object arg0);
+	public List<Users>find(int start,int max,Object arg0,String nameQuery);
 }
