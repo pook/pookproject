@@ -16,8 +16,8 @@ public class Purchese implements java.io.Serializable {
 	@Column(name = "P_ID")
 	private Long pId;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "S_ID",referencedColumnName="S_ID")
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "S_ID",referencedColumnName="S_ID",updatable=true)
 	private Sku sku;
 
 
@@ -88,8 +88,34 @@ public class Purchese implements java.io.Serializable {
 			if (sv > 0)
 				setPsv(sv);
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		}
 		return psv;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 13;
+		result = prime * result + ((pId == null) ? 0 : pId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Purchese other = (Purchese) obj;
+		if (pId == null) {
+			if (other.pId != null)
+				return false;
+		} else if (!pId.equals(other.pId))
+			return false;
+		return true;
+	}
+	
 }

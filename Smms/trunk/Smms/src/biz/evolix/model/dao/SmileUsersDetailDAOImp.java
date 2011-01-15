@@ -46,4 +46,15 @@ public class SmileUsersDetailDAOImp extends JpaDaoSupport implements
 		return sm;
 	}
 
+	@Override
+	@Transactional
+	public void update(SmileUsersDetails smileuser) {
+		try {
+			getJpaTemplate().merge(smileuser);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		
+	}
+
 }

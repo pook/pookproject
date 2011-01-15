@@ -1,10 +1,13 @@
 package com.smms.action;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
+
+import biz.evolix.model.bean.OrderBean;
 import biz.evolix.service.PurcheseService;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -12,21 +15,31 @@ import com.opensymphony.xwork2.ActionSupport;
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
 public class BlackOffice extends ActionSupport {
-	
+
 	private static final long serialVersionUID = 9197620900860026907L;
 	private PurcheseService purcheseService;
 
 	@Action(value = "/json-ordering", results = { @Result(name = "success", type = "json") })
-	public String execute() throws Exception {			
+	public String execute() throws Exception {
 		return SUCCESS;
 	}
 
 	public String getJSON() throws Exception {
-		setGridModel( purcheseService.odering());		
+		List<biz.evolix.model.Order> ordering = purcheseService.odering();
+		List<OrderBean> orders = new ArrayList<OrderBean>();
+		if (ordering.size() > 0) {
+			long l = ordering.get(0).getOrderId();
+			OrderBean ob = new OrderBean((int) l, ordering.get(0).getUser()
+					.getNode1().getSmileId(), ordering.get(0).getUser()
+					.getDetail().getName(), ordering.get(0).getDate(), ordering
+					.get(0).getTotalPrice(), ordering.get(0).getTotalSv());
+			orders.add(ob);
+		}		
+		setGridModel(orders);
 		return SUCCESS;
 	}
 
-	private List<biz.evolix.model.Order> gridModel;
+	private List<OrderBean> gridModel;
 	private Integer orderId;
 	private Integer rows = 0;
 	private Integer page = 0;
@@ -37,16 +50,8 @@ public class BlackOffice extends ActionSupport {
 	private String searchOper;
 	private Integer total = 0;
 	private Integer records = 0;
-//	private Map<String, Object> session;
-	
 
-	public List<biz.evolix.model.Order> getGridModel() {
-		return gridModel;
-	}
-
-	public void setGridModel(List<biz.evolix.model.Order> gridModel) {
-		this.gridModel = gridModel;
-	}
+	// private Map<String, Object> session;
 
 	public Integer getRows() {
 		return rows;
@@ -132,5 +137,13 @@ public class BlackOffice extends ActionSupport {
 	public Integer getOrderId() {
 		return orderId;
 	}
-	
+
+	public void setGridModel(List<OrderBean> gridModel) {
+		this.gridModel = gridModel;
+	}
+
+	public List<OrderBean> getGridModel() {
+		return gridModel;
+	}
+
 }

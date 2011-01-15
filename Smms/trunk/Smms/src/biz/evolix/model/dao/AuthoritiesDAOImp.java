@@ -40,7 +40,7 @@ public class AuthoritiesDAOImp extends JpaDaoSupport implements AuthoritiesDAO {
 	*/
     @Override
     @Transactional(readOnly=false)
-    public boolean chgpw(String uid, String newpw) {
+    public boolean chgpw(long uid, String newpw) {
             try{
                     Users u = getJpaTemplate().find(Users.class, uid);
                     u.setPassword(newpw);

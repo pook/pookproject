@@ -6,5 +6,5 @@ import biz.evolix.model.bean.Temp;
 
 public interface FindPlaceService {
 	public NodePK manual(long chose,String treeId);
-	public NodePK auto(NodeDescription dHead,boolean auto,Temp<Integer>level);
+	public NodePK auto(NodeDescription dHead,String treeId,boolean auto,Temp<Integer>level,boolean test);
 }

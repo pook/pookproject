@@ -53,7 +53,7 @@
 	<bean id="newsDAO" class="biz.evolix.model.dao.NewsDAOImp" scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	<bean id="registerService" class="biz.evolix.service.RegisterServiceImp" scope="singleton"/>	
+	<bean id="registerService" class="biz.evolix.service.RegisterServiceImp" scope="session"/>	
 	<!-- end of Register Service -->
 	<!-- Start Organization Chart Service -->
 	<bean id="orchartService" class="biz.evolix.service.OrchartServiceImp" />
@@ -71,6 +71,8 @@
 	<bean id="inventoryService" class="biz.evolix.service.InventoryServiceImp" />
 	<bean id="updateComService" class="biz.evolix.service.UpdateComServiceImp" />
 	<bean id="findPlaceService" class="biz.evolix.service.FindPlaceServiceImp" />
+	<bean id="findQuotaService" class="biz.evolix.service.FindQuotaServiceImp"/>
+	<bean id="findMaxRegisterService" class="biz.evolix.service.FindMaxRegisterServiceImp" scope="session" />
 	<bean id="orderService" class="biz.evolix.service.OrderServiceImp" scope="session"/>
 	<bean id="purcheseService" class="biz.evolix.service.PurcheseServiceImp"
 		scope="session" />	
@@ -85,6 +87,9 @@
 	</bean>	
 	<bean id="userDAO" class="biz.evolix.model.dao.UsersDAOImp" scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	<bean id="jdbcTeamsDAO" class="biz.evolix.model.dao.JdbcTeamsDAOImp" scope="session">
+		<property name="dataSource" ref="dataSource" />
 	</bean>			
 	<bean id="downlineService" class="biz.evolix.service.DownlineServiceImp" scope="session" />	
 	<bean id="userDetail" class="biz.evolix.secure.UserDetail" />
@@ -92,6 +97,8 @@
 	<bean id="branceService" class="biz.evolix.service.BranceServiceImp" scope="session" />
 	<bean id="changePasswdService" class="biz.evolix.service.sub.imp.ChangePasswdServiceImp" scope="session" />
 	<bean id="roleService" class="biz.evolix.service.sub.RoleServiceImp" scope="session" />
+	<bean id="fetchListTeams" class="biz.evolix.service.FetchListTeamsImp" scope="session" />
+	
 	<bean id="fetchProvince" class="biz.evolix.model.dao.ProvinceDAOImp" scope="prototype" >
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
@@ -113,7 +120,7 @@
 		<constructor-arg ref="purcheseService" />
 	</bean>
 	<bean id="editOrderAct" class="com.smms.action.EditOrderAct"
-		scope="session">
+		scope="request">
 		<constructor-arg ref="purcheseService" />
 	</bean>
 	<bean id="blackOfficeAct" class="com.smms.action.BlackOffice"
@@ -230,6 +237,15 @@
 	</bean>
 	<bean id="gridDownlineAct" scope="session" class="biz.evolix.action.member.GridDownlineAct">
 		<constructor-arg  ref="downlineService" />		
+	</bean>
+	<bean id="gridTeamsAct" scope="prototype" class="biz.evolix.action.member.GridTeamsAct">
+		<constructor-arg  ref="fetchListTeams" />		
+	</bean>	
+	<bean id="findMaxRegisterAct" scope="prototype" class="biz.evolix.action.register.FindMaxRegisterAct">
+		<constructor-arg  ref="findMaxRegisterService" />		
+	</bean>
+	<bean id="chkCreateAccountAct" scope="prototype" class="biz.evolix.action.register.ChkCreateAccountAct">
+		<constructor-arg  ref="findQuotaService" />		
 	</bean>
 	<!-- end faces action -->
 	<context:annotation-config />

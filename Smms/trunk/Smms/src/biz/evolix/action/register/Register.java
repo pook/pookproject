@@ -1,5 +1,7 @@
 package biz.evolix.action.register;
 
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -67,6 +69,7 @@ public class Register extends ActionSupport {
 				u.setPassword(ConstType.DEFAULT_PW);
 				u.setBrance(getBrance());
 				u.setBranceCard(getBranceCard());
+				u.setDate(new Date());
 				user.setAddress(getAddress());
 				user.setAddress2(getAddress2());
 				user.setBank(getBank());
@@ -78,8 +81,8 @@ public class Register extends ActionSupport {
 				user.setSurename(getSurename());
 				user.setTel(getTel());
 				user.setTel2(getTel2());
-				user.setTypeOfAccount(getTypeOfAccount());
-				Node1 n = new Node1();
+				user.setTypeOfAccount(getTypeOfAccount());				
+				Node1 n = new Node1();			
 				n.setInviter(getInviter());
 				n.setDisplayName(getDisplayName());			
 				String id = registerService
@@ -186,8 +189,8 @@ public class Register extends ActionSupport {
 		this.tel2 = tel2;
 	}
 
-	public String getInviter() {
-		return (getUsers() == null) ? getDisplayName() : getUsers()
+	private String getInviter() {
+		return (getUsers() == null) ? "" : getUsers()
 				.getDisplayName();
 	}
 
@@ -294,7 +297,6 @@ public class Register extends ActionSupport {
 	public String getBankBrance() {
 		return bankBrance;
 	}
-
 	private SmileUser getUsers() {
 		try {
 			return (SmileUser) SecurityContextHolder.getContext()

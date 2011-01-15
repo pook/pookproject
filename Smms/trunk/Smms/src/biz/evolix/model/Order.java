@@ -43,7 +43,7 @@ public class Order implements java.io.Serializable {
 	private Integer totalSv = 0;
 
 	@Column(name = "BRANCE")
-	private Integer brance;
+	private String brance;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATE")
@@ -110,7 +110,7 @@ public class Order implements java.io.Serializable {
 		this.purchese = purchese;
 	}
 
-	@OneToMany(mappedBy = "P_ID", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "P_ID", cascade ={ CascadeType.PERSIST,CascadeType.REMOVE}, fetch = FetchType.EAGER)
 	public List<Purchese> getPurchese() {
 		return purchese;
 	}
@@ -141,19 +141,19 @@ public class Order implements java.io.Serializable {
 		return seller;
 	}
 
-	public void setBrance(Integer brance) {
-		this.brance = brance;
-	}
-
-	public Integer getBrance() {
-		return brance;
-	}
-
 	public void setUser(Users user) {
 		this.user = user;
 	}
 
 	public Users getUser() {
 		return user;
+	}
+
+	public void setBrance(String brance) {
+		this.brance = brance;
+	}
+
+	public String getBrance() {
+		return brance;
 	}
 }

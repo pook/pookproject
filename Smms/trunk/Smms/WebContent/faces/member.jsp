@@ -4,6 +4,7 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
+
 	$(function() {
 		$.getJSON("json-member.action", function(data) {
 			$("table tr").addClass("ui-widget-content");
@@ -14,50 +15,129 @@
 	function profile(dat){
 		$("#f1").empty().append(dat.node1.inviter);
 		$("#f2").empty().append(dat.node1.smileId);
-		$("#f3").empty().append(dat.smile.codeIdentification);
-		$("#f4").empty().append(dat.smile.name);
-		$("#f5").empty().append(dat.smile.surename);
+		$("#f3").empty().append(dat.detail.codeIdentification);
+		$("#f4").empty().append(dat.detail.name);
+		$("#f5").empty().append(dat.detail.surename);
 		$("#f6").empty().append(dat.node1.displayName);
-		$("#f7").empty().append(dat.smile.tel);
-		$("#f8").empty().append(dat.smile.tel2);
-		$("#f9").empty().append(dat.smile.email);
-		$("#f10").empty().append(dat.smile.address);
-		$("#f11").empty().append(dat.smile.province.pname);
-		$("#f12").empty().append(dat.smile.address2);
+		$("#f7").empty().append(dat.detail.tel);
+		$("#f8").empty().append(dat.detail.tel2);
+		$("#f9").empty().append(dat.detail.email);
+		$("#f10").empty().append(dat.detail.address);
+		$("#f11").empty().append(dat.detail.province.pname);
+		$("#f12").empty().append(dat.detail.address2);
 		$("#f13").empty().append(dat.branceCard);
-		$("#f14").empty().append(dat.smile.bank);
-		$("#f15").empty().append(dat.smile.bankAccount);
-		$("#f16").empty().append(dat.smile.bbrance);
-		$("#f17").empty().append(dat.smile.typeOfAccount);
+		$("#f14").empty().append(dat.detail.bank);
+		$("#f15").empty().append(dat.detail.bankAccount);
+		$("#f16").empty().append(dat.detail.bbrance);
+		$("#f17").empty().append(dat.detail.typeOfAccount);
 		$("#f18").empty().append(dat.bonusTeam);
 		$("#f19").empty().append(dat.bonusInv);
 		$("#f20").empty().append(dat.bonusTeam+dat.bonusInv);
 		$("#f21").empty().append(dat.bonusLast);
-		$("#f501").empty().append(dat.smile.numOfAccount);
+		$("#f501").empty().append(dat.detail.numOfAccount);
+		$("#f502").empty().append(dat.node1.sv);	
+		$.ajax({
+			url :"check-account",					
+			success : function(res) {					
+				if(res == 0)
+					$("#sdialog").show();					
+				else
+					$("#sdialog").hide();							
+			}		
+		});      	   				
 	}
+	$("#displayName").live("focusout", checkDisplayName);
+	function okButton1(){
+		var displayName = $("#displayName");
+		var valid = true;
+		valid = valid&&checkLength(displayName," ชื่อแสดงในสายงาน ", 3, 30);		
+		if(valid){
+			$.ajax({
+				url :"save2.action",
+				data :"displayName="+displayName.val()+"&upline="+$("#upline").val(),		
+				success : function(res) {	
+					if(res.length>0){
+						showmsgInf(res);	
+					}							
+				}		
+			});
+			$('#btndialog').dialog('close');
+		}						
+			
+	};
+	
+	function cancelButton1(){	  
+		$('#btndialog').dialog('close');
+	};
+	function checkLength(o, n, min, max) {
+		if (o.val().length > max || o.val().length < min) {
+			o.addClass("ui-state-error");
+			showmsgInf("ข้อมูล  " + n + " ที่กรอกควรมีความยาวระหว่าง " + min
+					+ " และ " + max + ".");
+			return false;
+		} else {
+			return true;
+		}
+	}
+	function showmsgInf(msgInf) {
+		$("#messageInfo").addClass("ui-state-highlight ui-corner-all").empty().append(
+						"<p><span style='float: left; margin-right: 0.3em;' class='ui-icon ui-icon-info'></span>"
+								+ "<strong>ข้อความ</strong> "							
+								+ msgInf							
+								+ "</p>");
+	}
+	function checkDisplayName() {
+		$(this).removeClass("ui-state-error");
+		$.ajax({
+			type : "post",
+			url : "check-displayname.action",
+			data : "displayName=" + $(this).val(),
+			success : function(res) {				
+				if (res.length>0) {	
+					showmsgInf(res);			
+					$("#displayName").addClass("ui-state-error");
+					$("#displayName").focus();				
+					return false;
+				}
+			}	
+		});	
+		return true;
+	}
+		
 </script>
 
 <style type="text/css">
-#main{
- height: 1090px
+#main {
+	height: 1069px
 }
-
 .th2 {
 	height: 30px;
 }
 table td {	
 	padding: 7px 20px 10px 50px;
 }
+.tbd td{	
+	padding: 5px 5px 5px 10px;
+}
 table tfoot td{	
 	padding: 2px 2px 2px 10px;
 }
-
+.hide{
+	display: block
+}
 table {
 	margin-top: 50px;
 	margin-left: 120px;
 	margin-bottom: 20px;
 	width:720px
 }
+.tbd  {
+	margin-top: 5px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	width:400px
+}
+
 #downlinelink{
 	padding: 0px 0px 0px 0px;
 	margin: 0px 0px 0px 0px;
@@ -65,6 +145,41 @@ table {
 </style>
 <div id="main-member">
 <div id="userinf">
+<s:url id="uplineurl"
+	action="json-fetch-upline.action" />
+<s:url id="showdownlineurl" action="showdownline"/>
+<s:url id="teamsurl" action="teams"/>
+<sj:dialog 
+		width="450"
+    	id="btndialog" 
+    	buttons="{ 
+    		'OK':function() { okButton1(); },
+    		'Cancel':function() { cancelButton1(); } 
+    		}" 
+    	autoOpen="false" 
+    	modal="true" 
+    	title="Create Account" 
+    >
+    <table class="tbd">
+    <tr>
+			<td colspan="2">
+			<div class="ui-widget">
+			<div id="messageInfo" style="margin-top: 5px; padding: 0pt 0.7em;">
+			</div></div>
+    <tr>
+    <td style="width: 180px"><label for="upline">ชื่อ up line <font color="red">
+			*</font>:</label></td>
+			<td><sj:select href="%{uplineurl}" id="upline"
+				name="echo" list="uplines" headerKey="-2" 
+				headerValue="Auto Assign" /></td></tr><tr>
+				<td><label for="displayName">ชื่อแสดงในสายงาน *:</label></td>
+			<td><input type="text" name="displayName"
+				id="displayName"  /></td>
+		</tr>
+	 </table>
+    </sj:dialog>
+   
+    
 <table id="users" class="ui-widget ui-widget-content">
 	<thead>
 		<tr class="ui-widget-header">
@@ -73,10 +188,19 @@ table {
 	</thead>
 	<tfoot>
     <tr>
-      <td colspan="2">	<sj:a id="downlinelink" href="%{ajax}" indicator="indicator"
-						targets="div4" button="true" buttonIcon="ui-icon-gear">
-	ดูดาวน์ไลน์
-	</sj:a></td>     
+      <td colspan="2">	<sj:a id="downlinelink" href="%{showdownlineurl}" indicator="indicator"
+						targets="main-member" button="true" buttonIcon="ui-icon-gear">
+	ดูผู้ที่เราแนะนำ
+	</sj:a>	<sj:a id="teamlink" href="%{teamsurl}" indicator="indicator"
+						targets="main-member" button="true" buttonIcon="ui-icon-gear">
+	ดูลูกทีม
+	</sj:a>
+ <sj:submit id= "sdialog"
+    	openDialog="btndialog" 
+    	value="Create Account" 
+    	button="true" 
+    />
+	</td>     
     </tr>
   </tfoot>
 	<tr>
@@ -135,7 +259,11 @@ table {
 		<td>จำนวนบัญชี</td>
 		<td id="f501">f501</td>
 	</tr>
-</table>
+	<tr>
+		<td>Total Team SV</td>
+		<td id="f502">f502</td>
+	</tr>
+	</table>
 </div>
 <div id="status">
 <table id="tstatus" class="ui-widget ui-widget-content">

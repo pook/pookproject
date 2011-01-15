@@ -9,6 +9,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import biz.evolix.customconst.ConstType;
+import biz.evolix.gen.Generate;
 import biz.evolix.model.Node1;
 import biz.evolix.service.OrchartService;
 
@@ -51,7 +52,7 @@ public class OrganizationBackward extends ActionSupport {
 		return execute();
 	}
 	private static long backward(long c) {
-		return -2;
+		return Generate.parent(c);
 	}
 
 	private static long backward6(long c) {

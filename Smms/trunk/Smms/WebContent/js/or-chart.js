@@ -183,7 +183,7 @@ function orgJSON(data) {
 		$("#abackword1").live("mouseover", addbackwardhover);
 		$("#abackword6").live("mouseover", addbackwardhover);
 		$("#fsubmit").live("mouseover", addbackwardhover);
-		$("#n1").live("mouseover", cmouseover);
+	/*	$("#n1").live("mouseover", cmouseover);
 		$("#n2").live("mouseover", cmouseover);
 		$("#n3").live("mouseover", cmouseover);
 		$("#n4").live("mouseover", cmouseover);
@@ -198,7 +198,7 @@ function orgJSON(data) {
 		$("#n13").live("mouseover", cmouseover);
 		$("#n14").live("mouseover", cmouseover);
 		$("#n15").live("mouseover", cmouseover);
-		$("#n16").live("mouseover", cmouseover);
+	*/	$("#n16").live("mouseover", cmouseover);
 		$("#n17").live("mouseover", cmouseover);
 		$("#n18").live("mouseover", cmouseover);
 		$("#n19").live("mouseover", cmouseover);
@@ -251,7 +251,7 @@ function orgJSON(data) {
 		$("#abackword1").live("mouseout", removebackwardhover);
 		$("#abackword6").live("mouseout", removebackwardhover);
 		$("#fsubmit").live("mouseout", removebackwardhover);
-		$("#n1").live("mouseout", cmouseout);
+	/*	$("#n1").live("mouseout", cmouseout);
 		$("#n2").live("mouseout", cmouseout);
 		$("#n3").live("mouseout", cmouseout);
 		$("#n4").live("mouseout", cmouseout);
@@ -266,7 +266,7 @@ function orgJSON(data) {
 		$("#n13").live("mouseout", cmouseout);
 		$("#n14").live("mouseout", cmouseout);
 		$("#n15").live("mouseout", cmouseout);
-		$("#n16").live("mouseout", cmouseout);
+	*/	$("#n16").live("mouseout", cmouseout);
 		$("#n17").live("mouseout", cmouseout);
 		$("#n18").live("mouseout", cmouseout);
 		$("#n19").live("mouseout", cmouseout);

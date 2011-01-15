@@ -34,7 +34,7 @@ public class CheckDisplayName extends ActionSupport {
 			return ERROR;
 		} else {			
 			setTest(true);
-			addActionMessage("สามารถใช้ชื่อนี้ได้");
+			
 		}
 		return SUCCESS;
 	}

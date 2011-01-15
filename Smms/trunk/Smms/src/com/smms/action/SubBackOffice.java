@@ -22,7 +22,8 @@ public class SubBackOffice extends ActionSupport {
 	}
 
 	public String getJSON() throws Exception {
-		setGridModel( purcheseService.purchese());		
+		setGridModel( purcheseService.purchese());
+		setTotal(1);
 		return SUCCESS;
 	}
 	

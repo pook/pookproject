@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import biz.evolix.model.Node1;
 import biz.evolix.model.NodePK;
 import biz.evolix.model.dao.callback.FindByCondition1;
+import biz.evolix.model.dao.callback.FindByCondition2;
+import biz.evolix.model.dao.callback.FindListByCon4;
 import biz.evolix.model.dao.callback.FindListByCondition2;
 
 @Repository
@@ -104,10 +106,10 @@ public class Node1DAOImp extends JpaDaoSupport implements Node1DAO {
 	@Override
 	@SuppressWarnings("unchecked")	
 	@Transactional(readOnly=true)
-	public List<Long> findNonSpace(long lower, long upper) {
+	public List<Long> findNonSpace(long lower, long upper,int baseLevel,String treeId) {
 		List<Long> nonspace=null;
 		try{
-			nonspace =(List<Long>) getJpaTemplate().executeFind(new FindListByCondition2<Long>("findNonSpace",lower,upper));
+			nonspace =(List<Long>) getJpaTemplate().executeFind(new FindListByCon4<Long>(lower,upper,baseLevel,treeId,"findNonSpace"));
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -135,6 +137,6 @@ public class Node1DAOImp extends JpaDaoSupport implements Node1DAO {
 			log.error(e.getMessage());
 		}
 		return nodes;
-	}
+	}	
 	
 }

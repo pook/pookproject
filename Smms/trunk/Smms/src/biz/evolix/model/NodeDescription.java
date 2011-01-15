@@ -13,7 +13,7 @@ import biz.evolix.gen.Generate;
 
 @Entity
 @IdClass(NodePK.class)
-@NamedQueries({ @NamedQuery(name = "findNonSpace", query = "select D.pos from NodeDescription D where  D.pos>=?1 and D.pos<=?2 "),
+@NamedQueries({ @NamedQuery(name = "findNonSpace", query = "select D.pos from NodeDescription D where  D.pos>=?1 and D.pos<=?2 and D.baseLevel=?3 and D.treeId=?4 "),
 	@NamedQuery(name = "findNonSpace2", query = "select D.treeId,D.pos from NodeDescription D where  D.pos>=?1  and D.pos<=?2 ")
 	})
 @Table(name = "NODE_DEPT")
@@ -32,8 +32,8 @@ public class NodeDescription implements java.io.Serializable {
 	private Long upper;
 	@Column(name = "LOWER")
 	private Long lower;
-	@Column(name = "LEVEL")
-	private Integer level = 0;
+	@Column(name = "HIGH")
+	private Integer high = 0;
 	@Column(name = "HASH_CODE", updatable = false, columnDefinition = "CHAR(32)", length = 32)
 	private String hashCode;
 	@Column(name = "COUNT")
@@ -56,16 +56,22 @@ public class NodeDescription implements java.io.Serializable {
 		super();
 		this.treeId = nodeId;
 		this.pos = pos;
-		setLower(Generate.left(this.pos));
-		setUpper(Generate.right(this.pos));
+		long low = Generate.left(this.pos),uppr = Generate.right(this.pos);
+		if(Generate.bottom(pos)){
+			low  =2;
+			uppr = 3;
+		}
+		setLower(low);
+		setUpper(uppr);
 		setNextId(getLower());
 		setCount(0L);
-		setHashCode(new NodePK(getTreeId(), getPos()).hashNode1());
+		String hash =NodePK.hashNode1(getTreeId()+ getPos());
+		setHashCode(hash);
 	}
 
 	public NodeDescription(int blevel, NodePK id) {
 		this(id.getTreeId(), id.getPos());
-		setLevel(1);
+		setHigh(1);
 		setBaseLevel(blevel);
 	}
 
@@ -83,14 +89,6 @@ public class NodeDescription implements java.io.Serializable {
 
 	public String getTreeId() {
 		return treeId;
-	}
-
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
-
-	public Integer getLevel() {
-		return level;
 	}
 
 	public void setPos(Long pos) {
@@ -147,5 +145,13 @@ public class NodeDescription implements java.io.Serializable {
 
 	public Integer getBaseLevel() {
 		return baseLevel;
+	}
+
+	public void setHigh(Integer high) {
+		this.high = high;
+	}
+
+	public Integer getHigh() {
+		return high;
 	}
 }

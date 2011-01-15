@@ -35,11 +35,9 @@ public class ProcheseAct extends ActionSupport {
 				k = purcheseService.loadSku(Integer.parseInt(sku.getName()));
 			} catch (Exception e) {
 				addActionError(e.getMessage());
-				System.err.println(e);
 			}
 			if(k==null || quantity==0){
-				addActionMessage("Item not found");
-				System.out.println("Item not found");
+				addActionMessage("Item not found");				
 			}else{
 				purcheseService.buyItem(k,quantity);
 			}
@@ -52,7 +50,7 @@ public class ProcheseAct extends ActionSupport {
 				System.err.println(e);
 			}				
 		} else if (oper.equals(ConstType.EDIT)) {
-			
+			purcheseService.edit(Integer.parseInt(getId()), getSku(), getQuantity());
 		}
 		return SUCCESS;
 	}

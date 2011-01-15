@@ -26,8 +26,8 @@ public class EditOrderAct extends ActionSupport {
 
 	@Action(value = "/edit-grid-order", results = {
 			@Result(location = "echo/error.jsp", name = "error"),
-			@Result(location = "echo/success.jsp", name = "success"),
-			@Result(location = "blackoffice.jsp", name = "input") })
+			@Result(location = "echo/redirect.jsp", name = "success")
+			 })
 	public String execute() {
 		if (oper.equals(ConstType.ADD)) {
 			return add();
@@ -44,6 +44,7 @@ public class EditOrderAct extends ActionSupport {
 	}
 
 	private String edit() {
+		
 		return SUCCESS;
 	}
 
@@ -97,6 +98,5 @@ public class EditOrderAct extends ActionSupport {
 
 	public String getSmileId() {
 		return smileId;
-	}
-	
+	}	
 }

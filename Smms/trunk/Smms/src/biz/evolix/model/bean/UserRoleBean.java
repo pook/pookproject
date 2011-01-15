@@ -1,24 +1,28 @@
 package biz.evolix.model.bean;
 
+import java.util.Date;
+
 public class UserRoleBean extends User{
 	
-	public UserRoleBean(Integer id, String smileId, String name, Boolean allow,String tel) {
+	public UserRoleBean(Integer id, String smileId, String name,int maxuser,String tel) {
 		super(id, smileId, name);
-		this.allow = allow;	
+		this.maxuser = maxuser;	
 		this.tel = tel;
 	}
 	
 	public UserRoleBean(Integer id, String smileId, String name, Boolean admin,
-			Boolean staff, Boolean member, Boolean allow,String tel) {
+			Boolean staff, Boolean member, Integer maxuser,String tel,Date date) {
 		super(id, smileId, name);
 		this.admin = admin;
 		this.staff = staff;
 		this.member = member;
-		this.allow = allow;
+		this.maxuser = maxuser;
 		this.tel = tel;
+		this.date = date;
 	}
 
-	private Boolean admin = false,staff = false,member = false,allow = false;String tel;
+	private Boolean admin = false,staff = false,member = false;String tel;
+	private Integer maxuser = 0;private Date date;
 	public Boolean getAdmin() {
 		return admin;
 	}
@@ -37,19 +41,29 @@ public class UserRoleBean extends User{
 	public void setMember(Boolean member) {
 		this.member = member;
 	}
-	public Boolean getAllow() {
-		return allow;
-	}
-	public void setAllow(Boolean allow) {
-		this.allow = allow;
-	}
-
+	
 	public String getTel() {
 		return tel;
 	}
 
 	public void setTel(String tel) {
 		this.tel = tel;
+	}
+
+	public Integer getMaxuser() {
+		return maxuser;
+	}
+
+	public void setMaxuser(Integer maxuser) {
+		this.maxuser = maxuser;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Date getDate() {
+		return date;
 	}
 	
 }

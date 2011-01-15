@@ -24,8 +24,7 @@ public class BuyOrder extends ActionSupport {
 			return SUCCESS;
 			addActionError("ควรชื้อสินค้าอย่างน้อย 1 รายการ");
 			return ERROR;
-		}
-		
+		}		
 			
 		private PurcheseService purcheseService;
 		public BuyOrder(PurcheseService purcheseService) {

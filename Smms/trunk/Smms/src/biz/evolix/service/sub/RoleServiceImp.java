@@ -31,15 +31,15 @@ public class RoleServiceImp implements RoleService {
 	@Override
 	public List<UserBean> userNotRevCard(int start, int max) {
 		List<Users> user = usersDAO.userRecCard(start, max);
-		List<UserBean> ub = new ArrayList<UserBean>();
+		ub = new ArrayList<UserBean>();
 		for (int i = 0; i < user.size(); i++)
 			ub.add(new UserBean(i, user.get(i).getNode1().getSmileId(), user
-					.get(i).getSmile().getName(), user.get(i).getSmile()
+					.get(i).getDetail().getName(), user.get(i).getDetail()
 					.getSurename(), user.get(i).getNode1().getDisplayName(),
-					user.get(i).getBrance(), user.get(i).getBranceCard()));
+					user.get(i).getBrance(), user.get(i).getBranceCard(),user.get(i).getDate()));
 		return ub;
 	}
-
+	private List<UserBean> ub ;
 	public void setUsersDAO(UsersDAO usersDAO) {
 		this.usersDAO = usersDAO;
 	}
@@ -50,10 +50,11 @@ public class RoleServiceImp implements RoleService {
 
 	@Override
 	public void updateCard(String userIds) {
-		String[] rowstr = userIds.split(",");
+		String[] rowstr = userIds.split(",");List<Integer>rows = new ArrayList<Integer>();	
+		for(String row : rowstr)rows.add(new Integer(row));		
 		try {
-			for (String row : rowstr)
-				usersDAO.updateQuery(Long.parseLong(row), "updateCard");
+			for (int row : rows)
+				usersDAO.updateQuery(ub.get(row).getDisplayName(),"updateCard");
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
@@ -76,8 +77,8 @@ public class RoleServiceImp implements RoleService {
 		for (int i = 0; i < users.size(); i++) {
 			Collection<Authorities> auth = users.get(i).getAuthorities();
 			UserRoleBean b = new UserRoleBean(i, users.get(i).getNode1().getSmileId()
-					, users.get(i).getSmile().getName(), users
-					.get(i).getEnaebled(),users.get(i).getSmile().getTel());
+					, users.get(i).getDetail().getName(), users
+					.get(i).getMaxRegister(),users.get(i).getDetail().getTel());
 			for (Authorities a : auth) {
 				if (a.getAuthority().equals(Role.ROLE_MEMBER.name())) {
 					b.setMember(true);
@@ -104,8 +105,7 @@ public class RoleServiceImp implements RoleService {
 			addRole(user, roleb.getAdmin(), Role.ROLE_ADMIN.name());
 			addRole(user, roleb.getMember(), Role.ROLE_MEMBER.name());
 			addRole(user, roleb.getStaff(), Role.ROLE_STAFF.name());
-			if (roleb.getAllow())
-				user.setEnaebled(true);
+			user.setMaxRegister(roleb.getMaxuser());
 			try {
 				usersDAO.update(user);			
 				usersDAO.flush();

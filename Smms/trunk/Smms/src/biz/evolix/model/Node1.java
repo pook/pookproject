@@ -23,7 +23,9 @@ import org.eclipse.persistence.annotations.CacheType;
 		@NamedQuery(name = "findNode1FromUserId", query = "select N from Node1 N where N.user=?1"),
 		@NamedQuery(name = "findFromSmileId", query = "select N from Node1 N where N.smileId=?1"),
 		@NamedQuery(name = "findByHashcode", query = "select N from Node1 N,NodeDescription D where N.treeId = D.treeId and "
-				+ "N.pos = D.pos and D.hashCode =?1") })
+				+ "N.pos = D.pos and D.hashCode =?1"),
+		@NamedQuery(name = "findteams", query = "select N from Node1 N where N.pos in (?1)")		
+				})
 @IdClass(NodePK.class)
 @Table(name = "NODE1")
 public class Node1 implements java.io.Serializable {
@@ -163,20 +165,21 @@ public class Node1 implements java.io.Serializable {
 		return pos;
 	}
 
-	public void setSmileId(String smileId) {
-		this.smileId = smileId;
-	}
-
-	public String getSmileId() {
-		return smileId;
-	}
-
 	public void setTreeId(String treeId) {
 		this.treeId = treeId;
 	}
 
 	public String getTreeId() {
 		return treeId;
+	}
+
+	
+	public void setSmileId(String smileId) {
+		this.smileId = smileId;
+	}
+
+	public String getSmileId() {
+		return smileId;
 	}
 
 }

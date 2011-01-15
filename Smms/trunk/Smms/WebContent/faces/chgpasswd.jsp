@@ -79,8 +79,7 @@ table {
 		
 	}
 	$("#chgpasswd").submit(function(){
-		var dat = "newpasswd="+$("#newpasswd").val()+"&oldpassword="+$("#oldpasswd").val();
-		alert(""+dat);		
+		var dat = "newpasswd="+$("#newpasswd").val()+"&oldpassword="+$("#oldpasswd").val();			
 		$.ajax({
 			type : "post",
 			contentType : "application/x-www-form-urlencoded;charset=UTF-8",

@@ -30,116 +30,120 @@ public class Commission extends ActionSupport {
 	}
 	@Action(value = "/commission1-cvs", results = { @Result( name = "success",type ="stream"
 		,params={"contentType","application/octet-stream","inputName","fileInputStream"
-			,"contentDisposition","attachment;filename=smile_com_test.cvs"})
+			,"contentDisposition","attachment;filename=smile_com_jan.cvs"}),
+			@Result(location = "echo/error.jsp", name = "error")
 	})
-	public String execute1() throws Exception {
-		File f = new File("/opt/bonus/");
-		File[]fs = f.listFiles(new FileLastMod("12"));
-		int j=0;
-		long last = fs[j].lastModified();		
-		for(int i=1;i<fs.length;i++){
-			if(fs[i].lastModified()>last){
-				last = fs[i].lastModified();j=i;
-			}
-		}
+	public String execute1() throws Exception {		
+		return export("1");
+	}
+	private String export(String mount){
+		File f = null;File[]fs= null;		
 		try{
+			f = new File("/opt/bonus/");
+			fs = f.listFiles(new FileLastMod(mount));
+			int j=0;
+			long last = fs[j].lastModified();		
+			for(int i=1;i<fs.length;i++){
+				if(fs[i].lastModified()>last){
+					last = fs[i].lastModified();j=i;
+				}
+			}
 			fileInputStream = new FileInputStream(fs[j]);
-		}catch (FileNotFoundException e) {
-			log.error(e.getMessage());
+		}catch (Exception e) {
+			addActionError("ไม่พบข้อมูล");
+			log.error(e.getMessage());	
 			return ERROR;
-		}				
+		}
 		return SUCCESS;
-	}	
+	}
 	@Action(value = "/commission2-cvs", results = { @Result( name = "success",type ="stream"
 		,params={"contentType","application/octet-stream","inputName","fileInputStream"
-			,"contentDisposition","attachment;filename=smms-batch.log"})
+			,"contentDisposition","attachment;filename=smile_com_feb.cvs"})
+			,@Result(location = "echo/error.jsp", name = "error")
 	})
-	public String execute2() throws Exception {
-			
-		return SUCCESS;
+	public String execute2() throws Exception {			
+		return export("2");
 	}
 	@Action(value = "/commission3-cvs", results = { @Result( name = "success",type ="stream"
 		,params={"contentType","application/octet-stream","inputName","fileInputStream"
-			,"contentDisposition","attachment;filename=smms-batch.log"})
+			,"contentDisposition","attachment;filename=smile_com_mar.cvs"})
+			,@Result(location = "echo/error.jsp", name = "error")
 	})
-	public String execute3() throws Exception {
-			
-		return SUCCESS;
+	public String execute3() throws Exception {		
+		return export("3");
 	}
 	@Action(value = "/commission4-cvs", results = { @Result( name = "success",type ="stream"
 		,params={"contentType","application/octet-stream","inputName","fileInputStream"
-			,"contentDisposition","attachment;filename=smms-batch.log"})
+			,"contentDisposition","attachment;filename=smile_com_april .cvs"})
+			,@Result(location = "echo/error.jsp", name = "error")
 	})
-	public String execute4() throws Exception {
-				
-		return SUCCESS;
+	public String execute4() throws Exception {		
+		return export("4");
 	}
 	@Action(value = "/commission5-cvs", results = { @Result( name = "success",type ="stream"
 		,params={"contentType","application/octet-stream","inputName","fileInputStream"
-			,"contentDisposition","attachment;filename=smms-batch.log"})
+			,"contentDisposition","attachment;filename=smile_com_may.cvs"})
+			,@Result(location = "echo/error.jsp", name = "error")
 	})
-	public String execute5() throws Exception {
-				
-		return SUCCESS;
+	public String execute5() throws Exception {		
+		return export("5");
 	}
 	@Action(value = "/commission6-cvs", results = { @Result( name = "success",type ="stream"
 		,params={"contentType","application/octet-stream","inputName","fileInputStream"
-			,"contentDisposition","attachment;filename=smms-batch.log"})
+			,"contentDisposition","attachment;filename=smile_com_june.cvs"})
+			,@Result(location = "echo/error.jsp", name = "error")
 	})
-	public String execute6() throws Exception {
-		fileInputStream = new FileInputStream(new File("D:\\smms-batch.log"));		
-		return SUCCESS;
+	public String execute6() throws Exception {				
+		return export("6");
 	}
 	@Action(value = "/commission7-cvs", results = { @Result( name = "success",type ="stream"
 		,params={"contentType","application/octet-stream","inputName","fileInputStream"
-			,"contentDisposition","attachment;filename=smms-batch.log"})
+			,"contentDisposition","attachment;filename=smile_com_july.cvs"})
+			,@Result(location = "echo/error.jsp", name = "error")
 	})
-	public String execute7() throws Exception {
-				
-		return SUCCESS;
+	public String execute7() throws Exception {		
+		return export("7");
 	}
 	@Action(value = "/commission8-cvs", results = { @Result( name = "success",type ="stream"
 		,params={"contentType","application/octet-stream","inputName","fileInputStream"
-			,"contentDisposition","attachment;filename=smms-batch.log"})
+			,"contentDisposition","attachment;filename=smile_com_august .cvs"})
+			,@Result(location = "echo/error.jsp", name = "error")
 	})
-	public String execute8() throws Exception {
-			
-		return SUCCESS;
+	public String execute8() throws Exception {		
+		return export("8");
 	}
 	@Action(value = "/commission9-cvs", results = { @Result( name = "success",type ="stream"
 		,params={"contentType","application/octet-stream","inputName","fileInputStream"
-			,"contentDisposition","attachment;filename=smms-batch.log"})
+			,"contentDisposition","attachment;filename=smile_com_september .cvs"})
+			,@Result(location = "echo/error.jsp", name = "error")
 	})
-	public String execute9() throws Exception {
-				
-		return SUCCESS;
+	public String execute9() throws Exception {		
+		return export("9");
 	}
 	@Action(value = "/commission10-cvs", results = { @Result( name = "success",type ="stream"
 		,params={"contentType","application/octet-stream","inputName","fileInputStream"
-			,"contentDisposition","attachment;filename=xxx1.txt"})
+			,"contentDisposition","attachment;filename=smile_com_october.txt"})
+			,@Result(location = "echo/error.jsp", name = "error")
 	})
-	public String execute10() throws Exception {
-			
-		return SUCCESS;
+	public String execute10() throws Exception {		
+		return export("10");
 	}
 	@Action(value = "/commission11-cvs", results = { @Result( name = "success",type ="stream"
 		,params={"contentType","application/octet-stream","inputName","fileInputStream"
-			,"contentDisposition","attachment;filename=smms-batch.log"})
+			,"contentDisposition","attachment;filename=smile_com_november .cvs"})
+			,@Result(location = "echo/error.jsp", name = "error")
 	})
-	public String execute11() throws Exception {
-				
-		return SUCCESS;
+	public String execute11() throws Exception {				
+		return export("11");
 	}
 	@Action(value = "/commission12-cvs", results = { @Result( name = "success",type ="stream"
 		,params={"contentType","application/octet-stream","inputName","fileInputStream"
-			,"contentDisposition","attachment;filename=smms-batch.log"})
+			,"contentDisposition","attachment;filename=smile_com_december .cvs"})
+			,@Result(location = "echo/error.jsp", name = "error")
 	})
-	public String execute12() throws Exception {
-				
-		return SUCCESS;
-	}
-
-	
+	public String execute12() throws Exception {			
+		return export("12");
+	}	
 	private InputStream fileInputStream;
 	 
 	public InputStream getFileInputStream() {

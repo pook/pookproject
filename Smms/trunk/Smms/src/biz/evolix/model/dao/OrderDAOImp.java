@@ -99,9 +99,14 @@ public class OrderDAOImp extends JpaDaoSupport implements OrderDAO {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Order> showOrderOwner(String uid, int f, int m) {
-		SmileUsersDetails u = getJpaTemplate().find(SmileUsersDetails.class, uid);
-		return (List<Order>) getJpaTemplate().execute(
-				new MaxResaultByOwner<Order>("findOrderOwner", u, f, m));
+		try{
+			SmileUsersDetails u = getJpaTemplate().find(SmileUsersDetails.class, uid);
+			return (List<Order>) getJpaTemplate().execute(
+					new MaxResaultByOwner<Order>("findOrderOwner", u, f, m));
+		}catch (Exception e) {
+			
+		}
+		return null;
 	}
 
 	@Override

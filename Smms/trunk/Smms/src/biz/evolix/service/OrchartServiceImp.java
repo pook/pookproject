@@ -20,6 +20,7 @@ public class OrchartServiceImp implements OrchartService {
 		NULL_NODE = new Node1();
 		NULL_NODE.setTreeId("");
 		NULL_NODE.setPos(-2L);
+		NULL_NODE.setSv(0);
 	}
 	private static Logger log = Logger.getLogger(OrchartServiceImp.class);
 	private Long header;
@@ -47,9 +48,9 @@ public class OrchartServiceImp implements OrchartService {
 		for (int i = 0; i < ConstType.MAX_NODE_SHOW; i++) {
 			Node1 n1 = null, n2 = null;			
 			id.setPos(teams.get(i).getPos());
-			n1 = node1DAO.find( id.getLeft());
+			n1 = node1DAO.find(new NodePK(id.getTreeId(),Generate.left(id.getPos())));
 			addList(teams, n1);
-			n2 = node1DAO.find(id.getRight());
+			n2 = node1DAO.find(new NodePK(id.getTreeId(),Generate.right(id.getPos())));
 			addList(teams, n2);
 		}
 		xCommission(teams);
@@ -72,7 +73,7 @@ public class OrchartServiceImp implements OrchartService {
 			int value = 0;
 			int c = (int) Math.floor(Generate.math2Pow(i));
 			for (int j = 0; j < c; j++) {
-				if(teams.get(k).getPos()==-2L)continue;
+				//if(teams.get(k).getPos()==-2L)continue;
 				value += teams.get(k++).getSv();				
 			}
 			this.levels.add(value);
@@ -133,5 +134,4 @@ public class OrchartServiceImp implements OrchartService {
 		}
 		return false;
 	}
-
 }

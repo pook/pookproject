@@ -10,7 +10,7 @@ public interface AuthoritiesDAO {
 	public Authorities findByName(String name,Users user);
 	public Collection<Authorities> findAuth(final String id);
 	//public Users findUser(String userId)throws NullPointerException;
-    public boolean chgpw(String uid,String newpw);
+    public boolean chgpw(long uid,String newpw);
     public boolean ckpasswd(String uid,String pw);  
     public void remove(long userId); 
     public void remove1(Authorities auth);

@@ -8,16 +8,13 @@
 $.subscribe('getselectedids2', function(event,data) {
 	var s;
 	s = $("#gridmultitable").jqGrid('getGridParam','selarrrow');
-/*
 	$.ajax({
 		type : "get",
 		url : "edit-card",
 		data : "rows="+s,
-		success: function(dat) {
-			
+		success: function(dat) {			
 		}		
 	});
-	*/
 	$("#div4").load("smmsrole.action");
 });
 
@@ -133,6 +130,9 @@ $.subscribe('getselectedids2', function(event,data) {
 							<sjg:gridColumn name="tel"  title="เบอร์โทร" width="80"
 								editable="false" search="false"
 								 align="center" />
+							<sjg:gridColumn name="date"  title="วันที่สมัคร" width="100"
+								editable="false" search="false" formatter="date" 
+								 align="center" />
 							<sjg:gridColumn name="admin" index="admin" title="admin" width="80"
 								edittype="checkbox" sortable="false" editable="true" search="false"
 								formatter="checkbox" align="center" />
@@ -142,9 +142,9 @@ $.subscribe('getselectedids2', function(event,data) {
 							<sjg:gridColumn name="member" index="member" title="member"  search="false"
 								sortable="false" edittype="checkbox" editable="true" width="80"
 								formatter="checkbox" align="center" />
-							<sjg:gridColumn name="allow" index="allow" width="120" search="false"
-								title="อนุญาติใช้งานระบบ" edittype="checkbox" sortable="false"
-								editable="true" formatter="checkbox" align="center" />
+							<sjg:gridColumn name="maxuser" index="maxuser" width="120" search="false"
+								title="สมาชิกที่เพิ่ม" edittype="select" sortable="false" editoptions="{value:'1:1;2:2;3:3;4:4;5:5;6:6;7:7;8:8;9:9;10:10;15:15;20:20;25:25;30:30;35:35;40:40;45:45;50:50'}"
+								editable="true" formatter="" align="center" />
 						</sjg:grid>
 						<br />
 						<sj:submit id="grid_edit_searchbutton45" value="Search"

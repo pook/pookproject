@@ -26,7 +26,7 @@ public class BonusPeriod implements java.io.Serializable {
 
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "USER_ID", nullable = false)
-	private SmileUsersDetails userId;
+	private Users userId;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATE")
 	private Date date;
@@ -39,14 +39,7 @@ public class BonusPeriod implements java.io.Serializable {
 	@Column(name = "BONUS")
 	private Integer bonus = 0;
 
-	public SmileUsersDetails getUserId() {
-		return userId;
-	}
-
-	public void setUserId(SmileUsersDetails userId) {
-		this.userId = userId;
-	}
-
+	
 	public Integer getBonusTeam() {
 		return bonusTeam;
 	}
@@ -93,5 +86,13 @@ public class BonusPeriod implements java.io.Serializable {
 
 	public Integer getCommissions() {
 		return commissions;
+	}
+
+	public void setUserId(Users userId) {
+		this.userId = userId;
+	}
+
+	public Users getUserId() {
+		return userId;
 	}
 }

@@ -22,10 +22,8 @@ public class ConstType {
 	public static final Character STATUS_ACTIVE = 'A';
 	public static final Character STATUS_INACTIVE = 'I';
 	public static final String DEFAULT_PW = "b60d121b438a380c343d5ec3c2037564b82ffef3";//sha-1
-	public static final String HASHCODE_NODE0 = "b4b147bc522828731f1a016bfa72c073"; // md5	
-	public static final long MAX_NODE62 =0x4000000000000000L;
-	public static final long MAX_NODE63 =0x8000000000000000L;
-	public static final int MAX_LEVEL = 64;
+	public static final String HASHCODE_NODE0 = "b4b147bc522828731f1a016bfa72c073"; // md5		
+	public static final int MAX_LEVEL = 62;
 	public static final String NOTICE = "NOTICE";
 	public static final String ACTIVITY = "ACTIVITY";
 }

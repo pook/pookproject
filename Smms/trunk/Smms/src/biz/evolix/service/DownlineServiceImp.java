@@ -19,7 +19,7 @@ public class DownlineServiceImp implements DownlineService {
 
 	@Override
 	public int size() {
-		long i = usersDAO.size(getUsers().getDisplayName());
+		long i = usersDAO.size(getUsers().getDisplayName(),"userdownlinesize");
 		return (int) i;
 	}
 
@@ -57,9 +57,17 @@ public class DownlineServiceImp implements DownlineService {
 			return downs;
 		int i = 0;
 		for (Users user : users) {
-			downs.add(new UserDowlineBean(i++,user.getNode1().getSmileId(), user.getSmile().getName(), user.getSmile().getAddress(),
-					user.getNode1().getDisplayName(), user.getSmile().getName()));
+			downs.add(new UserDowlineBean(i++,user.getNode1().getSmileId(), user.getDetail().getName(), user.getDetail().getAddress(),
+					user.getNode1().getDisplayName(),status(user.getNode1().getStatus())));
 		}
 		return downs;
+	}
+	private static String status(char status){
+		switch (status) {
+		case 'A':
+			return "ACTIVE";
+		default:
+			return "INACTIVE";
+		}
 	}
 }

@@ -24,10 +24,13 @@ public class GridDownlineAct extends ActionSupport {
 	@Action(value = "/json-downline", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
 		try{
+			
 			setRecord( downlineService.size());		
 			int to = (getRows() * getPage());
-			int from = to - getRows();		
+			int from = to - getRows();
+			
 			setGridModel(downlineService.downline(from, getRecord()));
+			
 			setTotal();
 		}catch (Exception e) {
 			log.error(e.getMessage(),e);
@@ -137,6 +140,11 @@ public class GridDownlineAct extends ActionSupport {
 
 	public List<UserDowlineBean> getGridModel() {
 		return gridModel;
+	}
+
+	public GridDownlineAct(DownlineService downlineService) {
+		super();
+		this.downlineService = downlineService;
 	}
 
 }

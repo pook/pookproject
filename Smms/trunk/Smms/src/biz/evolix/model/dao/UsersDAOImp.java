@@ -9,10 +9,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import biz.evolix.model.SmileUsersDetails;
 import biz.evolix.model.Users;
 import biz.evolix.model.dao.callback.FindByCondition1;
+import biz.evolix.model.dao.callback.FindByCondition2;
+import biz.evolix.model.dao.callback.FindListByQuery;
 import biz.evolix.model.dao.callback.GenericSize;
 import biz.evolix.model.dao.callback.GenericSizeByCause;
+import biz.evolix.model.dao.callback.GenericsizeByQuery;
 import biz.evolix.model.dao.callback.MaxResult;
 import biz.evolix.model.dao.callback.MaxResultCon1;
 import biz.evolix.model.dao.callback.UpdateCon1;
@@ -61,7 +65,7 @@ public class UsersDAOImp extends JpaDaoSupport implements UsersDAO {
 			user = getJpaTemplate().execute(
 					new FindByCondition1<Users>(smileId, "finduser"));
 		} catch (Exception e) {
-			log.error(e.getMessage(), e);
+			log.error(e.getMessage());
 		}
 		return user;
 	}
@@ -120,9 +124,9 @@ public class UsersDAOImp extends JpaDaoSupport implements UsersDAO {
 	}
 
 	@Override
-	public void updateQuery(long user, String nameQuery) {
+	public void updateQuery(Object arg0, String nameQuery) {
 		try {
-			getJpaTemplate().execute(new UpdateCon1<Long>(null, nameQuery));
+			getJpaTemplate().execute(new UpdateCon1<Long>(arg0, nameQuery));
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
@@ -139,12 +143,11 @@ public class UsersDAOImp extends JpaDaoSupport implements UsersDAO {
 
 	@Override
 	@Transactional(readOnly = true)
-	public long size(Object arg0) {
+	public long size(Object arg0, String nameQuery) {
 		long size = -1;
 		try {
 			size = getJpaTemplate().execute(
-					new GenericSizeByCause<Long, Object>("userdownlinesize",
-							arg0));
+					new GenericSizeByCause<Long, Object>(nameQuery, arg0));
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
@@ -165,4 +168,66 @@ public class UsersDAOImp extends JpaDaoSupport implements UsersDAO {
 		return users;
 	}
 
+	@Override
+	public long size(String query) {
+		long size = -1;
+		try {
+			size = getJpaTemplate()
+					.execute(new GenericsizeByQuery<Long>(query));
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return size;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Users> find(int start, int max, String query) {
+		List<Users> users = null;
+		try {
+			users = getJpaTemplate().executeFind(
+					new FindListByQuery<Users>(start, max, query));
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return users;
+	}
+
+	@Override
+	public int maxRegister(long user) {
+		int max = 0;
+		try {
+			max = getJpaTemplate().execute(
+					new FindByCondition1<Integer>(user, "findmaxregister"));
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return max;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public int findNumAccountQuota(Object id) {
+		int i = -1;
+		try {
+			i = getJpaTemplate().execute(
+					new FindByCondition1<Integer>(id, "findquata"));
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		return i;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public int findNextQuota(int next,Object id) {
+		int i = 0;
+		try{
+			i = getJpaTemplate().execute(
+					new FindByCondition2<Integer>(next, id, "nextquata"));
+		}catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return i;
+	}	
 }

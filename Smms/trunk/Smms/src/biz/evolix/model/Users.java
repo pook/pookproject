@@ -1,5 +1,6 @@
 package biz.evolix.model;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,17 +20,23 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "ckpasswd", query = "select U from Users U where U.smile=?1 and U.password=?2"),
+@NamedQueries({ 
+	@NamedQuery(name = "ckpasswd", query = "select U from Users U where U.node1.smileId=?1 and U.password=?2"),
 	@NamedQuery(name = "finduser", query = "select U from Users U where U.node1.smileId =?1 "),
-	@NamedQuery(name = "receivecardSize", query = "select count(U) from Users U where U.recivecard=false"),
+	@NamedQuery(name = "receivecardSize", query = "select count(0) from Users U where U.recivecard=false"),
 	@NamedQuery(name = "receivecard", query = "select U from Users U where U.recivecard=false"),
-	@NamedQuery(name = "userSize", query = "select count(U) from Users U "),
+	@NamedQuery(name = "userSize", query = "select count(0) from Users U "),
 	@NamedQuery(name = "loadUser", query = "select U from Users U "),
-	@NamedQuery(name = "updateCard", query = "update Users set recivecard=true where userId=?1"),
-	@NamedQuery(name = "userdownlinesize", query = "select count(U) from Users U where U.node1.inviter=?1"),
-	@NamedQuery(name = "loaddownline", query = "select U from Users U where U.node1.inviter=?1")
+	@NamedQuery(name = "updateCard", query = "update Users U set recivecard=true where U.node1.displayName=?1"),
+	@NamedQuery(name = "userdownlinesize", query = "select count(0) from Users U where U.node1.inviter=?1"),
+	@NamedQuery(name = "loaddownline", query = "select U from Users U where U.node1.inviter=?1"),
+	@NamedQuery(name = "findmaxregister", query = "select U.maxRegister from Users U where U.userId =?1"),
+	@NamedQuery(name = "findquata", query = "select U.numberOfAccount from Users U where U.userId=?1"),
+	@NamedQuery(name = "nextquata", query = "select U.numberOfAccount from Users U where U.numberOfAccount=?1 and U.detail=?2")
 	}
 )
 @Table(name = "USERS")
@@ -38,15 +45,16 @@ public class Users implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(generator = "USER_SEQ", strategy = GenerationType.TABLE)
-	@TableGenerator(name = "USER_SEQ", initialValue = 10024, allocationSize = 1)
+	@TableGenerator(name = "USER_SEQ", initialValue = 14024, allocationSize = 1)
 	@Column(name = "USER_ID")
 	private Long userId;
-	@ManyToOne(cascade ={ CascadeType.PERSIST})
-	@JoinColumn(name = "SMILE_ID",referencedColumnName="SMILE_ID")
-	private SmileUsersDetails smile;
+	@ManyToOne(cascade ={ CascadeType.MERGE})
+	@JoinColumn(name = "DETAIL_ID",referencedColumnName="DETAIL_ID")
+	private SmileUsersDetails detail;
 	@Column(name = "NUM_ACCOUNT")
 	private Integer numberOfAccount = 0;
-
+	@Column(name = "MAX_REGISTER")
+	private Integer maxRegister = 0;
 	@Column(name = "ENABLED")
 	private Boolean enaebled = true;
 	@Column(name = "BRANCE", length = 50)
@@ -65,6 +73,9 @@ public class Users implements java.io.Serializable {
 	private Boolean readed = false;
 	@Column(name = "PASSWORD", length = 50)
 	private String password;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DATE")
+	private Date date;
 	@OneToOne
 	@JoinColumns({
 			@JoinColumn(name = "TREE_ID", referencedColumnName = "TREE_ID"),
@@ -112,14 +123,6 @@ public class Users implements java.io.Serializable {
 	@OneToMany(mappedBy = "AUTH_ID", cascade = {CascadeType.PERSIST,CascadeType.REMOVE},orphanRemoval=true)
 	public Set<Authorities> getAuthorities() {
 		return authorities;
-	}
-
-	public void setSmile(SmileUsersDetails smile) {
-		this.smile = smile;
-	}
-
-	public SmileUsersDetails getSmile() {
-		return smile;
 	}
 
 	public Boolean getEnaebled() {
@@ -209,6 +212,30 @@ public class Users implements java.io.Serializable {
 		} else if (!userId.equals(other.userId))
 			return false;
 		return true;
+	}
+
+	public void setDetail(SmileUsersDetails detail) {
+		this.detail = detail;
+	}
+
+	public SmileUsersDetails getDetail() {
+		return detail;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setMaxRegister(Integer maxRegister) {
+		this.maxRegister = maxRegister;
+	}
+
+	public Integer getMaxRegister() {
+		return maxRegister;
 	}
 	
 

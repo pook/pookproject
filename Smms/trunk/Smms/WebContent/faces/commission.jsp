@@ -23,7 +23,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><a id="load"
+				<td><a id="load" target="div0" href="javascript:void(0)"
 					class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span
 					class="ui-button-text">Export</span></a></td>
 			</tr>

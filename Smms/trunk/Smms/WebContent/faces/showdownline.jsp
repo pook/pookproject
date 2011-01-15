@@ -6,43 +6,42 @@
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 
 <style type="text/css">
+#main{
+	height: 450px
+}
 div#main1 div {
-	clear:both;
-	
+	clear:both;			
+}
+div#inner1{
+	margin: 35px 40px 50px 60px;
 }
 </style>
+<div id="m1">
 <div id="main1">
 <div id="inner1">
-		<s:url id="remoteurl" action="json-ordering" />					
-					<s:url id="editpurcheseurl" action="edit-grid-purchese" />
-					<s:url id="editorderurl" action="edit-grid-order" />
-					<sjg:grid id="gridedittable" caption=""  dataType="json"
-						href="%{remote2url}" pager="true" navigator="true"
+		<s:url id="remoteurl" action="json-downline" />					
+					<sjg:grid id="gridedittable" caption="-"  dataType="json"
+						href="%{remoteurl}" pager="true" navigator="true"
 						navigatorSearch="false"							
 						navigatorView="false"
 						navigatorDelete="false"
 						navigatorAdd="false"
 						navigatorEdit="false"
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
-						gridModel="gridModel" rowList="10,15,20" rowNum="15" width="924"
-						editurl="%{editpurcheseurl}" 
-						onSelectRowTopics="rowselect">						
-						
-							<sjg:gridColumn name="sku.sid" title="รหัสผสิตภัณฑ์" width="120"
+						gridModel="gridModel" rowList="10,15,20" rowNum="15" width="924"						
+						>						
+							<sjg:gridColumn name="smileId" title="รหัสสมาชิก" width="120"
 								index="sku.sid" />
-							<sjg:gridColumn name="sku.name" title="ชื่อผสิตภัณฑ์"
-								edittype="select" editable="true"
-								editoptions="{ dataUrl : '%{selectskuurl}' }" />
-							<sjg:gridColumn name="sku.description" edittype="textarea" width="350"
-								title="รายละเอียด ผลิตภัณฑ์" sortable="false" />
-							<sjg:gridColumn name="quantity" title="จำนวน" editable="true"
-								required="true"
-								editrules="{integer:true,minValue:1,required:true}"
-								formatter="integer" />
-							<sjg:gridColumn name="purchesePrice" title="ราคา"
-								formatter="currency" align="right" />							
-							<sjg:gridColumn name="psv" title="smile value" align="center"
-								formatter="integer" />
+							<sjg:gridColumn name="name" title="ชือสมาชิก"
+								 editable="false" />
+								 <sjg:gridColumn name="displayName" title="ชื่อในสายงาน"
+								 editable="false" />
+							<sjg:gridColumn name="address" edittype="textarea" width="350"
+								title="ที่อยู่" sortable="false" />
+								<sjg:gridColumn name="status" title="สถานะ" align="center"
+								 editable="false" />
+							
 						</sjg:grid>	
+</div>
 </div>
 </div>

@@ -10,13 +10,14 @@ import org.springframework.orm.jpa.JpaCallback;
 
 public class MaxResultCon1<T> implements JpaCallback<List<T>> {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> doInJpa(EntityManager em) throws PersistenceException {
 		Query q = em.createNamedQuery(this.nameQuery) ;
 		q.setFirstResult(this.start);
 		q.setMaxResults(this.max);
 		q.setParameter(1,this.arg0);
-		return null;
+		return (List<T>)q.getResultList();
 	}
 	private Object arg0;
 	private int start;

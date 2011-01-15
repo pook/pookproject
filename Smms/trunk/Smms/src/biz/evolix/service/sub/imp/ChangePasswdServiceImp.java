@@ -18,7 +18,7 @@ public class ChangePasswdServiceImp implements ChangePasswdService{
 	@Override
 	public void chgpw(String newpw) {
 		try {
-			authoritiesDAO.chgpw(getUsers().getSmileid(),
+			authoritiesDAO.chgpw(getUsers().getUserid(),
 					Generate.generateIdSHA(newpw));
 			SecurityContextHolder.clearContext();
 		} catch (NoSuchAlgorithmException e) {

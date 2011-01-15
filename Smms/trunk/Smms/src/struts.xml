@@ -15,6 +15,7 @@
 		,biz.evolix.action.order
 		,biz.evolix.action.role
 		,biz.evolix.action.global
+		,biz.evolix.action.member
 		,biz.evolix.action.mamagesku" />
 	<include file="smms.xml" />
 </struts>

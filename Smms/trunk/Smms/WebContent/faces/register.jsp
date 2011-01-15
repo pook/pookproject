@@ -8,8 +8,8 @@
 <%@ page import="org.apache.log4j.Logger"%>
 <script type="text/javascript" src="js/register.js"></script>
 <script type="text/javascript">
-	$(function() {
-		regis();
+	$(function() {		 
+		regis();		
 	});
 </script>
 <link href="styles/register.css" rel="stylesheet" type="text/css" />
@@ -27,7 +27,6 @@
 		log.error("Unknow login");
 	}
 %>
-
 <div id="main-regist">
 <div id="test"></div>
 <div id="input-form"><s:url id="checkurl"
@@ -47,9 +46,7 @@
 		<tr class="ui-widget-footer ">
 			<th colspan="6" class="tf"><input type="submit" id="fsubmit1"
 				class="ui-button ui-widget ui-state-default ui-corner-all"
-				value="ยืนยัน" onmouseover="ui-state-hover" /> <input type="button"
-				class="ui-button ui-widget ui-state-default ui-corner-all"
-				value="ยกเลิก" onmouseover="ui-state-hover" /></th>
+				value="ยืนยัน" onmouseover="ui-state-hover" /> </th>
 		</tr>
 	</tfoot>
 	<tbody>
@@ -75,14 +72,12 @@
 				readonly="readonly" disabled="disabled"
 				class="text ui-widget-content ui-corner-all" value=<%=displayName%> />
 			<div id="inviter1" style="display: none"></div>
-
 			</td>
 		</tr>
 		<tr>
 			<td><label for="name">ชื่อ *:</label></td>
 			<td><input type="text" name="name" id="name"
 				class="text ui-widget-content ui-corner-all required" /></td>
-
 			<td><label for="surename">นามสกุล *:</label></td>
 			<td><input type="text" name="surename" id="surename"
 				class="text ui-widget-content ui-corner-all" /></td>
@@ -136,7 +131,6 @@
 			<td><label for="bankAccount">เลที่บัญชี *:</label></td>
 			<td><input type="text" name="bankAccount" id="bankAccount"
 				class="text ui-widget-content ui-corner-all" /></td>
-
 			<td><label for="bankBrance">สาขาธนาคาร *:</label></td>
 			<td><input type="text" name="bankBrance" id="bankBrance"
 				class="text ui-widget-content ui-corner-all" /></td>

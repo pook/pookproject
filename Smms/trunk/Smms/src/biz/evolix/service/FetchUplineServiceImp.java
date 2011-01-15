@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import biz.evolix.customconst.Utils;
 import biz.evolix.gen.Generate;
 import biz.evolix.model.NodeDescription;
 import biz.evolix.model.NodePK;
@@ -17,7 +18,7 @@ import biz.evolix.secure.SmileUser;
 
 public class FetchUplineServiceImp implements FetchUplineService {
 
-	private static final int MAX = 128;
+	// private static final int MAX = 128;
 
 	@Autowired
 	private NodeDeptDAO nodeDeptDAO;
@@ -32,49 +33,55 @@ public class FetchUplineServiceImp implements FetchUplineService {
 			return new HashMap<String, String>();
 		NodePK id = new NodePK(head.getTreeId(), head.getPos());
 		dept = nodeDeptDAO.find(id);
+		String treeId = dept.getTreeId();
+		long pos = dept.getPos();
 		Map<String, String> map = new HashMap<String, String>();
 		while (map.isEmpty()) {
-			uplines2(dept, map);
-			if (map.isEmpty())
-				updateNodeDept(dept.getUpper() + 1, dept, true);
+			if (dept.getNextId() < dept.getPos()) {	
+				log.info(">>>>8888888888>>>>>>>"+dept.getBaseLevel());
+				List<String> hashs = Utils.hashCodes(treeId,dept.getBaseLevel(),pos);
+				log.info(">>>>>>>>>>>"+hashs);
+				for(String hash:hashs){
+					long nextId = dept.getNextId();
+					uplines2(dept,nextId,hash, map,false);
+					log.info(">>>>>>>>>>>1>"+nextId);
+				}
+			} else {
+				uplines2(dept, dept.getNextId(), treeId, map,true);
+			}
+			if (map.isEmpty()) {
+				if (Generate.bottom(dept.getNextId())) {
+					Utils.resetNodeDept(dept, true);
+				} else
+					Utils.updateNodeDept(dept.getUpper() + 1, dept, true);
+			}
 		}
 		return map;
 	}
 
-	private void uplines2(NodeDescription dept, Map<String, String> map) {
+	private void uplines2(NodeDescription dept, long lower, String treeId,
+			Map<String, String> map,boolean test) {
 		final long upper = dept.getUpper();
-		long lower = dept.getNextId();
-		List<Long> nonspace = node1DAO.findNonSpace(lower, upper);
-		boolean isLeft = true;		
+		List<Long> nonspace = node1DAO.findNonSpace(lower, upper,
+				dept.getBaseLevel(), treeId);
+		boolean isLeft = true;
 		while (lower <= upper) {
 			if (!nonspace.contains(lower)) {
 				isLeft = Generate.isLeft(lower);
 				String upline = node1DAO
 						.findDisplayName(Generate.parent(lower));
-				add(map, lower, upline, isLeft);
+				add(map, lower, treeId, upline, isLeft);
 			}
 			lower++;
 		}
 	}
 
-	public void updateNodeDept(long nxt, NodeDescription dept, boolean test) {
-		if (test) {
-			while (nxt > dept.getUpper()) {
-				dept.setLevel(dept.getLevel() + 1);
-				dept.setLower(Generate.left(dept.getLower()));
-				dept.setUpper(Generate.right(dept.getUpper()));
-				dept.setNextId(dept.getLower());
-				dept.setCount(0L);
-			}
-		}
-	}
-
-	private static void add(Map<String, String> map, Long pos, String upline,
-			boolean left) {
+	private static void add(Map<String, String> map, long pos, String treeId,
+			String upline, boolean left) {
 		StringBuilder upl = new StringBuilder().append(upline);
 		String strl = (left) ? " ช้าย" : " ขวา";
 		upl.append(strl);
-		map.put(pos.toString(), upl.toString());
+		map.put(treeId + pos, upl.toString());
 	}
 
 	private static Logger log = Logger.getLogger(FetchUplineServiceImp.class);
@@ -104,5 +111,4 @@ public class FetchUplineServiceImp implements FetchUplineService {
 	public Node1DAO getNode1DAO() {
 		return node1DAO;
 	}
-
 }

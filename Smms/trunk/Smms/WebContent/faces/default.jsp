@@ -46,6 +46,7 @@
 	function cancelButton() {
 		$('#mybuttondialog').dialog('close');
 	};
+		
 </script>
 <style type="text/css">
 a#logout:hover{

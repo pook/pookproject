@@ -9,4 +9,5 @@ import biz.evolix.model.Users;
 public interface RegisterService {
 	public String save(SmileUsersDetails n,String id,String pv,Node1 node,Users user)throws UsernameNotFoundException;		
 	public boolean checkLevel();
+	public String save(String cid,String displayName)throws UsernameNotFoundException;
 }

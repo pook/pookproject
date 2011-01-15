@@ -4,17 +4,35 @@ function checkDisplayName() {
 		type : "post",
 		url : "check-displayname.action",
 		data : "displayName=" + $(this).val(),
-		success : function(res) {
-			showmsgInf(res);
-			if ($("#testResult").html() == 'false') {
+		success : function(res) {			
+			if (res.length>0) {	
+				showmsgInf(res);
 				$("#displayName").addClass("ui-state-error");
 				$("#displayName").focus();				
 				return false;
 			}
-		}
-	});
+		}	
+	});	
 	return true;
 }
+
+function chkMax(){	
+	$.ajax({
+		url : "max-register.action",		
+		success : function(res) {			
+			if(res==0){
+				$("#fsubmit1").remove();
+				var name = $("#name"), surename = $("#surename"), displayName = $("#displayName"), codeIdentification = $("#codeIdentification"), tel = $("#tel"), tel2 = $("#tel2"), email = $("#email"), inviter = $("#inviter"), address = $("#address"), address2 = $("#address2"), bank = $("#bank"), bankAccount = $("#bankAccount"), brance = $("#brance"), branceCard = $("#branceCard"), bankBrance = $("#bankBrance"), typeOfAccount = $("#typeOfAccount");
+				var allFields = $([]).add(name).add(surename).add(displayName).add(
+						codeIdentification).add(tel).add(tel2).add(email).add(brance).add(branceCard).add(address).add(address2).add(
+						bankAccount).add(typeOfAccount).add(bankBrance).add("#upline").add("#bank").add("#province");
+				allFields.attr("disabled", true);
+				showmsgInf("ลงทะเบียนเพื่อรับ คีย์โทเค็นก่อน");			
+			}			
+		}		
+	});	
+}
+
 function chkLevel(){
 	$.ajax({
 		type : "get",		
@@ -30,17 +48,16 @@ function clrErrInf2(){
 }
 function regis() {
 	chkLevel();
-	
+	chkMax();
 	$("#displayName").live("focusout", checkDisplayName);
 	$("#codeIdentification").live("focusout",clrErrInf2);
 	$("#tel").live("focusout",clrErrInf2);$("#tel2").live("focusout",clrErrInf2);$("#name").live("focusout",clrErrInf2);$("#address").live("focusout",clrErrInf2);$("#bank").live("focusout",clrErrInf2);
 	$("#fsubmit1").live("click",
 					function() {
-		var name = $("#name"), surename = $("#surename"), displayName = $("#displayName"), codeIdentification = $("#codeIdentification"), tel = $("#tel"), tel2 = $("#tel2"), email = $("#email"), inviter = $("#inviter"), address = $("#address"), address2 = $("#address2"), bank = $("#bank"), bankAccount = $("#bankAccount"), brance = $("#brance"), branceCard = $("#branceCard"), bankBrance = $("#bankBrance"), typeOfAccount = $("#typeOfAccount");
-		var allFields = $([]).add(name).add(surename).add(displayName).add(
+					var name = $("#name"), surename = $("#surename"), displayName = $("#displayName"), codeIdentification = $("#codeIdentification"), tel = $("#tel"), tel2 = $("#tel2"), email = $("#email"), inviter = $("#inviter"), address = $("#address"), address2 = $("#address2"), bank = $("#bank"), bankAccount = $("#bankAccount"), brance = $("#brance"), branceCard = $("#branceCard"), bankBrance = $("#bankBrance"), typeOfAccount = $("#typeOfAccount");
+					var allFields = $([]).add(name).add(surename).add(displayName).add(
 				codeIdentification).add(tel).add(tel2).add(email).add(brance).add(branceCard).add(address).add(address2).add(
 				bankAccount).add(typeOfAccount).add(bankBrance);
-		
 						clrErrInf();
 						allFields.removeClass("ui-state-error");
 						var valid = true;

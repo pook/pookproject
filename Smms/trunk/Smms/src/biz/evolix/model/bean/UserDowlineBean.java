@@ -2,23 +2,18 @@ package biz.evolix.model.bean;
 
 public class UserDowlineBean extends User {
 
-	public UserDowlineBean(Integer id, String smileId, String name,String address,String displayName,String tel) {
+	public UserDowlineBean(Integer id, String smileId, String name,String address,String displayName,String status) {
 		super(id, smileId, name);
 		this.address = address;
 		this.displayName = displayName;
-		this.tel = tel;
+		this.status = status;
 	}
-	private String tel;
+	
+	private String status;
 	private String address;
 	private String displayName;
 		
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
-	public String getTel() {
-		return tel;
-	}
-
+	
 	public void setAddress(String address) {
 		this.address = address;
 	}
@@ -33,6 +28,14 @@ public class UserDowlineBean extends User {
 
 	public String getDisplayName() {
 		return displayName;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getStatus() {
+		return status;
 	}
 	
 }

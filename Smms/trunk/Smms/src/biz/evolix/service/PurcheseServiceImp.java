@@ -15,7 +15,6 @@ import biz.evolix.model.Sku;
 import biz.evolix.model.Users;
 import biz.evolix.model.dao.OrderDAO;
 import biz.evolix.model.dao.SkuDAO;
-import biz.evolix.model.dao.SmileUsersDetailDAO;
 import biz.evolix.model.dao.UsersDAO;
 import biz.evolix.secure.SmileUser;
 
@@ -31,9 +30,8 @@ public class PurcheseServiceImp implements PurcheseService {
 	private UpdateComService updateComService;
 	@Autowired
 	private SkuDAO skuDAO;
-	@Autowired
-	private SmileUsersDetailDAO smileUsersDetailDAO;
-	private List<Order> ordering = new ArrayList<Order>();;
+	
+	private List<Order> ordering = new ArrayList<Order>();
 
 	public void setOrderDAO(OrderDAO orderDAO) {
 		this.orderDAO = orderDAO;
@@ -66,6 +64,7 @@ public class PurcheseServiceImp implements PurcheseService {
 	public boolean newOrder(Users u) {
 		Order o = new Order();
 		o.setUser(u);
+		o.setBrance(getUsers().getBrance());
 		o.setSeller(getUsers().getSmileid());
 		o.setPurchese(new ArrayList<Purchese>());
 		o.setDate(new Date());
@@ -110,17 +109,24 @@ public class PurcheseServiceImp implements PurcheseService {
 			p.setOrder(getOrdering().get(0));
 			purchese().add(purchese().size(), p);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 		return false;
 	}
 
 	@Override
 	public boolean save() {
+		log.info("size >>"+size()+"empty>>"+getOrdering().get(ConstType.ZERO).getPurchese().isEmpty());
 		if (size() == 1
 				&& !getOrdering().get(ConstType.ZERO).getPurchese().isEmpty()) {
-			orderDAO.update(getOrdering().get(0));
-			updateComService.update(getOrdering().get(0));
+			long s = System.currentTimeMillis();	
+			try{
+				orderDAO.update(getOrdering().get(0));
+				updateComService.update(getOrdering().get(0));
+			}catch (Exception e) {
+				log.error(e.getMessage(),e);
+			}			
+			log.info("Total time >"+(System.currentTimeMillis()-s));
 			setOrdering(new ArrayList<Order>());
 			return true;
 		}
@@ -141,16 +147,11 @@ public class PurcheseServiceImp implements PurcheseService {
 	}
 
 	@Override
-	public void edit(int idx, Sku sku, Integer quantity) {
-		getOrdering().get(ConstType.ZERO).getPurchese().remove(idx);
-		buyItem(sku, quantity);
-	}
-
-	public void setSmileUsersDetailDAO(SmileUsersDetailDAO smileUsersDetailDAO) {
-		this.smileUsersDetailDAO = smileUsersDetailDAO;
-	}
-
-	public SmileUsersDetailDAO getSmileUsersDetailDAO() {
-		return smileUsersDetailDAO;
-	}
+	public void edit(int idx, Sku sku, Integer quantity) {		
+		try{
+			getOrdering().get(ConstType.ZERO).getPurchese().get(idx-1).setQuantity(quantity);
+		}catch (Exception e) {
+			log.error(e.getMessage());
+		}		
+	}	
 }

@@ -18,17 +18,17 @@ div#div4 div {
 				<sj:div id="div1"></sj:div>
 				<sj:div id="div2">
 					<s:url id="remoteurl" action="jsoneditproduct" /><!-- EditProduct -->					
-					<s:url id="editurl" action="add-sku-grid" /><!-- AddSkuAct    (insert,update,del) -->
+					<s:url id="edit1url" action="add-sku-grid" /><!-- AddSkuAct    (insert,update,del) -->
 					<sjg:grid id="gridedittable" caption="พระราม 4 " dataType="json"
 						href="%{remoteurl}" pager="true" navigator="true" width="930"
 						navigatorEdit="true"  
-						navigatorSearchOptions="{sopt:['eq','ne','lt','gt']}"
+						navigatorSearchOptions="{sopt:['eq']}"
 						navigatorAddOptions="{height:280,reloadAfterSubmit:true}"
 						navigatorEditOptions="{height:280,reloadAfterSubmit:true}"
 						navigatorDelete="true" 						
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true,msg:'ต้องการลบเรคคอร์ดนี้ ?'}"
 						gridModel="gridModel" rowList="15,30" rowNum="15"  
-						editurl="%{editurl}" editinline="false" onSelectRowTopics="rowselect"
+						editurl="%{edit1url}" editinline="false" 
 						 >
 						<sjg:gridColumn name="sid" index="sid" title="รหัส ผลิตภัณฑ์"
 							sortable="true" />

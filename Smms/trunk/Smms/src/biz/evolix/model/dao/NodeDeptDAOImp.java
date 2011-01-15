@@ -51,9 +51,10 @@ public class NodeDeptDAOImp extends JpaDaoSupport implements NodeDeptDAO {
 		return false;
 	}
 
+	@SuppressWarnings("unused")
 	@Transactional
 	private void updateNodeDept2(NodeDescription dHead) {
-		dHead.setLevel(dHead.getLevel() + 1);
+		dHead.setHigh(dHead.getHigh() + 1);
 		dHead.setLower(2L);
 		dHead.setUpper(3L);
 		dHead.setCount(0L);

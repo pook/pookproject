@@ -126,7 +126,7 @@ $.subscribe('rowadd', function(event,data) {
     $("#gridedittable").jqGrid('editGridRow',"new",{height:280,reloadAfterSubmit:false}); 
 	});
 $.subscribe('searchgrid', function(event,data) {
-    $("#gridedittable").jqGrid('searchGrid', {sopt:['cn','bw','eq','ne','lt','gt','ew']} );
+    $("#gridedittable").jqGrid('searchGrid', {sopt:['eq']} );
 	});
 $.subscribe('showcolumns', function(event,data) {
     $("#gridedittable").jqGrid('setColumns',{});

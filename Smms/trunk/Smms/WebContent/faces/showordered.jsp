@@ -24,7 +24,7 @@ div#gridinfo div {
 					<s:url id="remoteurl" action="json-list-order" />	<!-- ShowOrdered -->
 					<s:url id="editurl" action="edit-order-grid" />
 					<s:url id="subgridurl" action="json-list-purchese2" />													
-					<sjg:grid id="gridedittable" caption="พระราม 3 " dataType="json"
+					<sjg:grid id="gridedittable" caption="-" dataType="json"
 						href="%{remoteurl}" pager="true" 
 						navigator="true" editurl="%{editurl}"
 						navigatorDelete="true"
@@ -33,7 +33,7 @@ div#gridinfo div {
 						navigatorSearchOptions="{sopt:['eq']}"													
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
 						gridModel="gridModel" rowList="15,30" rowNum="15" width="820" 						
-						onSelectRowTopics="rowselect" >
+						 >
 						<sjg:grid id="subgridtable"  subGridUrl="%{subgridurl}" 
 							dataType="json" gridModel="gridModel" footerrow="true" rownumbers="1" rowNum="0"				
 							 width="750">
@@ -42,24 +42,26 @@ div#gridinfo div {
 						   editoptions ="{ dataUrl : '%{selectskuurl}' }"  search="false" />							
 							<sjg:gridColumn name="sku.description" 
 								title="รายละเอียด ผลิตภัณฑ์" sortable="false" width="330" />
-							<sjg:gridColumn name="quantity" title="จำนวน" 
+							<sjg:gridColumn name="quantity" title="จำนวน" align="right"
 								formatter="integer" />
-							<sjg:gridColumn name="purchesePrice" title="ราคา"
+							<sjg:gridColumn name="purchesePrice" title="ราคา" formatoptions="{decimalSeparator:'.',thousandsSeparator: ',', decimalPlaces: 2}"
 								formatter="currency" align="right" />
-							<sjg:gridColumn name="psv" title="smile value" align="center"
-								formatter="integer" />
+							<sjg:gridColumn name="psv" title="smile value" align="center" formatoptions="{thousandsSeparator: ','}"
+								formatter="integer" align="right" />
 						</sjg:grid>
+						<sjg:gridColumn name="date" index="date" align="center" width="100"
+							title="วันที่" formatter="date" sortable="true" />
 						<sjg:gridColumn name="orderId" index="orderId"
 							title="sale order ID" formatter="integer" sortable="true" />
 						<sjg:gridColumn name="user.userId" title="รหัสสมาชิก"
 							editable="true" editrules="{required:true}"  />
-						<sjg:gridColumn name="user.smile.name" title="ชื่อสมาชิก" />
-						<sjg:gridColumn name="totalQuantity" title="จำนวน"
+						<sjg:gridColumn name="user.detail.name" title="ชื่อสมาชิก" />
+						<sjg:gridColumn name="totalQuantity" title="จำนวน" align="right"
 							formatter="integer" search="false"/>
-						<sjg:gridColumn name="totalPrice" title="ราคารวม" sortable="false"
-							formatter="currency" search="false" />
-						<sjg:gridColumn name="totalSv" index="totalPV"
-							title="Total Smile Value" formatter="integer" width="235" search="false" />
+						<sjg:gridColumn name="totalPrice" title="ราคารวม" sortable="false" formatoptions="{decimalSeparator:'.',thousandsSeparator: ',', decimalPlaces: 2}"
+							formatter="currency" search="false" align="right" />
+						<sjg:gridColumn name="totalSv" index="totalPV" formatoptions="{thousandsSeparator: ','}"
+							title="Total Smile Value" formatter="integer" width="150" search="false" align="right"/>
 					</sjg:grid>
 					<br />				
 					
