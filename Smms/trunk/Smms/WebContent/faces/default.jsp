@@ -120,11 +120,12 @@ And MemberShip Management</span>
 	</li>
 	<!-- 
            <li class="ui-widget-header"><s:url id="urllogin" action="login"/><sj:a id="loginlink" href="%{urllogin}" targets="main">&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;</sj:a> </li>
-           -->
+           
 	<li class="ui-widget-header"><s:url id="urlchgpasswd"
 		action="chgpasswd" /><sj:a id="chgpasswdlink"
 		href="%{urlchgpasswd}" targets="main">&nbsp;เปลี่ยนรหัสผ่าน&nbsp;</sj:a>
 	</li>
+	-->
 	<li class="ui-widget-header"><s:url id="urlblackoffice"
 		action="blackoffice" /><sj:a id="blackofficelink"
 		href="%{urlblackoffice}" targets="main">&nbsp;จัดการการชื้อสินค้า&nbsp;</sj:a>

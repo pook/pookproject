@@ -32,6 +32,7 @@ import javax.persistence.TemporalType;
 	@NamedQuery(name = "userSize", query = "select count(0) from Users U "),
 	@NamedQuery(name = "loadUser", query = "select U from Users U "),
 	@NamedQuery(name = "updateCard", query = "update Users U set recivecard=true where U.node1.displayName=?1"),
+	@NamedQuery(name = "resetPassword", query = "update Users U set U.password=?1 where U.userId=?2"),
 	@NamedQuery(name = "userdownlinesize", query = "select count(0) from Users U where U.node1.inviter=?1"),
 	@NamedQuery(name = "loaddownline", query = "select U from Users U where U.node1.inviter=?1"),
 	@NamedQuery(name = "findmaxregister", query = "select U.maxRegister from Users U where U.userId =?1"),

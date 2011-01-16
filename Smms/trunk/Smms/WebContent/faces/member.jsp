@@ -149,6 +149,7 @@ table {
 	action="json-fetch-upline.action" />
 <s:url id="showdownlineurl" action="showdownline"/>
 <s:url id="teamsurl" action="teams"/>
+<s:url id="chgpasswdurl" action="chgpasswd"/>
 <sj:dialog 
 		width="450"
     	id="btndialog" 
@@ -194,6 +195,10 @@ table {
 	</sj:a>	<sj:a id="teamlink" href="%{teamsurl}" indicator="indicator"
 						targets="main-member" button="true" buttonIcon="ui-icon-gear">
 	ดูลูกทีม
+	</sj:a>
+		<sj:a id="chgpasswlink" href="%{chgpasswdurl}" indicator="indicator"
+						targets="main" button="true" buttonIcon="ui-icon-gear">
+	Change Password
 	</sj:a>
  <sj:submit id= "sdialog"
     	openDialog="btndialog" 

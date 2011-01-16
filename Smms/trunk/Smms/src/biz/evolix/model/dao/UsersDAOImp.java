@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import biz.evolix.model.SmileUsersDetails;
 import biz.evolix.model.Users;
 import biz.evolix.model.dao.callback.FindByCondition1;
 import biz.evolix.model.dao.callback.FindByCondition2;
@@ -20,6 +19,7 @@ import biz.evolix.model.dao.callback.GenericsizeByQuery;
 import biz.evolix.model.dao.callback.MaxResult;
 import biz.evolix.model.dao.callback.MaxResultCon1;
 import biz.evolix.model.dao.callback.UpdateCon1;
+import biz.evolix.model.dao.callback.UpdateCon2;
 
 @Repository
 @Transactional(isolation = Isolation.DEFAULT)
@@ -229,5 +229,15 @@ public class UsersDAOImp extends JpaDaoSupport implements UsersDAO {
 			log.error(e.getMessage());
 		}
 		return i;
+	}
+
+	@Override
+	public void updateQuery(Object arg0, Object arg1, String nameQuery) {
+		try {
+			getJpaTemplate().execute(new UpdateCon2<Long>(arg0,arg1, nameQuery));
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		
 	}	
 }

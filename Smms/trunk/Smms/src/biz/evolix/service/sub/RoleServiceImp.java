@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import biz.evolix.customconst.ConstType;
 import biz.evolix.model.Authorities;
 import biz.evolix.model.Staff;
 import biz.evolix.model.Users;
@@ -26,6 +27,7 @@ public class RoleServiceImp implements RoleService {
 	private AuthoritiesDAO authoritiesDAO;
 	@Autowired
 	private StaffDAO staffDAO;
+
 	@Override
 	public Integer sizeOfRevCard() {
 		long x = usersDAO.sizeRevCard();
@@ -37,13 +39,17 @@ public class RoleServiceImp implements RoleService {
 		List<Users> user = usersDAO.userRecCard(start, max);
 		ub = new ArrayList<UserBean>();
 		for (int i = 0; i < user.size(); i++)
-			ub.add(new UserBean(i, user.get(i).getNode1().getSmileId(), user
-					.get(i).getDetail().getName(), user.get(i).getDetail()
-					.getSurename(), user.get(i).getNode1().getDisplayName(),
-					user.get(i).getBrance(), user.get(i).getBranceCard(),user.get(i).getDate()));
+			ub.add(new UserBean(i, user.get(i).getUserId(), user.get(i)
+					.getNode1().getSmileId(),
+					user.get(i).getDetail().getName(), user.get(i).getDetail()
+							.getSurename(), user.get(i).getNode1()
+							.getDisplayName(), user.get(i).getBrance(), user
+							.get(i).getBranceCard(), user.get(i).getDate()));
 		return ub;
 	}
-	private List<UserBean> ub ;
+
+	private List<UserBean> ub;
+
 	public void setUsersDAO(UsersDAO usersDAO) {
 		this.usersDAO = usersDAO;
 	}
@@ -52,13 +58,20 @@ public class RoleServiceImp implements RoleService {
 		return usersDAO;
 	}
 
+	private static List<Integer> rows(String userIds) {
+		String[] rowstr = userIds.split(",");
+		List<Integer> rows = new ArrayList<Integer>();
+		for (String row : rowstr)
+			rows.add(new Integer(row));
+		return rows;
+	}
+
 	@Override
 	public void updateCard(String userIds) {
-		String[] rowstr = userIds.split(",");List<Integer>rows = new ArrayList<Integer>();	
-		for(String row : rowstr)rows.add(new Integer(row));		
+		List<Integer> rows = rows(userIds);
 		try {
 			for (int row : rows)
-				usersDAO.updateQuery(ub.get(row).getDisplayName(),"updateCard");
+				usersDAO.updateQuery(ub.get(row).getDisplayName(), "updateCard");
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
@@ -73,16 +86,18 @@ public class RoleServiceImp implements RoleService {
 
 	@Override
 	public List<UserRoleBean> userRole(int start, int max) {
-		users = usersDAO.find(start, max);		
+		users = usersDAO.find(start, max);
 		return find(users);
 	}
-	private List<UserRoleBean>find(List<Users>users){
+
+	private List<UserRoleBean> find(List<Users> users) {
 		List<UserRoleBean> roles = new ArrayList<UserRoleBean>();
 		for (int i = 0; i < users.size(); i++) {
 			Collection<Authorities> auth = users.get(i).getAuthorities();
-			UserRoleBean b = new UserRoleBean(i, users.get(i).getNode1().getSmileId()
-					, users.get(i).getDetail().getName(), users
-					.get(i).getMaxRegister(),users.get(i).getDetail().getTel(),users.get(i).getDate());
+			UserRoleBean b = new UserRoleBean(i, users.get(i).getNode1()
+					.getSmileId(), users.get(i).getDetail().getName(), users
+					.get(i).getMaxRegister(),
+					users.get(i).getDetail().getTel(), users.get(i).getDate());
 			for (Authorities a : auth) {
 				if (a.getAuthority().equals(Role.ROLE_MEMBER.name())) {
 					b.setMember(true);
@@ -105,43 +120,45 @@ public class RoleServiceImp implements RoleService {
 	public void updateRole(UserRoleBean roleb) {
 		int idx = roleb.getId();
 		Users user = users.get(idx);
-		if (user != null) {	
+		if (user != null) {
 			addRole(user, roleb.getAdmin(), Role.ROLE_ADMIN.name());
 			addRole(user, roleb.getMember(), Role.ROLE_MEMBER.name());
 			addRole(user, roleb.getStaff(), Role.ROLE_STAFF.name());
-			staff(roleb.getStaff(),user);			
+			staff(roleb.getStaff(), user);
 			user.setMaxRegister(roleb.getMaxuser());
 			try {
-				usersDAO.update(user);			
+				usersDAO.update(user);
 				usersDAO.flush();
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);
 			}
 		}
 	}
-	private void addRole(Users user,boolean hasRole,String role){
-		Authorities auth = authoritiesDAO.findByName( role,user);
-		if (hasRole){				
-			if(auth == null){
+
+	private void addRole(Users user, boolean hasRole, String role) {
+		Authorities auth = authoritiesDAO.findByName(role, user);
+		if (hasRole) {
+			if (auth == null) {
 				auth = new Authorities(user, role);
 				authoritiesDAO.insert(auth);
 				user.getAuthorities().add(auth);
-			}else{
+			} else {
 				user.getAuthorities().add(auth);
 			}
-		}else{
-			if(user.getAuthorities().contains(auth)){
+		} else {
+			if (user.getAuthorities().contains(auth)) {
 				user.getAuthorities().remove(auth);
 			}
 		}
 	}
-	private void staff(boolean hasStaff,Users user){
-		Staff  staff =  staffDAO.find(user.getUserId());
-		if(hasStaff){
-			if(staff == null)
-				staffDAO.persist(new Staff(user.getUserId(),user.getBrance()));							
-		}else {
-			if(staff != null)
+
+	private void staff(boolean hasStaff, Users user) {
+		Staff staff = staffDAO.find(user.getUserId());
+		if (hasStaff) {
+			if (staff == null)
+				staffDAO.persist(new Staff(user.getUserId(), user.getBrance()));
+		} else {
+			if (staff != null)
 				staffDAO.remove(staff);
 		}
 	}
@@ -168,5 +185,19 @@ public class RoleServiceImp implements RoleService {
 
 	public StaffDAO getStaffDAO() {
 		return staffDAO;
+	}
+
+	@Override
+	public void resetPasswd(String userIds) {
+		List<Integer> rows = rows(userIds);
+		try {
+			for (int row : rows)
+				usersDAO.updateQuery(ConstType.DEFAULT_PW, ub.get(row)
+						.getUserId(), "resetPassword");
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		usersDAO.flush();
+
 	}
 }

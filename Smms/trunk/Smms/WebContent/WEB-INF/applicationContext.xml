@@ -261,7 +261,9 @@
 	<bean id="staffEditAct" scope="prototype" class="biz.evolix.action.role.EditStaffAct">
 		<constructor-arg  ref="staffService" />		
 	</bean>
-	
+	<bean id="resetPasswdAct" scope="prototype" class="biz.evolix.action.role.ResetPasswdAct">
+		<constructor-arg  ref="roleService" />		
+	</bean>
 	<!-- end faces action -->
 	<context:annotation-config />
 </beans>

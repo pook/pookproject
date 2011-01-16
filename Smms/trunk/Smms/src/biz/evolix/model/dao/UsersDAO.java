@@ -10,6 +10,7 @@ public interface UsersDAO {
 	public void persist(Users user);
 	public void update(Users user);
 	public void updateQuery(Object arg0,String nameQuery);
+	public void updateQuery(Object arg0,Object arg1,String nameQuery);
 	public Long sizeRevCard();
 	public List<Users> userRecCard(int start,int max);
 	public Long size();

@@ -19,14 +19,15 @@ $.subscribe('getselectedids2', function(event,data) {
 });
 $.subscribe('getselectedids3', function(event,data) {
 	var s;
-	s = $("#gridmultitable").jqGrid('getGridParam','selarrrow');
+	s = $("#gridedittable2").jqGrid('getGridParam','selarrrow',{reloadAfterSubmit:true});
 	$.ajax({
 		type : "get",
-		url : "edit-card",
+		url : "resetpasswd",
 		data : "rows="+s,
 		success: function(dat) {			
 		}		
 	});	
+	$("#div4").load("smmsrole.action");
 });
 
 </script>
@@ -125,7 +126,7 @@ $.subscribe('getselectedids3', function(event,data) {
 					</sj:div>
 				</sj:div></div>
 				<div id="tone"><sj:div id="div0">					
-					<sj:div id="div2">
+					<div id="div2">
 						<s:url id="roleurl" action="json-role" />
 						<s:url id="editroleurl" action="edit-role1" />
 						<sjg:grid id="gridedittable2" caption="กำหนดสิทธิ์" dataType="json"
@@ -167,11 +168,11 @@ $.subscribe('getselectedids3', function(event,data) {
 						<sj:submit id="grid_edit_colsbutton35" value="Show/Hide Columns"
 							onClickTopics="showcolumns" button="true" />
 						<sj:submit id="grid_multi_getselectedbuttonxxs13"
-							value="Reset Password" onClickTopics="getselectedids"
+							value="Reset Password" onClickTopics="getselectedids3" 
 							button="true" />
 						<br/>
 						<br/>
-					</sj:div>
+					</div>
 				</sj:div></div>
 				<div id="tfour"><sj:div id="div4">					
 					<sj:div id="div44">

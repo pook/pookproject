@@ -8,10 +8,11 @@ public class UserBean extends User{
 	private String brance;
 	private String branceCard;	
 	private Date date;
-	public UserBean(int id,String smileId, String name, String surename,
+	private Long userId;
+	public UserBean(int id,long userId,String smileId, String name, String surename,
 			String displayName, String brance, String branceCard,Date date) {
 		super(id, smileId, displayName);
-		this.surename = surename;
+		this.surename = surename;this.userId = userId;
 		this.displayName = displayName;
 		this.brance = brance;
 		this.branceCard = branceCard;this.date= date;
@@ -45,5 +46,11 @@ public class UserBean extends User{
 	}
 	public Date getDate() {
 		return date;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+	public Long getUserId() {
+		return userId;
 	}	
 }

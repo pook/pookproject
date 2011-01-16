@@ -16,10 +16,9 @@ table {
 }
 </style>
 <script type="text/javascript">
-	function checkdup(o){		
+	function checkdup(){		
 		var np = $("#newpasswd"),rnp = $("#renewpasswd");		
-		if( np.val()!=rnp.val()){
-			o.addClass("ui-state-error");
+		if( np.val()!=rnp.val()){			
 			showmsgInf("ข้อมูล รหัสผ่านใหม่ ไม่ตรงกัน");
 			return false;			
 		}else{
@@ -35,32 +34,9 @@ table {
 		} else {
 			return true;
 		}
-	}
-	function ckvalid(){
-		var v =true,t=$(this);
-		v =  checkLength(t," รหัสผ่าน ",3,30);
-		if(!v){t.focus();}
-		else{
-			t.removeClass( "ui-state-error" );
-			clrErrInf();
-			}
-		
-	}
-	function ckvalid3(){
-		var v =true,t=$(this);
-		v =  checkLength(t," รหัสผ่านใหม่อีกครั้ง ",3,30);
-		v =  v && checkdup(t);
-		if(!v){t.focus();}
-		else{
-			t.removeClass( "ui-state-error" );
-			clrErrInf();
-			return true;
-		}
-		return false;	
 	}	
-	$("#oldpasswd").live("focusout",ckvalid);
-	$("#newpasswd").live("focusout",ckvalid);
-	$("#renewpasswd").live("focusout",ckvalid3);
+	
+	
 	function showmsgInf(msgInf) {
 		$("#messageInfo")
 				.addClass("ui-state-highlight ui-corner-all")
@@ -79,9 +55,15 @@ table {
 		
 	}
 	$("#chgpasswd").submit(function(){
-		var dat = "newpasswd="+$("#newpasswd").val()+"&oldpassword="+$("#oldpasswd").val();			
-		$.ajax({
-			type : "post",
+		var valid = true;var newp =$("#newpasswd"),oldp =$("#oldpasswd"),renewp=$("#renewpasswd");
+		valid = valid && checkLength(oldp, " รหัสผ่าน  ", 3, 30);
+		valid = valid && checkLength(newp, " รหัสผ่านใหม่  ", 3, 30);
+		valid = valid && checkLength(renewp, " รหัสผ่านใหม่อีกครั้ง   ", 3, 30);
+		valid = valid && checkdup();
+		if(valid){
+			var dat = "newpasswd="+newp.val()+"&oldpassword="+oldp.val();			
+			$.ajax({
+				type : "post",
 			contentType : "application/x-www-form-urlencoded;charset=UTF-8",
 			url : "changepasswd",
 			data :dat,
@@ -89,6 +71,7 @@ table {
 				$("#result1").html(res);
 			}
 		});
+		}
 	});
 </script>
 <div id="result1">
