@@ -79,6 +79,9 @@
 	<bean id="skuDAO" class="biz.evolix.model.dao.SkuDAOImp" scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>	
+	<bean id="staffDAO" class="biz.evolix.model.dao.StaffDAOImp" scope="prototype">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
 	<bean id="orderDAO" class="biz.evolix.model.dao.OrderDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
@@ -95,6 +98,7 @@
 	<bean id="userDetail" class="biz.evolix.secure.UserDetail" />
 	<bean id="fetchUplineService" class="biz.evolix.service.FetchUplineServiceImp" scope="session" />
 	<bean id="branceService" class="biz.evolix.service.BranceServiceImp" scope="session" />
+	<bean id="staffService" class="biz.evolix.service.StaffServiceImp" scope="session" />
 	<bean id="changePasswdService" class="biz.evolix.service.sub.imp.ChangePasswdServiceImp" scope="session" />
 	<bean id="roleService" class="biz.evolix.service.sub.RoleServiceImp" scope="session" />
 	<bean id="fetchListTeams" class="biz.evolix.service.FetchListTeamsImp" scope="session" />
@@ -186,7 +190,11 @@
 		scope="prototype">
 		<constructor-arg ref="fetchProvince" />
 	</bean>
-	<bean id="fetchBranceAction" class="biz.evolix.action.global.FetchBranceJSON"
+	<bean id="fetchBranceJSON" class="biz.evolix.action.global.FetchBranceJSON"
+		scope="prototype">
+		<constructor-arg ref="fetchBrance" />
+	</bean>
+	<bean id="fetchBranceAct" class="biz.evolix.action.global.FetchBrance"
 		scope="prototype">
 		<constructor-arg ref="fetchBrance" />
 	</bean>
@@ -247,6 +255,13 @@
 	<bean id="chkCreateAccountAct" scope="prototype" class="biz.evolix.action.register.ChkCreateAccountAct">
 		<constructor-arg  ref="findQuotaService" />		
 	</bean>
+	<bean id="staffManAct" scope="prototype" class="biz.evolix.action.role.StaffManAct">
+		<constructor-arg  ref="staffService" />		
+	</bean>
+	<bean id="staffEditAct" scope="prototype" class="biz.evolix.action.role.EditStaffAct">
+		<constructor-arg  ref="staffService" />		
+	</bean>
+	
 	<!-- end faces action -->
 	<context:annotation-config />
 </beans>

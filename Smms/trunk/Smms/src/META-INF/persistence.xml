@@ -14,10 +14,11 @@
 		<class>biz.evolix.model.Order</class>
 		<class>biz.evolix.model.NodeDescription</class>
 		<class>biz.evolix.model.Node1</class>
+		<class>biz.evolix.model.News</class>
 		<class>biz.evolix.model.Brance</class>
 		<class>biz.evolix.model.BonusPeriod</class>
 		<class>biz.evolix.model.Authorities</class>
-		<class>biz.evolix.model.News</class>
+		<class>biz.evolix.model.Staff</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINEST" />
 			<property name="eclipselink.cache.type.default" value="Weak"/>			

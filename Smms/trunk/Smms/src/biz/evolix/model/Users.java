@@ -35,7 +35,7 @@ import javax.persistence.TemporalType;
 	@NamedQuery(name = "userdownlinesize", query = "select count(0) from Users U where U.node1.inviter=?1"),
 	@NamedQuery(name = "loaddownline", query = "select U from Users U where U.node1.inviter=?1"),
 	@NamedQuery(name = "findmaxregister", query = "select U.maxRegister from Users U where U.userId =?1"),
-	@NamedQuery(name = "findquata", query = "select U.numberOfAccount from Users U where U.userId=?1"),
+	@NamedQuery(name = "findquata", query = "select U.numberOfAccount from Users U where U.userId=?1"),	
 	@NamedQuery(name = "nextquata", query = "select U.numberOfAccount from Users U where U.numberOfAccount=?1 and U.detail=?2")
 	}
 )

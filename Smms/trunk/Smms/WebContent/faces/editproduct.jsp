@@ -19,7 +19,7 @@ div#div4 div {
 				<sj:div id="div2">
 					<s:url id="remoteurl" action="jsoneditproduct" /><!-- EditProduct -->					
 					<s:url id="edit1url" action="add-sku-grid" /><!-- AddSkuAct    (insert,update,del) -->
-					<sjg:grid id="gridedittable" caption="พระราม 4 " dataType="json"
+					<sjg:grid id="gridedittable" caption="ผลิตภัณฑ์" dataType="json"
 						href="%{remoteurl}" pager="true" navigator="true" width="930"
 						navigatorEdit="true"  
 						navigatorSearchOptions="{sopt:['eq']}"

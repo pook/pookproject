@@ -17,6 +17,17 @@ $.subscribe('getselectedids2', function(event,data) {
 	});
 	$("#div4").load("smmsrole.action");
 });
+$.subscribe('getselectedids3', function(event,data) {
+	var s;
+	s = $("#gridmultitable").jqGrid('getGridParam','selarrrow');
+	$.ajax({
+		type : "get",
+		url : "edit-card",
+		data : "rows="+s,
+		success: function(dat) {			
+		}		
+	});	
+});
 
 </script>
 <div id="test"></div>
@@ -30,6 +41,7 @@ $.subscribe('getselectedids2', function(event,data) {
 					tabindex="0" />
 				<sj:tab id="tab3" target="ttree" label="ตั้งค่าสาขา" tabindex="1" />
 				<sj:tab id="tab1" target="tone" label="กำหนดสิทธิ์" tabindex="2" />
+				<sj:tab id="tab4" target="tfour" label=" ตั้งค่า Staff " tabindex="3" />
 				<div id="ttwo"><sj:div id="div01">
 					<sj:div id="div11"></sj:div>
 					<sj:div id="div21">
@@ -44,7 +56,7 @@ $.subscribe('getselectedids2', function(event,data) {
 							multiselect="true" 
 							rowList="15,30" rowNum="15" width="880" editurl="%{cardediturl}"
 							onSelectRowTopics="rowselect">							
-							<sjg:gridColumn name="smileId" index="smileId" title="รหัสสมาชิก" width="100"
+							<sjg:gridColumn name="smileId" index="smileId" title="รหัสสมาชิก" width="120"
 								sortable="false"  editable="false"/>
 							<sjg:gridColumn name="name" 
 								title="ชื่อ สมาชิก" sortable="false"/>
@@ -52,6 +64,9 @@ $.subscribe('getselectedids2', function(event,data) {
 								title="นามสกุล" sortable="false"/>
 							<sjg:gridColumn name="displayName" 
 								title="ชื่อแสดงในสายงาน" sortable="false"/>
+								<sjg:gridColumn name="date"  title="วันที่สมัคร" width="100"
+								editable="false" search="false" formatter="date" 
+								 align="center" />
 							<sjg:gridColumn name="brance" index="brance"
 								title="สาขาที่ลงทะเบียน" sortable="false"/>
 							<sjg:gridColumn name="branceCard" index="branceCard"
@@ -121,10 +136,10 @@ $.subscribe('getselectedids2', function(event,data) {
 							navigatorEdit="false" navigatorView="false"
 							navigatorDelete="false" navigatorAdd="false" rownumbers="15"							
 							gridModel="gridModel" rowList="15,30" rowNum="15" editinline="true"
-							width="880" editurl="%{editroleurl}"
+							width="880" editurl="%{editroleurl}" multiselect="true" 
 							onSelectRowTopics="rowselect">
 							<sjg:gridColumn name="smileId" index="smileId" title="รหัสสมาชิก"
-								sortable="false" editable="false" width="80"/>
+								sortable="false" editable="false" width="100"/>
 							<sjg:gridColumn name="name" index="name"
 								title="ชื่อ สมาชิก" sortable="false" editable="false" />
 							<sjg:gridColumn name="tel"  title="เบอร์โทร" width="80"
@@ -154,6 +169,43 @@ $.subscribe('getselectedids2', function(event,data) {
 						<sj:submit id="grid_multi_getselectedbuttonxxs13"
 							value="Reset Password" onClickTopics="getselectedids"
 							button="true" />
+						<br/>
+						<br/>
+					</sj:div>
+				</sj:div></div>
+				<div id="tfour"><sj:div id="div4">					
+					<sj:div id="div44">
+						<s:url id="staffurl" action="json-staff" />
+						<s:url id="selectbranceeurl" action="fetch-brance" />
+						<s:url id="editstaffurl" action="edit-staff" />
+						<sjg:grid id="gridedittable4" caption="staff" dataType="json"
+							href="%{staffurl}" pager="true" navigator="true"
+							navigatorSearchOptions="{sopt:['eq'],reloadAfterSubmit:true}"
+							navigatorEditOptions="{height:280,reloadAfterSubmit:false}"											
+							navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
+							navigatorEdit="false" navigatorView="false"
+							navigatorDelete="false" navigatorAdd="false" rownumbers="15"							
+							gridModel="gridModel" rowList="15,30" rowNum="15" editinline="true"
+							width="880" editurl="%{editstaffurl}"  
+							>
+							<sjg:gridColumn name="smileId" index="smileId" title="รหัสสมาชิก"
+								sortable="false" editable="false" width="100"/>
+							<sjg:gridColumn name="name" index="name"
+								title="ชื่อ สมาชิก" sortable="false" editable="false" />
+							
+							<sjg:gridColumn name="date"  title="วันที่สมัคร" width="100"
+								editable="false" search="false" formatter="date" 
+								 align="center" />							
+							<sjg:gridColumn name="brance" index="brance" width="120" search="false"
+								title="สาขา" edittype="select" editable="true"  
+								editoptions="{ dataUrl : '%{selectbranceeurl}' }" align="center" />
+						</sjg:grid>
+						<br />
+						<sj:submit id="grid_edit_searchbutton4" value="Search"
+							onClickTopics="searchgrid" button="true" />
+						<sj:submit id="grid_edit_colsbutton4" value="Show/Hide Columns"
+							onClickTopics="showcolumns" button="true" />
+						
 						<br/>
 						<br/>
 					</sj:div>

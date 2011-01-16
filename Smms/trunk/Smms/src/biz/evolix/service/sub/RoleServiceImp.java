@@ -9,11 +9,13 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import biz.evolix.model.Authorities;
+import biz.evolix.model.Staff;
 import biz.evolix.model.Users;
 import biz.evolix.model.bean.UserBean;
 import biz.evolix.model.bean.UserRoleBean;
 import biz.evolix.model.dao.AuthoritiesDAO;
 import biz.evolix.model.dao.Role;
+import biz.evolix.model.dao.StaffDAO;
 import biz.evolix.model.dao.UsersDAO;
 
 public class RoleServiceImp implements RoleService {
@@ -22,6 +24,8 @@ public class RoleServiceImp implements RoleService {
 	private UsersDAO usersDAO;
 	@Autowired
 	private AuthoritiesDAO authoritiesDAO;
+	@Autowired
+	private StaffDAO staffDAO;
 	@Override
 	public Integer sizeOfRevCard() {
 		long x = usersDAO.sizeRevCard();
@@ -78,7 +82,7 @@ public class RoleServiceImp implements RoleService {
 			Collection<Authorities> auth = users.get(i).getAuthorities();
 			UserRoleBean b = new UserRoleBean(i, users.get(i).getNode1().getSmileId()
 					, users.get(i).getDetail().getName(), users
-					.get(i).getMaxRegister(),users.get(i).getDetail().getTel());
+					.get(i).getMaxRegister(),users.get(i).getDetail().getTel(),users.get(i).getDate());
 			for (Authorities a : auth) {
 				if (a.getAuthority().equals(Role.ROLE_MEMBER.name())) {
 					b.setMember(true);
@@ -105,6 +109,7 @@ public class RoleServiceImp implements RoleService {
 			addRole(user, roleb.getAdmin(), Role.ROLE_ADMIN.name());
 			addRole(user, roleb.getMember(), Role.ROLE_MEMBER.name());
 			addRole(user, roleb.getStaff(), Role.ROLE_STAFF.name());
+			staff(roleb.getStaff(),user);			
 			user.setMaxRegister(roleb.getMaxuser());
 			try {
 				usersDAO.update(user);			
@@ -130,6 +135,16 @@ public class RoleServiceImp implements RoleService {
 			}
 		}
 	}
+	private void staff(boolean hasStaff,Users user){
+		Staff  staff =  staffDAO.find(user.getUserId());
+		if(hasStaff){
+			if(staff == null)
+				staffDAO.persist(new Staff(user.getUserId(),user.getBrance()));							
+		}else {
+			if(staff != null)
+				staffDAO.remove(staff);
+		}
+	}
 
 	public void setAuthoritiesDAO(AuthoritiesDAO authoritiesDAO) {
 		this.authoritiesDAO = authoritiesDAO;
@@ -145,5 +160,13 @@ public class RoleServiceImp implements RoleService {
 		users = new ArrayList<Users>();
 		users.add(user);
 		return find(users);
+	}
+
+	public void setStaffDAO(StaffDAO staffDAO) {
+		this.staffDAO = staffDAO;
+	}
+
+	public StaffDAO getStaffDAO() {
+		return staffDAO;
 	}
 }

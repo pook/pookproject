@@ -14,6 +14,7 @@ import javax.persistence.Column;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "findAuthorities", query = "select A from Authorities A where A.user.userId =?1"),
+		@NamedQuery(name = "findAllStaff", query = "select U from Users U,Authorities A where A.user = U and A.authority=?1"),
 		@NamedQuery(name = "findAuthoritiesByName", query = "select A from Authorities A where A.authority=?1 and A.user=?2"),
 		@NamedQuery(name = "removeAuthorities", query = "delete from Authorities A where A.user.userId =?1") })
 @Table(name = "AUTHORITIES")

@@ -37,7 +37,6 @@ public class CardManageAct extends ActionSupport {
 	}
 
 	public String getJSON() throws Exception {
-
 		return SUCCESS;
 	}
 	private List<UserBean> gridModel;

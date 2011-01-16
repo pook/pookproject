@@ -9,45 +9,35 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import biz.evolix.customconst.ConstType;
-import biz.evolix.model.bean.UserRoleBean;
-import biz.evolix.service.sub.RoleService;
+import biz.evolix.model.Brance;
+import biz.evolix.model.bean.UserStaff;
+import biz.evolix.service.BranceService;
+import biz.evolix.service.StaffService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
-public class RoleManAct extends ActionSupport {
+public class StaffManAct extends ActionSupport{
 
-	private static final long serialVersionUID = -1859780521426943662L;
-	private static Logger log = Logger.getLogger(RoleManAct.class);
-
-	@Action(value = "/json-role", results = { @Result(name = "success", type = "json") })
-	public String execute() throws Exception {		
-		try {
-			if (searchString != null && searchOper != null &&!searchString.equals("")&&!searchOper.equals("")) {
-				if (searchOper.equalsIgnoreCase("eq")) {
-					setGridModel(roleService.search(searchString));
-					setTotal(1);
-				}
-			} else {
-				setRecord(roleService.sizeMember());
-				int to = (getRows() * getPage());
-				int from = to - getRows();
-				setGridModel(roleService.userRole(from, getRecord()));
-				setTotal();
-			}
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
+	private static final long serialVersionUID = 7246187661225173231L;
+	private static Logger log = Logger.getLogger(StaffManAct.class);
+	@Action(value = "/json-staff", results = { @Result(name = "success", type = "json") })
+	public String execute() throws Exception {
+		try{
+			long l = staffService.size();
+			setRecord((int)l);			
+			int to = (getRows() * getPage());
+			int from = to - getRows();		
+			setGridModel(staffService.staffs(from ,getRecord() ));			
+			setTotal();
+		}catch (Exception e) {
+			log.error(e.getMessage(),e);
 			return ERROR;
-		}
-		return SUCCESS;
+		}		
+		return SUCCESS;		
 	}
-
-	public String getJSON() throws Exception {
-		return SUCCESS;
-	}
-
-	private List<UserRoleBean> gridModel;
+	private List<UserStaff> gridModel;
 	private Integer rows = 0;
 	private Integer page = 0;
 	private String sord;
@@ -57,9 +47,8 @@ public class RoleManAct extends ActionSupport {
 	private String searchOper;
 	private Integer total = 0;
 	private Integer record = 0;
-	private Boolean loadonce = false;
-	private String id;
-
+	
+	
 	public Integer getRows() {
 		return rows;
 	}
@@ -132,48 +121,27 @@ public class RoleManAct extends ActionSupport {
 		this.record = record;
 		this.setTotal();
 	}
-
-	private void setTotal() {
+	private void setTotal(){
 		if (getRecord() > 0 && getRows() > 0) {
-			setTotal((int) Math.ceil((double) this.record / (double) this.rows));
+			setTotal( (int) Math.ceil((double) this.record
+					/ (double) this.rows));
 		} else {
 			setTotal(ConstType.ZERO);
-		}
+		}		
 	}
 
-	public void setGridModel(List<UserRoleBean> gridModel) {
+	public void setGridModel(List<UserStaff> gridModel) {
 		this.gridModel = gridModel;
 	}
 
-	public List<UserRoleBean> getGridModel() {
+	public List<UserStaff> getGridModel() {
 		return gridModel;
 	}
-
-	public void setLoadonce(Boolean loadonce) {
-		this.loadonce = loadonce;
-	}
-
-	public Boolean getLoadonce() {
-		return isLoadonce();
-	}
-
-	public Boolean isLoadonce() {
-		return loadonce;
-	}
-
-	private RoleService roleService;
-
-	public RoleManAct(RoleService roleService) {
+	private StaffService staffService ;
+	public StaffManAct(StaffService staffService) {
 		super();
-		this.roleService = roleService;
+		this.staffService = staffService;
 	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getId() {
-		return id;
-	}
-
+	
+	
 }

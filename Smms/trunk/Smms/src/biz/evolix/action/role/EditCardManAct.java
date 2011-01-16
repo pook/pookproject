@@ -11,7 +11,7 @@ import biz.evolix.service.sub.RoleService;
 import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage(value = "smms")
-@InterceptorRef("jsonValidationWorkflowStack")
+
 public class EditCardManAct extends ActionSupport {
 
 	private static Logger log = Logger.getLogger(EditCardManAct.class);

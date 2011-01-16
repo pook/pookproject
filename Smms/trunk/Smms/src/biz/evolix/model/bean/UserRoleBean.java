@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class UserRoleBean extends User{
 	
-	public UserRoleBean(Integer id, String smileId, String name,int maxuser,String tel) {
+	public UserRoleBean(Integer id, String smileId, String name,int maxuser,String tel,Date date) {
 		super(id, smileId, name);
 		this.maxuser = maxuser;	
-		this.tel = tel;
+		this.tel = tel;this.date = date;
 	}
 	
 	public UserRoleBean(Integer id, String smileId, String name, Boolean admin,
