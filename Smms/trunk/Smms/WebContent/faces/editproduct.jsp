@@ -17,8 +17,8 @@ div#div4 div {
 			<td><sj:div id="div0">
 				<sj:div id="div1"></sj:div>
 				<sj:div id="div2">
-					<s:url id="remoteurl" action="jsoneditproduct" /><!-- EditProduct -->					
-					<s:url id="edit1url" action="add-sku-grid" /><!-- AddSkuAct    (insert,update,del) -->
+					<s:url id="remoteurl" action="jsoneditproduct-admin" /><!-- EditProduct -->					
+					<s:url id="edit1url" action="add-sku-grid-admin" /><!-- AddSkuAct    (insert,update,del) -->
 					<sjg:grid id="gridedittable" caption="ผลิตภัณฑ์" dataType="json"
 						href="%{remoteurl}" pager="true" navigator="true" width="930"
 						navigatorEdit="true"  
@@ -34,7 +34,7 @@ div#div4 div {
 							sortable="true" />
 						<sjg:gridColumn name="name" index="name" title="ชื่อ ผลิตภัณฑ์" editrules="{required:true}"
 							editable="true" width="200"/>
-						<sjg:gridColumn name="description" title="รายละเอียด ผลิตภัณฑ์"  editrules="{required:true}"
+						<sjg:gridColumn name="description" title="รายละเอียด ผลิตภัณฑ์"  editrules="{required:true,minlength:5,required:true}" edittype="textarea"
 							editable="true" width="250" search="false"/>
 						<sjg:gridColumn name="price" title="ราคากลางต่อหน่วย" formatter="currency" required="true" editrules="{number:true,required:true}"
 							editable="true" width="180" search="false"/>
@@ -48,7 +48,7 @@ div#div4 div {
 							formatter="integer" sortable="false" editable="true" width="160" search="false"/>
 					</sjg:grid>
 					<br />
-					<sj:submit id="grid_edit_addbutton" value="Add New"
+					<sj:submit id="grid_edit_addbutton2e" value="Add New"
 						onClickTopics="rowadd" button="true" />
 					<sj:submit id="grid_edit_searchbutton" value="Search"
 						onClickTopics="searchgrid" button="true" />

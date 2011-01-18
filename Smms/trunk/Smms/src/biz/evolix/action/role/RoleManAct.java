@@ -21,7 +21,7 @@ public class RoleManAct extends ActionSupport {
 	private static final long serialVersionUID = -1859780521426943662L;
 	private static Logger log = Logger.getLogger(RoleManAct.class);
 
-	@Action(value = "/json-role", results = { @Result(name = "success", type = "json") })
+	@Action(value = "/json-role-admin", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {		
 		try {
 			if (searchString != null && searchOper != null &&!searchString.equals("")&&!searchOper.equals("")) {

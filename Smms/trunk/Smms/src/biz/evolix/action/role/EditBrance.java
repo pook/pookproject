@@ -18,7 +18,7 @@ public class EditBrance extends ActionSupport {
 
 	private static final long serialVersionUID = -5539029562838837864L;
 
-	@Action(value = "/edit-grid-brance", results = {
+	@Action(value = "/edit-grid-brance-admin", results = {
 			@Result(location = "smmsrole.jsp", name = "success"),
 			@Result(location = "smmsrole.jsp", name = "input") })
 	public String execute() throws Exception {

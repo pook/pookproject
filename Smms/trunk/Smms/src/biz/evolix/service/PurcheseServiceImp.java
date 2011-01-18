@@ -68,9 +68,11 @@ public class PurcheseServiceImp implements PurcheseService {
 		o.setSeller(getUsers().getSmileid());
 		o.setPurchese(new ArrayList<Purchese>());
 		o.setDate(new Date());
-		o = orderDAO.newOrder(o);
-		if(o==null)return false;
-		getOrdering().add(o);
+		if(getOrdering().isEmpty())	{
+		o = orderDAO.newOrder(o);			
+		if(o==null)return false;		
+			getOrdering().add(o);
+		}
 		return true;
 	}
 

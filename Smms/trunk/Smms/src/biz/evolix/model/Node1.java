@@ -82,7 +82,8 @@ public class Node1 implements java.io.Serializable {
 	private String inviter;
 	@Column(name = "SMILE_ID", length = 50)
 	private String smileId;
-
+	@Column(name ="TOTAL_SV")
+	private Integer totalSv = 0;
 	public Node1() {
 		super();
 	}
@@ -182,4 +183,11 @@ public class Node1 implements java.io.Serializable {
 		return smileId;
 	}
 
+	public void setTotalSv(Integer totalSv) {
+		this.totalSv = totalSv;
+	}
+
+	public Integer getTotalSv() {
+		return totalSv;
+	}
 }

@@ -20,7 +20,7 @@ public class AddSkuAct extends ActionSupport {
 	private static Logger log = Logger.getLogger(AddSkuAct.class);
 	private InventoryService inventoryService;
 
-	@Action(value = "/add-sku-grid", results = { @Result(name = "success", location = "editproduct.jsp") })
+	@Action(value = "/add-sku-grid-admin", results = { @Result(name = "success", location = "editproduct.jsp") })
 	public String execute() {
 		if (oper.equals(ConstType.ADD)) {
 			add();

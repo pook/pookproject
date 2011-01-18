@@ -35,7 +35,7 @@ public class StaffServiceImp implements StaffService {
 		for (Users u : users) {
 			Staff staff = staffDAO.find(u.getUserId());
 			staffs.add(new UserStaff(i++, u.getUserId(), u.getNode1()
-					.getSmileId(), u.getDetail().getName(), u.getDate(), staff
+					.getSmileId(), u.getDetail().getName(),u.getNode1().getDisplayName(), u.getDate(), staff
 					.getBrance()));
 		}
 		return staffs;

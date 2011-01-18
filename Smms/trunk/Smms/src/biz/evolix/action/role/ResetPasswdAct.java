@@ -13,7 +13,7 @@ public class ResetPasswdAct extends ActionSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = -8622495338803920907L;
-	@Action(value = "/resetpasswd", results = {
+	@Action(value = "/resetpasswd-admin", results = {
 			@Result(location = "smmsrole.jsp", name = "success"),
 			@Result(location = "smmsrole.jsp", name = "input") })
 	public String execute() throws Exception {

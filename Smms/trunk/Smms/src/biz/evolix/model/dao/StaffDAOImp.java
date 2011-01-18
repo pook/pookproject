@@ -27,6 +27,17 @@ public class StaffDAOImp extends JpaDaoSupport implements StaffDAO {
 		}
 		return staff;
 	}
+	@Override	
+	public Staff find2(long userId) {
+		Staff staff = null;
+		try {
+			staff = getJpaTemplate().find(Staff.class, userId);
+		} catch (Exception e) {
+		
+		}
+		return staff;
+	}
+
 
 	@Override
 	@Transactional
@@ -41,8 +52,9 @@ public class StaffDAOImp extends JpaDaoSupport implements StaffDAO {
 	private static Logger log = Logger.getLogger(StaffDAOImp.class);
 
 	@Override
+	@Transactional
 	public void remove(Staff staff) {
-		try {
+		try {			
 			getJpaTemplate().remove(staff);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

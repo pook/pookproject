@@ -39,12 +39,17 @@ public class UpdateComServiceImp implements UpdateComService {
 			nc = node1DAO.find(new NodePK(treeId,c));
 			nl = node1DAO.find(new NodePK(treeId,Generate.left(c))); 
 			nr = node1DAO.find(new NodePK(treeId,Generate.right(c)));
-			int com = 0;
-			if (nl != null)
+			int com = 0,totalSv = 0;
+			if (nl != null){
 				com += nl.getCommissions();
-			if (nr != null)
+				totalSv +=(nl.getSv()+nl.getTotalSv());
+			}
+			if (nr != null){
 				com += nr.getCommissions();
+				totalSv +=(nr.getSv()+nr.getTotalSv());
+			}
 			nc.setCommissions(com);
+			nc.setTotalSv(totalSv);
 			node1DAO.update(nc);
 			return new NodePK(treeId,Generate.parent(c));
 		}

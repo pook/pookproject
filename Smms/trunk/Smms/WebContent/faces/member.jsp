@@ -35,7 +35,7 @@
 		$("#f20").empty().append(dat.bonusTeam+dat.bonusInv);
 		$("#f21").empty().append(dat.bonusLast);
 		$("#f501").empty().append(dat.detail.numOfAccount);
-		$("#f502").empty().append(dat.node1.sv);	
+		$("#f502").empty().append(dat.node1.totalSv);	
 		$.ajax({
 			url :"check-account",					
 			success : function(res) {					

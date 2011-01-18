@@ -24,7 +24,7 @@ public class EditOrderAct extends ActionSupport {
 	private Integer orderId;
 	private PurcheseService purcheseService;
 
-	@Action(value = "/edit-grid-order", results = {
+	@Action(value = "/edit-grid-order-staff", results = {
 			@Result(location = "echo/error.jsp", name = "error"),
 			@Result(location = "echo/redirect.jsp", name = "success")
 			 })

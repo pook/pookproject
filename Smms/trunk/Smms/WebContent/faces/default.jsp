@@ -120,26 +120,34 @@ And MemberShip Management</span>
 	</li>
 	<!-- 
            <li class="ui-widget-header"><s:url id="urllogin" action="login"/><sj:a id="loginlink" href="%{urllogin}" targets="main">&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;</sj:a> </li>
-           
-	<li class="ui-widget-header"><s:url id="urlchgpasswd"
-		action="chgpasswd" /><sj:a id="chgpasswdlink"
-		href="%{urlchgpasswd}" targets="main">&nbsp;เปลี่ยนรหัสผ่าน&nbsp;</sj:a>
+      --> 
+      <sec:authorize access="hasRole('ROLE_STAFF')">	    
+	<li class="ui-widget-header"><s:url id="urlstaffmember"
+		action="staffmember" /><sj:a id="staffmemberlink"
+		href="%{urlstaffmember}" targets="main">&nbsp;สิทธิ์การสมัคร&nbsp;</sj:a>
 	</li>
-	-->
+	</sec:authorize>
+<sec:authorize access="hasRole('ROLE_STAFF')">	
 	<li class="ui-widget-header"><s:url id="urlblackoffice"
 		action="blackoffice" /><sj:a id="blackofficelink"
 		href="%{urlblackoffice}" targets="main">&nbsp;จัดการการชื้อสินค้า&nbsp;</sj:a>
 	</li>
+	</sec:authorize>
+<sec:authorize access="hasRole('ROLE_ADMIN')">	
 	<li class="ui-widget-header"><s:url id="urleditproduct"
 		action="editproduct" /><sj:a id="editproduct"
 		href="%{urleditproduct}" targets="main">&nbsp;ตั้งค่าผลิตภัณฑ์&nbsp;</sj:a></li>
+		</sec:authorize>
+<sec:authorize access="hasRole('ROLE_ADMIN')">		
 	<li class="ui-widget-header"><s:url id="urlsmmsrole"
 		action="smmsrole" /><sj:a id="smmsrole" href="%{urlsmmsrole}"
 		targets="main">&nbsp;กำหนดสิทธิ์&nbsp;</sj:a></li>
+</sec:authorize>
+<sec:authorize access="hasRole('ROLE_ADMIN')">	
 			<li class="ui-widget-header"><s:url id="urlcommission"
 			action="commission" /><sj:a id="commission" href="%{urlcommission}"
 			targets="main">&nbsp;คอมมิสชั่นที่ตัดบัญชี&nbsp;</sj:a></li>
-	
+</sec:authorize>
 </ul>
 </div>
 </div>

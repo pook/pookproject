@@ -7,6 +7,7 @@ import biz.evolix.model.Users;
 
 public interface StaffDAO {
 	public Staff find(long userId);
+	public Staff find2(long userId);
 	public void persist(Staff staff);
 	public void remove(Staff staff);
 	public long size();

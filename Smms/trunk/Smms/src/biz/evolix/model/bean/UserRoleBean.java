@@ -2,27 +2,42 @@ package biz.evolix.model.bean;
 
 import java.util.Date;
 
-public class UserRoleBean extends User{
-	
-	public UserRoleBean(Integer id, String smileId, String name,int maxuser,String tel,Date date) {
-		super(id, smileId, name);
-		this.maxuser = maxuser;	
-		this.tel = tel;this.date = date;
-	}
-	
-	public UserRoleBean(Integer id, String smileId, String name, Boolean admin,
-			Boolean staff, Boolean member, Integer maxuser,String tel,Date date) {
-		super(id, smileId, name);
+public class UserRoleBean extends User{	
+		
+	public UserRoleBean(Integer id, String name,
+			String surename, String bankAccount,
+			String bankBrance, String address, Boolean admin, Boolean staff,
+			Boolean member, String tel) {
+		super();
+		setId(id);
+		setName(name);	
+		this.surename = surename;
+		this.bankAccount = bankAccount;
+		this.bankBrance = bankBrance;
+		this.address = address;
 		this.admin = admin;
 		this.staff = staff;
 		this.member = member;
-		this.maxuser = maxuser;
+		this.tel = tel;	
+	}
+	public UserRoleBean(Integer id, String smileId, String name,
+			String displayName, String surename, String bankAccount,
+			String bankBrance, String address, String tel, Date date) {
+		super(id, smileId, name, displayName);
+		this.surename = surename;
+		this.bankAccount = bankAccount;
+		this.bankBrance = bankBrance;
+		this.address = address;		
 		this.tel = tel;
 		this.date = date;
 	}
-
-	private Boolean admin = false,staff = false,member = false;String tel;
-	private Integer maxuser = 0;private Date date;
+	private String surename;
+	private String bankAccount;
+	private String bankBrance;
+	private String address;
+	private Boolean admin = false,staff = false,member = false;
+	private String tel;
+	private Date date;
 	public Boolean getAdmin() {
 		return admin;
 	}
@@ -50,20 +65,41 @@ public class UserRoleBean extends User{
 		this.tel = tel;
 	}
 
-	public Integer getMaxuser() {
-		return maxuser;
-	}
-
-	public void setMaxuser(Integer maxuser) {
-		this.maxuser = maxuser;
-	}
-
+	
 	public void setDate(Date date) {
 		this.date = date;
 	}
 
 	public Date getDate() {
 		return date;
+	}
+
+	public void setSurename(String surename) {
+		this.surename = surename;
+	}
+
+	public String getSurename() {
+		return surename;
+	}
+
+	public void setBankAccount(String bankAccount) {
+		this.bankAccount = bankAccount;
+	}
+
+	public String getBankAccount() {
+		return bankAccount;
+	}
+	public void setBankBrance(String bankBrance) {
+		this.bankBrance = bankBrance;
+	}
+	public String getBankBrance() {
+		return bankBrance;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getAddress() {
+		return address;
 	}
 	
 }

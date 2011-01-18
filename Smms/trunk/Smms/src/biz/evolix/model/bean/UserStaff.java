@@ -4,20 +4,28 @@ import java.util.Date;
 
 public class UserStaff extends User{
 
-	public UserStaff(Integer id, String smileId, String name) {
-		super(id, smileId, name);		
-	}
+	public UserStaff(Integer id, String smileId, String name,String displayName) {
+		super(id, smileId, name,displayName);		
+	}	
 	
-	
-	public UserStaff(Integer id,long userId, String smileId, String name, Date date,
+	public UserStaff(Integer id,long userId, String smileId, String name,String displayName ,Date date,
 			String brance) {
-		super(id, smileId, name);
+		super(id, smileId, name,displayName);
 		this.date = date;
 		this.brance = brance;
 		this.userId = userId;
 	}
+	
 
+	public UserStaff(Integer id,Long userId, String smileId, String name,String displayName, Integer maxuser,
+			Date date, String brance) {
+		this(id,userId,smileId,name,displayName,date,brance);
+		this.maxuser = maxuser;
+	}
+
+	private Integer maxuser = 0;
 	private Long userId;
+	
 	public Date getDate() {
 		return date;
 	}
@@ -38,6 +46,14 @@ public class UserStaff extends User{
 
 	public Long getUserId() {
 		return userId;
+	}
+
+	public void setMaxuser(Integer maxuser) {
+		this.maxuser = maxuser;
+	}
+
+	public Integer getMaxuser() {
+		return maxuser;
 	}
 
 	private Date date;

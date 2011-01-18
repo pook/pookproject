@@ -24,7 +24,7 @@ public class ProcheseAct extends ActionSupport {
 	private Integer psv;
 	private String id;
 	
-	@Action(value = "/edit-grid-purchese", results = {
+	@Action(value = "/edit-grid-purchese-staff", results = {
 			@Result(location = "blackoffice.jsp", name = "success"),
 			@Result(location = "blackoffice.jsp", name = "input") })
 	public String execute() {		

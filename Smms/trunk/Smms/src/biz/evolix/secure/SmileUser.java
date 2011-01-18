@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import biz.evolix.customconst.ConstType;
 import biz.evolix.model.Authorities;
 import biz.evolix.model.SmileUsersDetails;
+import biz.evolix.model.Staff;
 import biz.evolix.model.Users;
 import biz.evolix.model.dao.callback.FindByCondition1;
 
@@ -32,7 +33,7 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 	private String displayName;
 	private String inviter;
 	private String passwd;
-	private String brance;
+	private String brance = "";
 	private String treeId;
 	private Long pos;
 	private Long userid;
@@ -42,22 +43,18 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 		super();
 		this.smileid = smileid;
 	}
-	
 
 	public Long getUserid() {
 		return userid;
 	}
 
-
 	public void setUserid(Long userid) {
 		this.userid = userid;
 	}
 
-
-	
 	@Override
 	@Transactional(readOnly = true)
-	public Collection<GrantedAuthority> getAuthorities() {		
+	public Collection<GrantedAuthority> getAuthorities() {
 		return getGrantedAuthority();
 	}
 
@@ -68,16 +65,15 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 	@Transactional(readOnly = true)
 	private SmileUsersDetails getUser1() {
 		Users u = null;
-		try {			
-			setEntityManager(em);			
+		try {
+			setEntityManager(em);
 			u = getJpaTemplate().execute(
 					new FindByCondition1<Users>(getSmileid(), "finduser"));			
-			
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new UsernameNotFoundException(e + ": username");
 		}
-		Collection<Authorities> auths =u.getAuthorities();
+		Collection<Authorities> auths = u.getAuthorities();
 		Collection<GrantedAuthority> gat = new HashSet<GrantedAuthority>();
 		for (Authorities a : auths)
 			gat.add(new GrantedAuthorityImp(a.getAuthority()));
@@ -89,8 +85,17 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 		setInviter(u.getNode1().getInviter());
 		setDisplayName(u.getNode1().getDisplayName());
 		setBrance(u.getBrance());
+		staff();
 		return null;
 	}
+	private void staff(){
+		Staff staff = null;
+		try{
+			staff = getJpaTemplate().find(Staff.class,getUserid());
+			this.brance = staff.getBrance();
+		}catch (Exception e) {}		
+	}
+
 	@Override
 	public String getPassword() {
 		return this.passwd;
@@ -173,11 +178,10 @@ public class SmileUser extends JpaDaoSupport implements UserDetails {
 		return treeId;
 	}
 
-
-	public void setGrantedAuthority(Collection<GrantedAuthority> grantedAuthority) {
+	public void setGrantedAuthority(
+			Collection<GrantedAuthority> grantedAuthority) {
 		this.grantedAuthority = grantedAuthority;
 	}
-
 
 	public Collection<GrantedAuthority> getGrantedAuthority() {
 		return grantedAuthority;

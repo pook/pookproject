@@ -4,16 +4,14 @@ import java.util.Date;
 
 public class UserBean extends User{	
 	private String surename;	
-	private String displayName;
 	private String brance;
 	private String branceCard;	
 	private Date date;
 	private Long userId;
 	public UserBean(int id,long userId,String smileId, String name, String surename,
 			String displayName, String brance, String branceCard,Date date) {
-		super(id, smileId, displayName);
-		this.surename = surename;this.userId = userId;
-		this.displayName = displayName;
+		super(id, smileId,name, displayName);
+		this.surename = surename;this.userId = userId;		
 		this.brance = brance;
 		this.branceCard = branceCard;this.date= date;
 	}
@@ -22,12 +20,6 @@ public class UserBean extends User{
 	}
 	public void setSurename(String surename) {
 		this.surename = surename;
-	}
-	public String getDisplayName() {
-		return displayName;
-	}
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
 	}
 	public String getBrance() {
 		return brance;

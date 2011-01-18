@@ -21,7 +21,7 @@ public class CardManageAct extends ActionSupport {
 	private static final long serialVersionUID = 5457921225777954498L;
 	private static Logger log = Logger.getLogger(CardManageAct.class);
 
-	@Action(value = "/json-card", results = { @Result(name = "success", type = "json") })
+	@Action(value = "/json-card-admin", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
 		try{
 			setRecord( roleService.sizeOfRevCard());		

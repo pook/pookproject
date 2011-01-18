@@ -14,6 +14,7 @@
 		,biz.evolix.action.backoffice
 		,biz.evolix.action.order
 		,biz.evolix.action.role
+		,biz.evolix.action.staff
 		,biz.evolix.action.global
 		,biz.evolix.action.member
 		,biz.evolix.action.mamagesku" />

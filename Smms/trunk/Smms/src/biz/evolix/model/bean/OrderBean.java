@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class OrderBean extends User{
 
-	public OrderBean(Integer id, String smileId, String name, Date date,
+	public OrderBean(Integer id, String smileId, String name,String displayName, Date date,
 			Double totalPrice, Integer totalSv) {
-		super(id, smileId, name);
+		super(id, smileId, name,displayName);
 		this.date = date;
 		this.totalPrice = totalPrice;
 		this.totalSv = totalSv;

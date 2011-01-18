@@ -1,4 +1,4 @@
-package biz.evolix.action.managesku;
+package biz.evolix.action.staff;
 
 import java.util.List;
 
@@ -9,39 +9,49 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import biz.evolix.customconst.ConstType;
-import biz.evolix.model.Sku;
-import biz.evolix.service.InventoryService;
-
+import biz.evolix.model.bean.UserStaff;
+import biz.evolix.service.sub.StaffMemberService;
 import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
-public class EditProduct extends ActionSupport {
 
-	private static final long serialVersionUID = 1720423244713713847L;
-	private static Logger log = Logger.getLogger(EditProduct.class);
-	
-	@Action(value = "/jsoneditproduct-admin", results = { @Result(name = "success", type = "json") })
-	public String execute() throws Exception {
-		try{
-			setRecord( inventoryService.count());		
-			int to = (getRows() * getPage());
-			int from = to - getRows();		
-			setGridModel(inventoryService.find(from ,getRecord() ));
-			setTotal();
-		}catch (Exception e) {
-			log.error(e.getMessage(),e);
+public class StaffMemberManAct extends ActionSupport {
+
+	private static final long serialVersionUID = 8083340476423094565L;
+	private static Logger log = Logger.getLogger(StaffMemberManAct.class);
+	@Action(value = "/json-user-regist-staff", results = { @Result(name = "success", type = "json") })
+	public String execute() throws Exception {		
+		try {
+			
+			if (searchString != null && searchOper != null &&!searchString.equals("")&&!searchOper.equals("")) {
+				if (searchOper.equalsIgnoreCase("eq")) {
+					setGridModel(staffMemberService.search(searchString));
+					setTotal(1);
+				}
+			} else {
+				setRecord(staffMemberService.size());
+				int to = (getRows() * getPage());
+				int from = to - getRows();
+				setGridModel(staffMemberService.userRole(from, getRecord()));
+				setTotal();
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 			return ERROR;
 		}
 		return SUCCESS;
 	}
-
-	public String getJSON() throws Exception {			
+	private StaffMemberService staffMemberService;
+	public StaffMemberManAct(StaffMemberService staffMemberService) {
+		super();
+		this.staffMemberService = staffMemberService;
+	}
+	public String getJSON() throws Exception {
 		return SUCCESS;
 	}
 
-	private InventoryService inventoryService;
-	private List<Sku> gridModel;
+	private List<UserStaff> gridModel;
 	private Integer rows = 0;
 	private Integer page = 0;
 	private String sord;
@@ -51,14 +61,8 @@ public class EditProduct extends ActionSupport {
 	private String searchOper;
 	private Integer total = 0;
 	private Integer record = 0;
-
-	public List<Sku> getGridModel() {
-		return gridModel;
-	}
-
-	public void setGridModel(List<Sku> gridModel) {
-		this.gridModel = gridModel;
-	}
+	private Boolean loadonce = false;
+	private String id;
 
 	public Integer getRows() {
 		return rows;
@@ -120,14 +124,6 @@ public class EditProduct extends ActionSupport {
 		return total;
 	}
 
-	private void setTotal(){
-		if (getRecord() > 0 && getRows() > 0) {
-			setTotal( (int) Math.ceil((double) this.record
-					/ (double) this.rows));
-		} else {
-			setTotal(ConstType.ZERO);
-		}		
-	}
 	public void setTotal(Integer total) {
 		this.total = total;
 	}
@@ -141,9 +137,37 @@ public class EditProduct extends ActionSupport {
 		this.setTotal();
 	}
 
-	public EditProduct(InventoryService inventoryService) {
-		super();
-		this.inventoryService = inventoryService;
+	private void setTotal() {
+		if (getRecord() > 0 && getRows() > 0) {
+			setTotal((int) Math.ceil((double) this.record / (double) this.rows));
+		} else {
+			setTotal(ConstType.ZERO);
+		}
 	}
 
+	public void setLoadonce(Boolean loadonce) {
+		this.loadonce = loadonce;
+	}
+
+	public Boolean getLoadonce() {
+		return isLoadonce();
+	}
+
+	public Boolean isLoadonce() {
+		return loadonce;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getId() {
+		return id;
+	}
+	public void setGridModel(List<UserStaff> gridModel) {
+		this.gridModel = gridModel;
+	}
+	public List<UserStaff> getGridModel() {
+		return gridModel;
+	}
 }

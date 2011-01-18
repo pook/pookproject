@@ -96,8 +96,10 @@ public class RoleServiceImp implements RoleService {
 			Collection<Authorities> auth = users.get(i).getAuthorities();
 			UserRoleBean b = new UserRoleBean(i, users.get(i).getNode1()
 					.getSmileId(), users.get(i).getDetail().getName(), users
-					.get(i).getMaxRegister(),
-					users.get(i).getDetail().getTel(), users.get(i).getDate());
+					.get(i).getNode1().getDisplayName(), users.get(i)
+					.getDetail().getSurename(), users.get(i).getDetail()
+					.getBankAccount(), users.get(i).getDetail().getBbrance(),
+					users.get(i).getDetail().getAddress(),users.get(i).getDetail().getTel(),users.get(i).getDate());
 			for (Authorities a : auth) {
 				if (a.getAuthority().equals(Role.ROLE_MEMBER.name())) {
 					b.setMember(true);
@@ -125,7 +127,11 @@ public class RoleServiceImp implements RoleService {
 			addRole(user, roleb.getMember(), Role.ROLE_MEMBER.name());
 			addRole(user, roleb.getStaff(), Role.ROLE_STAFF.name());
 			staff(roleb.getStaff(), user);
-			user.setMaxRegister(roleb.getMaxuser());
+			user.getDetail().setName(roleb.getName());
+			user.getDetail().setSurename(roleb.getSurename());
+			user.getDetail().setBankAccount(roleb.getBankAccount());
+			user.getDetail().setBbrance(roleb.getBankBrance());
+			user.getDetail().setAddress(roleb.getAddress());			
 			try {
 				usersDAO.update(user);
 				usersDAO.flush();
@@ -153,13 +159,14 @@ public class RoleServiceImp implements RoleService {
 	}
 
 	private void staff(boolean hasStaff, Users user) {
-		Staff staff = staffDAO.find(user.getUserId());
+		Staff staff = staffDAO.find2(user.getUserId());
 		if (hasStaff) {
 			if (staff == null)
 				staffDAO.persist(new Staff(user.getUserId(), user.getBrance()));
 		} else {
-			if (staff != null)
-				staffDAO.remove(staff);
+			if (staff != null){	
+				staffDAO.merg(staff);
+			}
 		}
 	}
 

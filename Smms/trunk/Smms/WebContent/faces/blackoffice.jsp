@@ -53,7 +53,7 @@ label {
 <script type="text/javascript">
 $(function(){
 	var auto = setInterval(function(){
-		 $.getJSON('json-ordering.action', function(data) {			 
+		 $.getJSON('json-ordering-staff', function(data) {			 
 			 fetchData(data.gridModel[0]);
 		 });
 		}
@@ -62,7 +62,7 @@ $(function(){
 	$("table tfoot tr").removeClass("ui-widget-content");
 	$.ajax({
 		type : "get",
-		url : "json-ordering.action",				
+		url : "json-ordering-staff",				
 		success : function(res) {			
 			if(res.gridModel.length == 0){
 				$("#create-order").show();
@@ -77,7 +77,7 @@ $(function(){
 		}
 	});	
 	$("#refresh").live("click",function(){
-		 $.getJSON('json-ordering.action', function(data) {			 
+		 $.getJSON('json-ordering-staff', function(data) {			 
 			 fetchData(data.gridModel[0]);
 		 });
 	}
@@ -92,7 +92,7 @@ $(function(){
 		if (ck_search.test(m)) {
 			$.ajax({
 				type : "get",
-				url : "edit-grid-order",
+				url : "edit-grid-order-staff",
 				data : "oper=add&smileId="+$("#smileId").val(),
 				success : function(dat) {					
 					$("#smileId").empty().val("");					
@@ -133,7 +133,7 @@ $.subscribe('rowadd1', function(event,data) {
     	$("#gridedittable").jqGrid('editGridRow',"new",{height:200,reloadAfterSubmit:true});    	
 });	
 </script>
-<s:url id="addorder" value="edit-grid-order" />
+<s:url id="addorder" value="edit-grid-order-staff" />
 <s:url id="buyurl" value="order-purchese" />
 <s:url id="prochesedetail" action="showordered" />	
 <sj:div id="div4"><div id="#test"></div>
@@ -190,14 +190,14 @@ $.subscribe('rowadd1', function(event,data) {
 				<sj:div id="div2">					
 					<s:url id="remote2url" action="json-grid-purchese" />
 					<s:url id="selectskuurl" action="json-customer-loadskuss" />
-					<s:url id="editpurcheseurl" action="edit-grid-purchese" />									
+					<s:url id="editpurcheseurl" action="edit-grid-purchese-staff" />									
 					<sjg:grid id="gridedittable" caption="+"  dataType="json"
 						href="%{remote2url}" pager="true" navigator="true"
 						navigatorSearch="false"
 						navigatorEditOptions="{height:200,reloadAfterSubmit:true}"
 						navigatorAddOptions="{height:200,reloadAfterSubmit:true}"						
 						navigatorEdit="true" navigatorView="false" navigatorDelete="true"
-						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true,beforeSubmit:'yyy'}"
+						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
 						gridModel="gridModel" rowList="10,15,20" rowNum="15" width="924" 
 						editurl="%{editpurcheseurl}" 
 						onSelectRowTopics="rowselect">						

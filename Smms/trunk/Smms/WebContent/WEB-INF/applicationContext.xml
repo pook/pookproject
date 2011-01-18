@@ -102,7 +102,7 @@
 	<bean id="changePasswdService" class="biz.evolix.service.sub.imp.ChangePasswdServiceImp" scope="session" />
 	<bean id="roleService" class="biz.evolix.service.sub.RoleServiceImp" scope="session" />
 	<bean id="fetchListTeams" class="biz.evolix.service.FetchListTeamsImp" scope="session" />
-	
+	<bean id="staffMemberService" class="biz.evolix.service.sub.StaffMemberServiceImp" scope="session" />
 	<bean id="fetchProvince" class="biz.evolix.model.dao.ProvinceDAOImp" scope="prototype" >
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
@@ -257,6 +257,12 @@
 	</bean>
 	<bean id="staffManAct" scope="prototype" class="biz.evolix.action.role.StaffManAct">
 		<constructor-arg  ref="staffService" />		
+	</bean>
+	<bean id="staffMemberManAct" scope="prototype" class="biz.evolix.action.staff.StaffMemberManAct">
+		<constructor-arg  ref="staffMemberService" />		
+	</bean>
+	<bean id="editstaffMemberManAct" scope="prototype" class="biz.evolix.action.staff.EditStaffMemberAct">
+		<constructor-arg  ref="staffMemberService" />		
 	</bean>
 	<bean id="staffEditAct" scope="prototype" class="biz.evolix.action.role.EditStaffAct">
 		<constructor-arg  ref="staffService" />		

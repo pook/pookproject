@@ -49,7 +49,7 @@ public class Users implements java.io.Serializable {
 	@TableGenerator(name = "USER_SEQ", initialValue = 14024, allocationSize = 1)
 	@Column(name = "USER_ID")
 	private Long userId;
-	@ManyToOne(cascade ={ CascadeType.MERGE})
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "DETAIL_ID",referencedColumnName="DETAIL_ID")
 	private SmileUsersDetails detail;
 	@Column(name = "NUM_ACCOUNT")

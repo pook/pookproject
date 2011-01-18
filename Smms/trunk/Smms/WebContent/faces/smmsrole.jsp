@@ -10,24 +10,24 @@ $.subscribe('getselectedids2', function(event,data) {
 	s = $("#gridmultitable").jqGrid('getGridParam','selarrrow');
 	$.ajax({
 		type : "get",
-		url : "edit-card",
+		url : "edit-card-admin",
 		data : "rows="+s,
 		success: function(dat) {			
 		}		
 	});
-	$("#div4").load("smmsrole.action");
+	$("#gridmultitable").trigger('reloadGrid'); 
 });
 $.subscribe('getselectedids3', function(event,data) {
 	var s;
 	s = $("#gridedittable2").jqGrid('getGridParam','selarrrow',{reloadAfterSubmit:true});
 	$.ajax({
 		type : "get",
-		url : "resetpasswd",
+		url : "resetpasswd-admin",
 		data : "rows="+s,
 		success: function(dat) {			
 		}		
 	});	
-	$("#div4").load("smmsrole.action");
+	$("#gridedittable2").trigger('reloadGrid'); 
 });
 
 </script>
@@ -40,18 +40,18 @@ $.subscribe('getselectedids3', function(event,data) {
 			<td><sj:tabbedpanel id="localtabs" selectedTab="0">
 				<sj:tab id="tab2" target="ttwo" label="จัดการการออกบัตร"
 					tabindex="0" />
-				<sj:tab id="tab3" target="ttree" label="ตั้งค่าสาขา" tabindex="1" />
-				<sj:tab id="tab1" target="tone" label="กำหนดสิทธิ์" tabindex="2" />
+					<sj:tab id="tab1" target="tone" label="กำหนดสิทธิ์" tabindex="1" />
+				<sj:tab id="tab3" target="ttree" label="ตั้งค่าสาขา" tabindex="2" />
 				<sj:tab id="tab4" target="tfour" label=" ตั้งค่า Staff " tabindex="3" />
 				<div id="ttwo"><sj:div id="div01">
 					<sj:div id="div11"></sj:div>
 					<sj:div id="div21">
-						<s:url id="cardremoteurl" action="json-card" />
-						<s:url id="cardediturl" action="edit-card"/>
+						<s:url id="cardremoteurl" action="json-card-admin" />
+						<s:url id="cardediturl" action="edit-card-admin"/>
 						<sjg:grid id="gridmultitable" caption="จัดการการออกบัตร"
 							dataType="json" href="%{cardremoteurl}" pager="true" navigator="true"
 							navigatorSearchOptions="{sopt:['eq']}"
-							navigatorEditOptions="{height:280,reloadAfterSubmit:false}"
+							navigatorEditOptions="{height:280,reloadAfterSubmit:true,closeAfterEdit:true}"
 							navigatorEdit="false" navigatorView="false" navigatorAdd="false"
 							navigatorDelete="false" rownumbers="true" gridModel="gridModel"
 							multiselect="true" 
@@ -89,7 +89,7 @@ $.subscribe('getselectedids3', function(event,data) {
 					<sj:div id="div211">
 						<s:url id="selectprovinceurl" action="fetch-province" />
 						<s:url id="branceurl" action="json-brance" />
-						<s:url id="editbranceurl" action="edit-grid-brance" />						
+						<s:url id="editbranceurl" action="edit-grid-brance-admin" />						
 						<sjg:grid id="gridedittable11" caption="ตั้งค่าสาขา"
 							dataType="json" href="%{branceurl}" pager="true" navigator="true" 
 							navigatorSearchOptions="{sopt:['eq']}" 
@@ -127,40 +127,44 @@ $.subscribe('getselectedids3', function(event,data) {
 				</sj:div></div>
 				<div id="tone"><sj:div id="div0">					
 					<div id="div2">
-						<s:url id="roleurl" action="json-role" />
-						<s:url id="editroleurl" action="edit-role1" />
+						<s:url id="roleurl" action="json-role-admin" />
+						<s:url id="editroleurl" action="edit-role1-admin" />
 						<sjg:grid id="gridedittable2" caption="กำหนดสิทธิ์" dataType="json"
 							href="%{roleurl}" pager="true" navigator="true"
 							navigatorSearchOptions="{sopt:['eq'],reloadAfterSubmit:true}"
-							navigatorEditOptions="{height:280,reloadAfterSubmit:false}"											
-							navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
-							navigatorEdit="false" navigatorView="false"
+							navigatorEditOptions="{height:280,reloadAfterSubmit:true,closeAfterEdit:true}"						
+							navigatorEdit="true" navigatorView="false"
 							navigatorDelete="false" navigatorAdd="false" rownumbers="15"							
-							gridModel="gridModel" rowList="15,30" rowNum="15" editinline="true"
+							gridModel="gridModel" rowList="15,30" rowNum="15" 
 							width="880" editurl="%{editroleurl}" multiselect="true" 
 							onSelectRowTopics="rowselect">
-							<sjg:gridColumn name="smileId" index="smileId" title="รหัสสมาชิก"
-								sortable="false" editable="false" width="100"/>
-							<sjg:gridColumn name="name" index="name"
-								title="ชื่อ สมาชิก" sortable="false" editable="false" />
+							<sjg:gridColumn name="smileId" index="smileId" title="รหัสสมาชิก" editoptions= "{ readonly: true,disabled:'disabled'}"
+								sortable="false" editable="true" width="100"/>
+							<sjg:gridColumn name="name" editrules="{ minlength:5,required:true}"
+								title="ชื่อ สมาชิก" sortable="false" editable="true" />
+							<sjg:gridColumn name="surename"  editrules="{ edithidden:true,minlength:5,required:true}" hidden="true"
+								title="นามสกุล" sortable="false" editable="true" />
+							<sjg:gridColumn name="address"  editrules="{ edithidden:true,minlength:5,required:true}" hidden="true"
+								title="ที่อยู่" sortable="false" editable="true" edittype="textarea"/>
+							<sjg:gridColumn name="bankAccount"  editrules="{ edithidden:true,integer:true,minlength:5,required:true}" hidden="true"
+								title="บัญชีธนาคาร " sortable="false" editable="true" />
+							<sjg:gridColumn name="bankBrance"  editrules="{ edithidden:true,minlength:5,required:true}" hidden="true"
+								title="สาขาบัญชี " sortable="false" editable="true" />							
 							<sjg:gridColumn name="tel"  title="เบอร์โทร" width="80"
 								editable="false" search="false"
 								 align="center" />
 							<sjg:gridColumn name="date"  title="วันที่สมัคร" width="100"
 								editable="false" search="false" formatter="date" 
 								 align="center" />
-							<sjg:gridColumn name="admin" index="admin" title="admin" width="80"
+							<sjg:gridColumn name="admin" index="admin" title="admin" width="80" editoptions ="{value:'Yes:No'}" 
 								edittype="checkbox" sortable="false" editable="true" search="false"
 								formatter="checkbox" align="center" />
-							<sjg:gridColumn name="staff" index="staff" title="staff"  search="false"
+							<sjg:gridColumn name="staff" index="staff" title="staff"  search="false" editoptions ="{value:'Yes:No'}" 
 								sortable="false" edittype="checkbox" editable="true" width="80"
 								formatter="checkbox" align="center" />
-							<sjg:gridColumn name="member" index="member" title="member"  search="false"
+							<sjg:gridColumn name="member" index="member" title="member"  search="false" editoptions ="{value:'Yes:No'}" 
 								sortable="false" edittype="checkbox" editable="true" width="80"
-								formatter="checkbox" align="center" />
-							<sjg:gridColumn name="maxuser" index="maxuser" width="120" search="false"
-								title="สมาชิกที่เพิ่ม" edittype="select" sortable="false" editoptions="{value:'1:1;2:2;3:3;4:4;5:5;6:6;7:7;8:8;9:9;10:10;15:15;20:20;25:25;30:30;35:35;40:40;45:45;50:50'}"
-								editable="true" formatter="" align="center" />
+								formatter="checkbox" align="center" />							
 						</sjg:grid>
 						<br />
 						<sj:submit id="grid_edit_searchbutton45" value="Search"
@@ -182,15 +186,14 @@ $.subscribe('getselectedids3', function(event,data) {
 						<sjg:grid id="gridedittable4" caption="staff" dataType="json"
 							href="%{staffurl}" pager="true" navigator="true"
 							navigatorSearchOptions="{sopt:['eq'],reloadAfterSubmit:true}"
-							navigatorEditOptions="{height:280,reloadAfterSubmit:false}"											
-							navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
-							navigatorEdit="false" navigatorView="false"
+							navigatorEditOptions="{height:280,reloadAfterSubmit:false,closeAfterEdit:true}"											
+							navigatorEdit="true" navigatorView="false"
 							navigatorDelete="false" navigatorAdd="false" rownumbers="15"							
-							gridModel="gridModel" rowList="15,30" rowNum="15" editinline="true"
+							gridModel="gridModel" rowList="15,30" rowNum="15"
 							width="880" editurl="%{editstaffurl}"  
 							>
-							<sjg:gridColumn name="smileId" index="smileId" title="รหัสสมาชิก"
-								sortable="false" editable="false" width="100"/>
+							<sjg:gridColumn name="smileId" index="smileId" title="รหัสสมาชิก" editoptions= "{ readonly: true,disabled:'disabled'}"
+								sortable="false" editable="true" width="100"/>
 							<sjg:gridColumn name="name" index="name"
 								title="ชื่อ สมาชิก" sortable="false" editable="false" />
 							

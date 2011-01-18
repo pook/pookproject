@@ -3,11 +3,10 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <script type="text/javascript">
-	$("a#load").live("click", function() {
+	$("a#load").click( function() {
 		var m = '-1';
-		//m = $("#month").val();
-		m=1;
-		var a = a = "commission"+m+"-cvs.action";					
+		m = $("#month").val();		
+		var a = "commission"+m+"-cvs.action";					
 		$("a#load").attr("href", a);
 	});
 </script>
@@ -18,12 +17,12 @@
 			cellspacing="10px">
 			<tr>
 				<td><b>นำออกเอกสาร CVS</b> <s:label for="month">
-				</s:label> <s:select label="เดือน" name="mount" headerKey="-1" id="month"
+				</s:label> <s:select label="เดือน" name="mount" headerKey="1" id="month"
 					list="#{'1':'มกราคม', '2':'กุมภาพันธ์', '3':'มีนาคม', '4':'เมษายน', '5':'พฤษภาคม', '6':'มิถุนายน', '7':'กรกฎาคม', '8':'สิงหาคม', '9':'กันยายน', '10':'ตุลาคม', '11':'พฤศจิกายน', '12':'ธันวาคม'}" />
 				</td>
 			</tr>
 			<tr>
-				<td><a id="load" target="div0" href="javascript:void(0)"
+				<td><a id="load" target="_blank" href="javascript:void(0)" 
 					class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span
 					class="ui-button-text">Export</span></a></td>
 			</tr>

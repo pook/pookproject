@@ -19,7 +19,7 @@ public class BlackOffice extends ActionSupport {
 	private static final long serialVersionUID = 9197620900860026907L;
 	private PurcheseService purcheseService;
 
-	@Action(value = "/json-ordering", results = { @Result(name = "success", type = "json") })
+	@Action(value = "/json-ordering-staff", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
 		return SUCCESS;
 	}
@@ -31,7 +31,7 @@ public class BlackOffice extends ActionSupport {
 			long l = ordering.get(0).getOrderId();
 			OrderBean ob = new OrderBean((int) l, ordering.get(0).getUser()
 					.getNode1().getSmileId(), ordering.get(0).getUser()
-					.getDetail().getName(), ordering.get(0).getDate(), ordering
+					.getDetail().getName(),ordering.get(0).getUser().getNode1().getDisplayName(), ordering.get(0).getDate(), ordering
 					.get(0).getTotalPrice(), ordering.get(0).getTotalSv());
 			orders.add(ob);
 		}		

@@ -3,13 +3,19 @@ package biz.evolix.model.bean;
 public class User{
 	private Integer id;
 	private String smileId;
-	private String name;	
+	private String name;
+	private String displayName;
 	
-	public User(Integer id, String smileId, String name) {
+	
+	public User() {
+		super();
+	}
+	public User(Integer id, String smileId, String name,String displayName) {
 		super();
 		this.setId(id);
 		this.smileId = smileId;
 		this.name = name;
+		this.displayName = displayName;
 	}
 	public String getSmileId() {
 		return smileId;
@@ -51,6 +57,12 @@ public class User{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+	public String getDisplayName() {
+		return displayName;
 	}
 	
 }

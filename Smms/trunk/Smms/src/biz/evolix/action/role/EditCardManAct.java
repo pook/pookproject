@@ -2,7 +2,6 @@ package biz.evolix.action.role;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
@@ -16,7 +15,7 @@ public class EditCardManAct extends ActionSupport {
 
 	private static Logger log = Logger.getLogger(EditCardManAct.class);
 	private static final long serialVersionUID = 3896887071573358570L;
-	@Action(value = "/edit-card", results = {
+	@Action(value = "/edit-card-admin", results = {
 			@Result(location = "smmsrole.jsp", name = "success"),
 			@Result(location = "smmsrole.jsp", name = "input") })
 	public String execute() throws Exception {

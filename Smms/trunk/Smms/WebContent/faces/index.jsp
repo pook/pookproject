@@ -3,6 +3,8 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <%@ taglib prefix="sjr" uri="/struts-jquery-richtext-tags"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 <link href="styles/ext.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/ckeditor.config.js"></script>
@@ -24,7 +26,6 @@
 	});
 
 	$(document).ready(function() {
-
 		var myrichtextoptions = {};
 		myrichtextoptions.jqueryaction = "myrichtextextend";
 		myrichtextoptions.id = "richtextarea";
@@ -78,6 +79,7 @@ div#main3{
 	</sj:accordionItem>
 </sj:accordion></div>
 <s:set id="contextPath"  value="#request.get('javax.servlet.forward.context_path')" />
+<sec:authorize access="hasRole('ROLE_ADMIN')">	
 <div id="sec1">
 <div id="main3"> 
 	<div id="divrt1">
@@ -118,6 +120,7 @@ div#main3{
 	</div>
 	</div>
 </div>
+</sec:authorize>
 </div>
 
 
