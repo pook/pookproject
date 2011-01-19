@@ -37,11 +37,11 @@ public class SmileUsersDetails implements java.io.Serializable {
 	private String tel2;
 	@Column(name = "EMAIL", length = 100)
 	private String email;
-	@Column(name = "ADDRESS", columnDefinition = "TEXT(500)")
+	@Column(name = "ADDRESS", columnDefinition = "TEXT")
 	private String address;
 	@JoinColumn(name = "PROVINCE")
 	private Province province;
-	@Column(name = "ADDRESS2", columnDefinition = "TEXT(500)")
+	@Column(name = "ADDRESS2", columnDefinition = "TEXT")
 	private String address2;
 	@Column(name = "BANK", length = 50)
 	private String bank;

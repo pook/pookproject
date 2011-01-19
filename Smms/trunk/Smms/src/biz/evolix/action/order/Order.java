@@ -19,7 +19,7 @@ public class Order extends ActionSupport {
 	private static final long serialVersionUID = 8619781837424132878L;
 	private static Logger log = Logger.getLogger(Order.class);
 	
-	@Action(value = "/json-list-order1", results = { @Result(name = "success", type = "json") })
+	@Action(value = "/json-list-order1-member", results = { @Result(name = "success", type = "json") })
 	public String execute() {
 		return SUCCESS;
 	}
@@ -31,7 +31,7 @@ public class Order extends ActionSupport {
 			int from = to - getRows();		
 			setGridModel(orderService.ordersByOwner(from ,getRows()));
 		}catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getMessage(),e);
 		}		
 		setTotal();
 		return execute();

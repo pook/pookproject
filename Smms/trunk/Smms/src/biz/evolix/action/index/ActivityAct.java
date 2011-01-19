@@ -10,7 +10,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class ActivityAct extends ActionSupport {
 
 	private static final long serialVersionUID = -8020285958469699339L;
-	@Action(value = "/activity", results = { @Result(name = "success", location = "echo/echo.jsp") })
+	@Action(value = "/activity-member", results = { @Result(name = "success", location = "echo/echo.jsp") })
 	public String execute() {
 		setEcho(newsDAO.loadActivity().getContent());
 		return SUCCESS;

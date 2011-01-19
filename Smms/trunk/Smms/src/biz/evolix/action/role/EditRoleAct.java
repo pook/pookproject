@@ -25,8 +25,7 @@ public class EditRoleAct extends ActionSupport {
 		return SUCCESS;
 	}
 
-	private void edit() {	
-		log.info(">>>>"+getAdmin()+">>>>>>>>>"+getStaff()+">>>>>>>>"+getMember());
+	private void edit() {			
 		UserRoleBean ub = new UserRoleBean(Integer.parseInt(getId()),
 				getName(), getSurename(), getBankAccount(), getBankBrance(),
 				getAddress(), val(getAdmin()), val(getStaff()),
@@ -134,7 +133,7 @@ public class EditRoleAct extends ActionSupport {
 	}
 
 	private static boolean val(String arg) {
-		return arg.equalsIgnoreCase("on")||arg.equalsIgnoreCase("Yes");
+		return arg.equalsIgnoreCase("Yes")||arg.equalsIgnoreCase("on");
 	}
 
 	public void setTel(String tel) {

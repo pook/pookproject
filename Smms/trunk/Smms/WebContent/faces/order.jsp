@@ -19,9 +19,9 @@ div#div4 div{
 			<td><sj:div id="div0">
 				<sj:div id="div1"></sj:div>
 				<sj:div id="div2">
-					<s:url id="remoteurl" action="json-list-order1" />	<!-- ShowOrdered -->
-					<s:url id="subgridurl" action="json-list-purchese1" />																		
-					<sjg:grid id="gridedittable" caption="พระราม 3 " dataType="json"
+					<s:url id="remoteurl" action="json-list-order1-member" />	<!-- ShowOrdered -->
+					<s:url id="subgridurl" action="json-list-purchese1-member" />																		
+					<sjg:grid id="gridedittable" caption="รายการสั่งชื้อ" dataType="json"
 						href="%{remoteurl}" pager="true" 
 						navigator="true"
 						navigatorDelete="false"

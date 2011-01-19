@@ -6,7 +6,7 @@
 <script type="text/javascript">
 
 	$(function() {
-		$.getJSON("json-member.action", function(data) {
+		$.getJSON("json-member", function(data) {
 			$("table tr").addClass("ui-widget-content");
 			$("table tfoot tr").removeClass("ui-widget-content");
 			profile(data.userModel);
@@ -37,10 +37,11 @@
 		$("#f501").empty().append(dat.detail.numOfAccount);
 		$("#f502").empty().append(dat.node1.totalSv);	
 		$.ajax({
-			url :"check-account",					
-			success : function(res) {					
-				if(res == 0)
-					$("#sdialog").show();					
+			url :"check-account-member",					
+			success : function(res) {
+				alert(">>"+res);					
+				if(res == -1)
+					$("#sdialog").show();		//show			
 				else
 					$("#sdialog").hide();							
 			}		
@@ -53,7 +54,7 @@
 		valid = valid&&checkLength(displayName," ชื่อแสดงในสายงาน ", 3, 30);		
 		if(valid){
 			$.ajax({
-				url :"save2.action",
+				url :"save2-member",
 				data :"displayName="+displayName.val()+"&upline="+$("#upline").val(),		
 				success : function(res) {	
 					if(res.length>0){
@@ -62,6 +63,7 @@
 				}		
 			});
 			$('#btndialog').dialog('close');
+			$('#main').load("member.action");
 		}						
 			
 	};
@@ -90,7 +92,7 @@
 		$(this).removeClass("ui-state-error");
 		$.ajax({
 			type : "post",
-			url : "check-displayname.action",
+			url : "check-displayname-member",
 			data : "displayName=" + $(this).val(),
 			success : function(res) {				
 				if (res.length>0) {	
@@ -146,7 +148,7 @@ table {
 <div id="main-member">
 <div id="userinf">
 <s:url id="uplineurl"
-	action="json-fetch-upline.action" />
+	action="json-fetch-upline-member" />
 <s:url id="showdownlineurl" action="showdownline"/>
 <s:url id="teamsurl" action="teams"/>
 <s:url id="chgpasswdurl" action="chgpasswd"/>

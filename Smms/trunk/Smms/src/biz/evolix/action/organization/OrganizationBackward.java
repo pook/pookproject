@@ -29,7 +29,7 @@ public class OrganizationBackward extends ActionSupport {
 	private static Logger log = Logger
 			.getLogger(OrganizationBackward.class);
 
-	@Action(value = "/json-organization-backward", results = {
+	@Action(value = "/json-organization-backward-member", results = {
 			@Result(name = "success", type = "json"),
 			@Result(name = "error", type = "json") })
 	public String execute() throws Exception {

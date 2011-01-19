@@ -14,9 +14,9 @@ import javax.persistence.*;
 	@NamedQuery(name = "findOrderAll", query = "select O from Order O"),
 	@NamedQuery(name = "findOrderbyOwner", query = "select O from Order O where O.user =?1"),
 	@NamedQuery(name = "findOrderByStaff", query = "select O from Order O where O.seller =?1"),
-	@NamedQuery(name = "getSizeOrderAll", query = "select count(O) from Order O"),
-	@NamedQuery(name = "getSizeOrderOwner", query = "select count(O) from Order O where O.user =?1"),
-	@NamedQuery(name = "getSizeOrderByStaff", query = "select count(O) from Order O where O.seller =?1") })
+	@NamedQuery(name = "getSizeOrderAll", query = "select count(0) from Order O"),
+	@NamedQuery(name = "getSizeOrderOwner", query = "select count(0) from Order O where O.user =?1"),
+	@NamedQuery(name = "getSizeOrderByStaff", query = "select count(0) from Order O where O.seller =?1") })
 @Table(name = "ORDER1")
 public class Order implements java.io.Serializable {
 

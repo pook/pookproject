@@ -19,7 +19,7 @@ div#inner1{
 <div id="m1">
 <div id="main1">
 <div id="inner1">
-		<s:url id="remoteurl" action="json-downline" />					
+		<s:url id="remoteurl" action="json-downline-member" />					
 					<sjg:grid id="gridedittable" caption="-"  dataType="json"
 						href="%{remoteurl}" pager="true" navigator="true"
 						navigatorSearch="false"							

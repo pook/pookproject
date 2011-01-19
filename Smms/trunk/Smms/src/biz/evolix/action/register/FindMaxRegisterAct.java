@@ -13,7 +13,7 @@ public class FindMaxRegisterAct extends ActionSupport {
 
 	
 	private static final long serialVersionUID = -9075195843434199810L;
-	@Action(value = "/max-register", results = {
+	@Action(value = "/max-register-member", results = {
 			@Result(name = "success", location = "echo/echo.jsp"),
 			@Result(name = "error", location = "echo/echo.jsp")
 	})			

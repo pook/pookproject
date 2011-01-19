@@ -121,7 +121,8 @@ public class RegisterServiceImp implements RegisterService {
 		}
 		Users inviter = userDAO.find(getUsers().getUserid());
 		SmileUsersDetails smile = inviter.getDetail();		
-		if (inviter.getNumberOfAccount() > 2 || findQuotaService.quota() != 0){			
+		if (inviter.getNumberOfAccount() > 2 || findQuotaService.quota() !=-1){	
+			log.info("ddddd");
 			throw new UsernameNotFoundException("Register Fail");
 			}
 		boolean auto = (chose == ConstType.AUTO) ? true : false;

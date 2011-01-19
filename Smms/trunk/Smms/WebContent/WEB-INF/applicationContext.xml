@@ -20,9 +20,11 @@
 			<bean
 				class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
 				<property name="databasePlatform"
-					value="org.eclipse.persistence.platform.database.MySQLPlatform" />
+					value="org.eclipse.persistence.platform.database.PostgreSQLPlatform" />
 				<property name="showSql" value="true" />
+				<!-- 
 				<property name="database" value="MYSQL" />
+				 -->
 			</bean>
 		</property>
 		<property name="loadTimeWeaver">
@@ -30,7 +32,7 @@
 				class="org.springframework.instrument.classloading.ReflectiveLoadTimeWeaver" />
 		</property>
 	</bean>
-	<jee:jndi-lookup id="dataSource" jndi-name="java:/comp/env/jdbc/mysmmsDS" />
+	<jee:jndi-lookup id="dataSource" jndi-name="java:/comp/env/jdbc/pgsmmsDS" />
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>

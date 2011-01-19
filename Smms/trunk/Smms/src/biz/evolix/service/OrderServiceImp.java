@@ -8,13 +8,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import biz.evolix.model.Order;
 import biz.evolix.model.Purchese;
+import biz.evolix.model.Users;
 import biz.evolix.model.dao.OrderDAO;
+import biz.evolix.model.dao.UsersDAO;
 import biz.evolix.secure.SmileUser;
 
 public class OrderServiceImp implements OrderService {
 
 	@Autowired
 	private OrderDAO orderDAO;
+	@Autowired
+	private UsersDAO usersDAO;
 	private List<Order> orders;
 	private List<Purchese> purcheses;
 
@@ -63,8 +67,8 @@ public class OrderServiceImp implements OrderService {
 
 	@Override
 	public List<Order> ordersByOwner(int from, int rows) {
-		setOrders(getOrderDAO().showOrderOwner(getUsers().getSmileid(), from,
-				rows));
+		Users user = usersDAO.find(getUsers().getUserid());
+		setOrders(orderDAO.showOrderOwner(user, from, rows));
 		return getOrders();
 	}
 
@@ -75,7 +79,8 @@ public class OrderServiceImp implements OrderService {
 
 	@Override
 	public int sizeOrderOwner() {
-		return (int) orderDAO.sizeOrderOwner();
+		Users user = usersDAO.find(getUsers().getUserid());
+		return (int) orderDAO.sizeOrderOwner(user);
 	}
 
 	@Override
@@ -86,11 +91,20 @@ public class OrderServiceImp implements OrderService {
 
 	@Override
 	public void del(int id) {
-		Long l = getOrders().get(id).getOrderId();
+		long l = getOrders().get(id).getOrderId();
 		try {
 			orderDAO.del(l);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
 	}
+
+	public void setUsersDAO(UsersDAO usersDAO) {
+		this.usersDAO = usersDAO;
+	}
+
+	public UsersDAO getUsersDAO() {
+		return usersDAO;
+	}
+	
 }

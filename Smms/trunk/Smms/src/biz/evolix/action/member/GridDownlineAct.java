@@ -21,7 +21,7 @@ public class GridDownlineAct extends ActionSupport {
 	private static final long serialVersionUID = 4493787060586048546L;
 	private static Logger log = Logger.getLogger(GridDownlineAct.class);
 	
-	@Action(value = "/json-downline", results = { @Result(name = "success", type = "json") })
+	@Action(value = "/json-downline-member", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
 		try{
 			

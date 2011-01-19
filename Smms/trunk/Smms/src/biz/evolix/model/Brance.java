@@ -31,7 +31,7 @@ public class Brance implements java.io.Serializable {
 	private Integer branceCode;
 	@Column(name = "BRANCE_NAME", length = 50)
 	private String bName;
-	@Column (name = "BRANCE_ADDRESS",columnDefinition="TEXT(500)")
+	@Column (name = "BRANCE_ADDRESS",columnDefinition="TEXT")
 	private String bAddress;
 	@Column(name = "BRANCE_TEL",length=50)
 	private String bTel;

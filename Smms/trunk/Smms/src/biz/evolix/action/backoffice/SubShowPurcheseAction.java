@@ -20,7 +20,7 @@ public class SubShowPurcheseAction extends ActionSupport {
 	private static Logger log = Logger.getLogger(SubShowPurcheseAction.class);
 	private String id;
 
-	@Action(value = "/json-list-purchese2", results = { @Result(name = "success", type = "json") })
+	@Action(value = "/json-list-purchese2-staff", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
 		return SUCCESS;
 	}

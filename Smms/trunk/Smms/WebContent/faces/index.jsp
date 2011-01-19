@@ -69,8 +69,8 @@ div#main3{
 </style>
 
 <div id="main1">
-<div id="main2"><s:url id="noticeurl" action="notice" /> <s:url
-	id="activityurl" action="activity" /> <sj:accordion id="accordion">
+<div id="main2"><s:url id="noticeurl" action="notice-member" /> <s:url
+	id="activityurl" action="activity-member" /> <sj:accordion id="accordion">
 	<sj:accordionItem title="แจ้งให้ทราบ">
 		<sj:div id="divInAccrodionItem" href="%{noticeurl}" />
 	</sj:accordionItem>
@@ -78,12 +78,12 @@ div#main3{
 		<sj:div id="divInAccrodionItem1" href="%{activityurl}" />
 	</sj:accordionItem>
 </sj:accordion></div>
-<s:set id="contextPath"  value="#request.get('javax.servlet.forward.context_path')" />
 <sec:authorize access="hasRole('ROLE_ADMIN')">	
 <div id="sec1">
 <div id="main3"> 
 	<div id="divrt1">
-	<s:form id="f1" action="save-notice" theme="xhtml">
+	<s:form id="f1" action="save-notice-member" theme="xhtml">
+	<s:set id="contextPath"  value="#request.get('javax.servlet.forward.context_path')" />
 	<sjr:ckeditor  name="notice"
 	href="%{noticeurl}" id="rt" rows="8" cols="80" toolbar="MyToolbar" resizableMaxWidth="400"
 	 customConfig="%{contextPath}/js/ckeditor.config.js" />
@@ -101,7 +101,7 @@ div#main3{
 	 
 	 </s:form></div>	 
 	<div id="divrt2">
-	<s:form id="f2" action="save-activity" theme="xhtml">	
+	<s:form id="f2" action="save-activity-member" theme="xhtml">	
 	<sjr:ckeditor name="activity"
 	href="%{activityurl}" id="rt1" rows="8" cols="80" toolbar="MyToolbar" resizableMaxWidth="400"
 	 customConfig="%{contextPath}/js/ckeditor.config.js" />

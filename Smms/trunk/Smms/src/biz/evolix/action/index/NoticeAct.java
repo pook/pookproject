@@ -14,7 +14,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class NoticeAct extends ActionSupport{
 
 	private static final long serialVersionUID = 7865499216846614032L;
-	@Action(value = "/notice", results = { @Result(name = "success", location = "echo/echo.jsp") })
+	@Action(value = "/notice-member", results = { @Result(name = "success", location = "echo/echo.jsp") })
 	public String execute() {
 		setEcho(newsDAO.loadNotice().getContent());
 		return SUCCESS;

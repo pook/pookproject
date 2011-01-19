@@ -65,7 +65,7 @@ table {
 			$.ajax({
 				type : "post",
 			contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-			url : "changepasswd",
+			url : "changepasswd-member",
 			data :dat,
 			success : function(res) {
 				$("#result1").html(res);

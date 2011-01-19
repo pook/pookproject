@@ -47,7 +47,7 @@ public class Register extends ActionSupport {
 	private String upline;
 	private RegisterService registerService;
 
-	@Action(value = "/save", results = {
+	@Action(value = "/save-member", results = {
 			@Result(location = "echo/error.jsp", name = "error"),
 			@Result(location = "echo/success.jsp", name = "success") })
 	public String execute() throws Exception {

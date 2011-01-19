@@ -72,7 +72,7 @@ public class UsersDAOImp extends JpaDaoSupport implements UsersDAO {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Long sizeRevCard() {
+	public long sizeRevCard() {
 		long i = -1;
 		try {
 			i = getJpaTemplate().execute(
@@ -99,7 +99,7 @@ public class UsersDAOImp extends JpaDaoSupport implements UsersDAO {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Long size() {
+	public long size() {
 		long i = -1;
 		try {
 			i = getJpaTemplate().execute(new GenericSize<Long>("userSize"));
@@ -221,7 +221,7 @@ public class UsersDAOImp extends JpaDaoSupport implements UsersDAO {
 	@Override
 	@Transactional(readOnly = true)
 	public int findNextQuota(int next,Object id) {
-		int i = 0;
+		int i = -1;
 		try{
 			i = getJpaTemplate().execute(
 					new FindByCondition2<Integer>(next, id, "nextquata"));

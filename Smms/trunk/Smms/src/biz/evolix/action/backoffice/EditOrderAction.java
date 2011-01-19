@@ -20,7 +20,7 @@ public class EditOrderAction extends ActionSupport {
 	private String id;
 	private String oper;
 
-	@Action(value = "/edit-order-grid", results = { @Result(name = "success", location = "showordered.jsp") })
+	@Action(value = "/edit-order-grid-staff", results = { @Result(name = "success", location = "showordered.jsp") })
 	public String execute() {
 		if (getOper().equals(ConstType.DEL)) {
 			int idx = -1;			

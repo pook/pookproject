@@ -23,7 +23,7 @@ public class Sku implements java.io.Serializable {
 	private Integer sv = 0;
 	@Column(name = "DISCOUNT")
 	private Integer discount = 0;
-	@Column(name = "DESCRIPTION", columnDefinition="TEXT(500)")
+	@Column(name = "DESCRIPTION", columnDefinition="TEXT")
 	private String description;
 	@Column(name = "IMAGE")
 	private String image;

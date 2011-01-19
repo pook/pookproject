@@ -16,7 +16,7 @@ public class SubBackOffice extends ActionSupport {
 	private static final long serialVersionUID = 2583366281563051841L;
 	private PurcheseService purcheseService;
 
-	@Action(value = "/json-grid-purchese", results = { @Result(name = "success", type = "json") })
+	@Action(value = "/json-grid-purchese-staff", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {			
 		return SUCCESS;
 	}

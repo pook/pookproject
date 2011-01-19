@@ -30,10 +30,10 @@
 <div id="main-regist">
 <div id="test"></div>
 <div id="input-form"><s:url id="checkurl"
-	action="check-displayname.action" /> <s:url id="uplineurl"
-	action="json-fetch-upline.action" /> <s:url id="provinceurl"
-	action="json-fetch-province.action" /> <s:url id="branceurl"
-	action="json-fetch-brance.action" />
+	action="check-displayname-member" /> <s:url id="uplineurl"
+	action="json-fetch-upline-member" /> <s:url id="provinceurl"
+	action="json-fetch-province-member" /> <s:url id="branceurl"
+	action="json-fetch-brance-member" />
 <form id="form1" action="javascript:void(0)">
 <fieldset>
 <table id="users" class="ui-widget ui-widget-content">

@@ -12,7 +12,7 @@ public class ChkCreateAccountAct extends ActionSupport{
 	
 	private static final long serialVersionUID = 6556325405518018902L;
 
-	@Action(value = "/check-account", results = {
+	@Action(value = "/check-account-member", results = {
 			@Result(name = "success", location = "echo/echo.jsp")
 			 })
 	public String execute() {

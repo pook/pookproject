@@ -16,7 +16,7 @@ public class FetchBrance extends ActionSupport{
 	
 	private static final long serialVersionUID = 7083132476280971282L;
 
-	@Action(value = "/fetch-brance", results = {
+	@Action(value = "/fetch-brance-member", results = {
 			@Result(location = "select-brance.jsp", name = "success")})
 	public String execute() throws Exception {		
 		setBrances(new HashMap<String, String>());

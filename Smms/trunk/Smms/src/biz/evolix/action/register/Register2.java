@@ -11,7 +11,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class Register2 extends ActionSupport{
 
 	
-	@Action(value = "/save2", results = {
+	@Action(value = "/save2-member", results = {
 			@Result(location = "echo/error.jsp", name = "error"),
 			@Result(location = "echo/redirect.jsp", name = "success") })
 	public String execute() throws Exception {

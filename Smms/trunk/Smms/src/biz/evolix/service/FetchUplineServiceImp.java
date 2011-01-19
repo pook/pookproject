@@ -37,14 +37,11 @@ public class FetchUplineServiceImp implements FetchUplineService {
 		long pos = dept.getPos();
 		Map<String, String> map = new HashMap<String, String>();
 		while (map.isEmpty()) {
-			if (dept.getNextId() < dept.getPos()) {	
-				log.info(">>>>8888888888>>>>>>>"+dept.getBaseLevel());
-				List<String> hashs = Utils.hashCodes(treeId,dept.getBaseLevel(),pos);
-				log.info(">>>>>>>>>>>"+hashs);
+			if (dept.getNextId() < dept.getPos()) {				
+				List<String> hashs = Utils.hashCodes(treeId,dept.getBaseLevel(),pos);				
 				for(String hash:hashs){
 					long nextId = dept.getNextId();
-					uplines2(dept,nextId,hash, map,false);
-					log.info(">>>>>>>>>>>1>"+nextId);
+					uplines2(dept,nextId,hash, map,false);					
 				}
 			} else {
 				uplines2(dept, dept.getNextId(), treeId, map,true);
@@ -69,7 +66,7 @@ public class FetchUplineServiceImp implements FetchUplineService {
 			if (!nonspace.contains(lower)) {
 				isLeft = Generate.isLeft(lower);
 				String upline = node1DAO
-						.findDisplayName(Generate.parent(lower));
+						.findDisplayName(Generate.parent(lower),treeId);
 				add(map, lower, treeId, upline, isLeft);
 			}
 			lower++;

@@ -17,7 +17,7 @@ public class CheckDisplayName extends ActionSupport {
 	private Boolean test;
 	private static final long serialVersionUID = 818911213537613837L;	
 
-	@Action(value = "/check-displayname", results = {
+	@Action(value = "/check-displayname-member", results = {
 			@Result(name = "success", location = "echo/checkeddisplayname.jsp"),
 			@Result(name = "error", location = "echo/checkeddisplaynameErr.jsp") })
 	public String execute() {		

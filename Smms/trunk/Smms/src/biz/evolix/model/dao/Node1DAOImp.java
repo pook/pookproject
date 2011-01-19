@@ -118,10 +118,10 @@ public class Node1DAOImp extends JpaDaoSupport implements Node1DAO {
 
 	@Override
 	@Transactional(readOnly=true)
-	public String findDisplayName(long pos) {
+	public String findDisplayName(long pos,String treeId) {
 		String  displayName = null;
 		try{
-			displayName = getJpaTemplate().execute(new FindByCondition1<String>(pos,"findDisplayNameByPos"));
+			displayName = getJpaTemplate().execute(new FindByCondition2<String>(pos,treeId,"findDisplayNameByPosAndTreeId"));
 		}catch (Exception e) {
 			log.error(e.getMessage());
 		}

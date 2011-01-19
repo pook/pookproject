@@ -23,7 +23,7 @@ div#div4 div {
 						href="%{remoteurl}" pager="true" navigator="true" width="930"
 						navigatorEdit="true"  
 						navigatorSearchOptions="{sopt:['eq']}"
-						navigatorAddOptions="{height:280,reloadAfterSubmit:true}"
+						navigatorAddOptions="{height:280,reloadAfterSubmit:false}"
 						navigatorEditOptions="{height:280,reloadAfterSubmit:true}"
 						navigatorDelete="true" 						
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true,msg:'ต้องการลบเรคคอร์ดนี้ ?'}"

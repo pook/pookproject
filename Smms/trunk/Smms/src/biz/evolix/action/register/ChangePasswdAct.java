@@ -18,7 +18,7 @@ public class ChangePasswdAct extends ActionSupport {
 	private String newpasswd;	
 	private static final long serialVersionUID = 5112968657449123659L;
 	private static Logger log = Logger.getLogger(ChangePasswdAct.class);
-	@Action(value = "/changepasswd", results = {
+	@Action(value = "/changepasswd-member", results = {
 			@Result(name = "success", location = "echo/success.jsp"),
 			@Result(name = "error", location = "echo/error.jsp") })
 	public String execute(){

@@ -13,7 +13,7 @@ public class SaveActivityAct extends ActionSupport{
 
 	private static Logger log = Logger.getLogger(SaveActivityAct.class);
 	private static final long serialVersionUID = -4255236368852018548L;
-	@Action(value = "/save-activity", results = { @Result(name = "success", location = "index.jsp") })
+	@Action(value = "/save-activity-member", results = { @Result(name = "success", location = "index.jsp") })
 	public String execute() {
 		News news = newsDAO.loadActivity();
 		news.setContent(getActivity());

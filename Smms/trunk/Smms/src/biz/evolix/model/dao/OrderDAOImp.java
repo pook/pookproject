@@ -12,12 +12,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import biz.evolix.model.Order;
-import biz.evolix.model.SmileUsersDetails;
 import biz.evolix.model.Users;
 import biz.evolix.model.dao.callback.GenericSize;
 import biz.evolix.model.dao.callback.GenericSizeByCause;
-import biz.evolix.model.dao.callback.MaxResaultByOwner;
 import biz.evolix.model.dao.callback.MaxResult;
+import biz.evolix.model.dao.callback.MaxResultCon1;
 import biz.evolix.secure.SmileUser;
 
 @Repository
@@ -62,33 +61,19 @@ public class OrderDAOImp extends JpaDaoSupport implements OrderDAO {
 
 	@Override
 	@Transactional(readOnly = true)
-	public long sizeOrderOwner() {
-		try {
-			Users u = getJpaTemplate()
-					.find(Users.class, getUsers().getUserid());
-			if (u == null)
-				return -1L;
+	public long sizeOrderOwner(Users user) {
+		try {		
 			return getJpaTemplate()
 					.execute(
 							new GenericSizeByCause<Long, Users>(
-									"getSizeOrderOwner", u));// object
+									"getSizeOrderOwner", user));// object
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new PersistenceException();
 		}
 	}
 
-	private SmileUser getUsers() {
-		try {
-			return (SmileUser) SecurityContextHolder.getContext()
-					.getAuthentication().getPrincipal();
-		} catch (Exception e) {
-			SecurityContextHolder.clearContext();
-			log.error(e.getMessage(), e);
-		}
-		return null;
-	}
-
+	
 	@Override
 	@Transactional(readOnly = true)
 	public List<Order> showOrderAll(int f, int m) {
@@ -98,13 +83,12 @@ public class OrderDAOImp extends JpaDaoSupport implements OrderDAO {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Order> showOrderOwner(String uid, int f, int m) {
-		try{
-			SmileUsersDetails u = getJpaTemplate().find(SmileUsersDetails.class, uid);
+	public List<Order> showOrderOwner(Users user, int f, int m) {
+		try{			
 			return (List<Order>) getJpaTemplate().execute(
-					new MaxResaultByOwner<Order>("findOrderOwner", u, f, m));
+					new MaxResultCon1<Order>( user, f, m,"findOrderbyOwner"));
 		}catch (Exception e) {
-			
+			log.error(e.getMessage(), e);
 		}
 		return null;
 	}

@@ -15,7 +15,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class BuyOrder extends ActionSupport {
 
 		private static final long serialVersionUID = -2300418320210586222L;
-		@Action(value = "/order-purchese", results = {
+		@Action(value = "/order-purchese-staff", results = {
 				@Result(location = "blackoffice.jsp", name = "success"),
 				@Result(location = "echo/error-redirect.jsp", name = "error") ,
 				@Result(location = "blackoffice.jsp", name = "input") })

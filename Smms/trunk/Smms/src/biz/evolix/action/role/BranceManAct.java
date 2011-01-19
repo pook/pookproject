@@ -21,7 +21,7 @@ public class BranceManAct extends ActionSupport {
 	private static Logger log = Logger.getLogger(BranceManAct.class);
 	private static final long serialVersionUID = 3418958865383079308L;
 	private BranceService branceService;
-	@Action(value = "/json-brance", results = { @Result(name = "success", type = "json") })
+	@Action(value = "/json-brance-admin", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
 		try{
 			long l =branceService.size();

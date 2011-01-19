@@ -25,7 +25,7 @@ public class Organization extends ActionSupport {
 	private static final long serialVersionUID = -7992937997674968155L;
 	private static Logger log = Logger.getLogger(Organization.class);
 
-	@Action(value = "/json-organization", results = {
+	@Action(value = "/json-organization-member", results = {
 			@Result(name = "success", type = "json"),
 			@Result(name = "error", type = "json") })
 	public String execute() throws Exception {

@@ -32,6 +32,6 @@ public class News implements java.io.Serializable {
 	@Id
 	@Column(name = "NEWS_ID",columnDefinition="CHAR(10)")
 	private String newsId;
-	@Column(name = "CONTENT",columnDefinition="TEXT(500)")
+	@Column(name = "CONTENT",columnDefinition="TEXT")
 	private String content;   
 }

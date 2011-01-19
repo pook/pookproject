@@ -20,9 +20,8 @@ public class SubOrder extends ActionSupport {
 	private static Logger log = Logger.getLogger(SubOrder.class);
 	private String id;
 
-	@Action(value = "/json-list-purchese1", results = { @Result(name = "success", type = "json") })
+	@Action(value = "/json-list-purchese1-member", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
-
 		return SUCCESS;
 	}
 

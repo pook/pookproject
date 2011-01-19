@@ -28,7 +28,7 @@ public class FindQuotaServiceImp implements FindQuotaService {
 		next = user.getNumberOfAccount();		
 		quata =usersDAO.findNumAccountQuota(user.getUserId());		
 		quata =(node.getCommissions() > ConstType.COMMISION_BONUS && next < 3)? 
-			 usersDAO.findNextQuota(++next, user.getDetail()):-1;	
+			 usersDAO.findNextQuota(++next, user.getDetail()):-2;	
 		return quata;
 	}
 

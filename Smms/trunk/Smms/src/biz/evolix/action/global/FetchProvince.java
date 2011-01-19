@@ -15,7 +15,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class FetchProvince extends ActionSupport{
 
 	private static final long serialVersionUID = -4397811867097445251L;
-	@Action(value = "/fetch-province", results = {
+	@Action(value = "/fetch-province-member", results = {
 			@Result(location = "select-province.jsp", name = "success")})
 	public String execute() throws Exception {
 		setProvinces(new TreeMap<String,String>());

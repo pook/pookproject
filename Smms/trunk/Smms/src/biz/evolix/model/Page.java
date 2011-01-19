@@ -15,7 +15,7 @@ import javax.persistence.Table;
 public class Page implements java.io.Serializable {
 
 	@Id
-	@Column(name = "`KEY`", columnDefinition = "CHAR(32)")
+	@Column(name = "KEY", columnDefinition = "CHAR(32)")
 	private String key;
 	@Column(name = "VALUE", columnDefinition = "CHAR(32)")
 	private String value = null;

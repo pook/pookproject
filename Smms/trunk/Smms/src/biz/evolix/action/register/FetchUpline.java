@@ -21,7 +21,7 @@ public class FetchUpline extends ActionSupport {
 	private FetchUplineService fetchUplineService;
 	private static final long serialVersionUID = 2403583800756482378L;
 
-	@Action(value = "/json-fetch-upline", results = {
+	@Action(value = "/json-fetch-upline-member", results = {
 			@Result(name = "success", type = "json"),
 			@Result(name = "error", type = "json") })
 	public String execute() throws Exception {		

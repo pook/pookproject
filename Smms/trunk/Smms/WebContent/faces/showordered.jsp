@@ -21,9 +21,9 @@ div#gridinfo div {
 			<td><sj:div id="div0">
 				<sj:div id="div1"></sj:div>
 				<sj:div id="div2">
-					<s:url id="remoteurl" action="json-list-order" />	<!-- ShowOrdered -->
-					<s:url id="editurl" action="edit-order-grid" />
-					<s:url id="subgridurl" action="json-list-purchese2" />													
+					<s:url id="remoteurl" action="json-list-order-staff" />	<!-- ShowOrdered -->
+					<s:url id="editurl" action="edit-order-grid-staff" />
+					<s:url id="subgridurl" action="json-list-purchese2-staff" />													
 					<sjg:grid id="gridedittable" caption="-" dataType="json"
 						href="%{remoteurl}" pager="true" 
 						navigator="true" editurl="%{editurl}"

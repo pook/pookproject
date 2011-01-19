@@ -134,7 +134,7 @@ $.subscribe('rowadd1', function(event,data) {
 });	
 </script>
 <s:url id="addorder" value="edit-grid-order-staff" />
-<s:url id="buyurl" value="order-purchese" />
+<s:url id="buyurl" value="order-purchese-staff" />
 <s:url id="prochesedetail" action="showordered" />	
 <sj:div id="div4"><div id="#test"></div>
 <div id="main5"> 
@@ -188,8 +188,8 @@ $.subscribe('rowadd1', function(event,data) {
 		<tr>			
 			<td>				
 				<sj:div id="div2">					
-					<s:url id="remote2url" action="json-grid-purchese" />
-					<s:url id="selectskuurl" action="json-customer-loadskuss" />
+					<s:url id="remote2url" action="json-grid-purchese-staff" />
+					<s:url id="selectskuurl" action="json-customer-loadskuss-staff" />
 					<s:url id="editpurcheseurl" action="edit-grid-purchese-staff" />									
 					<sjg:grid id="gridedittable" caption="+"  dataType="json"
 						href="%{remote2url}" pager="true" navigator="true"

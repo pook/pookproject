@@ -13,6 +13,6 @@ public interface Node1DAO {
 	public List<Long> findNonSpace(long lower,long upper,int baseLevel,String treeId);
 	public void persist(Node1 node);
 	public void update(Node1 node);
-	public String findDisplayName(long pos);
+	public String findDisplayName(long pos,String treeId);
 	public List<Object[]> findDisplayName2(long lower,long upper);	
 }

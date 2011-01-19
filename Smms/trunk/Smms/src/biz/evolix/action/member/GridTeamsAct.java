@@ -22,7 +22,7 @@ public class GridTeamsAct extends ActionSupport{
 	private static final long serialVersionUID = 133768316707307634L;
 	private static Logger log = Logger.getLogger(GridTeamsAct.class);
 	private FetchListTeams fetchListTeams;
-	@Action(value = "/json-teams", results = { @Result(name = "success", type = "json") })
+	@Action(value = "/json-teams-member", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
 		try{			
 			setRecord( fetchListTeams.size());			

@@ -13,7 +13,7 @@ public class SaveNoticeAct extends ActionSupport{
 
 	private static Logger log = Logger.getLogger(SaveNoticeAct.class);
 	private static final long serialVersionUID = -7791839109490937842L;
-	@Action(value = "/save-notice", results = { @Result(name = "success", location = "index.jsp") })
+	@Action(value = "/save-notice-member", results = { @Result(name = "success", location = "index.jsp") })
 	public String execute() {
 		News news = newsDAO.loadNotice();
 		news.setContent(getNotice());

@@ -136,7 +136,7 @@
 </div>
 <script type="text/javascript" src="js/or-chart.js"></script>
 <script type="text/javascript">
-	var jsondat = "json-organization.action",jsonbw = "json-organization-backward",jsonsearch = "json-organization-search-member";
+	var jsondat = "json-organization-member",jsonbw = "json-organization-backward-member",jsonsearch = "json-organization-search-member";
 	$(function() {
 		$.getJSON(jsondat, function(data) {
 			orgJSON(data);

@@ -19,7 +19,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class FetchProvinceJSON extends ActionSupport {
 	
 	private static final long serialVersionUID = -8722319895173252394L;
-	@Action(value = "/json-fetch-province", results = {
+	@Action(value = "/json-fetch-province-member", results = {
 			@Result(name = "success", type = "json"),
 			@Result(name = "error", type = "json") })
 

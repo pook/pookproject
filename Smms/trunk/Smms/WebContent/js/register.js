@@ -2,7 +2,7 @@ function checkDisplayName() {
 	$(this).removeClass("ui-state-error");
 	$.ajax({
 		type : "post",
-		url : "check-displayname.action",
+		url : "check-displayname-member",
 		data : "displayName=" + $(this).val(),
 		success : function(res) {			
 			if (res.length>0) {	
@@ -18,7 +18,7 @@ function checkDisplayName() {
 
 function chkMax(){	
 	$.ajax({
-		url : "max-register.action",		
+		url : "max-register-member",		
 		success : function(res) {			
 			if(res==0){
 				$("#fsubmit1").remove();
@@ -36,7 +36,7 @@ function chkMax(){
 function chkLevel(){
 	$.ajax({
 		type : "get",		
-		url : "check-level.action",		
+		url : "check-level-member.action",		
 		success : function(res) {	
 			if(res.length()>0)
 				showmsgInf(res);
@@ -52,7 +52,7 @@ function regis() {
 	$("#displayName").live("focusout", checkDisplayName);
 	$("#codeIdentification").live("focusout",clrErrInf2);
 	$("#tel").live("focusout",clrErrInf2);$("#tel2").live("focusout",clrErrInf2);$("#name").live("focusout",clrErrInf2);$("#address").live("focusout",clrErrInf2);$("#bank").live("focusout",clrErrInf2);
-	$("#fsubmit1").live("click",
+	$("#fsubmit1").click(
 					function() {
 					var name = $("#name"), surename = $("#surename"), displayName = $("#displayName"), codeIdentification = $("#codeIdentification"), tel = $("#tel"), tel2 = $("#tel2"), email = $("#email"), inviter = $("#inviter"), address = $("#address"), address2 = $("#address2"), bank = $("#bank"), bankAccount = $("#bankAccount"), brance = $("#brance"), branceCard = $("#branceCard"), bankBrance = $("#bankBrance"), typeOfAccount = $("#typeOfAccount");
 					var allFields = $([]).add(name).add(surename).add(displayName).add(
@@ -74,7 +74,7 @@ function regis() {
 						valid = valid&& checkLength(bankBrance, " สาขาธนาคาร ", 3,30);
 						valid = valid&& checkLength(typeOfAccount, " ประเภทบัญชี ",	3, 30);
 						if (valid) {						
-							$("#main-regist").load("save.action", {"upline":""+$("#upline").val(),"name":""+name.val(),"surename":""+ surename.val() ,"displayName":""+displayName.val(),
+							$("#main-regist").load("save-member", {"upline":""+$("#upline").val(),"name":""+name.val(),"surename":""+ surename.val() ,"displayName":""+displayName.val(),
 								"codeIdentification":""+ codeIdentification.val(),"tel":""+ tel.val(),"brance":"" + brance.val(),"tel2":"" + tel2.val()	,
 								"branceCard":"" + branceCard.val(),"address" :""+ address.val(),"province":"" + $("#province").val(),"address2":"" + address2.val(),
 								"email":""+ email.val(),"bank":"" + bank.val(),"bankAccount":"" + bankAccount.val(), "bankBrance" :""+ bankBrance.val(), "typeOfAccount" :""+ typeOfAccount.val()});							

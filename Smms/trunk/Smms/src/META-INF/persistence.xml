@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="SmmsPU" transaction-type="JTA">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<jta-data-source>java:comp/env/jdbc/mysmmsDS</jta-data-source>
+		<jta-data-source>java:comp/env/jdbc/pgsmmsDS</jta-data-source>
 		<class>biz.evolix.model.Users</class>
 		<class>biz.evolix.model.SmileUsersDetails</class>
 		<class>biz.evolix.model.Sku</class>

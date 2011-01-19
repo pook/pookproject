@@ -20,6 +20,7 @@ import org.eclipse.persistence.annotations.CacheType;
 @NamedQueries({		
 		@NamedQuery(name = "findDisplayName", query = "select N from Node1 N where N.displayName=?1"),
 		@NamedQuery(name = "findDisplayNameByPos", query = "select N.displayName from Node1 N where N.pos=?1"),
+		@NamedQuery(name = "findDisplayNameByPosAndTreeId", query = "select N.displayName from Node1 N where N.pos =?1 and N.treeId =?2"),
 		@NamedQuery(name = "findNode1FromUserId", query = "select N from Node1 N where N.user=?1"),
 		@NamedQuery(name = "findFromSmileId", query = "select N from Node1 N where N.smileId=?1"),
 		@NamedQuery(name = "findByHashcode", query = "select N from Node1 N,NodeDescription D where N.treeId = D.treeId and "

@@ -11,9 +11,9 @@ public interface UsersDAO {
 	public void update(Users user);
 	public void updateQuery(Object arg0,String nameQuery);
 	public void updateQuery(Object arg0,Object arg1,String nameQuery);
-	public Long sizeRevCard();
+	public long sizeRevCard();
 	public List<Users> userRecCard(int start,int max);
-	public Long size();
+	public long size();
 	public List<Users> find(int start,int max);
 	public void flush();	
 	public long size(Object arg0,String nameQuery);

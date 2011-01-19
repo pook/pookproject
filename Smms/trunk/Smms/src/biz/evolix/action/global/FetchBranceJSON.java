@@ -20,7 +20,7 @@ public class FetchBranceJSON extends ActionSupport {
 
 	private static final long serialVersionUID = -2808613941250438494L;
 
-	@Action(value = "/json-fetch-brance", results = {
+	@Action(value = "/json-fetch-brance-member", results = {
 			@Result(name = "success", type = "json"),
 			@Result(name = "error", type = "json") })
 	public String execute() throws Exception {

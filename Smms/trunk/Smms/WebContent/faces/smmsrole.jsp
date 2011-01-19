@@ -87,8 +87,8 @@ $.subscribe('getselectedids3', function(event,data) {
 				<div id="ttree"><sj:div id="div011">
 					<sj:div id="div111"></sj:div>					
 					<sj:div id="div211">
-						<s:url id="selectprovinceurl" action="fetch-province" />
-						<s:url id="branceurl" action="json-brance" />
+						<s:url id="selectprovinceurl" action="fetch-province-member" />
+						<s:url id="branceurl" action="json-brance-admin" />
 						<s:url id="editbranceurl" action="edit-grid-brance-admin" />						
 						<sjg:grid id="gridedittable11" caption="ตั้งค่าสาขา"
 							dataType="json" href="%{branceurl}" pager="true" navigator="true" 
@@ -181,7 +181,7 @@ $.subscribe('getselectedids3', function(event,data) {
 				<div id="tfour"><sj:div id="div4">					
 					<sj:div id="div44">
 						<s:url id="staffurl" action="json-staff" />
-						<s:url id="selectbranceeurl" action="fetch-brance" />
+						<s:url id="selectbranceeurl" action="fetch-brance-member" />
 						<s:url id="editstaffurl" action="edit-staff" />
 						<sjg:grid id="gridedittable4" caption="staff" dataType="json"
 							href="%{staffurl}" pager="true" navigator="true"

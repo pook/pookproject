@@ -20,7 +20,7 @@ public class ShowOrdered extends ActionSupport {
 	private static final long serialVersionUID = 1203067266428303543L;
 	private static Logger log = Logger.getLogger(ShowOrdered.class);
 	
-	@Action(value = "/json-list-order", results = { @Result(name = "success", type = "json") })
+	@Action(value = "/json-list-order-staff", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {			
 		return SUCCESS;
 	}
