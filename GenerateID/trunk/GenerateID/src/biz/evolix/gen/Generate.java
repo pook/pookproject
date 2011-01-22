@@ -1,23 +1,24 @@
 package biz.evolix.gen;
 
-public class Generate {
-	public static final long AUTO=-2;
-	private static final char[] ALPHA = { 'A', 'B', 'C', 'D', 'E', 'F', 'G',
-			'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-			'U', 'V', 'W', 'X', 'Y', 'Z' };
-	private static final byte BASE = 2;
+import java.security.NoSuchAlgorithmException;
 
-	public synchronized static String getId(Long x,String provinceCode) {
-		int count=0,y=log2(x);		
-		while(y>=ALPHA.length){
-			++count;			
-			y-=ALPHA.length;
-		}
+public class Generate {
+	public static final long AUTO = -2;
+	private static final String ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	private static final byte BASE = 2;
+	private static final long MAX_ID = 0x5f5e0ff;
+	private static final String DIGITS = "0123456789abcdef";
+	public static final long MAX_NODE62 = 0x4000000000000000L;
+	public static final long MAX_NODE63 = 0x7fffffffffffffffL;
+
+	public synchronized static String smileId(long userId, int level,
+			String provinceCode) {
 		StringBuilder b = new StringBuilder();
-		b.append(ALPHA[count]);
-		b.append(ALPHA[y]);
+		codeId(b, level);
 		b.append(provinceCode);
-		stringId(b,x);
+		if (userId > MAX_ID)
+			userId = -MAX_ID;
+		stringId(b, userId);
 		return b.toString();
 	}
 
@@ -25,41 +26,111 @@ public class Generate {
 		double y = Math.log(x) / Math.log(BASE);
 		return (int) Math.floor(y);
 	}
-	private synchronized static void stringId(StringBuilder b,Long x){
-		String id=""+x;
-		switch(id.length()){
-		case 1:
-			b.append("0000000");break;
-		case 2:
-			b.append("000000");break;
-		case 3:
-			b.append("00000");break;
-		case 4:
-			b.append("0000");break;
-		case 5:
-			b.append("000");break;
-		case 6:
-			b.append("00");break;
-		case 7:
-			b.append("0");break;
-		case 8:
-			break;
-			default:
-				throw new NumberFormatException("Out of length support");
+
+	private synchronized static void codeId(StringBuilder sb, int level) {
+		int i = level / ALPHA.length();
+		int j = level % ALPHA.length();
+		i = codeId2(sb, i);
+		sb.append(ALPHA.charAt(i));
+		sb.append(ALPHA.charAt(j));
+	}
+
+	private static int codeId2(StringBuilder sb, int i) {
+		if (i > 25) {
+			i = i / ALPHA.length();
+			i = codeId2(sb, i - 1);
+			sb.append(ALPHA.charAt(i));
 		}
-		b.append(x);		
+		return i;
 	}
-	public static Long getParentId(Long x){
-		return x>>1;
+
+	private synchronized static void stringId(StringBuilder b, Long userId) {
+		switch (userId.toString().length()) {
+		case 1:
+			b.append("0000000");
+			break;
+		case 2:
+			b.append("000000");
+			break;
+		case 3:
+			b.append("00000");
+			break;
+		case 4:
+			b.append("0000");
+			break;
+		case 5:
+			b.append("000");
+			break;
+		case 6:
+			b.append("00");
+			break;
+		case 7:
+			b.append("0");
+			break;
+		}
+		b.append(userId);
 	}
-	public static Long getLeftChildId(Long x){
-		return x<<1;
+
+	public static long math2Pow(long x) {
+		final long y = 1;
+		return (long) y << x;
 	}
-	public static Long getRightChildId(Long x){
-		return 1+(x<<1);
+
+	public static double xCommission(final int sv) {
+		return (sv << 1) / 100;
 	}
-	public static long math2Pow(int x){
-		final long y=1;
-		return (long) y<<x;
+
+	public static String generateIdSHA(String word)
+			throws NoSuchAlgorithmException {
+		return hashAlgorilthm("SHA", word);
+	}
+
+	public static String generateHashAlgorilthm(String algorithm, String word)
+			throws NoSuchAlgorithmException {
+		return hashAlgorilthm(algorithm, word);
+	}
+
+	public static String hashAlgorilthm(String algorithm, String word)
+			throws NoSuchAlgorithmException {
+		try {
+			return hexEncode(java.security.MessageDigest.getInstance(algorithm)
+					.digest(word.getBytes()));
+		} catch (NoSuchAlgorithmException ex) {
+			throw new NoSuchAlgorithmException();
+		}
+	}
+
+	private static String hexEncode(byte[] sha) {
+		StringBuilder r = new StringBuilder();
+		for (int idx = 0; idx < sha.length; ++idx) {
+			byte b = sha[idx];
+			r.append(DIGITS.charAt((b & 0xf0) >> 4));
+			r.append(DIGITS.charAt(b & 0x0f));
+		}
+		return r.toString();
+	}
+
+	public static long next(long id) {
+		return id + 1;
+	}
+
+	public static long parent(long x) {
+		return x >> 1;
+	}
+
+	public static long left(long x) {
+		return x << 1;
+	}
+
+	public static long right(long x) {
+		return (x << 1) + 1;
+	}
+
+	public static boolean isLeft(long id) {
+		return id % 2 == 0;
+	}
+
+	public static boolean bottom(long id) {
+		return id >= MAX_NODE62 && id <= MAX_NODE63;
 	}
 }
