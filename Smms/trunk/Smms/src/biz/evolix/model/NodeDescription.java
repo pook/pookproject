@@ -13,9 +13,7 @@ import biz.evolix.gen.Generate;
 
 @Entity
 @IdClass(NodePK.class)
-@NamedQueries({ @NamedQuery(name = "findNonSpace", query = "select D.pos from NodeDescription D where  D.pos>=?1 and D.pos<=?2 and D.baseLevel=?3 and D.treeId=?4 "),
-	@NamedQuery(name = "findNonSpace2", query = "select D.treeId,D.pos from NodeDescription D where  D.pos>=?1  and D.pos<=?2 ")
-	})
+@NamedQueries({ @NamedQuery(name = "findDisplayNameByHashCode", query = "select N.displayName from Node1 N,NodeDescription D where D.treeId = N.treeId and D.pos = N.pos and D.hashCode =?1") })
 @Table(name = "NODE_DEPT")
 public class NodeDescription implements java.io.Serializable {
 
@@ -56,16 +54,16 @@ public class NodeDescription implements java.io.Serializable {
 		super();
 		this.treeId = nodeId;
 		this.pos = pos;
-		long low = Generate.left(this.pos),uppr = Generate.right(this.pos);
-		if(Generate.bottom(pos)){
-			low  =2;
+		long low = Generate.left(this.pos), uppr = Generate.right(this.pos);
+		if (Generate.bottom(pos)) {
+			low = 2;
 			uppr = 3;
 		}
 		setLower(low);
 		setUpper(uppr);
 		setNextId(getLower());
 		setCount(0L);
-		String hash =NodePK.hashNode1(getTreeId()+ getPos());
+		String hash = NodePK.hashNode1(getTreeId() + getPos());
 		setHashCode(hash);
 	}
 

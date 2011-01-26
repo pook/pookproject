@@ -123,26 +123,27 @@ public class RoleServiceImp implements RoleService {
 		int idx = roleb.getId();
 		Users user = users.get(idx);
 		if (user != null) {
-			addRole(user, roleb.getAdmin(), Role.ROLE_ADMIN.name());
-			addRole(user, roleb.getMember(), Role.ROLE_MEMBER.name());
-			addRole(user, roleb.getStaff(), Role.ROLE_STAFF.name());
+			Authorities auth = authoritiesDAO.findByName(Role.ROLE_ADMIN.name(), user);
+			addRole(user, roleb.getAdmin(),auth, Role.ROLE_ADMIN.name());
+			Authorities auth1 = authoritiesDAO.findByName(Role.ROLE_MEMBER.name(), user);
+			addRole(user, roleb.getMember(),auth1, Role.ROLE_MEMBER.name());
+			Authorities auth2 = authoritiesDAO.findByName(Role.ROLE_STAFF.name(), user);
+			addRole(user, roleb.getStaff(),auth2, Role.ROLE_STAFF.name());
 			staff(roleb.getStaff(), user);
 			user.getDetail().setName(roleb.getName());
 			user.getDetail().setSurename(roleb.getSurename());
 			user.getDetail().setBankAccount(roleb.getBankAccount());
 			user.getDetail().setBbrance(roleb.getBankBrance());
 			user.getDetail().setAddress(roleb.getAddress());			
-			try {
-				usersDAO.update(user);
-				usersDAO.flush();
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-			}
+			usersDAO.update(user);
+			usersDAO.flush();
+			remove(roleb.getAdmin(), auth,Role.ROLE_ADMIN.name());			
+			remove(roleb.getMember(), auth1,Role.ROLE_MEMBER.name());
+			remove(roleb.getStaff(), auth2,Role.ROLE_STAFF.name());
 		}
 	}
 
-	private void addRole(Users user, boolean hasRole, String role) {
-		Authorities auth = authoritiesDAO.findByName(role, user);
+	private void addRole(Users user, boolean hasRole, Authorities auth,String role) {		
 		if (hasRole) {
 			if (auth == null) {
 				auth = new Authorities(user, role);
@@ -153,8 +154,13 @@ public class RoleServiceImp implements RoleService {
 			}
 		} else {
 			if (user.getAuthorities().contains(auth)) {
-				user.getAuthorities().remove(auth);
+				user.getAuthorities().remove(auth);				
 			}
+		}
+	}
+	private void remove(boolean hasRole,Authorities auth,String role){
+		if(!hasRole && auth != null){
+			authoritiesDAO.remove(auth.getUser().getUserId(),role );
 		}
 	}
 

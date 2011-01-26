@@ -11,11 +11,14 @@ import biz.evolix.customconst.ConstType;
 import biz.evolix.gen.Generate;
 import biz.evolix.model.Node1;
 import biz.evolix.model.NodePK;
+import biz.evolix.model.bean.NodeBean;
 import biz.evolix.model.dao.Node1DAO;
 import biz.evolix.secure.SmileUser;
+import biz.evolix.utils.Utils;
 
 public class OrchartServiceImp implements OrchartService {
 	private static final Node1 NULL_NODE;
+	private static final NodeBean NULL_NODEB = new NodeBean();
 	static {
 		NULL_NODE = new Node1();
 		NULL_NODE.setTreeId("");
@@ -23,46 +26,81 @@ public class OrchartServiceImp implements OrchartService {
 		NULL_NODE.setSv(0);
 	}
 	private static Logger log = Logger.getLogger(OrchartServiceImp.class);
-	private Long header;
+	private String treeid;
+	private String tree2;
+	private long pos;
 	@Autowired
 	private Node1DAO node1DAO;
 
+	@Override
 	public void init() {
-		try {
-			setHeader();
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
+		this.treeid = getUsers().getTreeId();
+		this.pos = getUsers().getPos();
+	}
+
+	@Override
+	public List<NodeBean> getTeamLevel(String treeId, long pos, int bw) {
+		switch (bw) {
+		case ConstType.BACKWARD:
+			pos = backward(treeId, pos);
+			return getTeamLevel(this.tree2, pos);
+		case ConstType.BACKWARD_6:
+			pos = backward6(treeId, pos);
+			return getTeamLevel(this.tree2, pos);
+		default:
+			return getTeamLevel(this.treeid, new Long(ConstType.NOT_FOUND));
 		}
 	}
 
-	public List<Node1> getTeamLevel(Long head) {
-		List<Node1> teams = new ArrayList<Node1>();
-		if (head < getHeader()) {
-			head = getHeader();
+	@Override
+	public List<NodeBean> getTeamLevel(String treeId, long head) {
+		if (head == ConstType.AUTO || head < this.pos
+				&& treeId.equals(this.treeid)) {
+			head = this.pos;
+			treeId = this.treeid;
 		}
-		NodePK id = new NodePK(getUsers().getTreeId(), head);
+		return getTeamLevel1(treeId, head);
+	}
+
+	private List<NodeBean> getTeamLevel1(String treeId, long head) {
+		NodePK id = new NodePK(treeId, head);
 		Node1 n = node1DAO.find(id);
+		List<Node1> teams = new ArrayList<Node1>();
+		List<NodeBean> teams1 = new ArrayList<NodeBean>();
 		if (n == null)
-			return teams;
-		addList(teams, n);
+			return teams1;
+		addList(teams, n, teams1);
 		for (int i = 0; i < ConstType.MAX_NODE_SHOW; i++) {
-			Node1 n1 = null, n2 = null;			
-			id.setPos(teams.get(i).getPos());
-			n1 = node1DAO.find(new NodePK(id.getTreeId(),Generate.left(id.getPos())));
-			addList(teams, n1);
-			n2 = node1DAO.find(new NodePK(id.getTreeId(),Generate.right(id.getPos())));
-			addList(teams, n2);
+			long left=new Long(-1),right = new Long(-1);
+			id = new NodePK(teams.get(i).getTreeId(), teams.get(i).getPos());			
+			if (Utils.inRange(id.getPos())) {
+				treeId = NodePK.hashNode1(id.getTreeId() + id.getPos());
+				left = new Long(2);
+				right = new Long(3);
+			}else{
+				left = Generate.left(id.getPos());
+				right = Generate.right(id.getPos());
+				treeId = id.getTreeId();
+			}
+			Node1 n1 = node1DAO.find(new NodePK(treeId, left));
+			addList(teams, n1, teams1);
+			Node1 n2 = node1DAO.find(new NodePK(treeId, right));
+			addList(teams, n2, teams1);			
 		}
 		xCommission(teams);
-		return teams;
+		return teams1;
 	}
 
-	private void addList(List<Node1> teams, Node1 n1) {
-		if (n1 == null)
+	private synchronized void addList(List<Node1> teams, Node1 n1, List<NodeBean> teams1) {
+		if (n1 == null) {
 			teams.add(teams.size(), NULL_NODE);
-		else
+			teams1.add(teams1.size(), NULL_NODEB);
+		} else {
 			teams.add(teams.size(), n1);
-
+			teams1.add(teams1.size(),
+					new NodeBean(n1.getSmileId(), n1.getTreeId(), n1.getPos()
+							+ "", n1.getInviter(), n1.getDisplayName(),n1.getStatus()));
+		}
 	}
 
 	private List<Integer> levels;
@@ -72,9 +110,8 @@ public class OrchartServiceImp implements OrchartService {
 		for (int i = 0, k = 0; i < ConstType.BACKWARD_6 && k < teams.size(); i++) {
 			int value = 0;
 			int c = (int) Math.floor(Generate.math2Pow(i));
-			for (int j = 0; j < c; j++) {
-				//if(teams.get(k).getPos()==-2L)continue;
-				value += teams.get(k++).getSv();				
+			for (int j = 0; j < c; j++) {				
+				value += teams.get(k++).getSv();
 			}
 			this.levels.add(value);
 		}
@@ -93,15 +130,6 @@ public class OrchartServiceImp implements OrchartService {
 		return node1DAO;
 	}
 
-	private Long getHeader() {
-		return header;
-	}
-
-	private void setHeader() throws Exception {
-		this.header = getUsers().getPos();
-		log.debug("head :" + this.header);
-	}
-
 	private SmileUser getUsers() {
 		try {
 			return (SmileUser) SecurityContextHolder.getContext()
@@ -114,16 +142,26 @@ public class OrchartServiceImp implements OrchartService {
 	}
 
 	@Override
-	public long getNodeId(String node) {		
-		Node1 n = node1DAO.findFromSmileId(node);		
+	public Node1 getNodeId(String node) {
+		Node1 n = node1DAO.findFromSmileId(node);
 		if (n == null)
-			return ConstType.NOT_FOUND;
-		else if (n.getPos() < getHeader()) {
-			return ConstType.NOT_ALLOW;
-		} else if (!searchParent(n.getPos(), getHeader())) {
-			return ConstType.NOT_ALLOW;
+			return new Node1(new Long(-2L));
+		else if (!searchParent(n.getPos(), this.pos, n.getTreeId())) {
+			return new Node1(new Long(-3L));
 		}
-		return  n.getPos();
+		return n;
+	}
+
+	private boolean searchParent(long id, long head, String treeId) {
+		if (treeId.equals(this.treeid)) {
+			return id < head || searchParent(id, head);
+		} else {
+			final long id2 = new Long(1);
+			while (id > id2)
+				id = Generate.parent(id);
+			Node1 n = node1DAO.findByHashCode(treeId);
+			return searchParent(n.getPos(), head);
+		}
 	}
 
 	private static boolean searchParent(long id, long head) {
@@ -133,5 +171,26 @@ public class OrchartServiceImp implements OrchartService {
 			id = Generate.parent(id);
 		}
 		return false;
+	}
+
+	private long backward(String treeId, long c) {
+		this.tree2 = this.treeid;
+		if (treeId.equals(this.treeid)) {
+			return Generate.parent(c);
+		} else {
+			long p = Generate.parent(c);
+			if (p == ConstType.ONE) {
+				Node1 n = node1DAO.findByHashCode(treeId);
+				this.tree2 = n.getTreeId();
+				return n.getPos();
+			}
+			return p;
+		}
+	}
+
+	private long backward6(String treeId, long c) {
+		for (int i = 0; i < ConstType.BACKWARD_6; i++)
+			c = backward(treeId, c);
+		return c;
 	}
 }

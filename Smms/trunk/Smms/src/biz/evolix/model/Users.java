@@ -28,9 +28,10 @@ import javax.persistence.TemporalType;
 	@NamedQuery(name = "ckpasswd", query = "select U from Users U where U.node1.smileId=?1 and U.password=?2"),
 	@NamedQuery(name = "finduser", query = "select U from Users U where U.node1.smileId =?1 "),
 	@NamedQuery(name = "receivecardSize", query = "select count(0) from Users U where U.recivecard=false"),
-	@NamedQuery(name = "receivecard", query = "select U from Users U where U.recivecard=false"),
+	@NamedQuery(name = "receivecard", query = "select U from Users U where U.recivecard=false order by U.userId"),
 	@NamedQuery(name = "userSize", query = "select count(0) from Users U "),
-	@NamedQuery(name = "loadUser", query = "select U from Users U "),
+	@NamedQuery(name = "loadUser", query = "select U from Users U order by U.userId"),
+	@NamedQuery(name = "findAllStaff", query = "select U from Users U,Authorities A where A.user=U and A.authority = ?1  "),
 	@NamedQuery(name = "updateCard", query = "update Users U set recivecard=true where U.node1.displayName=?1"),
 	@NamedQuery(name = "resetPassword", query = "update Users U set U.password=?1 where U.userId=?2"),
 	@NamedQuery(name = "userdownlinesize", query = "select count(0) from Users U where U.node1.inviter=?1"),
@@ -121,7 +122,7 @@ public class Users implements java.io.Serializable {
 		this.authorities = authorities;
 	}
 	@JoinColumn(nullable=true)
-	@OneToMany(mappedBy = "AUTH_ID", cascade = {CascadeType.PERSIST,CascadeType.REMOVE},orphanRemoval=true)
+	@OneToMany(mappedBy = "AUTH_ID", cascade = {CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.MERGE})
 	public Set<Authorities> getAuthorities() {
 		return authorities;
 	}

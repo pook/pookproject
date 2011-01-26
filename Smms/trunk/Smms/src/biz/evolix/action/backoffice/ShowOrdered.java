@@ -26,10 +26,10 @@ public class ShowOrdered extends ActionSupport {
 	}
 
 	public String getJSON() throws Exception {		
-		setRecord((int) orderService.sizeAll());
+		setRecord((int) orderService.sizeAll(false));
 		int to = (getRows() * getPage());
 		int from = to - getRows();		
-		setGridModel(orderService.ordersAll(from , getRows()));	
+		setGridModel(orderService.ordersAll(false,from , getRows()));	
 		setTotal();
 		return execute();
 	}

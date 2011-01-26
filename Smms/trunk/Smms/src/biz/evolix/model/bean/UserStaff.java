@@ -2,7 +2,7 @@ package biz.evolix.model.bean;
 
 import java.util.Date;
 
-public class UserStaff extends User{
+public class UserStaff extends User implements Comparable{
 
 	public UserStaff(Integer id, String smileId, String name,String displayName) {
 		super(id, smileId, name,displayName);		
@@ -58,5 +58,11 @@ public class UserStaff extends User{
 
 	private Date date;
 	private String brance;
+
+	@Override
+	public int compareTo(Object o) {
+		UserStaff st = (UserStaff)o;		
+		return getSmileId().compareTo(st.getSmileId());
+	}
 
 }

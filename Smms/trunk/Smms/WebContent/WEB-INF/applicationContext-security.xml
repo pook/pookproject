@@ -20,20 +20,22 @@
 		<intercept-url pattern="/jsext/**" access="permitAll" />
 		<intercept-url pattern="/struts/**" access="isAuthenticated()" />
 		<intercept-url pattern="/images/**" access="permitAll" />			
-		<intercept-url pattern="/default.action" access="hasAnyRole('ROLE_STAFF','ROLE_MEMBER','ROLE_ADMIN')" />
+		<intercept-url pattern="/*" access="hasAnyRole('ROLE_STAFF','ROLE_MEMBER','ROLE_ADMIN')" />
 		<intercept-url pattern="/commission**" access="hasRole('ROLE_ADMIN')" />	
 		<intercept-url pattern="/smmsrole**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/editproduct**" access="hasRole('ROLE_ADMIN')" />	
 		<intercept-url pattern="/blackoffice**" access="hasAnyRole('ROLE_ADMIN','ROLE_STAFF')" />
 		<intercept-url pattern="/staffmember**" access="hasAnyRole('ROLE_ADMIN','ROLE_STAFF')" />
-		<intercept-url pattern="/index**" access="hasRole('ROLE_MEMBER')" />
+		<intercept-url pattern="/index.action" access="hasAnyRole('ROLE_ADMIN','ROLE_STAFF','ROLE_MEMBER')" />
+		<intercept-url pattern="/index" access="hasAnyRole('ROLE_ADMIN','ROLE_STAFF','ROLE_MEMBER')" />
 		<intercept-url pattern="/member**" access="hasRole('ROLE_MEMBER')" />
 		<intercept-url pattern="/register**" access="hasRole('ROLE_MEMBER')" />
 		<intercept-url pattern="/organization**" access="hasRole('ROLE_MEMBER')" />
-		<intercept-url pattern="/order**" access="hasRole('ROLE_MEMBER')" />
+		<intercept-url pattern="/order" access="hasAnyRole('ROLE_MEMBER')" />
+		<intercept-url pattern="/order.action" access="hasAnyRole('ROLE_MEMBER')" />
 		<intercept-url pattern="/select-brance**" access="hasRole('ROLE_MEMBER')" />
 		<intercept-url pattern="/select-province**" access="hasRole('ROLE_MEMBER')" />
-		<intercept-url pattern="/select-sku**" access="hasRole('ROLE_MEMBER')" />
+		<intercept-url pattern="/select-sku**" access="hasRole('ROLE_MEMBER')" />		
 		<intercept-url pattern="/*-staff**" access="hasRole('ROLE_STAFF')" />
 		<intercept-url pattern="/showordered**" access="hasRole('ROLE_STAFF')" />
 		<intercept-url pattern="/*-admin**" access="hasRole('ROLE_ADMIN')" />

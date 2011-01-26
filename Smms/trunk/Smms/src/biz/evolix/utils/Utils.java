@@ -1,8 +1,11 @@
-package biz.evolix.customconst;
+package biz.evolix.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import biz.evolix.customconst.ConstType;
 import biz.evolix.gen.Generate;
 import biz.evolix.model.NodeDescription;
 import biz.evolix.model.NodePK;
@@ -23,8 +26,8 @@ public class Utils {
 	public static void resetNodeDept(NodeDescription dept,boolean test){
 		if(test){
 			dept.setHigh(dept.getHigh() + 1);
-			dept.setLower(2L);
-			dept.setUpper(3L);
+			dept.setLower(new Long(2));
+			dept.setUpper(new Long(3));
 			dept.setNextId(dept.getLower());
 			dept.setCount(0L);
 		}
@@ -46,10 +49,14 @@ public class Utils {
 		int height = baseLevel % ConstType.MAX_LEVEL;
 		height = (height == 0)?0:ConstType.MAX_LEVEL-height;		
 		long lpos = Utils.buttomleft(pos, height), rpos = Utils
-				.buttomright(pos, height);
+				.buttomright(pos, height);		
 		List<String>hashs = new ArrayList<String>();
 		for (long i = lpos; i <= rpos; i++) 
-			hashs.add(NodePK.hashNode1(treeId+i));
+			hashs.add(hashs.size(),NodePK.hashNode1(treeId+i));		
 		return hashs;
 	}
+	public static boolean inRange(long x){
+		return Generate.bottom(x);
+	}
+	private static Logger log = Logger.getLogger(Utils.class);
 }

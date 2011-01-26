@@ -6,18 +6,19 @@ import javax.persistence.Query;
 
 import org.springframework.orm.jpa.JpaCallback;
 
-public class GenericSize<T> implements JpaCallback<T> {
-	
+public class FindAll<T> implements JpaCallback<T> {
+
+	@SuppressWarnings("unchecked")
 	@Override
-	@SuppressWarnings("unchecked")	
 	public T doInJpa(EntityManager em) throws PersistenceException {
-		Query q = em.createNamedQuery(this.sqlNameQuery);
+		Query q = em.createNamedQuery(this.nameQuery);
 		return (T)q.getSingleResult();
 	}
-	private String sqlNameQuery;
-	
-	public GenericSize(String sqlNameQuery) {
+	private String nameQuery;
+	public FindAll(String nameQuery) {
 		super();
-		this.sqlNameQuery = sqlNameQuery;		
-	}		
+		this.nameQuery = nameQuery;
+	}
+	
+
 }

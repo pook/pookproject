@@ -48,14 +48,18 @@ public class RegisterServiceImp implements RegisterService {
 
 	@Override
 	public String save(SmileUsersDetails smileuser, String choseId, String pv,
-			Node1 node, Users user) {
-		SmileUser suser = getUsers();
+			Node1 node, Users user) {		
+		SmileUser suser = getUsers();		
+		Users inviter = (suser == null)?null:userDAO.find(suser.getUserid());		
 		String treeId = (suser == null) ? ConstType.HASHCODE_NODE0 : getUsers()
-				.getTreeId();
+				.getTreeId();		
 		long pos = (suser == null) ? 0L : getUsers().getPos();
 		long chose = -1;
 		String choseTree = treeId;
-		boolean test = false;
+		boolean test = false;		
+		if (inviter != null)
+			if (inviter.getMaxRegister() < 1)
+				throw new UsernameNotFoundException("Limit register !!");		
 		if (choseId.length() == 2) {
 			try {
 				chose = Long.parseLong(choseId);
@@ -72,7 +76,7 @@ public class RegisterServiceImp implements RegisterService {
 				log.error(e.getMessage());
 				throw new UsernameNotFoundException("Register Fail");
 			}
-		}
+		}		
 		boolean auto = (chose == ConstType.AUTO) ? true : false;
 		if (chose == -1)
 			throw new UsernameNotFoundException("Register Fail");
@@ -86,10 +90,9 @@ public class RegisterServiceImp implements RegisterService {
 		smileuser.setProvince(p);
 		smileuser.setNumOfAccount(1);
 		user.setDetail(smileuser);
-		smileUsersDetailDAO.register(smileuser);		
+		smileUsersDetailDAO.register(smileuser);
 		String smileId = insert(smileuser, user, node, pv, chose);
 		if (getUsers() != null) {
-			Users inviter = userDAO.find(getUsers().getUserid());
 			inviter.setMaxRegister(inviter.getMaxRegister() - 1);
 			userDAO.update(inviter);
 		}
@@ -118,46 +121,52 @@ public class RegisterServiceImp implements RegisterService {
 				log.error(e.getMessage());
 				throw new UsernameNotFoundException("Register Fail");
 			}
-		}
+		}		
 		Users inviter = userDAO.find(getUsers().getUserid());
-		SmileUsersDetails smile = inviter.getDetail();		
-		if (inviter.getNumberOfAccount() > 2 || findQuotaService.quota() !=-1){	
-			log.info("ddddd");
-			throw new UsernameNotFoundException("Register Fail");
+		if (inviter != null) 
+			if (inviter.getMaxRegister() < 1)
+				throw new UsernameNotFoundException("Limit register !!");
+			if (inviter.getNumberOfAccount() > 2
+					|| findQuotaService.quota() != -1) {
+				new UsernameNotFoundException("Register Fail Not Allow");
 			}
+		
+		SmileUsersDetails smile = inviter.getDetail();
 		boolean auto = (chose == ConstType.AUTO) ? true : false;
 		Node1 node = new Node1();
 		node.setInviter(getUsers().getDisplayName());
 		node.setDisplayName(displayName);
 		if (chose == -1)
-			throw new UsernameNotFoundException("Register Fail");
+			throw new UsernameNotFoundException("Register Fail!");
 		if (!findPlace(new NodePK(treeId, pos), choseTree, chose, node, test,
-				auto))
-			throw new UsernameNotFoundException("Register Fail");
-		Users user = new Users();		
+				auto)) {
+			log.info("Register Fail" + node.getDisplayName());
+			throw new UsernameNotFoundException("Register Fail !!");
+		}
+		Users user = new Users();
 		user.setPassword(ConstType.DEFAULT_PW);
 		user.setBrance(inviter.getBrance());
 		user.setBranceCard(inviter.getBranceCard());
 		user.setDate(new Date());
 		user.setNode1(node);
 		int inv = inviter.getNumberOfAccount() + 1;
-		user.setNumberOfAccount(inv);		
-		smile.setNumOfAccount(inv);			
-		user.setDetail(smile);		
-		String smileId = insert(smile, user, node, inviter
-				.getDetail().getProvince().getpCode(), chose);
+		user.setNumberOfAccount(inv);
+		smile.setNumOfAccount(inv);
+		user.setDetail(smile);
+		String smileId = insert(smile, user, node, inviter.getDetail()
+				.getProvince().getpCode(), chose);
 		smile.getUsers().add(user);
 		smileUsersDetailDAO.update(smile);
-		if (getUsers() != null) {			
-			Users inviter1 = userDAO.find(getUsers().getUserid());
+		if (getUsers() != null) {
+			inviter = userDAO.find(getUsers().getUserid());
 			inviter.setMaxRegister(inviter.getMaxRegister() - 1);
-			userDAO.update(inviter1);
+			userDAO.update(inviter);
 		}
 		return smileId;
 	}
 
 	private String insert(SmileUsersDetails smileuser, Users user, Node1 node,
-			String pv, Long userChoseId) {	
+			String pv, Long userChoseId) {
 		userDAO.persist(user);
 		NodeDescription dept = nodeDeptDAO.find(new NodePK(node.getTreeId(),
 				node.getPos()));
@@ -199,7 +208,7 @@ public class RegisterServiceImp implements RegisterService {
 		}
 		return success;
 	}
-	
+
 	private boolean checkDisplayName(String displayName) {
 		return !checkNameDAO.test(displayName);
 	}

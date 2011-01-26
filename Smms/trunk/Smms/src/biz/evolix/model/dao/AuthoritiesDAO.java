@@ -12,7 +12,7 @@ public interface AuthoritiesDAO {
 	//public Users findUser(String userId)throws NullPointerException;
     public boolean chgpw(long uid,String newpw);
     public boolean ckpasswd(String uid,String pw);  
-    public void remove(long userId); 
+    public void remove(long userId,String role); 
     public void remove1(Authorities auth);
     public void merg(Authorities auth);
 }

@@ -103,21 +103,31 @@ And MemberShip Management</span>
 <div id="nav">
 <div class="hlist ui-widget-header">
 <ul>
+ 
 	<li class="ui-widget-header"><s:url id="urlindex" action="index" /><sj:a
 		id="indexlink" href="%{urlindex}" targets="main">&nbsp;ข่าวสารสมาชิก&nbsp;</sj:a></li>
+		
+		<sec:authorize access="hasRole('ROLE_MEMBER')">
 	<li class="ui-widget-header"><s:url id="urlmember" action="member" /><sj:a
 		id="memberlink" href="%{urlmember}" targets="main">&nbsp;ทะเบียนสมาชิก&nbsp;</sj:a>
 	</li>
+	</sec:authorize>
+	<sec:authorize access="hasRole('ROLE_MEMBER')">
 	<li class="ui-widget-header"><s:url id="urlregister"
 		action="register" /><sj:a id="registerlink" href="%{urlregister}"
 		targets="main">ลงทะเบียนสมาชิกใหม่</sj:a></li>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_MEMBER')">
 	<li class="ui-widget-header"><s:url id="urlorganization"
 		action="organization" /><sj:a id="organizationlink"
 		href="%{urlorganization}" targets="main">&nbsp;ผังองค์กร&nbsp;</sj:a>
 	</li>
+	</sec:authorize>
+	<sec:authorize access="hasRole('ROLE_MEMBER')">
 	<li class="ui-widget-header"><s:url id="urlorder" action="order" /><sj:a
 		id="orderlink" href="%{urlorder}" targets="main">&nbsp;ประวัติการสั่งชื้อสินค้า&nbsp;</sj:a>
 	</li>
+	</sec:authorize>
 	<!-- 
            <li class="ui-widget-header"><s:url id="urllogin" action="login"/><sj:a id="loginlink" href="%{urllogin}" targets="main">&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;</sj:a> </li>
       --> 
@@ -154,8 +164,7 @@ And MemberShip Management</span>
 <sj:div id="main" href="%{urlindex}">
 	<img id="indicator" src="images/indicator.gif" alt="Loading..." />
 </sj:div> <!-- begin: #footer -->
-<div id="footer"><a href="" title="Smile Plus Company co.ltd">Smile
-Plus Company co.ltd</a></div>
+<div id="footer"><a href="" title="Smile Plus Company co.ltd">Smile Plus Network Co.,Ltd.</a></div>
 </div>
 </div>
 

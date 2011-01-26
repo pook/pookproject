@@ -15,19 +15,20 @@ function checkDisplayName() {
 	});	
 	return true;
 }
-
 function chkMax(){	
 	$.ajax({
 		url : "max-register-member",		
 		success : function(res) {			
-			if(res==0){
+			if(res == 0){
 				$("#fsubmit1").remove();
 				var name = $("#name"), surename = $("#surename"), displayName = $("#displayName"), codeIdentification = $("#codeIdentification"), tel = $("#tel"), tel2 = $("#tel2"), email = $("#email"), inviter = $("#inviter"), address = $("#address"), address2 = $("#address2"), bank = $("#bank"), bankAccount = $("#bankAccount"), brance = $("#brance"), branceCard = $("#branceCard"), bankBrance = $("#bankBrance"), typeOfAccount = $("#typeOfAccount");
 				var allFields = $([]).add(name).add(surename).add(displayName).add(
 						codeIdentification).add(tel).add(tel2).add(email).add(brance).add(branceCard).add(address).add(address2).add(
 						bankAccount).add(typeOfAccount).add(bankBrance).add("#upline").add("#bank").add("#province");
-				allFields.attr("disabled", true);
-				showmsgInf("ลงทะเบียนเพื่อรับ คีย์โทเค็นก่อน");			
+				allFields.attr("disabled","disabled");
+				showmsgInf("คุณมีสิทธิ์การสมัคร  0 ต้องลงทะเบียนเพื่อขอสิทธิ์");			
+			}else if(res >0){
+				showmsgInf("คุณเหลือสิทธิ์การสมัคร  "+res);
 			}			
 		}		
 	});	
@@ -38,7 +39,7 @@ function chkLevel(){
 		type : "get",		
 		url : "check-level-member.action",		
 		success : function(res) {	
-			if(res.length()>0)
+			if(res.length>0)
 				showmsgInf(res);
 		}		
 	});
@@ -47,7 +48,7 @@ function clrErrInf2(){
 	clrErrInf();
 }
 function regis() {
-	chkLevel();
+	//chkLevel();
 	chkMax();
 	$("#displayName").live("focusout", checkDisplayName);
 	$("#codeIdentification").live("focusout",clrErrInf2);

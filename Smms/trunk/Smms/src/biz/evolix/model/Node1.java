@@ -17,16 +17,20 @@ import org.eclipse.persistence.annotations.CacheType;
 
 @Entity
 @Cache(type = CacheType.WEAK, size = 128, expiry = 600000, alwaysRefresh = true, disableHits = true, coordinationType = CacheCoordinationType.INVALIDATE_CHANGED_OBJECTS)
-@NamedQueries({		
+@NamedQueries({
 		@NamedQuery(name = "findDisplayName", query = "select N from Node1 N where N.displayName=?1"),
 		@NamedQuery(name = "findDisplayNameByPos", query = "select N.displayName from Node1 N where N.pos=?1"),
 		@NamedQuery(name = "findDisplayNameByPosAndTreeId", query = "select N.displayName from Node1 N where N.pos =?1 and N.treeId =?2"),
 		@NamedQuery(name = "findNode1FromUserId", query = "select N from Node1 N where N.user=?1"),
-		@NamedQuery(name = "findFromSmileId", query = "select N from Node1 N where N.smileId=?1"),
+		@NamedQuery(name = "findFromSmileId", query = "select N from Node1 N where N.smileId=upper(?1)"),
 		@NamedQuery(name = "findByHashcode", query = "select N from Node1 N,NodeDescription D where N.treeId = D.treeId and "
 				+ "N.pos = D.pos and D.hashCode =?1"),
-		@NamedQuery(name = "findteams", query = "select N from Node1 N where N.pos in (?1)")		
-				})
+		@NamedQuery(name = "findteams", query = "select N from Node1 N where N.pos in (?1)"),
+		@NamedQuery(name = "findNonSpace", query = "select D.pos from NodeDescription D where  D.pos>=?1 and D.pos<=?2 and D.baseLevel=?3 and D.treeId=?4 "),
+		@NamedQuery(name = "findNonSpace1", query = "select D.pos from NodeDescription D where  D.pos>=?1 and D.pos<=?2 and D.treeId=?3 "),		
+		@NamedQuery(name = "findNonSpace2", query = "select D.treeId,D.pos from NodeDescription D where  D.pos>=?1  and D.pos<=?2 ")
+
+})
 @IdClass(NodePK.class)
 @Table(name = "NODE1")
 public class Node1 implements java.io.Serializable {
@@ -66,6 +70,7 @@ public class Node1 implements java.io.Serializable {
 			return false;
 		return true;
 	}
+
 	@Id
 	@Column(name = "POS", nullable = false)
 	private Long pos;
@@ -83,10 +88,16 @@ public class Node1 implements java.io.Serializable {
 	private String inviter;
 	@Column(name = "SMILE_ID", length = 50)
 	private String smileId;
-	@Column(name ="TOTAL_SV")
+	@Column(name = "TOTAL_SV")
 	private Integer totalSv = 0;
+
 	public Node1() {
 		super();
+	}
+
+	public Node1(long pos) {
+		super();
+		this.pos = pos;
 	}
 
 	public Node1(NodePK id) {
@@ -110,7 +121,7 @@ public class Node1 implements java.io.Serializable {
 	@Transient
 	public void decSv(Integer sv) {
 		int v = getSv() - sv;
-		if (v >= ConstType.MIN_SV && getStatus() == ConstType.STATUS_ACTIVE)
+		if (v < ConstType.MIN_SV && getStatus() == ConstType.STATUS_ACTIVE)
 			setStatus(ConstType.STATUS_INACTIVE);
 		setSv(v);
 	}
@@ -175,7 +186,6 @@ public class Node1 implements java.io.Serializable {
 		return treeId;
 	}
 
-	
 	public void setSmileId(String smileId) {
 		this.smileId = smileId;
 	}

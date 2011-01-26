@@ -14,7 +14,7 @@ import javax.persistence.Column;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "findAuthorities", query = "select A from Authorities A where A.user.userId =?1"),
-		@NamedQuery(name = "findAllStaff", query = "select U from Users U,Authorities A where A.user = U and A.authority=?1"),
+		@NamedQuery(name = "findAuthorities2", query = "select A from Authorities A where A.user.userId =?1 and A.authority =?2"),		
 		@NamedQuery(name = "findAuthoritiesByName", query = "select A from Authorities A where A.authority=?1 and A.user=?2"),
 		@NamedQuery(name = "removeAuthorities", query = "delete from Authorities A where A.user.userId =?1") })
 @Table(name = "AUTHORITIES")
@@ -33,10 +33,17 @@ public class Authorities implements java.io.Serializable {
 	private String authority;
 
 	private static final long serialVersionUID = 1L;
-
+ 
 	public Authorities() {
 		super();
 	}
+	
+
+	public Authorities(String authority) {
+		super();
+		this.authority = authority;
+	}
+
 
 	public Authorities(Users user, String authority) {
 		super();
@@ -68,15 +75,16 @@ public class Authorities implements java.io.Serializable {
 		return user;
 	}
 
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
 				+ ((authority == null) ? 0 : authority.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -92,12 +100,8 @@ public class Authorities implements java.io.Serializable {
 				return false;
 		} else if (!authority.equals(other.authority))
 			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
-			return false;
 		return true;
 	}
+	
 	
 }

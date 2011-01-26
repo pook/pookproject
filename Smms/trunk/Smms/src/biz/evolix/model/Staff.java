@@ -12,14 +12,14 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({ 
-	@NamedQuery(name = "staffsize", query = "select count(0) from Staff S")
+	@NamedQuery(name = "staffsize", query = "select count(0) from Staff S"),
+	@NamedQuery(name = "updatestaff", query = "update Staff S  set brance =?1 where S.brance =?2 ")
 })
 @Table(name = "STAFF")
 public class Staff implements java.io.Serializable {
 
 	@Id
-	@Column(name = "USER_ID")
-	
+	@Column(name = "USER_ID")	
 	private Long userId;
 
 	@Column(name = "BRANCE_CODE", length = 50)

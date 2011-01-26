@@ -8,9 +8,7 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
-import biz.evolix.customconst.ConstType;
-import biz.evolix.gen.Generate;
-import biz.evolix.model.Node1;
+import biz.evolix.model.bean.NodeBean;
 import biz.evolix.service.OrchartService;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -21,9 +19,10 @@ import com.opensymphony.xwork2.ActionSupport;
 public class OrganizationBackward extends ActionSupport {
 
 	private OrchartService orchartService;	
-	private Integer nodeId;
+	private String nodeId;
+	private String treeId;
 	private Integer back;
-	private List<Node1> teams;
+	private List<NodeBean> teams;
 	private List<Integer> level;
 	private static final long serialVersionUID = -7992937997674968155L;
 	private static Logger log = Logger
@@ -37,48 +36,22 @@ public class OrganizationBackward extends ActionSupport {
 	}
 
 	private void setTeamOrg(long u) {		
-		setTeams(orchartService.getTeamLevel(u));
+		setTeams(orchartService.getTeamLevel(getTreeId(),u,getBack()));
 		setLevel(orchartService.levelCommissions());
 	}
 
 	public String getJSON() throws Exception {	
-		long c = -2L;
-		if(getBack() ==ConstType.BACKWARD){
-			c = backward(getNodeId());
-		}else{
-			c = backward6(getNodeId());
-		}
-		setTeamOrg(c);
+		long u = Long.parseLong(getNodeId());
+		setTeamOrg(u);
 		return execute();
-	}
-	private static long backward(long c) {
-		return Generate.parent(c);
-	}
-
-	private static long backward6(long c) {
-		for (int i = 0; i < ConstType.BACKWARD_6; i++) {
-			if (c == 0)
-				break;
-			c = backward(c);
-		}
-		return c;
-	}
-
+	}	
+	
 
 	public OrganizationBackward(OrchartService orchartService) {
 		super();
-		this.orchartService = orchartService;
+		this.orchartService = orchartService;	
 		this.orchartService.init();
-	}
-
-	public void setTeams(List<Node1> teams) {
-		this.teams = teams;
-	}
-
-	public List<Node1> getTeams() {
-		return teams;
-	}
-
+	}	
 	public void setLevel(List<Integer> level) {
 		this.level = level;
 	}
@@ -94,11 +67,27 @@ public class OrganizationBackward extends ActionSupport {
 		return back;
 	}
 
-	public void setNodeId(Integer nodeId) {
+	public void setTeams(List<NodeBean> teams) {
+		this.teams = teams;
+	}
+
+	public List<NodeBean> getTeams() {
+		return teams;
+	}
+
+	public void setNodeId(String nodeId) {
 		this.nodeId = nodeId;
 	}
 
-	public Integer getNodeId() {
+	public String getNodeId() {
 		return nodeId;
+	}
+
+	public void setTreeId(String treeId) {
+		this.treeId = treeId;
+	}
+
+	public String getTreeId() {
+		return treeId;
 	}
 }

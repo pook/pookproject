@@ -9,6 +9,7 @@ import org.apache.struts2.convention.annotation.Result;
 
 import biz.evolix.model.Province;
 import biz.evolix.model.dao.ProvinceDAO;
+import biz.evolix.utils.Comapare;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -18,7 +19,7 @@ public class FetchProvince extends ActionSupport{
 	@Action(value = "/fetch-province-member", results = {
 			@Result(location = "select-province.jsp", name = "success")})
 	public String execute() throws Exception {
-		setProvinces(new TreeMap<String,String>());
+		setProvinces(new TreeMap<String,String>(new Comapare<String>()));
 		return SUCCESS;
 	}	
 	

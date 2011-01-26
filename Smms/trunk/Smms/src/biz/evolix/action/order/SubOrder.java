@@ -2,7 +2,6 @@ package biz.evolix.action.order;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -17,7 +16,6 @@ import biz.evolix.service.OrderService;
 public class SubOrder extends ActionSupport {
 	
 	private static final long serialVersionUID = -8770006569548425345L;
-	private static Logger log = Logger.getLogger(SubOrder.class);
 	private String id;
 
 	@Action(value = "/json-list-purchese1-member", results = { @Result(name = "success", type = "json") })

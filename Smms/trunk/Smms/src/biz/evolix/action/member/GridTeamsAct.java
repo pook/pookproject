@@ -12,7 +12,6 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import biz.evolix.customconst.ConstType;
 import biz.evolix.model.bean.UserDowlineBean;
-import biz.evolix.model.dao.JdbcTeamsDAO;
 import biz.evolix.service.FetchListTeams;
 
 @ParentPackage(value = "smms")

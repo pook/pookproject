@@ -8,37 +8,8 @@
 <%@ taglib prefix="sjg" uri="/struts-jquery-grid-tags"%> 
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
-<style type="text/css">
-div#div4 div {
-	clear: both;
-}
-table#member td{
-	text-align:center;	
-	border-collapse:collapse;
-}
-.hide{
-	display: none;
-}
-input.text {
-	margin: 5px 9px 5px 9px;
-	width: 150px;
-	padding: 1px 5px 1px 5px;
-}
-label {
-	padding-left: 7px;
-	
-}
-#member-contain{
-	margin-left: 95px;
-	margin-top: 50px
-}
-#create-order{	
-	margin: 5px 9px 5px 9px;
-	width: 150px;
-	padding: 1px 5px 1px 5px;
-}
-
-</style>
+<link href="styles/backoffice.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/backoffice.js"></script>
 <%	Logger log = Logger.getLogger("BlackOffice");
 	SmileUser u =null;
 	String brance = "";
@@ -49,94 +20,11 @@ label {
 	}catch (ClassCastException e){
 		log.error("Unknow login");
 	}
-%>
-<script type="text/javascript">
-$(function(){
-	var auto = setInterval(function(){
-		 $.getJSON('json-ordering-staff', function(data) {			 
-			 fetchData(data.gridModel[0]);
-		 });
-		}
-	,7200);
-	$("table tr").addClass("ui-widget-content");
-	$("table tfoot tr").removeClass("ui-widget-content");
-	$.ajax({
-		type : "get",
-		url : "json-ordering-staff",				
-		success : function(res) {			
-			if(res.gridModel.length == 0){
-				$("#create-order").show();
-				$("#div2").addClass("hide");
-				$("#smileId").enable();
-				$("#smileId").focus();						
-			}else{				
-				$("#div2").removeClass("hide");									
-				$("#create-order").hide();				
-				fetchData(res.gridModel[0]);		
-			}
-		}
-	});	
-	$("#refresh").live("click",function(){
-		 $.getJSON('json-ordering-staff', function(data) {			 
-			 fetchData(data.gridModel[0]);
-		 });
-	}
-	);
-	
-	$("#smileId").live("focusout",clrErrInf);
-	var ck_search = /[A-Za-z]{2}[0-9]{10}$/;
-	$("#create-order").click(function() {		 
-		clrErrInf();		
-		var s = $("#smileId");
-		var m = s.val();
-		if (ck_search.test(m)) {
-			$.ajax({
-				type : "get",
-				url : "edit-grid-order-staff",
-				data : "oper=add&smileId="+$("#smileId").val(),
-				success : function(dat) {					
-					$("#smileId").empty().val("");					
-					if(dat.length==0)$("#main").load("blackoffice.action");
-					else showmsgInf(dat);
-				}					
-			});				
-		}else{		
-			showmsgInf("รหัสสมาชิก ผิดพลาด");			
-		}				
-	});
-	function fetchData(data){
-		var d = data.date.substring(8,10);
-		var m =	data.date.substring(6,7);
-		var y =	data.date.substring(0,4);		
-		$("#orderId").empty().val(""+data.id);				
-		$("#smileId").empty().val(data.smileId);
-		$("#name").empty().val(data.name);
-		$("#date").empty().val(""+d+"/"+m+"/"+y);
-		$("#totalprice").empty().val(data.totalPrice);
-		$("#totalsv").empty().val(data.totalSv);		 	
-	}
-	function showmsgInf(msgInf) {
-		$("#messageInfo")
-				.addClass("ui-state-highlight ui-corner-all")
-				.empty()
-				.append(
-						"<p><span style='float: left; margin-right: 0.3em;' class='ui-icon ui-icon-info'></span>"
-								+ "</strong> " + msgInf + "</p>");
-
-	}
-	function clrErrInf() {
-		$("#messageInfo").removeClass("ui-state-highlight ui-corner-all")
-				.empty();		
-	}
-});
-$.subscribe('rowadd1', function(event,data) {
-    	$("#gridedittable").jqGrid('editGridRow',"new",{height:200,reloadAfterSubmit:true});    	
-});	
-</script>
+%>	
+<sj:div id="div4">
 <s:url id="addorder" value="edit-grid-order-staff" />
 <s:url id="buyurl" value="order-purchese-staff" />
-<s:url id="prochesedetail" action="showordered" />	
-<sj:div id="div4"><div id="#test"></div>
+<s:url id="prochesedetail" action="showordered" />
 <div id="main5"> 
 <div id="member-contain" >
 	<table id="users" class="ui-widget ui-widget-content">
@@ -162,7 +50,7 @@ $.subscribe('rowadd1', function(event,data) {
 		<td><label for="orderId">Sale Order ID :</label></td><td><input id="orderId" type="text" class="text ui-widget-content ui-corner-all" style="color:#30f" readonly="readonly" disabled="disabled"/></td><td colspan="4"></td>
 		</tr>	
 	<tr>
-	<td><label for="smileId"></label>รหัสสมาชิก :</td><td><input id="smileId" type="text" value="" class="text ui-widget-content ui-corner-all"  disabled="disabled"/>
+	<td><label for="smileId"></label>รหัสสมาชิก :</td><td><input  id="smileId" type="text" value="" class="text ui-widget-content ui-corner-all"  disabled="disabled"/>
 	
 	</td><td><label for="name"></label>ชื่อสมาชิก :</td><td><input id="name" type="text" class="text ui-widget-content ui-corner-all" style="color:#30f" readonly="readonly" disabled="disabled" /></td><td><label for="date" >วันที่ :</label></td><td><input id="date" type="text" class="text ui-widget-content ui-corner-all" style="color:#30f" readonly="readonly" disabled="disabled" /></td>
 	</tr>
@@ -176,7 +64,10 @@ $.subscribe('rowadd1', function(event,data) {
 	<tr>
 	<td colspan="5"></td><td><a id="refresh"  href="javascript:void(0)" 
 	class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span
-	class="ui-button-text">Refresh</span></a></td>
+	class="ui-button-text">Refresh</span></a><sj:a id="ajaxlink3" href="%{prochesedetail}" indicator="indicator"
+						targets="main" button="true" buttonIcon="ui-icon-gear">
+	ดูประวัติการสั่งชื้อ
+	</sj:a></td>
 	</tr>
 	</tbody>
 	</table>
@@ -225,7 +116,7 @@ $.subscribe('rowadd1', function(event,data) {
 	สั่งสินค้า
 	</sj:a>
 					<sj:a id="ajaxlink2" href="%{prochesedetail}" indicator="indicator"
-						targets="div4" button="true" buttonIcon="ui-icon-gear">
+						targets="main" button="true" buttonIcon="ui-icon-gear">
 	ดูประวัติการสั่งชื้อ
 	</sj:a>
 

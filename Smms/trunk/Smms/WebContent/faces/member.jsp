@@ -3,148 +3,8 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript">
-
-	$(function() {
-		$.getJSON("json-member", function(data) {
-			$("table tr").addClass("ui-widget-content");
-			$("table tfoot tr").removeClass("ui-widget-content");
-			profile(data.userModel);
-		});
-	});	
-	function profile(dat){
-		$("#f1").empty().append(dat.node1.inviter);
-		$("#f2").empty().append(dat.node1.smileId);
-		$("#f3").empty().append(dat.detail.codeIdentification);
-		$("#f4").empty().append(dat.detail.name);
-		$("#f5").empty().append(dat.detail.surename);
-		$("#f6").empty().append(dat.node1.displayName);
-		$("#f7").empty().append(dat.detail.tel);
-		$("#f8").empty().append(dat.detail.tel2);
-		$("#f9").empty().append(dat.detail.email);
-		$("#f10").empty().append(dat.detail.address);
-		$("#f11").empty().append(dat.detail.province.pname);
-		$("#f12").empty().append(dat.detail.address2);
-		$("#f13").empty().append(dat.branceCard);
-		$("#f14").empty().append(dat.detail.bank);
-		$("#f15").empty().append(dat.detail.bankAccount);
-		$("#f16").empty().append(dat.detail.bbrance);
-		$("#f17").empty().append(dat.detail.typeOfAccount);
-		$("#f18").empty().append(dat.bonusTeam);
-		$("#f19").empty().append(dat.bonusInv);
-		$("#f20").empty().append(dat.bonusTeam+dat.bonusInv);
-		$("#f21").empty().append(dat.bonusLast);
-		$("#f501").empty().append(dat.detail.numOfAccount);
-		$("#f502").empty().append(dat.node1.totalSv);	
-		$.ajax({
-			url :"check-account-member",					
-			success : function(res) {
-				alert(">>"+res);					
-				if(res == -1)
-					$("#sdialog").show();		//show			
-				else
-					$("#sdialog").hide();							
-			}		
-		});      	   				
-	}
-	$("#displayName").live("focusout", checkDisplayName);
-	function okButton1(){
-		var displayName = $("#displayName");
-		var valid = true;
-		valid = valid&&checkLength(displayName," ชื่อแสดงในสายงาน ", 3, 30);		
-		if(valid){
-			$.ajax({
-				url :"save2-member",
-				data :"displayName="+displayName.val()+"&upline="+$("#upline").val(),		
-				success : function(res) {	
-					if(res.length>0){
-						showmsgInf(res);	
-					}							
-				}		
-			});
-			$('#btndialog').dialog('close');
-			$('#main').load("member.action");
-		}						
-			
-	};
-	
-	function cancelButton1(){	  
-		$('#btndialog').dialog('close');
-	};
-	function checkLength(o, n, min, max) {
-		if (o.val().length > max || o.val().length < min) {
-			o.addClass("ui-state-error");
-			showmsgInf("ข้อมูล  " + n + " ที่กรอกควรมีความยาวระหว่าง " + min
-					+ " และ " + max + ".");
-			return false;
-		} else {
-			return true;
-		}
-	}
-	function showmsgInf(msgInf) {
-		$("#messageInfo").addClass("ui-state-highlight ui-corner-all").empty().append(
-						"<p><span style='float: left; margin-right: 0.3em;' class='ui-icon ui-icon-info'></span>"
-								+ "<strong>ข้อความ</strong> "							
-								+ msgInf							
-								+ "</p>");
-	}
-	function checkDisplayName() {
-		$(this).removeClass("ui-state-error");
-		$.ajax({
-			type : "post",
-			url : "check-displayname-member",
-			data : "displayName=" + $(this).val(),
-			success : function(res) {				
-				if (res.length>0) {	
-					showmsgInf(res);			
-					$("#displayName").addClass("ui-state-error");
-					$("#displayName").focus();				
-					return false;
-				}
-			}	
-		});	
-		return true;
-	}
-		
-</script>
-
-<style type="text/css">
-#main {
-	height: 1069px
-}
-.th2 {
-	height: 30px;
-}
-table td {	
-	padding: 7px 20px 10px 50px;
-}
-.tbd td{	
-	padding: 5px 5px 5px 10px;
-}
-table tfoot td{	
-	padding: 2px 2px 2px 10px;
-}
-.hide{
-	display: block
-}
-table {
-	margin-top: 50px;
-	margin-left: 120px;
-	margin-bottom: 20px;
-	width:720px
-}
-.tbd  {
-	margin-top: 5px;
-	margin-left: 10px;
-	margin-bottom: 10px;
-	width:400px
-}
-
-#downlinelink{
-	padding: 0px 0px 0px 0px;
-	margin: 0px 0px 0px 0px;
-}
-</style>
+<link href="styles/member.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/member.js"></script>
 <div id="main-member">
 <div id="userinf">
 <s:url id="uplineurl"
@@ -316,7 +176,7 @@ table {
 		<td id="f20">f20</td>
 	</tr>
 	<tr>
-		<td>โบนัส รวม(ย้อนหลัง 2 เดือน) :</td>
+		<td>โบนัส รวม(เดือนที่ผ่านมา) :</td>
 		<td id="f21">f21</td>
 	</tr>
 </table>

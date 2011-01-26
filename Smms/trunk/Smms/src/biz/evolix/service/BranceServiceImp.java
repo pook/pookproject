@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import biz.evolix.model.Brance;
 import biz.evolix.model.Province;
 import biz.evolix.model.dao.BranceDAO;
+import biz.evolix.model.dao.StaffDAO;
 
 public class BranceServiceImp implements BranceService {
 
 	@Autowired
 	private BranceDAO branceDAO;
+	@Autowired
+	private StaffDAO staffDAO;
 	
 	@Override
 	public List<Brance> findAll() {
@@ -44,17 +47,16 @@ public class BranceServiceImp implements BranceService {
 	@Override
 	public boolean update(Integer id, String name, String address, String tel,
 			String provinceId, String postCode) {
-		Brance b = null;
-		try{
-			b = getBrances().get(id);			
-			b.setBAddress(address);
+		Brance b = getBrances().get(id);					
+		b.setBAddress(address);		
+		b.setBTel(tel);
+		b.setPostcode(postCode);
+		try{			
+			staffDAO.update(name, b.getBName(),"updatestaff");
 			b.setBName(name);
-			b.setBTel(tel);
-			b.setPostcode(postCode);			
 			if(branceDAO.update(b,provinceId))return true;
 		}catch (Exception e) {
-			log.error(e.getMessage());
-			return false;
+			log.error(e.getMessage());			
 		}		
 		return false;
 	}
@@ -91,6 +93,13 @@ public class BranceServiceImp implements BranceService {
 
 	public List<Brance> getBrances() {
 		return brances;
+	}
+	public void setStaffDAO(StaffDAO staffDAO) {
+		this.staffDAO = staffDAO;
+	}
+
+	public StaffDAO getStaffDAO() {
+		return staffDAO;
 	}
 	private List<Brance>brances;
 	private static Logger log = Logger.getLogger(BranceServiceImp.class);

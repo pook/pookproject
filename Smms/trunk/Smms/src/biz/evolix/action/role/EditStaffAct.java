@@ -11,7 +11,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class EditStaffAct extends ActionSupport{
 
 	private static final long serialVersionUID = -9032984422720912160L;
-	@Action(value = "/edit-staff", results = { @Result(name = "success", location = "smmsrole.jsp") })
+	@Action(value = "/edit-stff-admin", results = { @Result(name = "success", location = "smmsrole.jsp") })
 	public String execute() {
 		if (getOper().equals(ConstType.EDIT))
 			edit();

@@ -1,0 +1,36 @@
+@CHARSET "UTF-8";
+#main {
+	height: 1069px
+}
+.th2 {
+	height: 30px;
+}
+table td {	
+	padding: 7px 20px 10px 50px;
+}
+.tbd td{	
+	padding: 5px 5px 5px 10px;
+}
+table tfoot td{	
+	padding: 2px 2px 2px 10px;
+}
+.hide{
+	display: block
+}
+table {
+	margin-top: 50px;
+	margin-left: 120px;
+	margin-bottom: 20px;
+	width:720px
+}
+.tbd  {
+	margin-top: 5px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	width:400px
+}
+
+#downlinelink{
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+}

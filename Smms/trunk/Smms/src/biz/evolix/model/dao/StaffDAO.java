@@ -13,4 +13,5 @@ public interface StaffDAO {
 	public long size();
 	public List<Users> findAllStaff(int start,int max);
 	public void merg(Staff staff);
+	public void update(Object arg0,Object arg1,String nameQuery);
 }

@@ -23,16 +23,20 @@ public class EditOrderAction extends ActionSupport {
 	@Action(value = "/edit-order-grid-staff", results = { @Result(name = "success", location = "showordered.jsp") })
 	public String execute() {
 		if (getOper().equals(ConstType.DEL)) {
-			int idx = -1;			
-			try{
-				idx = Integer.parseInt(getId());				
-			}catch (Exception e) {
-				log.error(e.getMessage());
-				return ERROR;
-			}
-			if(idx<1)return ERROR;
-			orderService.del(idx-1);
+			del();
 		}
+		return SUCCESS;
+	}
+	private String del(){
+		int idx = -1;			
+		try{
+			idx = Integer.parseInt(getId());				
+		}catch (Exception e) {
+			log.error(e.getMessage());
+			return ERROR;
+		}
+		if(idx<1)return ERROR;
+		orderService.del(idx-1);
 		return SUCCESS;
 	}
 

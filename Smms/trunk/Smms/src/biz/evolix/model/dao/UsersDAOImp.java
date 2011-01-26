@@ -10,11 +10,10 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import biz.evolix.model.Users;
+import biz.evolix.model.dao.callback.FindAll;
 import biz.evolix.model.dao.callback.FindByCondition1;
 import biz.evolix.model.dao.callback.FindByCondition2;
 import biz.evolix.model.dao.callback.FindListByQuery;
-import biz.evolix.model.dao.callback.GenericSize;
-import biz.evolix.model.dao.callback.GenericSizeByCause;
 import biz.evolix.model.dao.callback.GenericsizeByQuery;
 import biz.evolix.model.dao.callback.MaxResult;
 import biz.evolix.model.dao.callback.MaxResultCon1;
@@ -76,7 +75,7 @@ public class UsersDAOImp extends JpaDaoSupport implements UsersDAO {
 		long i = -1;
 		try {
 			i = getJpaTemplate().execute(
-					new GenericSize<Long>("receivecardSize"));
+					new FindAll<Long>("receivecardSize"));
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
@@ -102,7 +101,7 @@ public class UsersDAOImp extends JpaDaoSupport implements UsersDAO {
 	public long size() {
 		long i = -1;
 		try {
-			i = getJpaTemplate().execute(new GenericSize<Long>("userSize"));
+			i = getJpaTemplate().execute(new FindAll<Long>("userSize"));
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
@@ -147,7 +146,7 @@ public class UsersDAOImp extends JpaDaoSupport implements UsersDAO {
 		long size = -1;
 		try {
 			size = getJpaTemplate().execute(
-					new GenericSizeByCause<Long, Object>(nameQuery, arg0));
+					new FindByCondition1<Long>(arg0, nameQuery));
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}

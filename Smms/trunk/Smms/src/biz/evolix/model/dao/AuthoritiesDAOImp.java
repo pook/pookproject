@@ -64,21 +64,22 @@ public class AuthoritiesDAOImp extends JpaDaoSupport implements AuthoritiesDAO {
 
 
 	@Override
-	public void remove(long userId) {
+	@Transactional
+	public void remove(long userId,String role) {
 		try{
-			getJpaTemplate().execute(new UpdateCon1<Integer>(userId, "removeAuthorities"));
+			Authorities auth =getJpaTemplate().execute(new FindByCondition2<Authorities>(userId, role,"findAuthorities2"));
+			getJpaTemplate().remove(auth);
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
-		}
-		
+		}		
 	}
 
 	@Override
 	@Transactional
 	public void remove1(Authorities auth) {
 		try{
-			getJpaTemplate().merge(auth);
-			getJpaTemplate().remove(auth);
+			Authorities a=getJpaTemplate().find(Authorities.class,auth.getAuthId());
+			getJpaTemplate().remove(a);
 		}catch (Exception e) {
 			log.error(e.getMessage());		}
 	}

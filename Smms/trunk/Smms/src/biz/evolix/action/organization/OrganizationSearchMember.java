@@ -10,19 +10,19 @@ import org.apache.struts2.convention.annotation.Result;
 
 import biz.evolix.customconst.ConstType;
 import biz.evolix.model.Node1;
+import biz.evolix.model.bean.NodeBean;
 import biz.evolix.service.OrchartService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
-
 public class OrganizationSearchMember extends ActionSupport {
 
 	private OrchartService orchartService;
 	private String messageError[];
 	private String memberid;
-	private List<Node1> teams;
+	private List<NodeBean> teams;
 	private List<Integer> level;
 	private static final long serialVersionUID = -7992937997674968155L;
 	private static Logger log = Logger
@@ -31,28 +31,28 @@ public class OrganizationSearchMember extends ActionSupport {
 	@Action(value = "/json-organization-search-member", results = {
 			@Result(name = "success", type = "json"),
 			@Result(name = "error", type = "json") })
-	public String execute() throws Exception {		
-				return SUCCESS;
+	public String execute() throws Exception {
+		return SUCCESS;
 	}
 
-	private void setTeamOrg(long u) {
-		setTeams(orchartService.getTeamLevel(u));
+	private void setTeamOrg(String treeId, long u) {
+		setTeams(orchartService.getTeamLevel(treeId, u));
 		setLevel(orchartService.levelCommissions());
 	}
 
-	public String getJSON() throws Exception {	
-		long u = orchartService.getNodeId(getMemberid());
-		if (u == ConstType.NOT_FOUND) {			
-			setMessageError(new String[]{ConstType.MEMBER_NOT_FOUND+" : "+getMemberid()});
-			log.debug(ConstType.MEMBER_NOT_FOUND+" : "+getMemberid());			
+	public String getJSON() throws Exception {
+		Node1 u = orchartService.getNodeId(getMemberid());
+		if (u.getPos() == ConstType.NOT_FOUND) {
+			setMessageError(new String[] { ConstType.MEMBER_NOT_FOUND + " : "
+					+ getMemberid() });
 			return ERROR;
-		}else if(u==ConstType.NOT_ALLOW){		
-			setMessageError(new String[]{ConstType.MEMBER_NOT_ALLOW+" : "+getMemberid()});
-			log.debug(ConstType.MEMBER_NOT_ALLOW+" :"+getMemberid());			
+		} else if (u.getPos() == ConstType.NOT_ALLOW) {
+			setMessageError(new String[] { ConstType.MEMBER_NOT_ALLOW + " : "
+					+ getMemberid() });
 			return ERROR;
-		}else{
-			setTeamOrg(u);
-		}	
+		} else {
+			setTeamOrg(u.getTreeId(), u.getPos());
+		}
 		return execute();
 	}
 
@@ -60,14 +60,6 @@ public class OrganizationSearchMember extends ActionSupport {
 		super();
 		this.orchartService = orchartService;
 		this.orchartService.init();
-	}
-
-	public void setTeams(List<Node1> teams) {
-		this.teams = teams;
-	}
-
-	public List<Node1> getTeams() {
-		return teams;
 	}
 
 	public void setLevel(List<Integer> level) {
@@ -94,4 +86,11 @@ public class OrganizationSearchMember extends ActionSupport {
 		return messageError;
 	}
 
+	public void setTeams(List<NodeBean> teams) {
+		this.teams = teams;
+	}
+
+	public List<NodeBean> getTeams() {
+		return teams;
+	}
 }

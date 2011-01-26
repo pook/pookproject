@@ -1,5 +1,6 @@
 package biz.evolix.action.staff;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -15,25 +16,27 @@ import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage(value = "smms")
 @InterceptorRef("jsonValidationWorkflowStack")
-
 public class StaffMemberManAct extends ActionSupport {
 
 	private static final long serialVersionUID = 8083340476423094565L;
 	private static Logger log = Logger.getLogger(StaffMemberManAct.class);
+
 	@Action(value = "/json-user-regist-staff", results = { @Result(name = "success", type = "json") })
-	public String execute() throws Exception {		
+	public String execute() throws Exception {
+		setRecord(staffMemberService.size());
 		try {
-			
-			if (searchString != null && searchOper != null &&!searchString.equals("")&&!searchOper.equals("")) {
+			if (searchString != null && searchOper != null
+					&& !searchString.equals("") && !searchOper.equals("")) {
 				if (searchOper.equalsIgnoreCase("eq")) {
 					setGridModel(staffMemberService.search(searchString));
 					setTotal(1);
 				}
-			} else {
-				setRecord(staffMemberService.size());
+			} else {				
 				int to = (getRows() * getPage());
 				int from = to - getRows();
-				setGridModel(staffMemberService.userRole(from, getRecord()));
+				setLoadonce(true);
+				setGridModel(staffMemberService.userRole(from, getRecord(),
+						getPage()));
 				setTotal();
 			}
 		} catch (Exception e) {
@@ -42,16 +45,19 @@ public class StaffMemberManAct extends ActionSupport {
 		}
 		return SUCCESS;
 	}
+
 	private StaffMemberService staffMemberService;
+
 	public StaffMemberManAct(StaffMemberService staffMemberService) {
 		super();
 		this.staffMemberService = staffMemberService;
 	}
+
 	public String getJSON() throws Exception {
 		return SUCCESS;
 	}
 
-	private List<UserStaff> gridModel;
+	private List<UserStaff> gridModel = new ArrayList<UserStaff>();
 	private Integer rows = 0;
 	private Integer page = 0;
 	private String sord;
@@ -156,7 +162,7 @@ public class StaffMemberManAct extends ActionSupport {
 	public Boolean isLoadonce() {
 		return loadonce;
 	}
-	
+
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -164,9 +170,11 @@ public class StaffMemberManAct extends ActionSupport {
 	public String getId() {
 		return id;
 	}
+
 	public void setGridModel(List<UserStaff> gridModel) {
 		this.gridModel = gridModel;
 	}
+
 	public List<UserStaff> getGridModel() {
 		return gridModel;
 	}

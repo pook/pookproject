@@ -6,11 +6,14 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import biz.evolix.customconst.ConstType;
 import biz.evolix.model.Order;
 import biz.evolix.model.Purchese;
 import biz.evolix.model.Users;
 import biz.evolix.model.dao.OrderDAO;
+import biz.evolix.model.dao.Role;
 import biz.evolix.model.dao.UsersDAO;
+import biz.evolix.secure.GrantedAuthorityImp;
 import biz.evolix.secure.SmileUser;
 
 public class OrderServiceImp implements OrderService {
@@ -19,6 +22,8 @@ public class OrderServiceImp implements OrderService {
 	private OrderDAO orderDAO;
 	@Autowired
 	private UsersDAO usersDAO;
+	@Autowired
+	private UpdateComService updateComService;
 	private List<Order> orders;
 	private List<Purchese> purcheses;
 
@@ -49,7 +54,7 @@ public class OrderServiceImp implements OrderService {
 	private SmileUser getUsers() {
 		try {
 			return (SmileUser) SecurityContextHolder.getContext()
-					 .getAuthentication().getPrincipal();
+					.getAuthentication().getPrincipal();
 		} catch (Exception e) {
 			SecurityContextHolder.clearContext();
 			log.error(e.getMessage(), e);
@@ -68,34 +73,48 @@ public class OrderServiceImp implements OrderService {
 	@Override
 	public List<Order> ordersByOwner(int from, int rows) {
 		Users user = usersDAO.find(getUsers().getUserid());
-		setOrders(orderDAO.showOrderOwner(user, from, rows));
+		setOrders(orderDAO.showOrderOwner(user, false, from, rows));
 		return getOrders();
 	}
 
+	
 	@Override
-	public long sizeAll() {
-		return orderDAO.sizeAll();
+	public long sizeAll(boolean cancel) {
+		long size = 0;		
+		size = (getUsers().getAuthorities().contains(new GrantedAuthorityImp(
+				Role.ROLE_ADMIN.name()))) ? orderDAO.sizeAll(cancel) : orderDAO
+				.sizeByStaff(getUsers().getBrance(), cancel);					
+		return size;		
 	}
 
 	@Override
 	public int sizeOrderOwner() {
 		Users user = usersDAO.find(getUsers().getUserid());
-		return (int) orderDAO.sizeOrderOwner(user);
+		return (int) orderDAO.sizeOrderOwner(user, false);
 	}
 
 	@Override
-	public List<Order> ordersAll(int from, int rows) {
-		setOrders(orderDAO.showOrderAll(from, rows));
+	public List<Order> ordersAll(boolean cancel, int from, int rows) {
+		List<Order> orders = (getUsers().getAuthorities().contains(new GrantedAuthorityImp(
+				Role.ROLE_ADMIN.name())))?orderDAO.showOrderAll(cancel, from, rows):orderDAO.showOrderStaff(getUsers().getBrance(), cancel, from, rows);
+		setOrders(orders);
 		return getOrders();
 	}
 
 	@Override
 	public void del(int id) {
-		long l = getOrders().get(id).getOrderId();
-		try {
-			orderDAO.del(l);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
+		Order order = getOrders().get(id);
+		long l = order.getOrderId();
+		if (order.getTotalQuantity() == ConstType.ZERO) {
+			try {
+				orderDAO.del(l);
+			} catch (Exception e) {
+				log.error(e.getMessage());
+			}
+		} else if (order.getReaded() == false) {
+			order.setCanceled(true);
+			updateComService.dec(order);
+			orderDAO.update(order);
 		}
 	}
 
@@ -106,5 +125,12 @@ public class OrderServiceImp implements OrderService {
 	public UsersDAO getUsersDAO() {
 		return usersDAO;
 	}
-	
+
+	public void setUpdateComService(UpdateComService updateComService) {
+		this.updateComService = updateComService;
+	}
+
+	public UpdateComService getUpdateComService() {
+		return updateComService;
+	}
 }

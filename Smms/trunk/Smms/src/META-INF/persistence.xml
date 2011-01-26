@@ -9,8 +9,7 @@
 		<class>biz.evolix.model.SmileUsersDetails</class>
 		<class>biz.evolix.model.Sku</class>
 		<class>biz.evolix.model.Purchese</class>
-		<class>biz.evolix.model.Province</class>
-		<class>biz.evolix.model.Page</class>
+		<class>biz.evolix.model.Province</class>		
 		<class>biz.evolix.model.Order</class>
 		<class>biz.evolix.model.NodeDescription</class>
 		<class>biz.evolix.model.Node1</class>

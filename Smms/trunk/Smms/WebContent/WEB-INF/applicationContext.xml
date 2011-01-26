@@ -21,10 +21,8 @@
 				class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
 				<property name="databasePlatform"
 					value="org.eclipse.persistence.platform.database.PostgreSQLPlatform" />
-				<property name="showSql" value="true" />
-				<!-- 
-				<property name="database" value="MYSQL" />
-				 -->
+				<property name="showSql" value="true" />				
+				<property name="database" value="POSTGRESQL" />				
 			</bean>
 		</property>
 		<property name="loadTimeWeaver">
@@ -48,10 +46,7 @@
 	</bean>
 	<bean id="authoritiesDAO" class="biz.evolix.model.dao.AuthoritiesDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
-	<bean id="pageDAO" class="biz.evolix.model.dao.PageDAOImp">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
+	</bean>	
 	<bean id="newsDAO" class="biz.evolix.model.dao.NewsDAOImp" scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
@@ -64,8 +59,7 @@
 	</bean>
 	<bean id="nodeDeptDAO" class="biz.evolix.model.dao.NodeDeptDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
-		<property name="node1DAO" ref="node1DAO" />
-		<property name="pageDAO" ref="pageDAO" />
+		<property name="node1DAO" ref="node1DAO" />		
 	</bean>
 	
 	<!-- end of Organization Chart Service -->
@@ -74,6 +68,7 @@
 	<bean id="updateComService" class="biz.evolix.service.UpdateComServiceImp" />
 	<bean id="findPlaceService" class="biz.evolix.service.FindPlaceServiceImp" />
 	<bean id="findQuotaService" class="biz.evolix.service.FindQuotaServiceImp"/>
+	<bean id="findCodeIdService" class="biz.evolix.service.FindCodeIdServiceImp" scope="request"/>
 	<bean id="findMaxRegisterService" class="biz.evolix.service.FindMaxRegisterServiceImp" scope="session" />
 	<bean id="orderService" class="biz.evolix.service.OrderServiceImp" scope="session"/>
 	<bean id="purcheseService" class="biz.evolix.service.PurcheseServiceImp"
@@ -137,14 +132,14 @@
 		scope="session">
 		<constructor-arg ref="purcheseService" />
 	</bean>
-	<bean id="buyOrder" class="com.smms.action.BuyOrder" scope="session">
+	<bean id="buyOrder" class="com.smms.action.BuyOrder" scope="prototype">
 		<constructor-arg ref="purcheseService" />
 	</bean>
 	<bean id="registerServiceAct" scope="request" class="biz.evolix.action.register.Register">
 		<constructor-arg index="0" ref="registerService" />
 		<constructor-arg index="1" ref="checkNameDAO" />
 	</bean>
-	<bean id="fetchUpLine" scope="prototype" class="biz.evolix.action.register.FetchUpline">
+	<bean id="fetchUpLine" scope="request" class="biz.evolix.action.register.FetchUpline">
 		<constructor-arg ref="fetchUplineService" />
 	</bean>
 	<bean id="orchartServiceAct" scope="prototype" class="biz.evolix.action.organization.Organization">
@@ -169,7 +164,11 @@
 		<constructor-arg ref="orderService" />
 	</bean>
 	<bean id="showOrdered" class="biz.evolix.action.backoffice.ShowOrdered"
-		scope="prototype">
+		scope="request">
+		<constructor-arg ref="orderService" />
+	</bean>
+	<bean id="showOrderedCancel" class="biz.evolix.action.backoffice.ShowOrdered2"
+		scope="request">
 		<constructor-arg ref="orderService" />
 	</bean>
 	<bean id="subShowPurcheseAction" class="biz.evolix.action.backoffice.SubShowPurcheseAction"
@@ -212,64 +211,64 @@
 		scope="session">
 		<constructor-arg ref="userDAO" />
 	</bean>
-	<bean id="chkLevelAct" scope="prototype" class="biz.evolix.action.register.ChkLevelAct">
+	<bean id="chkLevelAct" scope="request" class="biz.evolix.action.register.ChkLevelAct">
 		<constructor-arg  ref="registerService" />		
 	</bean>	
-	<bean id="editBranceAct" scope="prototype" class="biz.evolix.action.role.EditBrance">
+	<bean id="editBranceAct" scope="request" class="biz.evolix.action.role.EditBrance">
 		<constructor-arg  ref="branceService" />		
 	</bean>
-	<bean id="cardManageAct" scope="prototype" class="biz.evolix.action.role.CardManageAct">
+	<bean id="cardManageAct" scope="request" class="biz.evolix.action.role.CardManageAct">
 		<constructor-arg  ref="roleService" />		
 	</bean>
-	<bean id="roleManAct" scope="prototype" class="biz.evolix.action.role.RoleManAct">
+	<bean id="roleManAct" scope="request" class="biz.evolix.action.role.RoleManAct">
 		<constructor-arg  ref="roleService" />		
 	</bean>
-	<bean id="editRoleAct" scope="prototype" class="biz.evolix.action.role.EditRoleAct">
+	<bean id="editRoleAct" scope="request" class="biz.evolix.action.role.EditRoleAct">
 		<constructor-arg  ref="roleService" />		
 	</bean>
-	<bean id="editCardManAct" scope="prototype" class="biz.evolix.action.role.EditCardManAct">
+	<bean id="editCardManAct" scope="request" class="biz.evolix.action.role.EditCardManAct">
 		<constructor-arg  ref="roleService" />		
 	</bean>
 	<bean id="changePasswdAct" scope="session" class="biz.evolix.action.register.ChangePasswdAct">
 		<constructor-arg  ref="changePasswdService" />		
 	</bean>
-	<bean id="noticeAct" scope="prototype" class="biz.evolix.action.index.NoticeAct">
+	<bean id="noticeAct" scope="request" class="biz.evolix.action.index.NoticeAct">
 		<constructor-arg  ref="newsDAO" />		
 	</bean>
-	<bean id="activityAct" scope="prototype" class="biz.evolix.action.index.ActivityAct">
+	<bean id="activityAct" scope="request" class="biz.evolix.action.index.ActivityAct">
 		<constructor-arg  ref="newsDAO" />		
 	</bean>
-	<bean id="saveActivityAct" scope="prototype" class="biz.evolix.action.index.SaveActivityAct">
+	<bean id="saveActivityAct" scope="reqest" class="biz.evolix.action.index.SaveActivityAct">
 		<constructor-arg  ref="newsDAO" />		
 	</bean>
-	<bean id="saveNoticeAct" scope="prototype" class="biz.evolix.action.index.SaveNoticeAct">
+	<bean id="saveNoticeAct" scope="request" class="biz.evolix.action.index.SaveNoticeAct">
 		<constructor-arg  ref="newsDAO" />		
 	</bean>
-	<bean id="gridDownlineAct" scope="session" class="biz.evolix.action.member.GridDownlineAct">
+	<bean id="gridDownlineAct" scope="request" class="biz.evolix.action.member.GridDownlineAct">
 		<constructor-arg  ref="downlineService" />		
 	</bean>
-	<bean id="gridTeamsAct" scope="prototype" class="biz.evolix.action.member.GridTeamsAct">
+	<bean id="gridTeamsAct" scope="request" class="biz.evolix.action.member.GridTeamsAct">
 		<constructor-arg  ref="fetchListTeams" />		
 	</bean>	
-	<bean id="findMaxRegisterAct" scope="prototype" class="biz.evolix.action.register.FindMaxRegisterAct">
+	<bean id="findMaxRegisterAct" scope="request" class="biz.evolix.action.register.FindMaxRegisterAct">
 		<constructor-arg  ref="findMaxRegisterService" />		
 	</bean>
-	<bean id="chkCreateAccountAct" scope="prototype" class="biz.evolix.action.register.ChkCreateAccountAct">
+	<bean id="chkCreateAccountAct" scope="request" class="biz.evolix.action.register.ChkCreateAccountAct">
 		<constructor-arg  ref="findQuotaService" />		
 	</bean>
-	<bean id="staffManAct" scope="prototype" class="biz.evolix.action.role.StaffManAct">
+	<bean id="staffManAct" scope="request" class="biz.evolix.action.role.StaffManAct">
 		<constructor-arg  ref="staffService" />		
 	</bean>
-	<bean id="staffMemberManAct" scope="prototype" class="biz.evolix.action.staff.StaffMemberManAct">
+	<bean id="staffMemberManAct" scope="request" class="biz.evolix.action.staff.StaffMemberManAct">
 		<constructor-arg  ref="staffMemberService" />		
 	</bean>
-	<bean id="editstaffMemberManAct" scope="prototype" class="biz.evolix.action.staff.EditStaffMemberAct">
+	<bean id="editstaffMemberManAct" scope="request" class="biz.evolix.action.staff.EditStaffMemberAct">
 		<constructor-arg  ref="staffMemberService" />		
 	</bean>
-	<bean id="staffEditAct" scope="prototype" class="biz.evolix.action.role.EditStaffAct">
+	<bean id="staffEditAct" scope="request" class="biz.evolix.action.role.EditStaffAct">
 		<constructor-arg  ref="staffService" />		
 	</bean>
-	<bean id="resetPasswdAct" scope="prototype" class="biz.evolix.action.role.ResetPasswdAct">
+	<bean id="resetPasswdAct" scope="request" class="biz.evolix.action.role.ResetPasswdAct">
 		<constructor-arg  ref="roleService" />		
 	</bean>
 	<!-- end faces action -->

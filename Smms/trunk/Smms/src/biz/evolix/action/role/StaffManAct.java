@@ -22,7 +22,7 @@ public class StaffManAct extends ActionSupport{
 
 	private static final long serialVersionUID = 7246187661225173231L;
 	private static Logger log = Logger.getLogger(StaffManAct.class);
-	@Action(value = "/json-staff", results = { @Result(name = "success", type = "json") })
+	@Action(value = "/json-stff-admin", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
 		try{
 			long l = staffService.size();

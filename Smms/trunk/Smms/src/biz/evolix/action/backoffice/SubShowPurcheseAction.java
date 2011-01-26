@@ -2,7 +2,7 @@ package biz.evolix.action.backoffice;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -17,7 +17,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class SubShowPurcheseAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1468827265467130910L;
-	private static Logger log = Logger.getLogger(SubShowPurcheseAction.class);
+
 	private String id;
 
 	@Action(value = "/json-list-purchese2-staff", results = { @Result(name = "success", type = "json") })

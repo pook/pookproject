@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import biz.evolix.model.Brance;
 import biz.evolix.model.Province;
-import biz.evolix.model.dao.callback.GenericSize;
+import biz.evolix.model.dao.callback.FindAll;
 import biz.evolix.model.dao.callback.MaxResult;
 
 public class BranceDAOImp extends JpaDaoSupport implements BranceDAO {
@@ -61,7 +61,7 @@ public class BranceDAOImp extends JpaDaoSupport implements BranceDAO {
 	@Override
 	@Transactional(readOnly=true)
 	public Long size() {		
-		return getJpaTemplate().execute(new GenericSize<Long>("branceSize"));
+		return getJpaTemplate().execute(new FindAll<Long>("branceSize"));
 	}
 	private static Logger log = Logger.getLogger(BranceDAOImp.class);
 	@Override

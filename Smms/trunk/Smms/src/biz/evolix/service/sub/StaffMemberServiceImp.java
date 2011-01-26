@@ -23,21 +23,23 @@ public class StaffMemberServiceImp implements StaffMemberService {
 	private StaffDAO staffDAO;
 
 	private List<Users> users;
-
+	List<UserStaff> roles;
+	private int page = 0;
 	@Override
 	public Integer size() {
 		long l = usersDAO.size();
 		return (int) l;
 	}
-
+	
 	@Override
-	public List<UserStaff> userRole(int start, int max) {
+	public List<UserStaff> userRole(int start, int max,int page) {
+		this.page = page;
 		users = usersDAO.find(start, max);
 		return find(users);
 	}
 
 	private List<UserStaff> find(List<Users> users) {
-		List<UserStaff> roles = new ArrayList<UserStaff>();
+		roles = new ArrayList<UserStaff>();
 		for (int i = 0; i < users.size(); i++) {
 			roles.add(new UserStaff(i, users.get(i).getUserId(), users.get(i)
 					.getNode1().getSmileId(), users.get(i).getDetail()
@@ -92,6 +94,16 @@ public class StaffMemberServiceImp implements StaffMemberService {
 
 	public void setStaffDAO(StaffDAO staffDAO) {
 		this.staffDAO = staffDAO;
+	}
+
+	@Override
+	public int curpage() {		
+		return this.page;
+	}
+
+	@Override
+	public List<UserStaff> users() {		
+		return this.roles;
 	}
 
 }

@@ -10,8 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import biz.evolix.model.Staff;
 import biz.evolix.model.Users;
-import biz.evolix.model.dao.callback.GenericSize;
+import biz.evolix.model.dao.callback.FindAll;
 import biz.evolix.model.dao.callback.MaxResultCon1;
+import biz.evolix.model.dao.callback.UpdateCon2;
 
 @Repository
 public class StaffDAOImp extends JpaDaoSupport implements StaffDAO {
@@ -38,7 +39,6 @@ public class StaffDAOImp extends JpaDaoSupport implements StaffDAO {
 		return staff;
 	}
 
-
 	@Override
 	@Transactional
 	public void persist(Staff staff) {
@@ -55,7 +55,8 @@ public class StaffDAOImp extends JpaDaoSupport implements StaffDAO {
 	@Transactional
 	public void remove(Staff staff) {
 		try {			
-			getJpaTemplate().remove(staff);
+			Staff s = getJpaTemplate().find(Staff.class,staff);
+			getJpaTemplate().remove(s);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -66,7 +67,7 @@ public class StaffDAOImp extends JpaDaoSupport implements StaffDAO {
 	public long size() {
 		long s = 0;
 		try {
-			s = getJpaTemplate().execute(new GenericSize<Long>("staffsize"));
+			s = getJpaTemplate().execute(new FindAll<Long>("staffsize"));
 		} catch (Exception e) {
 		}
 		return s;
@@ -95,5 +96,14 @@ public class StaffDAOImp extends JpaDaoSupport implements StaffDAO {
 			log.error(e.getMessage());
 		}
 		
+	}
+	@Override
+	@Transactional
+	public void update(Object arg0, Object arg1, String nameQuery) {
+		try{
+			getJpaTemplate().execute(new UpdateCon2<Long>(arg0, arg1, nameQuery));
+		}catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}		
 	}
 }

@@ -7,14 +7,14 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import biz.evolix.customconst.Utils;
-import biz.evolix.gen.Generate;
+import biz.evolix.customconst.ConstType;
 import biz.evolix.model.Node1;
 import biz.evolix.model.NodeDescription;
 import biz.evolix.model.NodePK;
 import biz.evolix.model.bean.Temp;
 import biz.evolix.model.dao.Node1DAO;
 import biz.evolix.model.dao.NodeDeptDAO;
+import biz.evolix.utils.Utils;
 
 public class FindPlaceServiceImp implements FindPlaceService {
 
@@ -25,19 +25,17 @@ public class FindPlaceServiceImp implements FindPlaceService {
 
 	@Override
 	public NodePK manual(long chose, String treeId) {
-		if (chose == -2)
+		if (chose < ConstType.ONE)
 			return null;
 		NodePK id = new NodePK(treeId, chose);
-		if (node1DAO.find2(id) == null)
-			return id;
-		return null;
+		return (node1DAO.find2(id) == null)?id:null;			
 	}
 
 	@Override
 	public NodePK auto(NodeDescription dHead, String treeId, boolean auto,
 			Temp<Integer> level, boolean test) {
 		NodePK id = null;
-		List<String> hashs = null;
+		List<String> hashs = null;		
 		if (dHead.getNextId() < dHead.getPos()) {
 			hashs = Utils.hashCodes(treeId, dHead.getBaseLevel(),
 					dHead.getPos());
@@ -45,7 +43,7 @@ public class FindPlaceServiceImp implements FindPlaceService {
 			hashs = new ArrayList<String>();
 			hashs.add(treeId);
 		}
-		Iterator<String> itr = hashs.iterator();
+		Iterator<String> itr = hashs.iterator();		
 		id = auto1(dHead, auto, level, test, itr);
 		return id;
 
@@ -53,25 +51,26 @@ public class FindPlaceServiceImp implements FindPlaceService {
 
 	private NodePK auto1(NodeDescription dHead, boolean auto,
 			Temp<Integer> level, boolean test, Iterator<String> itr) {
-		boolean found = false;String treeId = itr.next();
-		long tn = dHead.getNextId();
+		boolean found = false;
+		String treeId = itr.next();
+		long low = dHead.getLower();
 		long next = dHead.getNextId(), upper = dHead.getUpper();
 		NodePK id2 = new NodePK(treeId, next);
 		while (!found) {
 			Node1 node = node1DAO.find2(id2);
 			if (node == null)
 				found = true;
-			if (id2.getPos() >= upper) {
+			if (next >= upper) {
 				level.setTemp(dHead.getHigh());
 				if (itr.hasNext()) {
 					dHead.setCount(dHead.getCount() + 1);
-					dHead.setNextId(tn);
-					treeId = itr.next();
-				} else if (Generate.bottom(id2.getPos())) {
-					Utils.resetNodeDept(dHead, true);
+					dHead.setNextId(low);
+					treeId = itr.next();					
+				} else if (Utils.inRange(next)) {
+					Utils.resetNodeDept(dHead, true);					
 				} else {
 					Utils.updateNodeDept(upper + 1, dHead, true);
-					upper = dHead.getUpper();
+					upper = dHead.getUpper();					
 				}
 			} else {
 				dHead.setCount(dHead.getCount() + 1);
@@ -85,7 +84,7 @@ public class FindPlaceServiceImp implements FindPlaceService {
 		nodeDeptDAO.update(dHead);
 		return id2;
 	}
-	
+
 	public void setNode1DAO(Node1DAO node1DAO) {
 		this.node1DAO = node1DAO;
 	}

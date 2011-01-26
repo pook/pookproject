@@ -30,7 +30,7 @@ public class PurcheseServiceImp implements PurcheseService {
 	private UpdateComService updateComService;
 	@Autowired
 	private SkuDAO skuDAO;
-	
+
 	private List<Order> ordering = new ArrayList<Order>();
 
 	public void setOrderDAO(OrderDAO orderDAO) {
@@ -49,7 +49,6 @@ public class PurcheseServiceImp implements PurcheseService {
 		return ordering;
 	}
 
-	
 	@Override
 	public int size() {
 		return getOrdering().size();
@@ -65,12 +64,13 @@ public class PurcheseServiceImp implements PurcheseService {
 		Order o = new Order();
 		o.setUser(u);
 		o.setBrance(getUsers().getBrance());
-		o.setSeller(getUsers().getSmileid());
+		o.setSeller(getUsers().getUserid());
 		o.setPurchese(new ArrayList<Purchese>());
 		o.setDate(new Date());
-		if(getOrdering().isEmpty())	{
-		o = orderDAO.newOrder(o);			
-		if(o==null)return false;		
+		if (getOrdering().isEmpty()) {
+			o = orderDAO.newOrder(o);
+			if (o == null)
+				return false;
 			getOrdering().add(o);
 		}
 		return true;
@@ -118,17 +118,15 @@ public class PurcheseServiceImp implements PurcheseService {
 
 	@Override
 	public boolean save() {
-		log.info("size >>"+size()+"empty>>"+getOrdering().get(ConstType.ZERO).getPurchese().isEmpty());
 		if (size() == 1
 				&& !getOrdering().get(ConstType.ZERO).getPurchese().isEmpty()) {
-			long s = System.currentTimeMillis();	
-			try{
+			try {
 				orderDAO.update(getOrdering().get(0));
 				updateComService.update(getOrdering().get(0));
-			}catch (Exception e) {
-				log.error(e.getMessage(),e);
-			}			
-			log.info("Total time >"+(System.currentTimeMillis()-s));
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+			}
+
 			setOrdering(new ArrayList<Order>());
 			return true;
 		}
@@ -146,14 +144,23 @@ public class PurcheseServiceImp implements PurcheseService {
 	@Override
 	public void del(int sku) { // remove sku
 		getOrdering().get(ConstType.ZERO).getPurchese().remove(sku);
+		getOrdering().get(0).getTotalQuantity();
+		getOrdering().get(0).getTotalPrice();
+		getOrdering().get(0).getTotalSv();			
+		orderDAO.update(getOrdering().get(0));
 	}
 
 	@Override
-	public void edit(int idx, Sku sku, Integer quantity) {		
-		try{
-			getOrdering().get(ConstType.ZERO).getPurchese().get(idx-1).setQuantity(quantity);
-		}catch (Exception e) {
+	public void edit(int idx, Sku sku, Integer quantity) {
+		try {
+			getOrdering().get(ConstType.ZERO).getPurchese().get(idx - 1)
+					.setQuantity(quantity);
+			getOrdering().get(0).getTotalQuantity();
+			getOrdering().get(0).getTotalPrice();
+			getOrdering().get(0).getTotalSv();
+			orderDAO.update(getOrdering().get(0));
+		} catch (Exception e) {
 			log.error(e.getMessage());
-		}		
-	}	
+		}
+	}
 }

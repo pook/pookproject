@@ -31,7 +31,7 @@ public class Order extends ActionSupport {
 			int from = to - getRows();		
 			setGridModel(orderService.ordersByOwner(from ,getRows()));
 		}catch (Exception e) {
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage());
 		}		
 		setTotal();
 		return execute();

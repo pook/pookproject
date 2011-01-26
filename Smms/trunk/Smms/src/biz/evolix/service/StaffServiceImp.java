@@ -56,8 +56,7 @@ public class StaffServiceImp implements StaffService {
 		if (s != null){
 			s.setBrance(brance);
 			staffDAO.merg(s);
-		}
-			
+		}			
 	}
 	
 	public List<UserStaff> getStaffs() {

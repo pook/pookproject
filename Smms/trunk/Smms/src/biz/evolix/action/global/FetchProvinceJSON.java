@@ -12,6 +12,7 @@ import org.apache.struts2.convention.annotation.Result;
 
 import biz.evolix.model.Province;
 import biz.evolix.model.dao.ProvinceDAO;
+import biz.evolix.utils.Comapare;
 
 import com.opensymphony.xwork2.ActionSupport;
 @ParentPackage(value = "smms")
@@ -24,7 +25,7 @@ public class FetchProvinceJSON extends ActionSupport {
 			@Result(name = "error", type = "json") })
 
 	public String execute() throws Exception {
-		setProvinces(new TreeMap<String,String>());
+		setProvinces(new TreeMap<String,String>(new Comapare<String>()));
 		return SUCCESS;
 	}
 	

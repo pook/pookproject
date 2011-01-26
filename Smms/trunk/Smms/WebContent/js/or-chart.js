@@ -105,14 +105,15 @@ function orgJSON(data) {
 		function cmouseclick(data) {
 			clrErrInf();
 			var g = $(this).attr("id");
-			var idx = parseInt(g.substring(1));
+			var idx = g.substring(1);
 			if (idx > dat.teams.length)
 				return;
 			var nid = dat.teams[idx - 1].pos;
+			var t = dat.teams[idx - 1].treeId;
 			$.ajax({
 				type : "get",
 				url : jsondat,
-				data : "nodeId=" + nid + "&backward=" + backward,
+				data : "nodeId=" + nid + "&backward=" + backward+"&treeId="+t,
 				success : function(data1) {
 					dat = data1;					
 					loopteamschild(dat);					
@@ -400,7 +401,7 @@ function orgJSON(data) {
 			$.ajax({
 				type : "get",
 				url : jsonbw,
-				data : "nodeId=" + dat.teams[0].pos + "&back=" + back,
+				data : "nodeId=" + dat.teams[0].pos + "&back=" + back+"&treeId="+dat.teams[0].treeId,
 				success : function(data1) {
 					dat = data1;
 					loopteamschild(dat);

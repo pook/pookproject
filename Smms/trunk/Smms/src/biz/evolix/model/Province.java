@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Table(name = "PROVINCE")
 
 @NamedQueries({ 
-	@NamedQuery(name = "findAllProvince", query = "select P from Province P")
+	@NamedQuery(name = "findAllProvince", query = "select P from Province P order by P.pCode")
 })
 public class Province implements java.io.Serializable {
 

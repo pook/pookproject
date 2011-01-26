@@ -9,4 +9,5 @@ public interface NodeDeptDAO {
 	public boolean insert(NodeDescription nodeDept);
 	public void update(NodeDescription dept);
 	public void flush();
+	public String find(Object arg0);
 }

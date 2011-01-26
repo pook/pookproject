@@ -33,6 +33,5 @@ public class FindMaxRegisterAct extends ActionSupport {
 	public FindMaxRegisterAct(FindMaxRegisterService findMaxRegisterService) {
 		super();
 		this.findMaxRegisterService = findMaxRegisterService;
-	}
-	
+	}	
 }

@@ -22,10 +22,11 @@ div#div4 div {
 					<sjg:grid id="gridedittable" caption="ผลิตภัณฑ์" dataType="json"
 						href="%{remoteurl}" pager="true" navigator="true" width="930"
 						navigatorEdit="true"  
+						navigatorSearch="false"
 						navigatorSearchOptions="{sopt:['eq']}"
 						navigatorAddOptions="{height:280,reloadAfterSubmit:false}"
 						navigatorEditOptions="{height:280,reloadAfterSubmit:true}"
-						navigatorDelete="true" 						
+						navigatorDelete="false" 						
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true,msg:'ต้องการลบเรคคอร์ดนี้ ?'}"
 						gridModel="gridModel" rowList="15,30" rowNum="15"  
 						editurl="%{edit1url}" editinline="false" 
@@ -36,22 +37,20 @@ div#div4 div {
 							editable="true" width="200"/>
 						<sjg:gridColumn name="description" title="รายละเอียด ผลิตภัณฑ์"  editrules="{required:true,minlength:5,required:true}" edittype="textarea"
 							editable="true" width="250" search="false"/>
-						<sjg:gridColumn name="price" title="ราคากลางต่อหน่วย" formatter="currency" required="true" editrules="{number:true,required:true}"
+						<sjg:gridColumn name="price" title="ราคากลางต่อหน่วย" formatter="currency" required="true" editrules="{number:true,required:true}" formatoptions="{decimalSeparator:'.',thousandsSeparator: ',', decimalPlaces: 2}" align="right"
 							editable="true" width="180" search="false"/>
-						<sjg:gridColumn name="memberPrice" title="ราคาสมาชิกต่อหน่วย" formatter="currency" editrules="{number:true,required:true}"
+						<sjg:gridColumn name="memberPrice" title="ราคาสมาชิกต่อหน่วย" formatter="currency" editrules="{number:true,required:true}" formatoptions="{decimalSeparator:'.',thousandsSeparator: ',', decimalPlaces: 2}" align="right"
 							editable="true" width="180" search="false" />
-						<sjg:gridColumn name="discount" title="ส่วนลดพิเศษ%" formatter="integer" editrules="{integer:true}"
+						<sjg:gridColumn name="discount" title="ส่วนลดพิเศษ%" formatter="integer" editrules="{integer:true}" align="right"
 							editable="true"  search="false"/>
-						<sjg:gridColumn name="priceDiscount" formatter="currency" editrules="{number:true,required:true}"
+						<sjg:gridColumn name="priceDiscount" formatter="currency" editrules="{number:true,required:true}" formatoptions="{decimalSeparator:'.',thousandsSeparator: ',', decimalPlaces: 2}" align="right"
 							title="ราคาต่อหน่วยหลังหักส่วนลด" width="250" search="false"/>
-						<sjg:gridColumn name="sv" index="sv" title="Smile Value" editrules="{integer:true,required:true}"
+						<sjg:gridColumn name="sv" index="sv" title="Smile Value" editrules="{integer:true,required:true}" formatoptions="{thousandsSeparator: ','}" align="right"
 							formatter="integer" sortable="false" editable="true" width="160" search="false"/>
 					</sjg:grid>
 					<br />
 					<sj:submit id="grid_edit_addbutton2e" value="Add New"
 						onClickTopics="rowadd" button="true" />
-					<sj:submit id="grid_edit_searchbutton" value="Search"
-						onClickTopics="searchgrid" button="true" />
 					<sj:submit id="grid_edit_colsbutton" value="Show/Hide Columns"
 						onClickTopics="showcolumns" button="true" />
 					<br />

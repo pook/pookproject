@@ -10,6 +10,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -18,6 +20,9 @@ import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name = "USERS_DETAIL")
+@NamedQueries({ 
+	@NamedQuery(name = "findcodeId", query = "select S.codeIdentification from SmileUsersDetails S where S.codeIdentification =?1")
+})
 public class SmileUsersDetails implements java.io.Serializable {
 
 	private static final long serialVersionUID = -1086396230161064363L;

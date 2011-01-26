@@ -8,13 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 import biz.evolix.model.Node1;
 import biz.evolix.model.NodeDescription;
 import biz.evolix.model.NodePK;
+import biz.evolix.model.dao.callback.FindByCondition1;
 
 @Repository
 @Transactional
 public class NodeDeptDAOImp extends JpaDaoSupport implements NodeDeptDAO {
 
 	private Node1DAO node1DAO;
-	private PageDAO pageDAO;
+	
 
 	@Override
 	@Transactional(readOnly = true)
@@ -81,14 +82,7 @@ public class NodeDeptDAOImp extends JpaDaoSupport implements NodeDeptDAO {
 		return n;
 	}
 
-	public void setPageDAO(PageDAO pageDAO) {
-		this.pageDAO = pageDAO;
-	}
-
-	public PageDAO getPageDAO() {
-		return pageDAO;
-	}
-
+	
 	@Override
 	public void flush() {
 		try {
@@ -96,4 +90,17 @@ public class NodeDeptDAOImp extends JpaDaoSupport implements NodeDeptDAO {
 		} catch (Exception e) {
 		}
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public String find(Object arg0) {	
+		String o = null;
+		try{
+			o = getJpaTemplate().execute(new FindByCondition1<String>(arg0,"findDisplayNameByHashCode"));
+		}catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		return o;
+	}
+
 }
