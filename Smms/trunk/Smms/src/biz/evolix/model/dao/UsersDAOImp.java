@@ -238,5 +238,31 @@ public class UsersDAOImp extends JpaDaoSupport implements UsersDAO {
 			log.error(e.getMessage());
 		}
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<Users> findByName(String name) {
+		List<Users> users = new ArrayList<Users>();
+		try {
+			users = getJpaTemplate().executeFind(new MaxResultCon1<Users>(name,0, 30, "finduserByName"));					
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return users;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Users findBydisplayName(String displayName) {
+		Users user = null;
+		try {
+			user = getJpaTemplate().execute(
+					new FindByCondition1<Users>(displayName, "finduserByDisplayName"));
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return user;
 	}	
 }

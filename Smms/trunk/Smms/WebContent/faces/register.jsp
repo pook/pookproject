@@ -7,11 +7,6 @@
 <%@ page import="biz.evolix.secure.SmileUser"%>
 <%@ page import="org.apache.log4j.Logger"%>
 <script type="text/javascript" src="js/register.js"></script>
-<script type="text/javascript">
-	$(function() {		 
-		regis();		
-	});
-</script>
 <link href="styles/register.css" rel="stylesheet" type="text/css" />
 <%
 	Logger log = Logger.getLogger("Register");

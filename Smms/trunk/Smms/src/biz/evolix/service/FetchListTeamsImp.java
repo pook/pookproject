@@ -55,14 +55,14 @@ public class FetchListTeamsImp implements FetchListTeams {
 		int high = 16;
 		StringBuilder sb = new StringBuilder();
 		sb.append(" from Users U where U.node1.pos in (");
-		for(int i=0;i<high;i++){
+		for(int i=1;i<high;i++){
 			int j = (int)Generate.math2Pow(i);
 			for(int k=0;k<j;k++)
 				sb.append(header+k).append(",");			
 			header = Generate.left(header);
 		}	
 		sb.deleteCharAt(sb.length()-1);
-		sb.append(")");
+		sb.append(")");		
 		return sb.toString();
 	}
 	

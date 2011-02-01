@@ -106,4 +106,16 @@ public class StaffMemberServiceImp implements StaffMemberService {
 		return this.roles;
 	}
 
+	@Override
+	public List<UserStaff> searchByName(String name) {
+		return find(usersDAO.findByName(name));
+	}
+
+	@Override
+	public List<UserStaff> searchByDisplayName(String displayName) {
+		Users user = usersDAO.findBydisplayName(displayName);
+		users = new ArrayList<Users>();
+		users.add(user);
+		return find(users);
+	}
 }

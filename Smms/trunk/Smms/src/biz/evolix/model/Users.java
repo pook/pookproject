@@ -27,6 +27,8 @@ import javax.persistence.TemporalType;
 @NamedQueries({ 
 	@NamedQuery(name = "ckpasswd", query = "select U from Users U where U.node1.smileId=?1 and U.password=?2"),
 	@NamedQuery(name = "finduser", query = "select U from Users U where U.node1.smileId =?1 "),
+	@NamedQuery(name = "finduserByName", query = "select U from Users U where U.detail.name =?1 "),
+	@NamedQuery(name = "finduserByDisplayName", query = "select U from Users U where U.node1.displayName =?1 "),
 	@NamedQuery(name = "receivecardSize", query = "select count(0) from Users U where U.recivecard=false"),
 	@NamedQuery(name = "receivecard", query = "select U from Users U where U.recivecard=false order by U.userId"),
 	@NamedQuery(name = "userSize", query = "select count(0) from Users U "),
@@ -78,6 +80,8 @@ public class Users implements java.io.Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATE")
 	private Date date;
+	@Column(name = "LST_TOTAL_SV")
+	private Integer lstTotalSV = 0;
 	@OneToOne
 	@JoinColumns({
 			@JoinColumn(name = "TREE_ID", referencedColumnName = "TREE_ID"),
@@ -238,6 +242,14 @@ public class Users implements java.io.Serializable {
 
 	public Integer getMaxRegister() {
 		return maxRegister;
+	}
+
+	public void setLstTotalSV(Integer lstTotalSV) {
+		this.lstTotalSV = lstTotalSV;
+	}
+
+	public Integer getLstTotalSV() {
+		return lstTotalSV;
 	}
 	
 

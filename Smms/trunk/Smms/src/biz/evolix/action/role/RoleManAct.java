@@ -22,12 +22,19 @@ public class RoleManAct extends ActionSupport {
 	private static Logger log = Logger.getLogger(RoleManAct.class);
 
 	@Action(value = "/json-role-admin", results = { @Result(name = "success", type = "json") })
-	public String execute() throws Exception {		
+	public String execute() throws Exception {
 		try {
-			if (searchString != null && searchOper != null &&!searchString.equals("")&&!searchOper.equals("")) {
-				if (searchOper.equalsIgnoreCase("eq")) {
-					setGridModel(roleService.search(searchString));
-					setTotal(1);
+			if (searchString != null && searchOper != null
+					&& !searchString.equals("") && !searchOper.equals("")) {
+				if (searchOper.equalsIgnoreCase("eq")) {					
+					if (searchField.equals("smileId")) {
+						setGridModel(roleService.search(searchString));
+						setTotal(1);
+					}
+					if (searchField.equals("name")) {
+						setGridModel(roleService.searchByName(searchString));
+						setTotal(30);
+					}
 				}
 			} else {
 				setRecord(roleService.sizeMember());

@@ -213,4 +213,9 @@ public class RoleServiceImp implements RoleService {
 		usersDAO.flush();
 
 	}
+
+	@Override
+	public List<UserRoleBean> searchByName(String name) {		
+		return find(usersDAO.findByName(name));
+	}
 }

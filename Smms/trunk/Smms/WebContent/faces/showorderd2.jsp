@@ -6,9 +6,10 @@
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 #main{
- margin: 40px 30px 30px 99px;
+ margin: 40px 30px 30px 70px;
 }
 </style>
+<s:url id="ajax" value="blackoffice" />
 <div id="divshow2">
 					<s:url id="remoteurl" action="json-list-order-cancel-staff" />	<!-- ShowOrdered -->					
 					<s:url id="subgridurl" action="json-list-purchese2-staff" />													
@@ -21,7 +22,7 @@
 						navigatorSearch="false"
 						navigatorSearchOptions="{sopt:['eq']}"													
 						navigatorDeleteOptions="{height:280,reloadAfterSubmit:true}"
-						gridModel="gridModel" rowList="15,30" rowNum="15" width="820" 						
+						gridModel="gridModel" rowList="15,30" rowNum="15" width="920" 						
 						 >
 						<sjg:grid id="subgridtable"  subGridUrl="%{subgridurl}"  caption="+"
 							dataType="json" gridModel="gridModel" footerrow="true" rownumbers="1" rowNum="0"				
@@ -41,17 +42,23 @@
 						<sjg:gridColumn name="date" index="date" align="center" width="100"
 							title="วันที่" formatter="date" sortable="true" />
 						<sjg:gridColumn name="orderId" index="orderId"
-							title="sale order ID" formatter="integer" sortable="true" />
+							title="sale order ID" formatter="integer" sortable="true" width="100" />
 						<sjg:gridColumn name="user.node1.smileId" title="รหัสสมาชิก"
-							editable="true" editrules="{required:true}"  />
+							editable="true" editrules="{required:true}"  />							
 						<sjg:gridColumn name="user.detail.name" title="ชื่อสมาชิก" />
-						<sjg:gridColumn name="totalQuantity" title="จำนวน" align="right"
+						<sjg:gridColumn name="brance" title="สาขา" width="100" sortable="false"				
+				search="false" />
+						<sjg:gridColumn name="totalQuantity" title="จำนวน" align="right" width="80"
 							formatter="integer" search="false"/>
 						<sjg:gridColumn name="totalPrice" title="ราคารวม" sortable="false" formatoptions="{decimalSeparator:'.',thousandsSeparator: ',', decimalPlaces: 2}"
-							formatter="currency" search="false" align="right" />
+							formatter="currency" search="false" align="right" width="80" />
 						<sjg:gridColumn name="totalSv" index="totalPV" formatoptions="{thousandsSeparator: ','}"
-							title="Total Smile Value" formatter="integer" width="150" search="false" align="right"/>
+							title="Total Smile Value" formatter="integer" width="110" search="false" align="right"/>
 					</sjg:grid>
-					<br />			
+					<br />	
+					<sj:a id="ajaxlink" href="%{ajax}" indicator="indicator" targets="main"
+	button="true" buttonIcon="ui-icon-gear">
+	กลับไปหน้าชื้อสินค้า
+				</sj:a> 		
 										
 </div>			

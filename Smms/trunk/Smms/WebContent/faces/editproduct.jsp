@@ -14,8 +14,7 @@ div#div4 div {
 		style="align: center; width:924px; margin-left: 60px; border: 0px solid #000000; margin-top: 50px"
 		cellspacing="10px">
 		<tr>
-			<td><sj:div id="div0">
-				<sj:div id="div1"></sj:div>
+			<td><sj:div id="div0">				
 				<sj:div id="div2">
 					<s:url id="remoteurl" action="jsoneditproduct-admin" /><!-- EditProduct -->					
 					<s:url id="edit1url" action="add-sku-grid-admin" /><!-- AddSkuAct    (insert,update,del) -->

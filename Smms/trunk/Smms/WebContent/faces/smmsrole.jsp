@@ -133,7 +133,7 @@ $.subscribe('getselectedids3', function(event,data) {
 							<sjg:gridColumn name="smileId" index="smileId" title="รหัสสมาชิก" editoptions= "{ readonly: true,disabled:'disabled'}"
 								sortable="false" editable="true" width="100"/>
 							<sjg:gridColumn name="name" editrules="{ minlength:5,required:true}"
-								title="ชื่อ สมาชิก" sortable="false" editable="true" />
+								title="ชื่อ สมาชิก" index="name" sortable="false" editable="true" />
 							<sjg:gridColumn name="surename"  editrules="{ edithidden:true,minlength:5,required:true}" hidden="true"
 								title="นามสกุล" sortable="false" editable="true" />
 							<sjg:gridColumn name="address"  editrules="{ edithidden:true,minlength:5,required:true}" hidden="true"

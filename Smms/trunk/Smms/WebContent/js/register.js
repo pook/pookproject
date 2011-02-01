@@ -1,3 +1,6 @@
+$(function() {		 
+		regis();		
+});
 function checkDisplayName() {
 	$(this).removeClass("ui-state-error");
 	$.ajax({
@@ -14,6 +17,19 @@ function checkDisplayName() {
 		}	
 	});	
 	return true;
+}
+function chkCodeId(c) {
+	$(this).removeClass("ui-state-error");
+	var v = false;
+	$.ajax({
+		type : "post",
+		url : "chk-codeId-member",
+		data : "codeIdentification=" + c.val(),
+		success : function(res) {			
+			if(res == -2)v = true;
+		}	
+	});	
+	return v;
 }
 function chkMax(){	
 	$.ajax({
@@ -90,16 +106,23 @@ function ckBrance(b1) {
 	}
 	return true;
 }
-function checkidentifier(ci) {
-	var c = true;
-	c = checkIdent(ci.val());
-	if (!c) {
-		ci.addClass("ui-state-error");
+function checkidentifier(c) {
+	var v = true;
+	v = checkIdent(c.val());	
+	if (!v) {
+		c.addClass("ui-state-error");
 		showmsgInf("<li>รหัสบัตรประชาชนไม่ถูกต้อง</li><li>ข้อมูล รหัสบัตรประชาชนควรมีเท่ากับ 13</li>");
 	} else {
-		ci.removeClass("ui-state-error");
+		c.removeClass("ui-state-error");
+	}	
+	v = v && chkCodeId(c);
+	if (!v) {
+		c.addClass("ui-state-error");
+		showmsgInf("<li>ข้อมูลรหัสบัตรประจำตัวประชาชนมีผู้ใช้แล้ว</li>");
+	} else {
+		c.removeClass("ui-state-error");
 	}
-	return c;
+	return v;
 }
 function checkIdent(id) {
 	if (id.length != 13)

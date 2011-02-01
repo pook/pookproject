@@ -130,6 +130,10 @@
 		<td>Total Team SV</td>
 		<td id="f502">f502</td>
 	</tr>
+	<tr>
+		<td>Total Team SV(เดือนที่ผ่านมา)</td>
+		<td id="f503">f503</td>
+	</tr>
 	</table>
 </div>
 <div id="status">

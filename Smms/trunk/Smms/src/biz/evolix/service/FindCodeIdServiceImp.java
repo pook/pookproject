@@ -8,9 +8,7 @@ public class FindCodeIdServiceImp implements FindCodeIdService{
 	@Autowired
 	private SmileUsersDetailDAO smileUsersDetailDAO;
 	@Override
-	public boolean find(String codeId) {
-		// TODO Auto-generated method stub
-		return false;
+	public int find(String codeId) {		
+		return smileUsersDetailDAO.findCode(codeId);
 	}
-
 }

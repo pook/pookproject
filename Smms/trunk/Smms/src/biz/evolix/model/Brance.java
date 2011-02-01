@@ -25,7 +25,7 @@ public class Brance implements java.io.Serializable {
 	   
 	@Id
 	@GeneratedValue(generator = "BRANCE_SEQ", strategy = GenerationType.TABLE)
-	@TableGenerator(name = "BRANCE_SEQ", initialValue = 5000, allocationSize = 1)
+	@TableGenerator(name = "BRANCE_SEQ", initialValue = 5001, allocationSize = 1)
 
 	@Column(name = "BRANCE_CODE")
 	private Integer branceCode;

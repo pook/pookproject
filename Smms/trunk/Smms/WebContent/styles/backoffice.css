@@ -6,7 +6,7 @@ table#member td{
 	text-align:center;	
 	border-collapse:collapse;
 }
-.hide{
+.hide1{
 	display: none;
 }
 input.text {
@@ -26,4 +26,9 @@ label {
 	margin: 5px 9px 5px 9px;
 	width: 150px;
 	padding: 1px 5px 1px 5px;
+}
+#div2 {
+	position:relative;
+	left:50px;
+	top:49px;	
 }

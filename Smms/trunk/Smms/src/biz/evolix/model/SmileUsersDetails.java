@@ -21,7 +21,7 @@ import javax.persistence.JoinColumn;
 @Entity
 @Table(name = "USERS_DETAIL")
 @NamedQueries({ 
-	@NamedQuery(name = "findcodeId", query = "select S.codeIdentification from SmileUsersDetails S where S.codeIdentification =?1")
+	@NamedQuery(name = "findcodeId", query = "select count(S.codeIdentification) from SmileUsersDetails S where S.codeIdentification =?1")
 })
 public class SmileUsersDetails implements java.io.Serializable {
 

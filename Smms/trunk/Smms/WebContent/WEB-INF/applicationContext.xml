@@ -20,9 +20,9 @@
 			<bean
 				class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
 				<property name="databasePlatform"
-					value="org.eclipse.persistence.platform.database.PostgreSQLPlatform" />
+					value="org.eclipse.persistence.platform.database.MySQLPlatform" />
 				<property name="showSql" value="true" />				
-				<property name="database" value="POSTGRESQL" />				
+				<property name="database" value="MYSQL" />				
 			</bean>
 		</property>
 		<property name="loadTimeWeaver">
@@ -30,7 +30,7 @@
 				class="org.springframework.instrument.classloading.ReflectiveLoadTimeWeaver" />
 		</property>
 	</bean>
-	<jee:jndi-lookup id="dataSource" jndi-name="java:/comp/env/jdbc/pgsmmsDS" />
+	<jee:jndi-lookup id="dataSource" jndi-name="java:/comp/env/jdbc/mysmmsDS" />
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
@@ -68,7 +68,7 @@
 	<bean id="updateComService" class="biz.evolix.service.UpdateComServiceImp" />
 	<bean id="findPlaceService" class="biz.evolix.service.FindPlaceServiceImp" />
 	<bean id="findQuotaService" class="biz.evolix.service.FindQuotaServiceImp"/>
-	<bean id="findCodeIdService" class="biz.evolix.service.FindCodeIdServiceImp" scope="request"/>
+	<bean id="findCodeIdService" class="biz.evolix.service.FindCodeIdServiceImp" scope="prototype"/>
 	<bean id="findMaxRegisterService" class="biz.evolix.service.FindMaxRegisterServiceImp" scope="session" />
 	<bean id="orderService" class="biz.evolix.service.OrderServiceImp" scope="session"/>
 	<bean id="purcheseService" class="biz.evolix.service.PurcheseServiceImp"
@@ -107,17 +107,17 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<!-- ^^^^^^^^^^begin Faces action^^^^^^^^^^^^6 -->
-	<bean id="loadSkusAct" class="com.smms.action.LoadSkusAct" scope="prototype">
+	<bean id="loadSkusAct" class="com.smms.action.LoadSkusAct" scope="request">
 		<constructor-arg ref="skuDAO" />
 	</bean>
-	<bean id="loadSkus2" class="com.smms.action.LoadSkus2" scope="prototype">
+	<bean id="loadSkus2" class="com.smms.action.LoadSkus2" scope="request">
 		<constructor-arg ref="skuDAO" />
 	</bean>
 	
-	<bean id="loadUsers" class="com.smms.action.LoadSkusAct" scope="prototype">
+	<bean id="loadUsers" class="com.smms.action.LoadSkusAct" scope="request">
 		<constructor-arg ref="authoritiesDAO" />
 	</bean>
-	<bean id="procheseAct" class="com.smms.action.ProcheseAct" scope="session">
+	<bean id="procheseAct" class="com.smms.action.ProcheseAct" scope="request">
 		<constructor-arg ref="purcheseService" />
 	</bean>
 	<bean id="editOrderAct" class="com.smms.action.EditOrderAct"
@@ -125,14 +125,14 @@
 		<constructor-arg ref="purcheseService" />
 	</bean>
 	<bean id="blackOfficeAct" class="com.smms.action.BlackOffice"
-		scope="session">
+		scope="request">
 		<constructor-arg ref="purcheseService" />
 	</bean>
 	<bean id="subBackOffice" class="com.smms.action.SubBackOffice"
-		scope="session">
+		scope="request">
 		<constructor-arg ref="purcheseService" />
 	</bean>
-	<bean id="buyOrder" class="com.smms.action.BuyOrder" scope="prototype">
+	<bean id="buyOrder" class="com.smms.action.BuyOrder" scope="request">
 		<constructor-arg ref="purcheseService" />
 	</bean>
 	<bean id="registerServiceAct" scope="request" class="biz.evolix.action.register.Register">
@@ -142,25 +142,25 @@
 	<bean id="fetchUpLine" scope="request" class="biz.evolix.action.register.FetchUpline">
 		<constructor-arg ref="fetchUplineService" />
 	</bean>
-	<bean id="orchartServiceAct" scope="prototype" class="biz.evolix.action.organization.Organization">
+	<bean id="orchartServiceAct" scope="request" class="biz.evolix.action.organization.Organization">
 		<constructor-arg ref="orchartService" />
 	</bean>
-	<bean id="orchartSearchMemberAct" scope="prototype" class="biz.evolix.action.organization.OrganizationSearchMember">
+	<bean id="orchartSearchMemberAct" scope="request" class="biz.evolix.action.organization.OrganizationSearchMember">
 		<constructor-arg ref="orchartService" />
 	</bean>
-	<bean id="orchartBackwardAct" scope="prototype" class="biz.evolix.action.organization.OrganizationBackward">
+	<bean id="orchartBackwardAct" scope="request" class="biz.evolix.action.organization.OrganizationBackward">
 		<constructor-arg ref="orchartService" />
 	</bean>
 	<bean id="inventoryServiceAct" class="biz.evolix.action.managesku.EditProduct"
-		scope="prototype">
+		scope="request">
 		<constructor-arg ref="inventoryService" />
 	</bean>
 	<bean id="editAdddelSkuAct" class="biz.evolix.action.managesku.AddSkuAct"
-		scope="prototype">
+		scope="request">
 		<constructor-arg ref="inventoryService" />
 	</bean>
 	<bean id="editOrder" class="biz.evolix.action.backoffice.EditOrderAction"
-		scope="prototype">
+		scope="request">
 		<constructor-arg ref="orderService" />
 	</bean>
 	<bean id="showOrdered" class="biz.evolix.action.backoffice.ShowOrdered"
@@ -172,43 +172,43 @@
 		<constructor-arg ref="orderService" />
 	</bean>
 	<bean id="subShowPurcheseAction" class="biz.evolix.action.backoffice.SubShowPurcheseAction"
-		scope="prototype">
+		scope="request">
 		<constructor-arg ref="orderService" />
 	</bean>
 	<bean id="subOrderAction" class="biz.evolix.action.order.SubOrder"
-		scope="session">
+		scope="request">
 		<constructor-arg ref="orderService" />
 	</bean>
 	<bean id="orderAction" class="biz.evolix.action.order.Order"
-		scope="session">
+		scope="request">
 		<constructor-arg ref="orderService" />
 	</bean>
 	<bean id="fetchProvinceJSONAction" class="biz.evolix.action.global.FetchProvinceJSON"
-		scope="prototype">
+		scope="request">
 		<constructor-arg ref="fetchProvince" />
 	</bean>
 	<bean id="fetchProvinceAction" class="biz.evolix.action.global.FetchProvince"
-		scope="prototype">
+		scope="request">
 		<constructor-arg ref="fetchProvince" />
 	</bean>
 	<bean id="fetchBranceJSON" class="biz.evolix.action.global.FetchBranceJSON"
-		scope="prototype">
+		scope="request">
 		<constructor-arg ref="fetchBrance" />
 	</bean>
 	<bean id="fetchBranceAct" class="biz.evolix.action.global.FetchBrance"
-		scope="prototype">
+		scope="request">
 		<constructor-arg ref="fetchBrance" />
 	</bean>
 	<bean id="checkNameAction" class="biz.evolix.action.register.CheckDisplayName"
-		scope="prototype">
+		scope="request">
 		<constructor-arg ref="checkNameDAO" />
 	</bean>
 	<bean id="branceManAct" class="biz.evolix.action.role.BranceManAct"
-		scope="prototype">
+		scope="request">
 		<constructor-arg ref="branceService" />
 	</bean>
 	<bean id="member" class="com.smms.action.Member"
-		scope="session">
+		scope="request">
 		<constructor-arg ref="userDAO" />
 	</bean>
 	<bean id="chkLevelAct" scope="request" class="biz.evolix.action.register.ChkLevelAct">
@@ -271,6 +271,10 @@
 	<bean id="resetPasswdAct" scope="request" class="biz.evolix.action.role.ResetPasswdAct">
 		<constructor-arg  ref="roleService" />		
 	</bean>
+	<bean id="chkCodeIdAct" scope="request" class="biz.evolix.action.register.ChkCodeIdAct">
+		<constructor-arg  ref="findCodeIdService" />		
+	</bean>
+	
 	<!-- end faces action -->
 	<context:annotation-config />
 </beans>

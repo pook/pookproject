@@ -38,7 +38,10 @@ public class BonusPeriod implements java.io.Serializable {
 	private Integer bonusInv = 0;
 	@Column(name = "BONUS")
 	private Integer bonus = 0;
-
+	@Column(name = "SMILE_VALUE")
+	private Integer sv = 0;
+	@Column(name = "TOTAL_SV")
+	private Integer totalSv = 0;
 	
 	public Integer getBonusTeam() {
 		return bonusTeam;
@@ -94,5 +97,21 @@ public class BonusPeriod implements java.io.Serializable {
 
 	public Users getUserId() {
 		return userId;
+	}
+
+	public void setTotalSv(Integer totalSv) {
+		this.totalSv = totalSv;
+	}
+
+	public Integer getTotalSv() {
+		return totalSv;
+	}
+
+	public void setSv(Integer sv) {
+		this.sv = sv;
+	}
+
+	public Integer getSv() {
+		return sv;
 	}
 }

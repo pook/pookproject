@@ -6,12 +6,11 @@ $(function(){
 		url : "json-ordering-staff",				
 		success : function(res) {			
 			if(res.gridModel.length != 0){
-				$("#div2").removeClass("hide");									
+				$("#divp").removeClass("hide1");									
 				$("#create-order").hide();							
 				fetchData(res.gridModel[0]);									
 			}else{				
-				$("#create-order").show();					
-				$("#div2").addClass("hide");
+				$("#create-order").show();				
 				$("#smileId").focus();
 				$("#smileId").removeAttr("disabled");		
 			}

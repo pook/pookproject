@@ -14,4 +14,5 @@ public interface RoleService {
 	public List<UserRoleBean> userRole(int start,int max);
 	public void updateRole(UserRoleBean userrole);
 	public List<UserRoleBean> search(String smileId);
+	public List<UserRoleBean> searchByName(String name);
 }

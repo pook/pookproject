@@ -9,22 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style type="text/css">
-#login {
-	margin: 235px 80px 100px 500px;	
-}
-table{
-	border-collapse:collapse;
-	border:1px solid;
-	border-style: none;
-}
-table tr td{
-	padding: 4px 9px 4px 9px;	
-}
-#submit{
-	
-}
-</style>
+<link href="styles/login.css" rel="stylesheet" type="text/css" />
 <title>Login</title>
 </head>
 <body>

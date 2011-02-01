@@ -25,6 +25,8 @@
 <s:url id="addorder" value="edit-grid-order-staff" />
 <s:url id="buyurl" value="order-purchese-staff" />
 <s:url id="prochesedetail" action="showordered" />
+<s:url id="ajax1" value="showorderd2" />
+<s:url id="ajax" value="blackoffice" />
 <div id="main5"> 
 <div id="member-contain" >
 	<table id="users" class="ui-widget ui-widget-content">
@@ -62,22 +64,23 @@
 	</td><td><label for="totalprice">ราคารวม :</label></td><td><input id="totalprice" type="text" style="color:#30f" class="text ui-widget-content ui-corner-all" readonly="readonly" disabled="disabled"/></td><td><label for="totalsv"></label>Total Smile value :</td><td><input id="totalsv" type="text" class="text ui-widget-content ui-corner-all" style="color:#30f" readonly="readonly" disabled="disabled"></td>
 	</tr>
 	<tr>
-	<td colspan="5"></td><td><a id="refresh"  href="javascript:void(0)" 
+	<td colspan="3"></td><td colspan="3"><a id="refresh"  href="javascript:void(0)" 
 	class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span
 	class="ui-button-text">Refresh</span></a><sj:a id="ajaxlink3" href="%{prochesedetail}" indicator="indicator"
 						targets="main" button="true" buttonIcon="ui-icon-gear">
 	ดูประวัติการสั่งชื้อ
-	</sj:a></td>
+	</sj:a>
+	 <sj:a id="ajaxlink1" href="%{ajax1}" indicator="indicator"
+	targets="main" button="true" buttonIcon="ui-icon-gear">
+	ดูรายการยกเลิกสั่งชื้อ
+				</sj:a>
+	</td>
 	</tr>
 	</tbody>
 	</table>
 </div>
 </div>
-	<table
-		style="align: center; width: 900px; margin-left: 60px; border: px solid #000000; margin-top: 50px"
-		cellspacing="10px">
-		<tr>			
-			<td>				
+	<div id="divp" class="hide1" >			
 				<sj:div id="div2">					
 					<s:url id="remote2url" action="json-grid-purchese-staff" />
 					<s:url id="selectskuurl" action="json-customer-loadskuss-staff" />
@@ -123,7 +126,5 @@
 					<br />
 					<br />
 				</sj:div>
-			</td>
-		</tr>
-	</table>
+		</div>
 </sj:div>

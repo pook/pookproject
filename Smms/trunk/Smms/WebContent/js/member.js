@@ -25,10 +25,12 @@ $(function() {
 		$("#f17").empty().append(dat.detail.typeOfAccount);
 		$("#f18").empty().append(dat.bonusTeam);
 		$("#f19").empty().append(dat.bonusInv);
-		$("#f20").empty().append(dat.bonusTeam+dat.bonusInv);
+		var x = dat.bonusTeam+dat.bonusInv;
+		$("#f20").empty().append(x);
 		$("#f21").empty().append(dat.bonusLast);
 		$("#f501").empty().append(dat.detail.numOfAccount);
-		$("#f502").empty().append(dat.node1.totalSv);	
+		$("#f502").empty().append(dat.node1.totalSv);
+		$("#f503").empty().append(dat.lstTotalSV);
 		$("#sdialog").hide();
 		$.ajax({
 			url :"check-account-member",					

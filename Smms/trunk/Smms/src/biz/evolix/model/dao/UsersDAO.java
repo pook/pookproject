@@ -7,6 +7,8 @@ import biz.evolix.model.Users;
 public interface UsersDAO {
 	public Users find(Long id);
 	public Users findBySmileUser(String smileId);
+	public List<Users> findByName(String name);
+	public Users findBydisplayName(String displayName);
 	public void persist(Users user);
 	public void update(Users user);
 	public void updateQuery(Object arg0,String nameQuery);

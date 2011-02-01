@@ -45,21 +45,21 @@ public class RegisterServiceImp implements RegisterService {
 	private FindPlaceService findPlaceService;
 	@Autowired
 	private FindQuotaService findQuotaService;
+	@Autowired
+	private FindCodeIdService findCodeIdService;
 
 	@Override
 	public String save(SmileUsersDetails smileuser, String choseId, String pv,
-			Node1 node, Users user) {		
-		SmileUser suser = getUsers();		
-		Users inviter = (suser == null)?null:userDAO.find(suser.getUserid());		
+			Node1 node, Users user) {
+		SmileUser suser = getUsers();
+		Users inviter = (suser == null) ? null : userDAO
+				.find(suser.getUserid());
 		String treeId = (suser == null) ? ConstType.HASHCODE_NODE0 : getUsers()
-				.getTreeId();		
+				.getTreeId();
 		long pos = (suser == null) ? 0L : getUsers().getPos();
 		long chose = -1;
 		String choseTree = treeId;
 		boolean test = false;		
-		if (inviter != null)
-			if (inviter.getMaxRegister() < 1)
-				throw new UsernameNotFoundException("Limit register !!");		
 		if (choseId.length() == 2) {
 			try {
 				chose = Long.parseLong(choseId);
@@ -76,10 +76,15 @@ public class RegisterServiceImp implements RegisterService {
 				log.error(e.getMessage());
 				throw new UsernameNotFoundException("Register Fail");
 			}
-		}		
+		}
 		boolean auto = (chose == ConstType.AUTO) ? true : false;
 		if (chose == -1)
 			throw new UsernameNotFoundException("Register Fail");
+		if (inviter != null)
+			if (inviter.getMaxRegister() < 1
+					|| findCodeIdService.find(smileuser.getCodeIdentification()) != ConstType.NOT_FOUND
+							)
+				throw new UsernameNotFoundException("Limit register !!");
 		user.setNode1(node);
 		user.setNumberOfAccount(1);
 		user.setMaxRegister(0);
@@ -121,16 +126,15 @@ public class RegisterServiceImp implements RegisterService {
 				log.error(e.getMessage());
 				throw new UsernameNotFoundException("Register Fail");
 			}
-		}		
+		}
 		Users inviter = userDAO.find(getUsers().getUserid());
-		if (inviter != null) 
+		if (inviter != null)
 			if (inviter.getMaxRegister() < 1)
 				throw new UsernameNotFoundException("Limit register !!");
-			if (inviter.getNumberOfAccount() > 2
-					|| findQuotaService.quota() != -1) {
-				new UsernameNotFoundException("Register Fail Not Allow");
-			}
-		
+		if (inviter.getNumberOfAccount() > 2 || findQuotaService.quota() != -1) {
+			new UsernameNotFoundException("Register Fail Not Allow");
+		}
+
 		SmileUsersDetails smile = inviter.getDetail();
 		boolean auto = (chose == ConstType.AUTO) ? true : false;
 		Node1 node = new Node1();
@@ -282,5 +286,13 @@ public class RegisterServiceImp implements RegisterService {
 
 	public FindQuotaService getFindQuotaService() {
 		return findQuotaService;
+	}
+
+	public void setFindCodeIdService(FindCodeIdService findCodeIdService) {
+		this.findCodeIdService = findCodeIdService;
+	}
+
+	public FindCodeIdService getFindCodeIdService() {
+		return findCodeIdService;
 	}
 }

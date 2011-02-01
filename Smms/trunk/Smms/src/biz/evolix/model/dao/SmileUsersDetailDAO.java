@@ -8,4 +8,5 @@ public interface SmileUsersDetailDAO {
 	public Province province(String id);
 	public SmileUsersDetails find(String smileId);
 	public void update(SmileUsersDetails smileuser);
+	public int findCode(String codeId);
 }

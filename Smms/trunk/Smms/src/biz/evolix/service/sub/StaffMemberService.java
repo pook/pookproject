@@ -12,4 +12,6 @@ public interface StaffMemberService {
 	public List<UserStaff> users();
 	public void updateMaxRegister(int idx,int max);
 	public List<UserStaff> search(String smileId);
+	public List<UserStaff> searchByName(String name);
+	public List<UserStaff> searchByDisplayName(String displayname);
 }
