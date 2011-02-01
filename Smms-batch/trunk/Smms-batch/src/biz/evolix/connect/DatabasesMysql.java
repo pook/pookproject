@@ -13,9 +13,7 @@ public class DatabasesMysql {
 		this.username = username;
 		this.passwd = passwd;
 	}
-	public DatabasesMysql(){
-		
-	}
+	public DatabasesMysql(){}
 	public String connection;
 	public String username;
 	public String passwd;
@@ -35,9 +33,8 @@ public class DatabasesMysql {
 			Connection conn = DriverManager.getConnection(connection, user,passwd);
 			return conn;
 		}catch (Exception e) {
-			System.err.println("can't connection!!");
+			log.error(e.getMessage());
 		}
 		return null;
-
 	}
 }
