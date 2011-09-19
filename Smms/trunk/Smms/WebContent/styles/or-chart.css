@@ -1,14 +1,19 @@
 @CHARSET "UTF-8";
+
 div#headnode {
 	clear: both;
 	margin: 5px;
 	left: 500px;
 }
+
 div#bcontent {
 	clear: both;
 }
+#main-or{
+	height: 620px;
+	}
 div#nl div {
-	clear: both; 
+	clear: both;
 	float: left;
 	width: 50px;
 	position: absolute;
@@ -43,6 +48,7 @@ div#nl div {
 	z-index: 10000;
 	top: 580px;
 }
+
 div#backward-buttom div {
 	float: left;
 	margin: 7px;
@@ -51,10 +57,10 @@ div#backward-buttom div {
 div#backward {
 	width: 160px;
 }
+
 div#mainnode div {
 	position: relative;
 	float: left;
-	
 	width: 980px;
 	left: 3px;
 }
@@ -69,34 +75,36 @@ div#l1 div {
 	width: 100%;
 	height: 108px;
 	top: 18px;
-	
 }
+
 div#l2 div {
 	width: 50%;
 	height: 90px;
 	top: 10px;
 }
+
 div#l3 div {
 	width: 25%;
 	height: 85px;
-	top:20px
+	top: 20px
 }
 
 div#l4 div {
 	width: 12.5%;
 	height: 100px;
-	top:33px;
+	top: 33px;
 }
+
 div#l5 div {
 	width: 6.25%;
 	height: 70px;
-	top:23px
+	top: 23px
 }
 
 div#l6 div {
 	width: 3.125%;
 	height: 60px;
-	top:4px
+	top: 4px
 }
 
 div#status {
@@ -173,17 +181,18 @@ div#personPopupContainer div {
 .personPopupPopup .top {
 	background: url(../images/balloon_top.png) repeat-x;
 }
+
 .personPopupPopup .bottom {
 	background: url(../images/balloon_bottom.png) repeat-x;
 	text-align: center;
 }
+
 #name1 {
 	height: 8px;
 	width: 60px;
 }
-#main {
-	height: 610px;
-}
+
+
 
 #b1 {
 	margin-left: 180px;

@@ -306,5 +306,4 @@ public class Register extends ActionSupport {
 		}
 		return null;
 	}
-
 }

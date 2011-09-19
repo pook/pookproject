@@ -1,34 +1,41 @@
 @CHARSET "UTF-8";
+
 div#div4 div {
 	clear: both;
 }
-table#member td{
-	text-align:center;	
-	border-collapse:collapse;
+
+table#member td {
+	text-align: center;
+	border-collapse: collapse;
 }
-.hide1{
+
+.hide1 {
 	display: none;
 }
+
 input.text {
 	margin: 5px 9px 5px 9px;
 	width: 150px;
 	padding: 1px 5px 1px 5px;
 }
+
 label {
 	padding-left: 7px;
-	
 }
-#member-contain{
+
+#member-contain {
 	margin-left: 95px;
 	margin-top: 50px
 }
-#create-order{	
+
+#create-order {
 	margin: 5px 9px 5px 9px;
 	width: 150px;
 	padding: 1px 5px 1px 5px;
 }
+
 #div2 {
-	position:relative;
-	left:50px;
-	top:49px;	
+	position: relative;
+	left: 50px;
+	top: 49px;
 }

@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import biz.evolix.customconst.ConstType;
@@ -26,7 +26,7 @@ import biz.evolix.model.dao.SmileUsersDetailDAO;
 import biz.evolix.model.dao.UsersDAO;
 import biz.evolix.secure.SmileUser;
 
-public class RegisterServiceImp implements RegisterService {
+public class RegisterServiceImp extends AbstractController implements RegisterService {
 
 	private final static Object LOCK = new Object();
 	@Autowired
@@ -49,7 +49,7 @@ public class RegisterServiceImp implements RegisterService {
 	private FindCodeIdService findCodeIdService;
 
 	@Override
-	public String save(SmileUsersDetails smileuser, String choseId, String pv,
+	public String save(final SmileUsersDetails smileuser,final String choseId, String pv,
 			Node1 node, Users user) {
 		SmileUser suser = getUsers();
 		Users inviter = (suser == null) ? null : userDAO
@@ -82,7 +82,7 @@ public class RegisterServiceImp implements RegisterService {
 			throw new UsernameNotFoundException("Register Fail");
 		if (inviter != null)
 			if (inviter.getMaxRegister() < 1
-					|| findCodeIdService.find(smileuser.getCodeIdentification()) != ConstType.NOT_FOUND
+					|| findCodeIdService.find(smileuser.getCodeIdentification()) != 0
 							)
 				throw new UsernameNotFoundException("Limit register !!");
 		user.setNode1(node);
@@ -218,17 +218,7 @@ public class RegisterServiceImp implements RegisterService {
 	}
 
 	private static Logger log = Logger.getLogger(RegisterServiceImp.class);
-
-	private SmileUser getUsers() {
-		try {
-			return (SmileUser) SecurityContextHolder.getContext()
-					.getAuthentication().getPrincipal();
-		} catch (Exception e) {
-			log.error(e.getMessage());
-		}
-		return null;
-	}
-
+	
 	@Override
 	public boolean checkLevel() {
 		// return registerDAO.checkLevel(getUsers().getNodeId());
@@ -275,7 +265,7 @@ public class RegisterServiceImp implements RegisterService {
 		return findPlaceService;
 	}
 
-	@Override
+	//@Override
 	public String save(String cid, String displayName) {
 		return save2(cid, displayName);
 	}

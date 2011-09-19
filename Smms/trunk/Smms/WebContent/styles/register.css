@@ -1,9 +1,11 @@
 @CHARSET "UTF-8";
+
 input.text {
 	margin: 5px 9px 5px 9px;
 	width: 150px;
 	padding: 1px 5px 1px 5px;
 }
+
 .selectop {
 	margin: 5px 9px 5px 9px;
 	width: 150px;
@@ -12,19 +14,19 @@ input.text {
 .th2 {
 	height: 30px;
 }
-#input-form{
+
+#input-form {
 	position: relative;
 	margin-left: 40px;
-	
-	}
-#user{
-	margin-top:10px
-	}
-#main-regist {
-	margin-top:10px;	
 }
-#main{
-	height: 370px	}
+
+#user {
+	margin-top: 10px
+}
+
+#main-regist {
+	margin-top: 10px;
+}
 .tf {
 	margin: 7px 30px 7px 35px;
 	padding-left: 90px;
@@ -51,8 +53,27 @@ fieldset {
 	border: 0;
 	margin-top: 25px;
 }
-.actionMessage{
+
+.actionMessage {
 	font-size: 32;
-	font-style:oblique;	
+	font-style: oblique;
 	color: #03f;
+}
+.field_req{
+	color:red;
+	}
+ div#loader {
+  position: fixed;
+	    top: 50%;
+	    left: 50%;
+	    margin-left: -50px; /* half width of the loader gif */
+	    margin-top: -50px; /* half height of the loader gif */
+	    text-align:center;
+	    z-index:9999;
+             overflow: auto;
+	    width: 100px; /* width of the loader gif */
+	    height: 102px; /
+}
+div#loader.loading {
+  background: url(indicator.gif) no-repeat center center;
 }

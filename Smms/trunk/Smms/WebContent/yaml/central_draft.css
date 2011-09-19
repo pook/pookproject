@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 /**
  * "Yet Another Multicolumn Layout" - (X)HTML/CSS Framework
  *
@@ -14,14 +15,11 @@
  * @revision        $Revision: 443 $
  * @lastmodified    $Date: 2009-12-31 18:05:05 +0100 (Do, 31. Dez 2009) $
  */
-
 /* import core styles | Basis-Stylesheets einbinden */
 @import url(/yaml/core/base.css);
-
 /* import screen layout | Screen-Layout einbinden */
 /* @import url(/yaml/navigation/nav_shinybuttons.css);
   @import url(/css/screen/basemod.css);
   @import url(/css/screen/content.css); */
-
 /* import print layout | Druck-Layout einbinden */
 /* @import url(/css/print/print_003.css); */

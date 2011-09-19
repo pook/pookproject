@@ -16,7 +16,7 @@ import biz.evolix.model.dao.Node1DAO;
 import biz.evolix.secure.SmileUser;
 import biz.evolix.utils.Utils;
 
-public class OrchartServiceImp implements OrchartService {
+public class OrchartServiceImp extends AbstractController implements OrchartService {
 	private static final Node1 NULL_NODE;
 	private static final NodeBean NULL_NODEB = new NodeBean();
 	static {
@@ -128,17 +128,6 @@ public class OrchartServiceImp implements OrchartService {
 
 	public Node1DAO getNode1DAO() {
 		return node1DAO;
-	}
-
-	private SmileUser getUsers() {
-		try {
-			return (SmileUser) SecurityContextHolder.getContext()
-					.getAuthentication().getPrincipal();
-		} catch (Exception e) {
-			SecurityContextHolder.clearContext();
-			log.error(e.getMessage(), e);
-		}
-		return null;
 	}
 
 	@Override

@@ -1,10 +1,13 @@
 @CHARSET "UTF-8";
-#main{
+
+#main {
 	height: 450px
 }
+
 div#main1 div {
-	clear:both;			
+	clear: both;
 }
-div#inner1{
+
+div#inner1 {
 	margin: 35px 40px 50px 60px;
 }

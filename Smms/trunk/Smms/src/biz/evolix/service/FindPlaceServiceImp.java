@@ -51,15 +51,15 @@ public class FindPlaceServiceImp implements FindPlaceService {
 
 	private NodePK auto1(NodeDescription dHead, boolean auto,
 			Temp<Integer> level, boolean test, Iterator<String> itr) {
-		boolean found = false;
+		boolean found = true;
 		String treeId = itr.next();
 		long low = dHead.getLower();
 		long next = dHead.getNextId(), upper = dHead.getUpper();
 		NodePK id2 = new NodePK(treeId, next);
-		while (!found) {
+		while (found) {
 			Node1 node = node1DAO.find2(id2);
 			if (node == null)
-				found = true;
+				found = false;
 			if (next >= upper) {
 				level.setTemp(dHead.getHigh());
 				if (itr.hasNext()) {
@@ -76,7 +76,7 @@ public class FindPlaceServiceImp implements FindPlaceService {
 				dHead.setCount(dHead.getCount() + 1);
 				dHead.setNextId(dHead.getNextId() + 1);
 			}
-			if (!found) {
+			if (found) {
 				id2 = new NodePK(treeId, (next = dHead.getNextId()));
 				level.setTemp(dHead.getHigh());
 			}

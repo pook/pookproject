@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
-<link href="styles/layout.css" rel="stylesheet" type="text/css" />
-<link href="styles/patch_layout.css" rel="stylesheet" type="text/css" />
+<%@ taglib prefix="sj" uri="/struts-jquery-tags"%> 
+<div id="main-or">
 <div class="headernode" id="headnode">
 <div class="ui-widget">
 <div id="messageInfo" style="margin-top: 20px; padding: 0pt 0.7em;"></div>
@@ -134,14 +133,13 @@
 <div class="node1" id="n63"></div>
 </div>
 </div>
-<script type="text/javascript" src="js/or-chart.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" src="js/or-chart.js"></script> <script
+	type="text/javascript">
 	var jsondat = "json-organization-member",jsonbw = "json-organization-backward-member",jsonsearch = "json-organization-search-member";
 	$(function() {
 		$.getJSON(jsondat, function(data) {
 			orgJSON(data);
 		});
 	});	
-</script>
+</script></div>
 </div>
-<div id="dis"></div>

@@ -36,7 +36,7 @@ $(function() {
 			url :"check-account-member",					
 			success : function(res) {				
 				if(res == -1){
-					$("#sdialog").show();		
+					$("#sdialog").show();	  // this function enable for 3 id	
 					chkMax();		
 				}						
 			}		

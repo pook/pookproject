@@ -6,43 +6,37 @@
 <link href="styles/member.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/member.js"></script>
 <div id="main-member">
-<div id="userinf">
-<s:url id="uplineurl"
-	action="json-fetch-upline-member" />
-<s:url id="showdownlineurl" action="showdownline"/>
-<s:url id="teamsurl" action="teams"/>
-<s:url id="chgpasswdurl" action="chgpasswd"/>
-<sj:dialog 
-		width="450"
-    	id="btndialog" 
-    	buttons="{ 
+<div id="userinf"><s:url id="uplineurl"
+	action="json-fetch-upline-member" /> <s:url id="showdownlineurl"
+	action="showdownline" /> <s:url id="teamsurl" action="teams" /> <s:url
+	id="chgpasswdurl" action="chgpasswd" /> <sj:dialog width="450"
+	id="btndialog"
+	buttons="{ 
     		'OK':function() { okButton1(); },
     		'Cancel':function() { cancelButton1(); } 
-    		}" 
-    	autoOpen="false" 
-    	modal="true" 
-    	title="Create Account" 
-    >
-    <table class="tbd">
-    <tr>
+    		}"
+	autoOpen="false" modal="true" title="Create Account">
+	<table class="tbd">
+		<tr>
 			<td colspan="2">
 			<div class="ui-widget">
 			<div id="messageInfo" style="margin-top: 5px; padding: 0pt 0.7em;">
-			</div></div>
-    <tr>
-    <td style="width: 180px"><label for="upline">ชื่อ up line <font color="red">
-			*</font>:</label></td>
-			<td><sj:select href="%{uplineurl}" id="upline"
-				name="echo" list="uplines" headerKey="-2" 
-				headerValue="Auto Assign" /></td></tr><tr>
-				<td><label for="displayName">ชื่อแสดงในสายงาน *:</label></td>
-			<td><input type="text" name="displayName"
-				id="displayName"  /></td>
+			</div>
+			</div>
+		<tr>
+			<td style="width: 180px"><label for="upline">ชื่อ up
+			line <font color="red"> *</font>:</label></td>
+			<td><sj:select href="%{uplineurl}" id="upline" name="echo"
+				list="uplines" headerKey="-2" headerValue="Auto Assign" /></td>
 		</tr>
-	 </table>
-    </sj:dialog>
-   
-    
+		<tr>
+			<td><label for="displayName">ชื่อแสดงในสายงาน *:</label></td>
+			<td><input type="text" name="displayName" id="displayName" /></td>
+		</tr>
+	</table>
+</sj:dialog>
+
+
 <table id="users" class="ui-widget ui-widget-content">
 	<thead>
 		<tr class="ui-widget-header">
@@ -50,26 +44,21 @@
 		</tr>
 	</thead>
 	<tfoot>
-    <tr>
-      <td colspan="2">	<sj:a id="downlinelink" href="%{showdownlineurl}" indicator="indicator"
-						targets="main-member" button="true" buttonIcon="ui-icon-gear">
+		<tr>
+			<td colspan="2"><sj:a id="downlinelink"
+				href="%{showdownlineurl}" indicator="indicator"
+				targets="main" button="true" buttonIcon="ui-icon-gear">
 	ดูผู้ที่เราแนะนำ
-	</sj:a>	<sj:a id="teamlink" href="%{teamsurl}" indicator="indicator"
-						targets="main-member" button="true" buttonIcon="ui-icon-gear">
+	</sj:a> <sj:a id="teamlink" href="%{teamsurl}" indicator="indicator"
+				targets="main" button="true" buttonIcon="ui-icon-gear">
 	ดูลูกทีม
-	</sj:a>
-		<sj:a id="chgpasswlink" href="%{chgpasswdurl}" indicator="indicator"
-						targets="main" button="true" buttonIcon="ui-icon-gear">
+	</sj:a> <sj:a id="chgpasswlink" href="%{chgpasswdurl}" indicator="indicator"
+				targets="main" button="true" buttonIcon="ui-icon-gear">
 	Change Password
-	</sj:a>
- <sj:submit id= "sdialog"
-    	openDialog="btndialog" 
-    	value="Create Account" 
-    	button="true" 
-    />
-	</td>     
-    </tr>
-  </tfoot>
+	</sj:a> <sj:submit id="sdialog" cssClass="hide" openDialog="btndialog"
+				value="Create Account" button="true" /></td>
+		</tr>
+	</tfoot>
 	<tr>
 		<td width="200px">ชื่อผู้แนะนำ :</td>
 		<td id="f1">f1</td>
@@ -134,7 +123,7 @@
 		<td>Total Team SV(เดือนที่ผ่านมา)</td>
 		<td id="f503">f503</td>
 	</tr>
-	</table>
+</table>
 </div>
 <div id="status">
 <table id="tstatus" class="ui-widget ui-widget-content">
@@ -144,12 +133,12 @@
 		</tr>
 	</thead>
 	<tfoot>
-    <tr>
-      <td></td>
-      <td></td>
-    </tr>
-  </tfoot>
-	
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+	</tfoot>
+
 	<tr>
 		<td width="200px">ธนาคาร :</td>
 		<td id="f14">f14</td>
@@ -166,7 +155,7 @@
 		<td>ประเภทบัญชี :</td>
 		<td id="f17">f17</td>
 	</tr>
-	
+
 	<tr>
 		<td>โบนัส ทีมธุรกิจ :</td>
 		<td id="f18">f18</td>
@@ -185,8 +174,4 @@
 	</tr>
 </table>
 </div>
-
 </div>
-
-
-

@@ -23,7 +23,6 @@
 	}
 %>
 <div id="main-regist">
-<div id="test"></div>
 <div id="input-form"><s:url id="checkurl"
 	action="check-displayname-member" /> <s:url id="uplineurl"
 	action="json-fetch-upline-member" /> <s:url id="provinceurl"
@@ -41,7 +40,7 @@
 		<tr class="ui-widget-footer ">
 			<th colspan="6" class="tf"><input type="submit" id="fsubmit1"
 				class="ui-button ui-widget ui-state-default ui-corner-all"
-				value="ยืนยัน" onmouseover="ui-state-hover" /> </th>
+				value="ยืนยัน" onmouseover="ui-state-hover" /></th>
 		</tr>
 	</tfoot>
 	<tbody>
@@ -57,12 +56,12 @@
 			</td>
 		</tr>
 		<tr>
-			<td><label for="upline">ชื่อ up line <font color="red">
-			*</font>:</label></td>
+			<td><label for="upline">ชื่อ up line <span class="field_req">
+			*</span>:</label></td>
 			<td colspan="2"><sj:select href="%{uplineurl}" id="upline"
 				name="echo" list="uplines" headerKey="-2" cssClass="selectop"
 				headerValue="Auto Assign" /></td>
-			<td><label for="inviter">ชื่อผู้แนะนำ *:</label></td>
+			<td><label for="inviter">ชื่อผู้แนะนำ <span class="field_req">*</span>:</label></td>
 			<td><input type="text" name="inviter" id="inviter"
 				readonly="readonly" disabled="disabled"
 				class="text ui-widget-content ui-corner-all" value=<%=displayName%> />
@@ -70,22 +69,22 @@
 			</td>
 		</tr>
 		<tr>
-			<td><label for="name">ชื่อ *:</label></td>
+			<td><label for="name">ชื่อ <span class="field_req">*</span>:</label></td>
 			<td><input type="text" name="name" id="name"
 				class="text ui-widget-content ui-corner-all required" /></td>
-			<td><label for="surename">นามสกุล *:</label></td>
+			<td><label for="surename">นามสกุล <span class="field_req">*</span>:</label></td>
 			<td><input type="text" name="surename" id="surename"
 				class="text ui-widget-content ui-corner-all" /></td>
-			<td><label for="displayName">ชื่อแสดงในสายงาน *:</label></td>
+			<td><label for="displayName">ชื่อแสดงในสายงาน <span class="field_req">*</span>:</label></td>
 			<td colspan="2"><input type="text" name="displayName"
 				id="displayName" class="text ui-widget-content ui-corner-all" /></td>
 		</tr>
 		<tr>
-			<td><label for="codeIdentification">รหัสบัตรประชาชน *:</label></td>
+			<td><label for="codeIdentification">รหัสบัตรประชาชน <span class="field_req">*</span>:</label></td>
 			<td><input type="text" name="codeIdentification"
 				id="codeIdentification" class="text ui-widget-content ui-corner-all" /></td>
 
-			<td><label for="tel">เบอร์โทรศัพท์ *:</label></td>
+			<td><label for="tel">เบอร์โทรศัพท์ <span class="field_req">*</span>:</label></td>
 			<td><input type="text" name="tel" id="tel"
 				class="text ui-widget-content ui-corner-all" /></td>
 			<td><label for="tel2">เบอร์โทรศัพท์(สำรอง) :</label></td>
@@ -96,20 +95,20 @@
 			<td><label for="email">email :</label></td>
 			<td><input type="text" name="email" id="email"
 				class="text ui-widget-content ui-corner-all" /></td>
-			<td><label for="brance">สาขาทีสมัคร *:</label></td>
+			<td><label for="brance">สาขาทีสมัคร <span class="field_req">*</span>:</label></td>
 			<td><sj:select href="%{branceurl}" id="brance" name="brance"
 				headerKey="-1" headerValue="กรุณาเลือก" list="brances"
 				cssClass="selectop" /></td>
-			<td><label for="branceCard">สาขาทีรับบัตรสมาชิก *:</label></td>
+			<td><label for="branceCard">สาขาทีรับบัตรสมาชิก <span class="field_req">*</span>:</label></td>
 			<td><sj:select href="%{branceurl}" id="branceCard"
 				name="branceCard" headerKey="-1" headerValue="กรุณาเลือก"
 				list="brances" cssClass="selectop" /></td>
 		</tr>
 		<tr>
-			<td><label for="address">ที่อยู่ *:</label></td>
+			<td><label for="address">ที่อยู่ <span class="field_req">*</span>:</label></td>
 			<td><textarea rows="2" cols="5" name="address" id="address"
 				class="text ui-widget-content ui-corner-all"></textarea></td>
-			<td><label for="province">จังหวัด *:</label></td>
+			<td><label for="province">จังหวัด <span class="field_req">*</span>:</label></td>
 			<td><sj:select href="%{provinceurl}" id="province" value="10"
 				name="province" list="provinces" cssClass="selectop" sortable="true" /></td>
 			<td><label for="address2">ที่อยู่ส่งของ :</label></td>
@@ -117,26 +116,35 @@
 				class="text ui-widget-content ui-corner-all"></textarea></td>
 		</tr>
 		<tr>
-			<td><label for="bank">ธนาคาร *:</label></td>
-			<td><select name="bank" id="bank" class="selectop">
-				<option value="ธนาคารไทยพานิชย์">ธนาคารไทยพานิชย์</option>
+			<td><label for="bank">ธนาคาร <span class="field_req">*</span>:</label></td>
+			<td><select name="bank" id="bank" class="selectop" >
+				<option value="ธนาคารไทยพาณิชย์" selected="selected">ธนาคารไทยพาณิชย์</option>
+				<option value="ธนาคารกรุงเทพ">ธนาคารกรุงเทพ</option>
+				<option value="ธนาคารกรุงไทย">ธนาคารกรุงไทย</option>
+				<option value="ธนาคารกสิกรไทย">ธนาคารกสิกรไทย</option>
+				<option value="ธนาคารกรุงศรีอยุธยา">ธนาคารกรุงศรีอยุธยา</option>
+				<option value="ธนาคารออมสิน">ธนาคารออมสิน</option>
+				<option value="ธนาคารทหารไทย">ธนาคารทหารไทย</option>
+				<option value="ธนาคารนครหลวงไทย"> ธนาคารนครหลวงไทย</option>
+				<option value="ธนาคารอาคารสงเคราะห์">ธนาคารอาคารสงเคราะห์</option>
+				<option value="ธนาคารธนชาติ">ธนาคารธนชาติ</option>
 			</select></td>
 		</tr>
 		<tr>
-			<td><label for="bankAccount">เลที่บัญชี *:</label></td>
+			<td><label for="bankAccount">เลขที่บัญชี <span class="field_req">*</span>:</label></td>
 			<td><input type="text" name="bankAccount" id="bankAccount"
 				class="text ui-widget-content ui-corner-all" /></td>
-			<td><label for="bankBrance">สาขาธนาคาร *:</label></td>
+			<td><label for="bankBrance">สาขาธนาคาร <span class="field_req">*</span>:</label></td>
 			<td><input type="text" name="bankBrance" id="bankBrance"
 				class="text ui-widget-content ui-corner-all" /></td>
-			<td><label for="typeOfAccount">ประเภทบัญชี *:</label></td>
+			<td><label for="typeOfAccount">ประเภทบัญชี <span class="field_req">*</span>:</label></td>
 			<td><input type="text" name="typeOfAccount" id="typeOfAccount"
 				class="text ui-widget-content ui-corner-all" /></td>
 		</tr>
-
 	</tbody>
 </table>
 </fieldset>
 </form>
 </div>
 </div>
+<div id="dialog" title="แจ้งให้ทราบ"></div>

@@ -1,4 +1,4 @@
-$(function() {		 
+$(function() {	
 		regis();		
 });
 function checkDisplayName() {
@@ -17,19 +17,6 @@ function checkDisplayName() {
 		}	
 	});	
 	return true;
-}
-function chkCodeId(c) {
-	$(this).removeClass("ui-state-error");
-	var v = false;
-	$.ajax({
-		type : "post",
-		url : "chk-codeId-member",
-		data : "codeIdentification=" + c.val(),
-		success : function(res) {			
-			if(res == -2)v = true;
-		}	
-	});	
-	return v;
 }
 function chkMax(){	
 	$.ajax({
@@ -63,8 +50,8 @@ function chkLevel(){
 function clrErrInf2(){	
 	clrErrInf();
 }
-function regis() {
-	//chkLevel();
+function regis() {	
+	//chkLevel();	
 	chkMax();
 	$("#displayName").live("focusout", checkDisplayName);
 	$("#codeIdentification").live("focusout",clrErrInf2);
@@ -89,12 +76,26 @@ function regis() {
 						valid = valid&& checkEmail(email);
 						valid = valid&& checkLength(bankAccount, " บัญชีธนาคาร ", 8,30);
 						valid = valid&& checkLength(bankBrance, " สาขาธนาคาร ", 3,30);
-						valid = valid&& checkLength(typeOfAccount, " ประเภทบัญชี ",	3, 30);
-						if (valid) {						
-							$("#main-regist").load("save-member", {"upline":""+$("#upline").val(),"name":""+name.val(),"surename":""+ surename.val() ,"displayName":""+displayName.val(),
-								"codeIdentification":""+ codeIdentification.val(),"tel":""+ tel.val(),"brance":"" + brance.val(),"tel2":"" + tel2.val()	,
-								"branceCard":"" + branceCard.val(),"address" :""+ address.val(),"province":"" + $("#province").val(),"address2":"" + address2.val(),
-								"email":""+ email.val(),"bank":"" + bank.val(),"bankAccount":"" + bankAccount.val(), "bankBrance" :""+ bankBrance.val(), "typeOfAccount" :""+ typeOfAccount.val()});							
+						valid = valid&& checkLength(typeOfAccount, " ประเภทบัญชี ",	3, 30);						
+						if (valid) {
+							$('#myDefaultIndicator').show();  
+							var data = {"upline":""+$("#upline").val(),"name":""+name.val(),"surename":""+ surename.val() ,"displayName":""+displayName.val(),
+									"codeIdentification":""+ codeIdentification.val(),"tel":""+ tel.val(),"brance":"" + brance.val(),"tel2":"" + tel2.val()	,
+									"branceCard":"" + branceCard.val(),"address" :""+ address.val(),"province":"" + $("#province").val(),"address2":"" + address2.val(),
+									"email":""+ email.val(),"bank":"" + bank.val(),"bankAccount":"" + bankAccount.val(), "bankBrance" :""+ bankBrance.val(), "typeOfAccount" :""+ typeOfAccount.val()};							
+							$.ajax({
+								type : "POST",
+								url : "save-member",
+								data : data,
+								success : function(res) {
+									$('#myDefaultIndicator').hide(); 									 
+									$("#dialog").html(res);
+									$("#dialog").dialog({ buttons: { "Ok": function() { 
+										$(this).dialog("close");
+										$('#main').load('register.action');
+									}}});
+								}	
+							});							
 						}
 						valid = false;
 					});
@@ -112,16 +113,24 @@ function checkidentifier(c) {
 	if (!v) {
 		c.addClass("ui-state-error");
 		showmsgInf("<li>รหัสบัตรประชาชนไม่ถูกต้อง</li><li>ข้อมูล รหัสบัตรประชาชนควรมีเท่ากับ 13</li>");
+		return v;
 	} else {
 		c.removeClass("ui-state-error");
-	}	
-	v = v && chkCodeId(c);
-	if (!v) {
-		c.addClass("ui-state-error");
-		showmsgInf("<li>ข้อมูลรหัสบัตรประจำตัวประชาชนมีผู้ใช้แล้ว</li>");
-	} else {
-		c.removeClass("ui-state-error");
-	}
+	}		
+	$.ajax({
+		type : "post",
+		url : "chk-codeId-member",
+		data : "codeIdentification=" + c.val(),
+		success : function(res) {			
+			if(res == 0){
+				c.removeClass("ui-state-error");
+			} else {
+				c.addClass("ui-state-error");
+				showmsgInf("<li>ข้อมูลรหัสบัตรประจำตัวประชาชนมีผู้ใช้แล้ว</li>");
+				return false;				
+			}			
+		}	
+	});
 	return v;
 }
 function checkIdent(id) {

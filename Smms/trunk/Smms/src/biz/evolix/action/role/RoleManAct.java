@@ -28,13 +28,10 @@ public class RoleManAct extends ActionSupport {
 					&& !searchString.equals("") && !searchOper.equals("")) {
 				if (searchOper.equalsIgnoreCase("eq")) {					
 					if (searchField.equals("smileId")) {
-						setGridModel(roleService.search(searchString));
-						setTotal(1);
-					}
-					if (searchField.equals("name")) {
+						setGridModel(roleService.search(searchString));						
+					}else if (searchField.equals("name")) 
 						setGridModel(roleService.searchByName(searchString));
-						setTotal(30);
-					}
+					setTotal(1);					
 				}
 			} else {
 				setRecord(roleService.sizeMember());

@@ -36,14 +36,12 @@ public class Authorities implements java.io.Serializable {
  
 	public Authorities() {
 		super();
-	}
-	
+	}	
 
 	public Authorities(String authority) {
 		super();
 		this.authority = authority;
 	}
-
 
 	public Authorities(Users user, String authority) {
 		super();
@@ -75,7 +73,6 @@ public class Authorities implements java.io.Serializable {
 		return user;
 	}
 
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -84,8 +81,7 @@ public class Authorities implements java.io.Serializable {
 				+ ((authority == null) ? 0 : authority.hashCode());
 		return result;
 	}
-
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -101,7 +97,5 @@ public class Authorities implements java.io.Serializable {
 		} else if (!authority.equals(other.authority))
 			return false;
 		return true;
-	}
-	
-	
+	}	
 }

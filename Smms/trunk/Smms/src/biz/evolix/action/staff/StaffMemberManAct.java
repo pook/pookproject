@@ -30,13 +30,11 @@ public class StaffMemberManAct extends ActionSupport {
 				if (searchOper.equalsIgnoreCase("eq")) {
 					if (searchField.equals("smileId"))
 						setGridModel(staffMemberService.search(searchString));					
-					if (searchField.equals("displayName"))
-						setGridModel(staffMemberService.searchByDisplayName(searchString));
+					else if (searchField.equals("displayName"))
+						setGridModel(staffMemberService.searchByDisplayName(searchString));					
+					else if (searchField.equals("name"))						
+						setGridModel(staffMemberService.searchByName(searchString));					
 					setTotal(1);
-					if (searchField.equals("name")){						
-						setGridModel(staffMemberService.searchByName(searchString));
-						setTotal(30);
-					}
 				}
 			} else {
 				int to = (getRows() * getPage());

@@ -21,8 +21,8 @@
 				class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
 				<property name="databasePlatform"
 					value="org.eclipse.persistence.platform.database.MySQLPlatform" />
-				<property name="showSql" value="true" />				
-				<property name="database" value="MYSQL" />				
+				<property name="showSql" value="true" />
+				<property name="database" value="MYSQL" />
 			</bean>
 		</property>
 		<property name="loadTimeWeaver">
@@ -36,21 +36,19 @@
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<!-- end JPA -->
-	<!-- start Register Service 
-	<bean id="registerDAO" class="biz.evolix.model.dao.RegisterDaoImp">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
-	-->
+	<!-- start Register Service <bean id="registerDAO" class="biz.evolix.model.dao.RegisterDaoImp"> 
+		<property name="entityManagerFactory" ref="entityManagerFactory" /> </bean> -->
 	<bean id="smileUsersDetailDAO" class="biz.evolix.model.dao.SmileUsersDetailDAOImp">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />	
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<bean id="authoritiesDAO" class="biz.evolix.model.dao.AuthoritiesDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>	
+	</bean>
 	<bean id="newsDAO" class="biz.evolix.model.dao.NewsDAOImp" scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	<bean id="registerService" class="biz.evolix.service.RegisterServiceImp" scope="session"/>	
+	<bean id="registerService" class="biz.evolix.service.RegisterServiceImp"
+		scope="session" />
 	<!-- end of Register Service -->
 	<!-- Start Organization Chart Service -->
 	<bean id="orchartService" class="biz.evolix.service.OrchartServiceImp" />
@@ -59,51 +57,67 @@
 	</bean>
 	<bean id="nodeDeptDAO" class="biz.evolix.model.dao.NodeDeptDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
-		<property name="node1DAO" ref="node1DAO" />		
+		<property name="node1DAO" ref="node1DAO" />
 	</bean>
-	
+
 	<!-- end of Organization Chart Service -->
 	<!-- Start market service -->
 	<bean id="inventoryService" class="biz.evolix.service.InventoryServiceImp" />
 	<bean id="updateComService" class="biz.evolix.service.UpdateComServiceImp" />
 	<bean id="findPlaceService" class="biz.evolix.service.FindPlaceServiceImp" />
-	<bean id="findQuotaService" class="biz.evolix.service.FindQuotaServiceImp"/>
-	<bean id="findCodeIdService" class="biz.evolix.service.FindCodeIdServiceImp" scope="prototype"/>
-	<bean id="findMaxRegisterService" class="biz.evolix.service.FindMaxRegisterServiceImp" scope="session" />
-	<bean id="orderService" class="biz.evolix.service.OrderServiceImp" scope="session"/>
+	<bean id="findQuotaService" class="biz.evolix.service.FindQuotaServiceImp" />
+	<bean id="findCodeIdService" class="biz.evolix.service.FindCodeIdServiceImp"
+		scope="prototype" />
+	<bean id="findMaxRegisterService" class="biz.evolix.service.FindMaxRegisterServiceImp"
+		scope="session" />
+	<bean id="orderService" class="biz.evolix.service.OrderServiceImp"
+		scope="session" />
 	<bean id="purcheseService" class="biz.evolix.service.PurcheseServiceImp"
-		scope="session" />	
+		scope="session" />
 	<bean id="skuDAO" class="biz.evolix.model.dao.SkuDAOImp" scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>	
-	<bean id="staffDAO" class="biz.evolix.model.dao.StaffDAOImp" scope="prototype">
+	</bean>
+	<bean id="staffDAO" class="biz.evolix.model.dao.StaffDAOImp"
+		scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<bean id="orderDAO" class="biz.evolix.model.dao.OrderDAOImp">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	<bean id="checkNameDAO" class="biz.evolix.model.dao.CheckDNameDAOImp" scope="prototype">
+	<bean id="checkNameDAO" class="biz.evolix.model.dao.CheckDNameDAOImp"
+		scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>	
+	</bean>
 	<bean id="userDAO" class="biz.evolix.model.dao.UsersDAOImp" scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	<bean id="jdbcTeamsDAO" class="biz.evolix.model.dao.JdbcTeamsDAOImp" scope="session">
+	<bean id="jdbcTeamsDAO" class="biz.evolix.model.dao.JdbcTeamsDAOImp"
+		scope="session">
 		<property name="dataSource" ref="dataSource" />
-	</bean>			
-	<bean id="downlineService" class="biz.evolix.service.DownlineServiceImp" scope="session" />	
+	</bean>
+	<bean id="downlineService" class="biz.evolix.service.DownlineServiceImp"
+		scope="session" />
 	<bean id="userDetail" class="biz.evolix.secure.UserDetail" />
-	<bean id="fetchUplineService" class="biz.evolix.service.FetchUplineServiceImp" scope="session" />
-	<bean id="branceService" class="biz.evolix.service.BranceServiceImp" scope="session" />
-	<bean id="staffService" class="biz.evolix.service.StaffServiceImp" scope="session" />
-	<bean id="changePasswdService" class="biz.evolix.service.sub.imp.ChangePasswdServiceImp" scope="session" />
-	<bean id="roleService" class="biz.evolix.service.sub.RoleServiceImp" scope="session" />
-	<bean id="fetchListTeams" class="biz.evolix.service.FetchListTeamsImp" scope="session" />
-	<bean id="staffMemberService" class="biz.evolix.service.sub.StaffMemberServiceImp" scope="session" />
-	<bean id="fetchProvince" class="biz.evolix.model.dao.ProvinceDAOImp" scope="prototype" >
+	<bean id="fetchUplineService" class="biz.evolix.service.FetchUplineServiceImp"
+		scope="session" />
+	<bean id="branceService" class="biz.evolix.service.BranceServiceImp"
+		scope="session" />
+	<bean id="staffService" class="biz.evolix.service.StaffServiceImp"
+		scope="session" />
+	<bean id="changePasswdService" class="biz.evolix.service.sub.imp.ChangePasswdServiceImp"
+		scope="session" />
+	<bean id="roleService" class="biz.evolix.service.sub.RoleServiceImp"
+		scope="session" />
+	<bean id="fetchListTeams" class="biz.evolix.service.FetchListTeamsImp"
+		scope="session" />
+	<bean id="staffMemberService" class="biz.evolix.service.sub.StaffMemberServiceImp"
+		scope="session" />
+	<bean id="fetchProvince" class="biz.evolix.model.dao.ProvinceDAOImp"
+		scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	<bean id="fetchBrance" class="biz.evolix.model.dao.BranceDAOImp" scope="prototype" >
+	<bean id="fetchBrance" class="biz.evolix.model.dao.BranceDAOImp"
+		scope="prototype">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<!-- ^^^^^^^^^^begin Faces action^^^^^^^^^^^^6 -->
@@ -113,7 +127,7 @@
 	<bean id="loadSkus2" class="com.smms.action.LoadSkus2" scope="request">
 		<constructor-arg ref="skuDAO" />
 	</bean>
-	
+
 	<bean id="loadUsers" class="com.smms.action.LoadSkusAct" scope="request">
 		<constructor-arg ref="authoritiesDAO" />
 	</bean>
@@ -135,20 +149,25 @@
 	<bean id="buyOrder" class="com.smms.action.BuyOrder" scope="request">
 		<constructor-arg ref="purcheseService" />
 	</bean>
-	<bean id="registerServiceAct" scope="request" class="biz.evolix.action.register.Register">
+	<bean id="registerServiceAct" scope="request"
+		class="biz.evolix.action.register.Register">
 		<constructor-arg index="0" ref="registerService" />
 		<constructor-arg index="1" ref="checkNameDAO" />
 	</bean>
-	<bean id="fetchUpLine" scope="request" class="biz.evolix.action.register.FetchUpline">
+	<bean id="fetchUpLine" scope="request"
+		class="biz.evolix.action.register.FetchUpline">
 		<constructor-arg ref="fetchUplineService" />
 	</bean>
-	<bean id="orchartServiceAct" scope="request" class="biz.evolix.action.organization.Organization">
+	<bean id="orchartServiceAct" scope="request"
+		class="biz.evolix.action.organization.Organization">
 		<constructor-arg ref="orchartService" />
 	</bean>
-	<bean id="orchartSearchMemberAct" scope="request" class="biz.evolix.action.organization.OrganizationSearchMember">
+	<bean id="orchartSearchMemberAct" scope="request"
+		class="biz.evolix.action.organization.OrganizationSearchMember">
 		<constructor-arg ref="orchartService" />
 	</bean>
-	<bean id="orchartBackwardAct" scope="request" class="biz.evolix.action.organization.OrganizationBackward">
+	<bean id="orchartBackwardAct" scope="request"
+		class="biz.evolix.action.organization.OrganizationBackward">
 		<constructor-arg ref="orchartService" />
 	</bean>
 	<bean id="inventoryServiceAct" class="biz.evolix.action.managesku.EditProduct"
@@ -207,74 +226,88 @@
 		scope="request">
 		<constructor-arg ref="branceService" />
 	</bean>
-	<bean id="member" class="com.smms.action.Member"
-		scope="request">
+	<bean id="member" class="com.smms.action.Member" scope="request">
 		<constructor-arg ref="userDAO" />
 	</bean>
-	<bean id="chkLevelAct" scope="request" class="biz.evolix.action.register.ChkLevelAct">
-		<constructor-arg  ref="registerService" />		
-	</bean>	
-	<bean id="editBranceAct" scope="request" class="biz.evolix.action.role.EditBrance">
-		<constructor-arg  ref="branceService" />		
+	<bean id="chkLevelAct" scope="request"
+		class="biz.evolix.action.register.ChkLevelAct">
+		<constructor-arg ref="registerService" />
 	</bean>
-	<bean id="cardManageAct" scope="request" class="biz.evolix.action.role.CardManageAct">
-		<constructor-arg  ref="roleService" />		
+	<bean id="editBranceAct" scope="request" class="biz.evolix.action.role.EditBrance">
+		<constructor-arg ref="branceService" />
+	</bean>
+	<bean id="cardManageAct" scope="request"
+		class="biz.evolix.action.role.CardManageAct">
+		<constructor-arg ref="roleService" />
 	</bean>
 	<bean id="roleManAct" scope="request" class="biz.evolix.action.role.RoleManAct">
-		<constructor-arg  ref="roleService" />		
+		<constructor-arg ref="roleService" />
 	</bean>
 	<bean id="editRoleAct" scope="request" class="biz.evolix.action.role.EditRoleAct">
-		<constructor-arg  ref="roleService" />		
+		<constructor-arg ref="roleService" />
 	</bean>
-	<bean id="editCardManAct" scope="request" class="biz.evolix.action.role.EditCardManAct">
-		<constructor-arg  ref="roleService" />		
+	<bean id="editCardManAct" scope="request"
+		class="biz.evolix.action.role.EditCardManAct">
+		<constructor-arg ref="roleService" />
 	</bean>
-	<bean id="changePasswdAct" scope="session" class="biz.evolix.action.register.ChangePasswdAct">
-		<constructor-arg  ref="changePasswdService" />		
+	<bean id="changePasswdAct" scope="session"
+		class="biz.evolix.action.register.ChangePasswdAct">
+		<constructor-arg ref="changePasswdService" />
 	</bean>
 	<bean id="noticeAct" scope="request" class="biz.evolix.action.index.NoticeAct">
-		<constructor-arg  ref="newsDAO" />		
+		<constructor-arg ref="newsDAO" />
 	</bean>
 	<bean id="activityAct" scope="request" class="biz.evolix.action.index.ActivityAct">
-		<constructor-arg  ref="newsDAO" />		
+		<constructor-arg ref="newsDAO" />
 	</bean>
-	<bean id="saveActivityAct" scope="reqest" class="biz.evolix.action.index.SaveActivityAct">
-		<constructor-arg  ref="newsDAO" />		
+	<bean id="saveActivityAct" scope="reqest"
+		class="biz.evolix.action.index.SaveActivityAct">
+		<constructor-arg ref="newsDAO" />
 	</bean>
-	<bean id="saveNoticeAct" scope="request" class="biz.evolix.action.index.SaveNoticeAct">
-		<constructor-arg  ref="newsDAO" />		
+	<bean id="saveNoticeAct" scope="request"
+		class="biz.evolix.action.index.SaveNoticeAct">
+		<constructor-arg ref="newsDAO" />
 	</bean>
-	<bean id="gridDownlineAct" scope="request" class="biz.evolix.action.member.GridDownlineAct">
-		<constructor-arg  ref="downlineService" />		
+	<bean id="gridDownlineAct" scope="request"
+		class="biz.evolix.action.member.GridDownlineAct">
+		<constructor-arg ref="downlineService" />
 	</bean>
-	<bean id="gridTeamsAct" scope="request" class="biz.evolix.action.member.GridTeamsAct">
-		<constructor-arg  ref="fetchListTeams" />		
-	</bean>	
-	<bean id="findMaxRegisterAct" scope="request" class="biz.evolix.action.register.FindMaxRegisterAct">
-		<constructor-arg  ref="findMaxRegisterService" />		
+	<bean id="gridTeamsAct" scope="session"
+		class="biz.evolix.action.member.GridTeamsAct">
+		<constructor-arg ref="fetchListTeams" />
 	</bean>
-	<bean id="chkCreateAccountAct" scope="request" class="biz.evolix.action.register.ChkCreateAccountAct">
-		<constructor-arg  ref="findQuotaService" />		
+	<bean id="findMaxRegisterAct" scope="request"
+		class="biz.evolix.action.register.FindMaxRegisterAct">
+		<constructor-arg ref="findMaxRegisterService" />
+	</bean>
+	<bean id="chkCreateAccountAct" scope="request"
+		class="biz.evolix.action.register.ChkCreateAccountAct">
+		<constructor-arg ref="findQuotaService" />
 	</bean>
 	<bean id="staffManAct" scope="request" class="biz.evolix.action.role.StaffManAct">
-		<constructor-arg  ref="staffService" />		
+		<constructor-arg ref="staffService" />
 	</bean>
-	<bean id="staffMemberManAct" scope="request" class="biz.evolix.action.staff.StaffMemberManAct">
-		<constructor-arg  ref="staffMemberService" />		
+	<bean id="staffMemberManAct" scope="request"
+		class="biz.evolix.action.staff.StaffMemberManAct">
+		<constructor-arg ref="staffMemberService" />
 	</bean>
-	<bean id="editstaffMemberManAct" scope="request" class="biz.evolix.action.staff.EditStaffMemberAct">
-		<constructor-arg  ref="staffMemberService" />		
+	<bean id="editstaffMemberManAct" scope="request"
+		class="biz.evolix.action.staff.EditStaffMemberAct">
+		<constructor-arg ref="staffMemberService" />
 	</bean>
-	<bean id="staffEditAct" scope="request" class="biz.evolix.action.role.EditStaffAct">
-		<constructor-arg  ref="staffService" />		
+	<bean id="staffEditAct" scope="request"
+		class="biz.evolix.action.role.EditStaffAct">
+		<constructor-arg ref="staffService" />
 	</bean>
-	<bean id="resetPasswdAct" scope="request" class="biz.evolix.action.role.ResetPasswdAct">
-		<constructor-arg  ref="roleService" />		
+	<bean id="resetPasswdAct" scope="request"
+		class="biz.evolix.action.role.ResetPasswdAct">
+		<constructor-arg ref="roleService" />
 	</bean>
-	<bean id="chkCodeIdAct" scope="request" class="biz.evolix.action.register.ChkCodeIdAct">
-		<constructor-arg  ref="findCodeIdService" />		
+	<bean id="chkCodeIdAct" scope="request"
+		class="biz.evolix.action.register.ChkCodeIdAct">
+		<constructor-arg ref="findCodeIdService" />
 	</bean>
-	
+
 	<!-- end faces action -->
 	<context:annotation-config />
 </beans>

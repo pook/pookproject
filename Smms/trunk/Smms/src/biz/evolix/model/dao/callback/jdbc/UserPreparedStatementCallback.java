@@ -21,7 +21,7 @@ public class UserPreparedStatementCallback implements PreparedStatementCallback<
 		ResultSet rs = pstmt.executeQuery();int i=0;
 		while(rs.next()){
 			if(rs.getRow()<this.start)continue;			
-			users.add(new UserDowlineBean(i++,rs.getString(1),rs.getString(2) , rs.getString(3), rs.getString(4),status(rs.getString(5))));
+			users.add(new UserDowlineBean(i++,rs.getString(1),rs.getString(2) , rs.getString(4),status(rs.getString(5))));
 		}
 		return users;
 	}

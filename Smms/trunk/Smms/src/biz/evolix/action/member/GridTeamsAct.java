@@ -23,11 +23,13 @@ public class GridTeamsAct extends ActionSupport{
 	private FetchListTeams fetchListTeams;
 	@Action(value = "/json-teams-member", results = { @Result(name = "success", type = "json") })
 	public String execute() throws Exception {
-		try{			
-			setRecord( fetchListTeams.size());			
+		try{						
 			int to = (getRows() * getPage());
 			int from = to - getRows();
-			setGridModel(fetchListTeams.find( from, getRecord()));			
+			//log.info(""+fetchListTeams.size());
+			setRecord( fetchListTeams.size());
+			List<UserDowlineBean>gridm = fetchListTeams.find( from,getRecord());			
+			setGridModel(gridm);			
 		}catch (Exception e) {
 			log.error(e.getMessage(),e);
 			return ERROR;
@@ -140,6 +142,6 @@ public class GridTeamsAct extends ActionSupport{
 	public GridTeamsAct(FetchListTeams fetchListTeams) {
 		super();
 		this.fetchListTeams = fetchListTeams;
-	}
-		
+		this.fetchListTeams.downlines();
+	}		
 }

@@ -31,7 +31,7 @@ public class UsersDAOImp extends JpaDaoSupport implements UsersDAO {
 		try {
 			u = getJpaTemplate().find(Users.class, id);
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error("User Id:"+id+" Not found!");
 		}
 		return u;
 	}

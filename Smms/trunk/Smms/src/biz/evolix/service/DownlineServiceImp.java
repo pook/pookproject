@@ -48,16 +48,15 @@ public class DownlineServiceImp implements DownlineService {
 	public List<UserDowlineBean> downline(int start, int max) {
 		List<Users> users = usersDAO.find(start, max, getUsers()
 				.getDisplayName(), "loaddownline");
-		return downline(users);
+		return downline(users,start);
 	}
 
-	private List<UserDowlineBean> downline(List<Users> users) {
+	private List<UserDowlineBean> downline(List<Users> users,int start) {
 		List<UserDowlineBean> downs = new ArrayList<UserDowlineBean>();
 		if (users == null)
-			return downs;
-		int i = 0;
+			return downs;		
 		for (Users user : users) {
-			downs.add(new UserDowlineBean(i++,user.getNode1().getSmileId(), user.getDetail().getName(), user.getDetail().getAddress(),
+			downs.add(new UserDowlineBean(++start,user.getNode1().getSmileId(), user.getDetail().getName(),
 					user.getNode1().getDisplayName(),status(user.getNode1().getStatus())));
 		}
 		return downs;

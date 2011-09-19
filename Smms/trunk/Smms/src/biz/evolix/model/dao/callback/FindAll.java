@@ -19,6 +19,4 @@ public class FindAll<T> implements JpaCallback<T> {
 		super();
 		this.nameQuery = nameQuery;
 	}
-	
-
 }

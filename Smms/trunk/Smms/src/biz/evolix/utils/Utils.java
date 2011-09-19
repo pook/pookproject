@@ -3,7 +3,7 @@ package biz.evolix.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 import biz.evolix.customconst.ConstType;
 import biz.evolix.gen.Generate;
@@ -58,5 +58,5 @@ public class Utils {
 	public static boolean inRange(long x){
 		return Generate.bottom(x);
 	}
-	private static Logger log = Logger.getLogger(Utils.class);
+	//private static Logger log = Logger.getLogger(Utils.class);
 }

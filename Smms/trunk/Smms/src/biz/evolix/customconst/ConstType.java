@@ -21,7 +21,7 @@ public class ConstType {
 	public static final char STATUS_VACANT = '\u0056';
 	public static final char STATUS_ACTIVE = '\u0041';
 	public static final char STATUS_INACTIVE = '\u0049';
-	public static final String DEFAULT_PW = "b60d121b438a380c343d5ec3c2037564b82ffef3";//sha-1
+	public static final String DEFAULT_PW = "c2e75a6ac6bf12e3681d29e36ba13eaa05158b26";//sha-1
 	public static final String HASHCODE_NODE0 = "b4b147bc522828731f1a016bfa72c073"; // md5		
 	public static final int MAX_LEVEL = 0x3e;
 	public static final String NOTICE = "NOTICE";

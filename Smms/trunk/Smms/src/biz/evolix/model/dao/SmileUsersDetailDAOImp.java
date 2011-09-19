@@ -62,8 +62,7 @@ public class SmileUsersDetailDAOImp extends JpaDaoSupport implements
 	@Override
 	@Transactional(readOnly = true)
 	public int findCode(String codeId) {
-		long f = ConstType.NOT_FOUND;
-		log.info(">>>>"+codeId);
+		long f = ConstType.NOT_FOUND;		
 		try {
 			f = getJpaTemplate().execute(
 					new FindByCondition1<Long>(codeId, "findcodeId"));

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -33,7 +33,7 @@ public class FetchBranceJSON extends ActionSupport {
 	}
 
 	private Map<String, String> brances;
-	private static Logger log = Logger.getLogger(FetchBranceJSON.class);
+//	private static Logger log = Logger.getLogger(FetchBranceJSON.class);
 	private BranceDAO fetchBrance;
 
 	public FetchBranceJSON(BranceDAO fetchBrance) {

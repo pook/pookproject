@@ -42,12 +42,15 @@ div#main1 div {
 div#main2 {
 	width: 700px
 }
-#sec1 {		
+
+#sec1 {
 	margin: 30px 100px 30px 150px;
 }
-div#main3{
-	float:left;
-	}
+
+div#main3 {
+	float: left;
+}
+
 #accordion {
 	margin: 30px 100px 50px 150px;
 }
@@ -59,18 +62,20 @@ div#main3{
 #divInAccrodionItem1 {
 	height: 180px
 }
-#divrt1{
-	margin: 30px 100px 30px 50px;
-}
-#divrt2{
+
+#divrt1 {
 	margin: 30px 100px 30px 50px;
 }
 
+#divrt2 {
+	margin: 30px 100px 30px 50px;
+}
 </style>
 
 <div id="main1">
 <div id="main2"><s:url id="noticeurl" action="notice-member" /> <s:url
-	id="activityurl" action="activity-member" /> <sj:accordion id="accordion">
+	id="activityurl" action="activity-member" /> <sj:accordion
+	id="accordion">
 	<sj:accordionItem title="แจ้งให้ทราบ">
 		<sj:div id="divInAccrodionItem" href="%{noticeurl}" />
 	</sj:accordionItem>
@@ -78,49 +83,34 @@ div#main3{
 		<sj:div id="divInAccrodionItem1" href="%{activityurl}" />
 	</sj:accordionItem>
 </sj:accordion></div>
-<sec:authorize access="hasRole('ROLE_ADMIN')">	
-<div id="sec1">
-<div id="main3"> 
-	<div id="divrt1">
-	<s:form id="f1" action="save-notice-member" theme="xhtml">
-	<s:set id="contextPath"  value="#request.get('javax.servlet.forward.context_path')" />
-	<sjr:ckeditor  name="notice"
-	href="%{noticeurl}" id="rt" rows="8" cols="80" toolbar="MyToolbar" resizableMaxWidth="400"
-	 customConfig="%{contextPath}/js/ckeditor.config.js" />
-	 <sj:submit 
-			id="s"
-			targets="main1" 
-			value="บันทึก การแจ้งให้ทราบ" 
-			indicator="indicator" 
-			button="true"
-		/>
-		<img id="indicator" 
-			src="images/indicator.gif" 
-			alt="Loading..." 
-			style="display:none"/>
-	 
-	 </s:form></div>	 
-	<div id="divrt2">
-	<s:form id="f2" action="save-activity-member" theme="xhtml">	
-	<sjr:ckeditor name="activity"
-	href="%{activityurl}" id="rt1" rows="8" cols="80" toolbar="MyToolbar" resizableMaxWidth="400"
-	 customConfig="%{contextPath}/js/ckeditor.config.js" />
-	  <sj:submit  
-			id="s1"
-			targets="main1" 
-			value="บันทึก กิจกรรม" 
-			indicator="indicator" 
-			button="true"
-		/>
-		<img id="indicator" 
-			src="images/indicator.gif" 
-			alt="Loading..." 
-			style="display:none"/>
-	 </s:form>
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+	<div id="sec1">
+	<div id="main3">
+	<div id="divrt1"><s:form id="f1" action="save-notice-member"
+		theme="xhtml">
+		<s:set id="contextPath"
+			value="#request.get('javax.servlet.forward.context_path')" />
+		<sjr:ckeditor name="notice" href="%{noticeurl}" id="rt" rows="8"
+			cols="80" toolbar="MyToolbar" resizableMaxWidth="400"
+			customConfig="%{contextPath}/js/ckeditor.config.js" />
+		<sj:submit id="s" targets="main1" value="บันทึก การแจ้งให้ทราบ"
+			indicator="indicator" button="true" />
+		<img id="indicator" src="images/indicator.gif" alt="Loading..."
+			style="display: none" />
+
+	</s:form></div>
+	<div id="divrt2"><s:form id="f2" action="save-activity-member"
+		theme="xhtml">
+		<sjr:ckeditor name="activity" href="%{activityurl}" id="rt1" rows="8"
+			cols="80" toolbar="MyToolbar" resizableMaxWidth="400"
+			customConfig="%{contextPath}/js/ckeditor.config.js" />
+		<sj:submit id="s1" targets="main1" value="บันทึก กิจกรรม"
+			indicator="indicator" button="true" />
+		<img id="indicator" src="images/indicator.gif" alt="Loading..."
+			style="display: none" />
+	</s:form></div>
 	</div>
 	</div>
-</div>
-</sec:authorize>
-</div>
+</sec:authorize></div>
 
 

@@ -14,7 +14,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="th">
 <head>
-<title>Smile Plus Company co.ltd</title>
+<title>Smile Plus Network Co., Ltd.</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta http-equiv="pragma" content="no-cache" />
@@ -25,8 +25,9 @@
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 <link href="styles/patch_layout.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet"
-	href= "<%=request.getContextPath()%>/struts/themes/ui-lightness/jquery-ui.css" type="text/css" />
-	<link href="styles/or-chart.css" rel="stylesheet" type="text/css" />
+	href="<%=request.getContextPath()%>/struts/themes/ui-lightness/jquery-ui.css"
+	type="text/css" />
+<link href="styles/or-chart.css" rel="stylesheet" type="text/css" />
 <sj:head debug="true" compressed="false" jquerytheme="ui-lightness"
 	customBasepath="themes" loadFromGoogle="%{google}"
 	ajaxhistory="%{ajaxhistory}" defaultIndicator="myDefaultIndicator"
@@ -49,9 +50,9 @@
 		
 </script>
 <style type="text/css">
-a#logout:hover{
-color:#39c;
-cursor: pointer;
+a#logout:hover {
+	color: #39c;
+	cursor: pointer;
 }
 </style>
 
@@ -73,14 +74,11 @@ cursor: pointer;
 		log.error("Unknow login");
 	}
 %>
-<div id="infoUser">
- <span 
-	style="background: none; border: none; font-size: -1">
-	<%=displayName %>&nbsp;:<%=userId %>
-	</span>| <sj:a id="logout" openDialog="mybuttondialog">
+<div id="infoUser"><span
+	style="background: none; border: none; font-size: -1"> <%=displayName %>&nbsp;:<%=userId %>
+</span>| <sj:a id="logout" openDialog="mybuttondialog">
     	Logout
-    </sj:a>
-<br />
+    </sj:a> <br />
 <span class="ui-state-default"
 	style="background: none; border: none; font-size: -2"> <sj:dialog
 	id="mybuttondialog"
@@ -91,11 +89,9 @@ cursor: pointer;
 	autoOpen="false" modal="true" title="ออกจากระบบ">
     คุณต้องการที่จะออกจากระบบ ?
 	</sj:dialog> </span></div>
-    </div>
-<div id="headline">
-<span class="ui-state-default" style="background: none; border: none;">Sale
-And MemberShip Management</span>
-<!-- 
+</div>
+<div id="headline"><span class="ui-state-default"
+	style="background: none; border: none;">Smile Plus Network Co., Ltd.</span> <!-- 
 	        <h4 class="ui-state-default" style="background: none; border: none;">Version 2.4.0</h4>
 	        --> <img id="myDefaultIndicator" src="images/ajax-loader.gif"
 	alt="Loading..." style="display: none" /></div>
@@ -103,71 +99,70 @@ And MemberShip Management</span>
 <div id="nav">
 <div class="hlist ui-widget-header">
 <ul>
- 
 	<li class="ui-widget-header"><s:url id="urlindex" action="index" /><sj:a
 		id="indexlink" href="%{urlindex}" targets="main">&nbsp;ข่าวสารสมาชิก&nbsp;</sj:a></li>
-		
-		<sec:authorize access="hasRole('ROLE_MEMBER')">
-	<li class="ui-widget-header"><s:url id="urlmember" action="member" /><sj:a
-		id="memberlink" href="%{urlmember}" targets="main">&nbsp;ทะเบียนสมาชิก&nbsp;</sj:a>
-	</li>
+
+	<sec:authorize access="hasRole('ROLE_MEMBER')">
+		<li class="ui-widget-header"><s:url id="urlmember"
+			action="member" /><sj:a id="memberlink" href="%{urlmember}"
+			targets="main">&nbsp;ทะเบียนสมาชิก&nbsp;</sj:a></li>
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_MEMBER')">
-	<li class="ui-widget-header"><s:url id="urlregister"
-		action="register" /><sj:a id="registerlink" href="%{urlregister}"
-		targets="main">ลงทะเบียนสมาชิกใหม่</sj:a></li>
-		</sec:authorize>
-		<sec:authorize access="hasRole('ROLE_MEMBER')">
-	<li class="ui-widget-header"><s:url id="urlorganization"
-		action="organization" /><sj:a id="organizationlink"
-		href="%{urlorganization}" targets="main">&nbsp;ผังองค์กร&nbsp;</sj:a>
-	</li>
+		<li class="ui-widget-header"><s:url id="urlregister"
+			action="register" /><sj:a id="registerlink" href="%{urlregister}"
+			targets="main">ลงทะเบียนสมาชิกใหม่</sj:a></li>
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_MEMBER')">
-	<li class="ui-widget-header"><s:url id="urlorder" action="order" /><sj:a
-		id="orderlink" href="%{urlorder}" targets="main">&nbsp;ประวัติการสั่งชื้อสินค้า&nbsp;</sj:a>
-	</li>
+		<li class="ui-widget-header"><s:url id="urlorganization"
+			action="organization" /><sj:a id="organizationlink"
+			href="%{urlorganization}" targets="main">&nbsp;ผังองค์กร&nbsp;</sj:a>
+		</li>
+	</sec:authorize>
+	<sec:authorize access="hasRole('ROLE_MEMBER')">
+		<li class="ui-widget-header"><s:url id="urlorder" action="order" /><sj:a
+			id="orderlink" href="%{urlorder}" targets="main">&nbsp;ประวัติการสั่งชื้อสินค้า&nbsp;</sj:a>
+		</li>
 	</sec:authorize>
 	<!-- 
            <li class="ui-widget-header"><s:url id="urllogin" action="login"/><sj:a id="loginlink" href="%{urllogin}" targets="main">&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;</sj:a> </li>
-      --> 
-      <sec:authorize access="hasRole('ROLE_STAFF')">	    
-	<li class="ui-widget-header"><s:url id="urlstaffmember"
-		action="staffmember" /><sj:a id="staffmemberlink"
-		href="%{urlstaffmember}" targets="main">&nbsp;สิทธิ์การสมัคร&nbsp;</sj:a>
-	</li>
+      -->
+	<sec:authorize access="hasRole('ROLE_STAFF')">
+		<li class="ui-widget-header"><s:url id="urlstaffmember"
+			action="staffmember" /><sj:a id="staffmemberlink"
+			href="%{urlstaffmember}" targets="main">&nbsp;สิทธิ์การสมัคร&nbsp;</sj:a>
+		</li>
 	</sec:authorize>
-<sec:authorize access="hasRole('ROLE_STAFF')">	
-	<li class="ui-widget-header"><s:url id="urlblackoffice"
-		action="blackoffice" /><sj:a id="blackofficelink"
-		href="%{urlblackoffice}" targets="main">&nbsp;จัดการการชื้อสินค้า&nbsp;</sj:a>
-	</li>
+	<sec:authorize access="hasRole('ROLE_STAFF')">
+		<li class="ui-widget-header"><s:url id="urlblackoffice"
+			action="blackoffice" /><sj:a id="blackofficelink"
+			href="%{urlblackoffice}" targets="main">&nbsp;จัดการการชื้อสินค้า&nbsp;</sj:a>
+		</li>
 	</sec:authorize>
-<sec:authorize access="hasRole('ROLE_ADMIN')">	
-	<li class="ui-widget-header"><s:url id="urleditproduct"
-		action="editproduct" /><sj:a id="editproduct"
-		href="%{urleditproduct}" targets="main">&nbsp;ตั้งค่าผลิตภัณฑ์&nbsp;</sj:a></li>
-		</sec:authorize>
-<sec:authorize access="hasRole('ROLE_ADMIN')">		
-	<li class="ui-widget-header"><s:url id="urlsmmsrole"
-		action="smmsrole" /><sj:a id="smmsrole" href="%{urlsmmsrole}"
-		targets="main">&nbsp;กำหนดสิทธิ์&nbsp;</sj:a></li>
-</sec:authorize>
-<sec:authorize access="hasRole('ROLE_ADMIN')">	
-			<li class="ui-widget-header"><s:url id="urlcommission"
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<li class="ui-widget-header"><s:url id="urleditproduct"
+			action="editproduct" /><sj:a id="editproduct"
+			href="%{urleditproduct}" targets="main">&nbsp;ตั้งค่าผลิตภัณฑ์&nbsp;</sj:a></li>
+	</sec:authorize>
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<li class="ui-widget-header"><s:url id="urlsmmsrole"
+			action="smmsrole" /><sj:a id="smmsrole" href="%{urlsmmsrole}"
+			targets="main">&nbsp;กำหนดสิทธิ์&nbsp;</sj:a></li>
+	</sec:authorize>
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<li class="ui-widget-header"><s:url id="urlcommission"
 			action="commission" /><sj:a id="commission" href="%{urlcommission}"
 			targets="main">&nbsp;คอมมิสชั่นที่ตัดบัญชี&nbsp;</sj:a></li>
-</sec:authorize>
+	</sec:authorize>
 </ul>
 </div>
 </div>
 <sj:div id="main" href="%{urlindex}">
-	<img id="indicator" src="images/indicator.gif" alt="Loading..." />
+	<img id="indicator" src="images/indicator.gif" alt="Loading..." />	
 </sj:div> <!-- begin: #footer -->
-<div id="footer"><a href="" title="Smile Plus Company co.ltd">Smile Plus Network Co.,Ltd.</a></div>
+<div id="footer"><a href="" title="Smile Plus Company co.ltd">Smile
+Plus Network Co.Ltd.</a></div>
 </div>
 </div>
-
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		if (jQuery.struts2_jquery.ajaxhistory) {
@@ -178,6 +173,5 @@ And MemberShip Management</span>
 		}
 	});
 </script>
-
 </body>
 </html>

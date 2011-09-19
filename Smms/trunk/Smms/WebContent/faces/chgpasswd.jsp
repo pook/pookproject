@@ -80,7 +80,7 @@ table {
 <table id="tchgpass" width="450" class="ui-widget ui-widget-content">
 	<tfoot>
 		<tr>
-			<td colspan="2"><input id="inp" type="submit" value="ตกลง" 
+			<td colspan="2"><input id="inp" type="submit" value="ตกลง"
 				class="ui-button ui-widget ui-state-default ui-corner-all"
 				onmouseover="ui-state-hover" /></td>
 
@@ -88,11 +88,13 @@ table {
 
 	</tfoot>
 	<tr>
-		<td colspan="2"><div class="ui-widget">
-			<div id="messageInfo" style="margin-top: 5px; padding: 0pt 0.7em;"></div>
-			</div></td>
-			</tr>
-	
+		<td colspan="2">
+		<div class="ui-widget">
+		<div id="messageInfo" style="margin-top: 5px; padding: 0pt 0.7em;"></div>
+		</div>
+		</td>
+	</tr>
+
 	<tr>
 		<td>รหัสผ่าน :</td>
 		<td width="256"><input type="password" id="oldpasswd"

@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 /**
  * "Yet Another Multicolumn Layout" - (X)HTML/CSS Framework
  *
@@ -14,16 +15,12 @@
  * @revision        $Revision: 443 $
  * @lastmodified    $Date: 2009-12-31 18:05:05 +0100 (Do, 31. Dez 2009) $
  */
-
 /* Layout independent adjustments | Layout-unabhängige Anpassungen ----------------------------------- */
 @import url(/yaml/core/iehacks.css);
 
 /* Box model adjustments for vlist navigation | Box-Modell-Anpassungen für vlist-Navigation */
 /* @import url(/yaml/patches/patch_nav_vlist.css); */
-
 /* Layout-dependent adjustments | Layout-abhängige Anpassungen --------------------------------------- */
-@media screen, projection
-{
-  /* add your adjustments here | Fügen Sie Ihre Anpassungen hier ein */
-
+@media screen , projection {
+	/* add your adjustments here | Fügen Sie Ihre Anpassungen hier ein */
 }

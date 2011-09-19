@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 /**
  * "Yet Another Multicolumn Layout" - (X)HTML/CSS Framework
  *
@@ -19,10 +20,7 @@
  * @revision        $Revision: 443 $
  * @lastmodified    $Date: 2009-12-31 18:05:05 +0100 (Do, 31. Dez 2009) $
  */
-
-@media all
-{
- /**
+@media all { /**
   * (en) Workaround for misplaced floating navigation lists
   * (de) Workaround behebt deplatzierte floatende Navigationselemente
   *
@@ -31,13 +29,14 @@
   * @css-for    IE 5.x/Win, IE6, IE7
   * @valid      yes
   */
-
-  #nav { direction:ltr; }
-  #nav * { direction:rtl; }
-
-  /*------------------------------------------------------------------------------------------------------*/
-
-  /**
+	#nav {
+		direction: ltr;
+	}
+	#nav * {
+		direction: rtl;
+	}
+	/*------------------------------------------------------------------------------------------------------*/
+	/**
    * (en) Optional: Forces right vertical scroll bars
    * (de) Optional: Erzwingt rechte vertikale Scrollbalken
    *
@@ -46,8 +45,7 @@
    * @css-for    IE 5.x/Win, IE6, IE7
    * @valid      yes
    */
-
-  /*
+	/*
   html { direction: ltr; }
   body { direction: rtl; }
   */
