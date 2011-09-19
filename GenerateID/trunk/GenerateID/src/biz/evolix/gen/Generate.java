@@ -110,7 +110,7 @@ public class Generate {
 		return r.toString();
 	}
 
-	public static long next(long id) {
+	public static long next(final long id) {
 		return id + 1;
 	}
 
