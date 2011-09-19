@@ -31,5 +31,4 @@ public class BuyOrder extends ActionSupport {
 			super();
 			this.purcheseService = purcheseService;
 		}
-
 }
