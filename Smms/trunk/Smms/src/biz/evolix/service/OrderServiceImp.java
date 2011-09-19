@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import biz.evolix.customconst.ConstType;
 import biz.evolix.model.Order;
@@ -14,9 +13,9 @@ import biz.evolix.model.dao.OrderDAO;
 import biz.evolix.model.dao.Role;
 import biz.evolix.model.dao.UsersDAO;
 import biz.evolix.secure.GrantedAuthorityImp;
-import biz.evolix.secure.SmileUser;
 
-public class OrderServiceImp implements OrderService {
+
+public class OrderServiceImp extends AbstractController implements OrderService {
 
 	@Autowired
 	private OrderDAO orderDAO;
@@ -49,19 +48,7 @@ public class OrderServiceImp implements OrderService {
 
 	public List<Purchese> getPurcheses() {
 		return purcheses;
-	}
-
-	private SmileUser getUsers() {
-		try {
-			return (SmileUser) SecurityContextHolder.getContext()
-					.getAuthentication().getPrincipal();
-		} catch (Exception e) {
-			SecurityContextHolder.clearContext();
-			log.error(e.getMessage(), e);
-		}
-		return null;
-	}
-
+	}	
 	private static Logger log = Logger.getLogger(OrderServiceImp.class);
 
 	@Override
